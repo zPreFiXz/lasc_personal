@@ -28,6 +28,6 @@
         header("location: ../index.php?page=1_2_a/index_1_2_a");
     }else{
         $_SESSION['error'] = "เพิ่มข้อมูลไม่สำเร็จ";
-        header("location: ../index.php?page=1_2_a/index_1_2_");
+        header("location: ../index.php?page=1_2_a/index_1_2_a");
     }
 ?>

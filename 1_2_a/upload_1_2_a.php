@@ -10,7 +10,7 @@
         $extension = explode('.', $file['name']);
         $fileActExt = strtolower(end($extension));
         $fileNew = rand() . "." . $fileActExt; 
-        $filePath = 'uploads/' . $fileNew;
+        $filePath = '../uploads/' . $fileNew;
     
         if (in_array($fileActExt, $allow)) {
             if ($file['size'] > 0 && $file['error'] == 0) {
@@ -29,9 +29,9 @@
         
     if ($stmt) {
         $_SESSION['success'] = "อัปโหลดไฟล์สำเร็จ";
-        header("location: index.php?page=1_2_a");
+        header("location: ../index.php?page=1_2_a/index_1_2_a");
     }else{
         $_SESSION['error'] = "อัปโหลดไฟล์ไม่สำเร็จ";
-        header("location: index.php?page=1_2_a");
+        header("location: ../index.php?page=1+2_a/index_1_2_a");
     }
 ?>

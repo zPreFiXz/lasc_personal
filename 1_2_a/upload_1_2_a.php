@@ -32,6 +32,6 @@
         header("location: ../index.php?page=1_2_a/index_1_2_a");
     }else{
         $_SESSION['error'] = "อัปโหลดไฟล์ไม่สำเร็จ";
-        header("location: ../index.php?page=1+2_a/index_1_2_a");
+        header("location: ../index.php?page=1_2_a/index_1_2_a");
     }
 ?>

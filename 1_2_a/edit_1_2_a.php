@@ -26,7 +26,7 @@
             header("location: ../index.php?page=1_2_a/index_1_2_a");
         }else{
             $_SESSION['error'] = "แก้ไขข้อมูลไม่สำเร็จ";
-            header("location: ../index.php?page=1_2_aindex_1_2_a");
+            header("location: ../index.php?page=1_2_a/index_1_2_a");
         }
 }
 ?>

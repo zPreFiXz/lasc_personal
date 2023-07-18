@@ -1,45 +1,80 @@
 <?php
-require_once "config/db.php";
+    require_once "config/db.php";
 
-if (isset($_GET['delete'])) {
-    $delete_id = $_GET['delete'];
-    $deletestmt = $conn->prepare("DELETE FROM personal_1_2_a WHERE code = :delete_id");
-    $deletestmt->bindParam(':delete_id', $delete_id);
-    $deletestmt->execute();
+    if(isset($_GET['delete_file'])){
+        $delete_file_id = $_GET['delete_file'];
+        $stmt = $conn->prepare("SELECT file FROM personal_1_2_a WHERE code = :delete_file_id");
+        $stmt->bindParam(':delete_file_id', $delete_file_id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $currentFile = $row['file'];
 
-    if ($deletestmt) {
-        $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
-        echo "<script>window.location.href = 'index.php?page=1_2_a/index_1_2_a';</script>";
-        exit;
+        if ($currentFile) {
+            $filePath = 'uploads/' . $currentFile;
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+
+        $delete_file = $conn->prepare("UPDATE personal_1_2_a SET file = '' WHERE code = :delete_file_id");
+        $delete_file->bindParam(':delete_file_id', $delete_file_id);
+        $delete_file->execute();
     }
-}
-if (isset($_GET['edit'])) {
-    $edit_id = $_GET['edit'];
-    $stmt = $conn->prepare("SELECT * FROM personal_1_2_a WHERE code = ?");
-    $stmt->execute([$edit_id]);
-    $data = $stmt->fetch();
-?>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var modal = new bootstrap.Modal(document.getElementById("modal"));
-            modal.show();
-        });
-    </script>
-<?php
-}
-if (isset($_GET['upload'])) {
-    $_SESSION['upload'] = $_GET['upload'];
-    $upload_id = $_SESSION['upload'];
-?>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var modal = new bootstrap.Modal(document.getElementById("uploadModal"));
-            modal.show();
-        });
-    </script>
-<?php
-}
-?>
+
+    if (isset($_GET['delete'])) {
+        $delete_id = $_GET['delete'];
+        
+
+        $stmt = $conn->prepare("SELECT file FROM personal_1_2_a WHERE code = :delete_id");
+        $stmt->bindParam(':delete_id', $delete_id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $currentFile = $row['file'];
+
+        if ($currentFile) {
+            $filePath = 'uploads/' . $currentFile;
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+
+        $deletestmt = $conn->prepare("DELETE FROM personal_1_2_a WHERE code = :delete_id");
+        $deletestmt->bindParam(':delete_id', $delete_id);
+        $deletestmt->execute();
+        
+        if ($deletestmt) {
+            $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
+            echo "<script>window.location.href = 'index.php?page=1_2_a/index_1_2_a';</script>";
+            exit;
+        }
+    }
+
+    if (isset($_GET['edit'])) {
+        $edit_id = $_GET['edit'];
+        $stmt = $conn->prepare("SELECT * FROM personal_1_2_a WHERE code = ?");
+        $stmt->execute([$edit_id]);
+        $data = $stmt->fetch();
+    ?>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var modal = new bootstrap.Modal(document.getElementById("modal"));
+                modal.show();
+            });
+        </script>
+    <?php
+    }
+
+    if (isset($_GET['upload'])) {
+        $_SESSION['upload'] = $_GET['upload'];
+        $upload_id = $_SESSION['upload'];
+    ?>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var modal = new bootstrap.Modal(document.getElementById("uploadModal"));
+                modal.show();
+            });
+        </script>
+    <?php } ?>
 
 <div class="container">
     <div class="pagetitle mt-3">
@@ -106,7 +141,7 @@ if (isset($_GET['upload'])) {
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
                                 <a href="uploads/<?= $per['file']; ?>"><?= $per['file']; ?></a>
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_2_a/index_1_2_a&delete=<?= $per['code']; ?>" class="btn btn-warning">
+                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')"  href="?page=1_2_a/index_1_2_a&delete_file=<?= $per['code']; ?>" class="btn btn-warning">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;
                                         <div class="label">ลบ</div>

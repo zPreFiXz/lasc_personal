@@ -287,7 +287,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_1/index_1_1">
-          <i class="bi bi-menu-button-wide"></i><span>1.ภาระงานสอน(ภาคปกติ)</span>
+          <i class="bi bi-menu-button-wide"></i><span>1. ภาระงานสอน(ภาคปกติ)</span>
         </a>
         <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         </ul>
@@ -295,17 +295,17 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav1" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>2.ภาระงานอาจารย์ที่ปรึกษาของนักศึกษา</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-menu-button-wide"></i><span>2. ภาระงานอาจารย์ที่ปรึกษาของนักศึกษา</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="index.php?page=1_2_a/index_1_2_a">
-              <i class="bi bi-circle"></i><span>ก.ภาระงานอาจารย์ที่ปรึกษาหมู่เรียน</span>
+              <i class="bi bi-circle"></i><span>ก. ภาระงานอาจารย์ที่ปรึกษาหมู่เรียน</span>
             </a>
           </li>
           <li>
             <a href="index.php?page=1_2_b/index_1_2_b">
-              <i class="bi bi-circle"></i><span>ข.ภาระงานอาจารย์ที่ปรึกษาชมรม ชุมนุม หรือที่ปรึกษาอื่น</span>
+              <i class="bi bi-circle"></i><span>ข. ภาระงานอาจารย์ที่ปรึกษาชมรม ชุมนุม หรือที่ปรึกษาอื่น</span>
             </a>
           </li>
         </ul>
@@ -313,7 +313,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_3/index_1_3">
-          <i class="bi bi-menu-button-wide"></i><span>3.ภาระงานอาจารย์นิเทศ</span>
+          <i class="bi bi-menu-button-wide"></i><span>3. ภาระงานอาจารย์นิเทศ</span>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         </ul>
@@ -321,7 +321,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_4/index_1_4">
-          <i class="bi bi-menu-button-wide"></i><span>4.ภาระงานกิจกรรมพัฒนานักศึกษา</span>
+          <i class="bi bi-menu-button-wide"></i><span>4. ภาระงานกิจกรรมพัฒนานักศึกษา</span>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         </ul>
@@ -329,17 +329,17 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav2" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>5.ภาระงานอาจารย์ที่ปรึกษางานวิจัย โครงการ</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-menu-button-wide"></i><span>5. ภาระงานอาจารย์ที่ปรึกษางานวิจัย โครงการ</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav2" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="index.php?page=1_5_a/index_1_5_a">
-              <i class="bi bi-circle"></i><span>ก.ภาระงานอาจารย์ที่ปรึกษางานวิจัย</span>
+              <i class="bi bi-circle"></i><span>ก. ภาระงานอาจารย์ที่ปรึกษางานวิจัย</span>
             </a>
           </li>
           <li>
             <a href="index.php?page=1_5_b/index_1_5_b">
-              <i class="bi bi-circle"></i><span>ข.ภาระงานอาจารย์ที่ปรึกษาโครงการ</span>
+              <i class="bi bi-circle"></i><span>ข. ภาระงานอาจารย์ที่ปรึกษาโครงการ</span>
             </a>
           </li>
         </ul>
@@ -347,17 +347,17 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav3" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>6.ภาระงานวิจัย</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-menu-button-wide"></i><span>6. ภาระงานวิจัย</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav3" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="index.php?page=1_6_a/index_1_6_a">
-              <i class="bi bi-circle"></i><span>ก.การสร้างงานวิจัย</span>
+              <i class="bi bi-circle"></i><span>ก. การสร้างงานวิจัย</span>
             </a>
           </li>
           <li>
             <a href="index.php?page=1_6_b/index_1_6_b">
-              <i class="bi bi-circle"></i><span>ข.การเผยแพร่ รับรางวัล หรือจดสิทธิบัตร</span>
+              <i class="bi bi-circle"></i><span>ข. การเผยแพร่ รับรางวัล หรือจดสิทธิบัตร</span>
             </a>
           </li>
         </ul>
@@ -365,7 +365,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_7/index_1_7">
-          <i class="bi bi-menu-button-wide"></i><span>7.ภาระงานผลิตผลงานทางวิชาการ</span>
+          <i class="bi bi-menu-button-wide"></i><span>7. ภาระงานผลิตผลงานทางวิชาการ</span>
         </a>
         <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         </ul>
@@ -373,7 +373,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_8/index_1_8">
-          <i class="bi bi-menu-button-wide"></i><span>8.ภาระงานด้านบริการวิชาการ</span>
+          <i class="bi bi-menu-button-wide"></i><span>8. ภาระงานด้านบริการวิชาการ</span>
         </a>
         <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         </ul>
@@ -381,7 +381,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_9/index_1_9">
-          <i class="bi bi-menu-button-wide"></i><span>9.ภาระงานทำนุบำรุงศิลปวัฒนธรรม</span>
+          <i class="bi bi-menu-button-wide"></i><span>9. ภาระงานทำนุบำรุงศิลปวัฒนธรรม</span>
         </a>
         <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         </ul>
@@ -389,7 +389,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_10/index_1_10">
-          <i class="bi bi-menu-button-wide"></i><span>10.ภาระงานเฉพาะกิจที่เกี่ยวข้อง นอกจากข้อ 1-9</span>
+          <i class="bi bi-menu-button-wide"></i><span>10. ภาระงานเฉพาะกิจที่เกี่ยวข้อง นอกจากข้อ 1-9</span>
         </a>
         <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         </ul>
@@ -397,7 +397,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_11/index_1_11">
-          <i class="bi bi-menu-button-wide"></i><span>11.ภาระงานด้านการบริหาร</span>
+          <i class="bi bi-menu-button-wide"></i><span>11. ภาระงานด้านการบริหาร</span>
         </a>
         <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         </ul>

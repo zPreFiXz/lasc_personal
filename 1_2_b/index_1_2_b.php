@@ -252,7 +252,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
                     <form action = "1_2_b/insert_1_2_b.php" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="club"  class="col-sm-2 col-form-label" style="white-space: nowrap;">ชื่อชมรม ชุมนุมหรือที่ปรึกษาอื่นๆ</label>
@@ -298,7 +297,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
                     <form action = "1_2_b/edit_1_2_b.php" method="post">
                         <div class="mb-3">
                             <label for="club"  class="col-sm-2 col-form-label" style="white-space: nowrap;">ชื่อชมรม ชุมนุมหรือที่ปรึกษาอื่นๆ</label>

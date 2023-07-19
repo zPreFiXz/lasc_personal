@@ -138,8 +138,7 @@ if (isset($_GET['upload'])) {
                 <th scope="col">จำนวนนักศึกษา</th>
                 <th scope="col">ระยะเวลาที่ปฏิบัติ</th>
                 <th scope="col">สถานที่ทำงาน</th>
-                <th scope="col">จำนวนภาระงาน</th>
-
+                <th scope="col">จำนวนภาระงาน</th>               
                 <th scope="col">อัปโหลดเอกสาร</th>
                 <th scope="col">จัดการข้อมูล</th>
 
@@ -248,30 +247,30 @@ if (isset($_GET['upload'])) {
                         <form action="1_3/insert_1_3.php" method="post" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="Major" class="col-form-label">สาขาวิชา:</label>
-                                <input type="text" required class="form-control" name="Major">
+                                <input type="text" required class="form-control" name="Major" required>
                             </div>
                             <div class="mb-3">
                                 <label for="level" class="col-form-label">ระดับชั้น:</label>
-                                <input type="text" required class="form-control" name="level">
+                                <input type="text" required class="form-control" name="level" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_student" class="col-form-label">จำนวนนักศึกษา:</label>
-                                <input type="text" required class="form-control" name="amount_student">
+                                <input type="text" required class="form-control" name="amount_student" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="amount_time" class="col-form-label">ระยะเวลาที่ปฏิบัติ:</label>
-                                <input type="text" required class="form-control" name="amount_time">
+                                <input type="text" required class="form-control" name="amount_time" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="workplace" class="col-form-label">สถานที่ทำงาน:</label>
-                                <input type="text" required class="form-control" name="workplace">
+                                <input type="text" required class="form-control" name="workplace" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="amount_work" class="col-form-label">จำนวนภาระงาน:</label>
-                                <input type="text" required class="form-control" name="amount_work">
+                                <input type="text" required class="form-control" name="amount_work" required>
                             </div>
 
 

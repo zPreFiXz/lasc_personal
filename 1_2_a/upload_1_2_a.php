@@ -9,8 +9,8 @@
         $allow = array('jpg', 'jpeg', 'png' , 'pdf','ppt','docx');
         $extension = explode('.', $file['name']);
         $fileActExt = strtolower(end($extension));
-        $fileNew = rand() . "." . $fileActExt; 
-        $filePath = '../uploads/' . $fileNew;
+        date_default_timezone_set('Asia/Bangkok');
+        $fileNew = date('Y-m-d_H-i-s'). "." . $fileActExt;        $filePath = '../uploads/' . $fileNew;
     
         if (in_array($fileActExt, $allow)) {
             if ($file['size'] > 0 && $file['error'] == 0) {

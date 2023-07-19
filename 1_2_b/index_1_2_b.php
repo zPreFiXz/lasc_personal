@@ -1,6 +1,6 @@
 <?php
     require_once "config/db.php";
-    //delete
+    //delete file
     if(isset($_GET['delete_file'])){
         $delete_file_id = $_GET['delete_file']; // รับค่า ID ที่ต้องการลบ
         $stmt = $conn->prepare("SELECT file FROM personal_1_2_b WHERE id = :delete_file_id");
@@ -20,7 +20,7 @@
         $delete_file->bindParam(':delete_file_id', $delete_file_id);
         $delete_file->execute();
     }
-
+    //delete 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         
@@ -71,6 +71,7 @@
         </script>
     <?php
     }
+    //upload file
     if(isset($_GET['upload'])) {
         // เก็บค่า ID ที่ต้องการแก้ไขในตัวแปร session ชื่อ 'upload'
         $_SESSION['upload'] = $_GET['upload'];
@@ -173,11 +174,16 @@
             
             <?php if ($per['file']) { ?> 
                 <td style="white-space: nowrap;">
-                    <a href="<?= "uploads/". $per['file']; ?>"><?= $per['file']; ?></a>
-                    <a onclick="return confirm('ต้องการลบไฟล์หรือไม่')" href="?page=1_2_b/index_1_2_b&delete_file=<?= $per['id']; ?>" class="btn btn-warning">
+                    <a href="<?= "uploads/". $per['file']; ?>" class="btn btn-secondary">
+                        <div class="icon d-flex">
+                            <i class="bi bi-eye"></i>&nbsp;
+                            <div class="label">ดูไฟล์</div>
+                        </div>
+                    </a>
+                    <a onclick="return confirm('ต้องการลบไฟล์หรือไม่')" href="?page=1_2_b/index_1_2_b&delete_file=<?= $per['id']; ?>" class="btn btn-danger">
                         <div class="icon d-flex">
                             <i class="bi bi-trash"></i>&nbsp;
-                            <div class="label">ลบ</div>
+                            <div class="label">ลบไฟล์</div>
                         </div>
                     </a>
                 </td>

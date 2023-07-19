@@ -140,7 +140,12 @@
                         <td><?= $per['amount_work']; ?></td>
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
-                                <a href="uploads/<?= $per['file']; ?>"><?= $per['file']; ?></a>
+                                <a href="uploads/<?= $per['file']; ?>"  class="btn btn-secondary">
+                                    <div class="icon d-flex">
+                                        <i class="bi bi-eye"></i>&nbsp;
+                                        <div class="label">ดูไฟล์</div>
+                                    </div>
+                                </a>
                                 <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')"  href="?page=1_2_a/index_1_2_a&delete_file=<?= $per['code']; ?>" class="btn btn-warning">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;

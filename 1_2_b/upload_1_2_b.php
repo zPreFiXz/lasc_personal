@@ -11,8 +11,10 @@
         $extension = explode(".", $file['name']);
         //แปลงนามสกุลไฟล์ให้เป็นตัวพิมพ์เล็ก
         $fileActExt = strtolower(end($extension));
+        // ตั้งค่าโซนเวลาให้เป็นเวลาประเทศไทย
+        date_default_timezone_set('Asia/Bangkok');
         // สร้างชื่อไฟล์ใหม่ที่ไม่ซ้ำกันโดยใช้เลขสุ่ม.นามสกุลไฟล์
-        $fileNew = rand(). "." . $fileActExt;
+        $fileNew = date('Y-m-d_H-i-s'). "." . $fileActExt;
         //อัพโหลดไปที่โฟล์เดอร์อะไร
         $filePath = "../uploads/".$fileNew;// กำหนดพาธของไฟล์ที่จะบันทึก
 

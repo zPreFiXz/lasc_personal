@@ -139,7 +139,7 @@ if (isset($_GET['upload'])) {
                 <th scope="col">ระยะเวลาที่ปฏิบัติ</th>
                 <th scope="col">สถานที่ทำงาน</th>
                 <th scope="col">จำนวนภาระงาน</th>
-                <th scope="col">อัปโหลด</th>
+                <th scope="col">อัปโหลดไฟล์</th>
                 <th scope="col">จัดการข้อมูล</th>
 
             </tr>

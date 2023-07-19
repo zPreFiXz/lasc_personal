@@ -3,7 +3,7 @@
     //delete file
     if(isset($_GET['delete_file'])){
         $delete_file_id = $_GET['delete_file']; // รับค่า ID ที่ต้องการลบ
-        $stmt = $conn->prepare("SELECT file FROM personal_1_2_b WHERE id = :delete_file_id");
+        $stmt = $conn->prepare("SELECT file FROM personal_1_5_a WHERE id = :delete_file_id");
         $stmt->bindParam(':delete_file_id', $delete_file_id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -16,7 +16,7 @@
             }
         }
 
-        $delete_file = $conn->prepare("UPDATE personal_1_2_b SET file = '' WHERE id = :delete_file_id");
+        $delete_file = $conn->prepare("UPDATE personal_1_5_a SET file = '' WHERE id = :delete_file_id");
         $delete_file->bindParam(':delete_file_id', $delete_file_id);
         $delete_file->execute();
     }
@@ -25,7 +25,7 @@
         $delete_id = $_GET['delete'];
         
 
-        $stmt = $conn->prepare("SELECT file FROM personal_1_2_b WHERE id = :delete_id");
+        $stmt = $conn->prepare("SELECT file FROM personal_1_5_a WHERE id = :delete_id");
         $stmt->bindParam(':delete_id', $delete_id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -38,13 +38,13 @@
             }
         }
 
-        $deletestmt = $conn->prepare("DELETE FROM personal_1_2_b WHERE id = :delete_id");
+        $deletestmt = $conn->prepare("DELETE FROM personal_1_5_a WHERE id = :delete_id");
         $deletestmt->bindParam(':delete_id', $delete_id);
         $deletestmt->execute();
         
         if ($deletestmt) {
             $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
-            echo "<script>window.location.href = 'index.php?page=1_2_b/index_1_2_b';</script>";
+            echo "<script>window.location.href = 'index.php?page=1_5_a/index_1_5_a';</script>";
             exit;
         }
     }
@@ -54,8 +54,8 @@
         // เก็บค่า ID ที่ต้องการแก้ไขในตัวแปร session ชื่อ 'edit'
         $_SESSION['edit'] = $_GET['edit'];
         $edit_id = $_SESSION['edit'];
-        // เตรียมคำสั่ง SQL สำหรับเลือกข้อมูลที่ต้องการแก้ไขจากตาราง personal_1_2_b โดยใช้ ID
-        $stmt = $conn->prepare("SELECT * FROM personal_1_2_b WHERE id = ?");
+        // เตรียมคำสั่ง SQL สำหรับเลือกข้อมูลที่ต้องการแก้ไขจากตาราง personal_1_5_a โดยใช้ ID
+        $stmt = $conn->prepare("SELECT * FROM personal_1_5_a WHERE id = ?");
         $stmt->execute([$edit_id]);
         // เก็บข้อมูลที่ได้จากการคิวรีในตัวแปร $data
         $data = $stmt->fetch();
@@ -92,11 +92,11 @@
 
 <div class="container">
     <div class="pagetitle mt-3">
-        <h1>ข. ภาระงานอาจารย์ที่ปรึกษาชมรม ชุมนุม หรือที่ปรึกษาอื่น</h1>
+        <h1>ก. ภาระงานอาจารย์ที่ปรึกษางานวิจัย</h1>
         <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item">ภาระงานอาจารย์ที่ปรึกษาของนักศึกษา</li>
-          <li class="breadcrumb-item">ข. ภาระงานอาจารย์ที่ปรึกษาชมรม ชุมนุม หรือที่ปรึกษาอื่น</li>
+          <li class="breadcrumb-item">ภาระงานอาจารย์ที่ปรึกษางานวิจัย โครงการ ปัญหาพิเศษหรืองานอื่นที่เกี่ยวข้อง</li>
+          <li class="breadcrumb-item">ก. ภาระงานอาจารย์ที่ปรึกษางานวิจัย</li>
         </ol>
       </nav> 
     </div>
@@ -139,38 +139,40 @@
     <table class="table table-bordered text-center">
         <thead class="align-middle table-secondary">
         <tr>
-            <th scope="col">ชื่อชมรม ชุมนุมหรือที่ปรึกษาอื่นๆ</th>
+            <th scope="col">สาขาวิชา</th>
             <th scope="col">ระดับชั้น</th>
+            <th scope="col">ชื่องานวิจัย</th>
+            <th scope="col">จำนวนที่ปรึกษา (คน)</th>
+            <th scope="col">ที่ปรึกษาหลัก/ร่วม</th>
             <th scope="col">จำนวนนักศึกษา (คน)</th>
-            <th scope="col">หมู่เรียน</th>
-            <th scope="col">จำนวนชั่วโมงทำงาน/สัปดาห์/ภาค (ชม.)</th>
-            <th scope="col">จำนวนภาระงาน (ชิ้น)</th>
+            <th scope="col">จำนวนภาระงาน</th>
             <th scope="col">อัปโหลดไฟล์</th>
             <th scope="col">จัดการข้อมูล</th>
-
         </tr>
         </thead>
 
         <tbody>
         <?php
-            $stmt = $conn->query("SELECT*FROM personal_1_2_b"); // ดึงข้อมูลจากตาราง personal_1_2_b
+            $stmt = $conn->query("SELECT*FROM personal_1_5_a"); // ดึงข้อมูลจากตาราง personal_1_5_a
             $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
             $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
             // ตรวจสอบว่ามีข้อมูลหรือไม่
             if (!$personal) { // ไม่มีข้อมูล
-                echo " <tr><td colspan='8' class='text-center'>ไม่มีข้อมูล</td></tr>";
+                echo " <tr><td colspan='9' class='text-center'>ไม่มีข้อมูล</td></tr>";
             } else {
                 // วนลูปแสดงข้อมูลที่ดึงมา
                 foreach ($personal as $per) { 
         ?>
         <tr> <!-- แสดงแถวของตาราง (row) โดยใช้ข้อมูลจากตัวแปร $per ในแต่ละคอลัมน์ของตาราง -->
             
-            <td style="white-space: nowrap;"><?= $per['club']; ?></td>
+            <td style="white-space: nowrap;"><?= $per['major']; ?></td>
             <td><?= $per['level']; ?></td>
+            <td style="white-space: nowrap;"><?= $per['name_project']; ?></td>
+            <td><?= $per['amount_teacher']; ?></td>
+            <td><?= $per['teacher']; ?></td>
             <td><?= $per['amount_student']; ?></td>
-            <td><?= $per['group_study']; ?></td>
-            <td><?= $per['amount_time']; ?></td>
             <td><?= $per['amount_work']; ?></td>
+            
             
             <?php if ($per['file']) { ?> 
                 <td style="white-space: nowrap;">
@@ -180,7 +182,7 @@
                             <div class="label">ดูไฟล์</div>
                         </div>
                     </a>
-                    <a onclick="return confirm('ต้องการลบไฟล์หรือไม่')" href="?page=1_2_b/index_1_2_b&delete_file=<?= $per['id']; ?>" class="btn btn-danger">
+                    <a onclick="return confirm('ต้องการลบไฟล์หรือไม่')" href="?page=1_5_a/index_1_5_a&delete_file=<?= $per['id']; ?>" class="btn btn-danger">
                         <div class="icon d-flex">
                             <i class="bi bi-trash"></i>&nbsp;
                             <div class="label">ลบไฟล์</div>
@@ -190,14 +192,14 @@
                 
                 <td class ="d-flex justify-content-center">
                         <!-- ปุ่มแก้ไข ส่งแบบ get มี url-->
-                        <a href="?page=1_2_b/index_1_2_b&edit=<?= $per['id']; ?>" class="btn btn-primary">
+                        <a href="?page=1_5_a/index_1_5_a&edit=<?= $per['id']; ?>" class="btn btn-primary">
                             <div class="icon d-flex">
                                 <i class="bi bi-pencil-square"></i>&nbsp;
                                 <div class="label">แก้ไข</div>
                             </div>
                         </a>&nbsp;                                                                                <!--ปุ่มลบ -->
-                        <a onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่?'); " href="?page=1_2_b/index_1_2_b&delete=<?= $per['id']?>" class="btn btn-danger">
-                            <div class="icon d-flex">
+                        <a onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่?'); " href="?page=1_5_a/index_1_5_a&delete=<?= $per['id']?>" class="btn btn-danger d-flex">
+                            <div class="icon"></div>
                                 <i class="bi bi-trash"></i>&nbsp;
                                 <div class="label">ลบ</div>
                             </div>
@@ -205,7 +207,7 @@
                 </td>
             <?php } else { ?>
                 <td> 
-                    <a style="white-space: nowrap;"href="?page=1_2_b/index_1_2_b&upload=<?= $per['id']; ?>" class="btn btn-warning">
+                    <a style="white-space: nowrap;"href="?page=1_5_a/index_1_5_a&upload=<?= $per['id']; ?>" class="btn btn-warning">
                         <div class="icon d-flex">
                             <i class="bi bi-upload"></i>&nbsp;
                             <div class="label">อัปโหลด</div>
@@ -215,13 +217,13 @@
 
             <td class ="d-flex justify-content-center">
                     <!-- ปุ่มแก้ไข ส่งแบบ get มี url-->
-                    <a href="?page=1_2_b/index_1_2_b&edit=<?= $per['id']; ?>" class="btn btn-primary">
+                    <a href="?page=1_5_a/index_1_5_a&edit=<?= $per['id']; ?>" class="btn btn-primary">
                         <div class="icon d-flex">
                             <i class="bi bi-pencil-square"></i>&nbsp;
                             <div class="label">แก้ไข</div>
                         </div>
                     </a>&nbsp;                                                                                <!--ปุ่มลบ -->
-                    <a onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่?'); " href="?page=1_2_b/index_1_2_b&delete=<?= $per['id']?>" class="btn btn-danger">
+                    <a onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่?'); " href="?page=1_5_a/index_1_5_a&delete=<?= $per['id']?>" class="btn btn-danger">
                         <div class="icon d-flex">
                             <i class="bi bi-trash"></i>&nbsp;
                             <div class="label">ลบ</div>
@@ -235,9 +237,7 @@
     }
                 ?>    
         <tr>
-            <th scope="row" colspan="3">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-            <td>0</td>
-            <td>0</td>
+            <th scope="row" colspan="6">รวมจำนวนภาระงานตลอดภาคเรียน</th>
             <td>0.00</td>
             <td colspan="2"></td>
         </tr>
@@ -253,29 +253,33 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action = "1_2_b/insert_1_2_b.php" method="post" enctype="multipart/form-data">
-                        <div class="mb-3">
-                            <label for="club"  class="col-sm-2 col-form-label" style="white-space: nowrap;">ชื่อชมรม ชุมนุมหรือที่ปรึกษาอื่นๆ</label>
-                                <input type="text" class="form-control" name ="club" required >               
+                    <form action = "1_5_a/insert_1_5_a.php" method="post" enctype="multipart/form-data">
+                            <label for="major"  class="col-sm-2 col-form-label">สาขาวิชา</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name ="major" required >                      
                         </div>
                         <div class="mb-3">
                             <label for="level"  class="col-sm-2 col-form-label">ระดับชั้น</label>
                                 <input type="text" class="form-control" name ="level" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name_project"  class="col-sm-2 col-form-label">ชื่องานวิจัย</label>
+                                <input type="text" class="form-control" name ="name_project" required>
+                        </div> 
+                        <div class="mb-3">
+                            <label for="amount_teacher" class="col-sm-2 col-form-label">จำนวนที่ปรึกษา (คน)</label>
+                                <input type="text" class="form-control" name ="amount_teacher" required>
+                        </div> 
+                        <div class="mb-3">
+                            <label for="teacher" class="col-sm-2 col-form-label">ที่ปรึกษาหลัก/ร่วม</label>
+                                <input type="text" class="form-control" name="teacher" required>
                         </div> 
                         <div class="mb-3">
                             <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา (คน)</label>
-                                <input type="text" class="form-control" name ="amount_student" required>
+                                <input type="text" class="form-control" name="amount_student" required>
                         </div> 
                         <div class="mb-3">
-                            <label for="group_study" class="col-sm-2 col-form-label">หมู่เรียน</label>
-                                <input type="text" class="form-control" name="group_study" required>
-                        </div> 
-                        <div class="mb-3">
-                            <label for="amount_time" class="col-sm-2 col-form-label" style="white-space: nowrap;">จำนวนชั่วโมงทำงาน/สัปดาห์/ภาค (ชม.)</label>
-                                <input type="text" class="form-control" name="amount_time" required>
-                        </div> 
-                        <div class="mb-3">
-                            <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน (ชิ้น)</label>
+                            <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
                                 <input type="text" class="form-control" name="amount_work" required>
                         </div>  
                         <div class="modal-footer">
@@ -299,29 +303,33 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action = "1_2_b/edit_1_2_b.php" method="post">
+                    <form action = "1_5_a/edit_1_5_a.php" method="post">
                         <div class="mb-3">
-                            <label for="club"  class="col-sm-2 col-form-label" style="white-space: nowrap;">ชื่อชมรม ชุมนุมหรือที่ปรึกษาอื่นๆ</label>
-                                <input type="text" class="form-control" name ="club" value="<?php echo $data['club']; ?>">
+                            <label for="major"  class="col-sm-2 col-form-label">สาขาวิชา</label>
+                                <input type="text" class="form-control" name ="major" value="<?php echo $data['major']; ?>">
                         </div>  
                         <div class="mb-3">
                             <label for="level"  class="col-sm-2 col-form-label">ระดับชั้น</label>
                                 <input type="text" class="form-control" name ="level" value="<?php echo $data['level']; ?>">
                         </div> 
                         <div class="mb-3">
-                            <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา (คน)</label>
-                                <input type="text" class="form-control" name ="amount_student" value="<?php echo $data['amount_student']; ?>">
+                            <label for="name_project" class="col-sm-2 col-form-label">ชื่องานวิจัย</label>
+                                <input type="text" class="form-control" name ="name_project" value="<?php echo $data['name_project']; ?>">
                         </div> 
                         <div class="mb-3">
-                            <label for="group_study" class="col-sm-2 col-form-label">หมู่เรียน</label>
-                                <input type="text" class="form-control" name="group_study" value="<?php echo $data['group_study']; ?>">
+                            <label for="amount_teacher" class="col-sm-2 col-form-label">จำนวนที่ปรึกษา (คน)</label>
+                                <input type="text" class="form-control" name="amount_teacher" value="<?php echo $data['amount_teacher']; ?>">
                         </div> 
                         <div class="mb-3">
-                            <label for="amount_time" class="col-sm-2 col-form-label" style="white-space: nowrap;">จำนวนชั่วโมงทำงาน/สัปดาห์/ภาค (ชม.)</label>
-                                <input type="text" class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>">
+                            <label for="teacher" class="col-sm-2 col-form-label">ที่ปรึกษาหลัก/ร่วม</label>
+                                <input type="text" class="form-control" name="teacher" value="<?php echo $data['teacher']; ?>">
                         </div> 
                         <div class="mb-3">
-                            <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน (ชิ้น)</label>
+                            <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>
+                                <input type="text" class="form-control" name="amount_student" value="<?php echo $data['amount_student']; ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
                                 <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>">
                         </div> 
 
@@ -346,7 +354,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action = "1_2_b/upload_1_2_b.php" method="post" enctype="multipart/form-data">
+                    <form action = "1_5_a/upload_1_5_a.php" method="post" enctype="multipart/form-data">
                     <div class="row mb-3">
                             <label for="file" class="col-sm-2 col-form-label">อัปโหลดไฟล์</label>
                             <div class="col-sm-10">
@@ -375,13 +383,13 @@
     $(document).ready(function () {
         // เมื่อโมดัลแสดงอยู่และถูกซ่อน
         $('#modal').on('hidden.bs.modal', function () { //$('#modal') จะเลือกองค์ประกอบที่มี id เป็น "modal".
-            window.location.href = 'index.php?page=1_2_b/index_1_2_b'; // เปลี่ยนเส้นทาง URL เพื่อเปลี่ยนหน้าเว็บไปที่ 'index.php?page=1_2_b'
+            window.location.href = 'index.php?page=1_5_a/index_1_5_a'; // เปลี่ยนเส้นทาง URL เพื่อเปลี่ยนหน้าเว็บไปที่ 'index.php?page=_1_5_a'
         });
     });
         // เมื่อโมดัลแสดงอยู่และถูกซ่อน
     $(document).ready(function () {
         $('#uploadModal').on('hidden.bs.modal', function () { //$('#uploadModal') จะเลือกองค์ประกอบที่มี id เป็น "uploadModal".
-            window.location.href = 'index.php?page=1_2_b/index_1_2_b'; // เปลี่ยนเส้นทาง URL เพื่อเปลี่ยนหน้าเว็บไปที่ 'index.php?page=1_2_b'
+            window.location.href = 'index.php?page=1_5_a/index_1_5_a'; // เปลี่ยนเส้นทาง URL เพื่อเปลี่ยนหน้าเว็บไปที่ 'index.php?page=_1_5_a'
         });
     });
     

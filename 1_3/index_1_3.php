@@ -91,7 +91,7 @@ if (isset($_GET['upload'])) {
 
 <div class="container">
     <div class="pagetitle mt-3">
-        <h1>1.3 ภาระงานอาจารย์นิเทศและ /หรืออาจารย์ผู้ควบคุมการฝึกประสบการณ์วิชาชีพ /สหกิจศึกษา /บ่มเพาะวิสาหกิจ </h1>
+        <h1>3.ภาระงานอาจารย์นิเทศและ /หรืออาจารย์ผู้ควบคุมการฝึกประสบการณ์วิชาชีพ /สหกิจศึกษา /บ่มเพาะวิสาหกิจ </h1>
     </div>
     <hr> <!-- เส้น -->
     <!-- ปุ่มเพิ่มข้อมูล -->
@@ -138,8 +138,8 @@ if (isset($_GET['upload'])) {
                 <th scope="col">จำนวนนักศึกษา</th>
                 <th scope="col">ระยะเวลาที่ปฏิบัติ</th>
                 <th scope="col">สถานที่ทำงาน</th>
-                <th scope="col">จำนวนภาระงาน</th>               
-                <th scope="col">อัปโหลดเอกสาร</th>
+                <th scope="col">จำนวนภาระงาน</th>
+                <th scope="col">อัปโหลด</th>
                 <th scope="col">จัดการข้อมูล</th>
 
             </tr>
@@ -246,37 +246,35 @@ if (isset($_GET['upload'])) {
                     <div class="modal-body">
                         <form action="1_3/insert_1_3.php" method="post" enctype="multipart/form-data">
                             <div class="mb-3">
-                                <label for="Major" class="col-form-label">สาขาวิชา:</label>
-                                <input type="text" required class="form-control" name="Major" required>
+                                <label for="Major" class="col-form-label">สาขาวิชา</label>
+                                <input type="text" required class="form-control" name="Major">
                             </div>
                             <div class="mb-3">
-                                <label for="level" class="col-form-label">ระดับชั้น:</label>
-                                <input type="text" required class="form-control" name="level" required>
+                                <label for="level" class="col-form-label">ระดับชั้น</label>
+                                <input type="text" required class="form-control" name="level">
                             </div>
                             <div class="mb-3">
-                                <label for="amount_student" class="col-form-label">จำนวนนักศึกษา:</label>
-                                <input type="text" required class="form-control" name="amount_student" required>
+                                <label for="amount_student" class="col-form-label">จำนวนนักศึกษา</label>
+                                <input type="text" required class="form-control" name="amount_student">
                             </div>
 
                             <div class="mb-3">
-                                <label for="amount_time" class="col-form-label">ระยะเวลาที่ปฏิบัติ:</label>
-                                <input type="text" required class="form-control" name="amount_time" required>
+                                <label for="amount_time" class="col-form-label">ระยะเวลาที่ปฏิบัติ</label>
+                                <input type="text" required class="form-control" name="amount_time">
                             </div>
 
                             <div class="mb-3">
-                                <label for="workplace" class="col-form-label">สถานที่ทำงาน:</label>
-                                <input type="text" required class="form-control" name="workplace" required>
+                                <label for="workplace" class="col-form-label">สถานที่ทำงาน</label>
+                                <input type="text" required class="form-control" name="workplace">
                             </div>
 
                             <div class="mb-3">
-                                <label for="amount_work" class="col-form-label">จำนวนภาระงาน:</label>
-                                <input type="text" required class="form-control" name="amount_work" required>
+                                <label for="amount_work" class="col-form-label">จำนวนภาระงาน</label>
+                                <input type="text" required class="form-control" name="amount_work">
                             </div>
-
-
                             <div class="modal-footer">
-                                <button type="submit" name="submit" class="btn btn-success">บันทืก</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                <button type="submit" name="submit" class="btn btn-primary">บันทืก</button>
                             </div>
                         </form>
                     </div>
@@ -297,25 +295,25 @@ if (isset($_GET['upload'])) {
 
                         <form action="1_3/edit_1_3.php" method="post">
                             <div class="mb-3">
-                                <label for="Major" class="col-form-label">สาขาวิชา:</label>
+                                <label for="Major" class="col-form-label">สาขาวิชา</label>
                                 <input type="text" required class="form-control" name="Major" value="<?php echo $data['Major']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label for="level" class="col-form-label">ระดับชั้น:</label>
+                                <label for="level" class="col-form-label">ระดับชั้น</label>
                                 <input type="text" required class="form-control" name="level" value="<?php echo $data['level']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label for="amount_student" class="col-form-label">จำนวนนักศึกษา:</label>
+                                <label for="amount_student" class="col-form-label">จำนวนนักศึกษา</label>
                                 <input type="text" required class="form-control" name="amount_student" value="<?php echo $data['amount_student']; ?>">
                             </div>
 
                             <div class="mb-3">
-                                <label for="amount_time" class="col-form-label">ระยะเวลาที่ปฏิบัติ:</label>
+                                <label for="amount_time" class="col-form-label">ระยะเวลาที่ปฏิบัติ</label>
                                 <input type="text" required class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>">
                             </div>
 
                             <div class="mb-3">
-                                <label for="workplace" class="col-form-label">สถานที่ทำงาน:</label>
+                                <label for="workplace" class="col-form-label">สถานที่ทำงาน</label>
                                 <input type="text" required class="form-control" name="workplace" value="<?php echo $data['workplace']; ?>">
                             </div>
 
@@ -323,8 +321,6 @@ if (isset($_GET['upload'])) {
                                 <label for="amount_work" class="col-form-label">จำนวนภาระงาน</label>
                                 <input type="text" required class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>">
                             </div>
-
-
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
                                 <button type="update" name="update" class="btn btn-primary">บันทึก</button>

@@ -42,8 +42,7 @@
  
 </head>
 
-<body class="toggle-sidebar">
-
+<body>
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -277,7 +276,6 @@
   <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
-
       <li class="nav-item">
         <a class="nav-link " href="index.php?page=">
           <i class="bi bi-grid"></i>

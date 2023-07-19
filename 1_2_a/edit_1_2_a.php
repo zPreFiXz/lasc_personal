@@ -3,6 +3,7 @@
     require_once '../config/db.php';
 
     if (isset($_POST['update'])) {
+        $id = $_SESSION['edit'];
         $major = $_POST['major'];
         $code = $_POST['code'];
         $level = $_POST['level'];
@@ -10,9 +11,10 @@
         $amount_student = $_POST['amount_student'];
         $amount_work = $_POST['amount_work'];
 
-        $sql = "UPDATE personal_1_2_a SET major = :major,code = :code,level = :level,group_study = :group_study,amount_student = :amount_student,amount_work = :amount_work WHERE code = :code";
+        $sql = "UPDATE personal_1_2_a SET major = :major,code = :code,level = :level,group_study = :group_study,amount_student = :amount_student,amount_work = :amount_work WHERE id = :id";
 
         $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id);
         $stmt->bindParam(':major', $major);
         $stmt->bindParam(':code', $code);
         $stmt->bindParam(':level', $level);

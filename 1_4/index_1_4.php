@@ -3,7 +3,7 @@
 
     if(isset($_GET['delete_file'])){
         $delete_file_id = $_GET['delete_file'];
-        $stmt = $conn->prepare("SELECT file FROM personal_1_2_a WHERE id = :delete_file_id");
+        $stmt = $conn->prepare("SELECT file FROM personal_1_4 WHERE id = :delete_file_id");
         $stmt->bindParam(':delete_file_id', $delete_file_id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -16,7 +16,7 @@
             }
         }
 
-        $delete_file = $conn->prepare("UPDATE personal_1_2_a SET file = '' WHERE id = :delete_file_id");
+        $delete_file = $conn->prepare("UPDATE personal_1_4 SET file = '' WHERE id = :delete_file_id");
         $delete_file->bindParam(':delete_file_id', $delete_file_id);
         $delete_file->execute();
     }
@@ -24,7 +24,7 @@
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         
-        $stmt = $conn->prepare("SELECT file FROM personal_1_2_a WHERE id = :delete_id");
+        $stmt = $conn->prepare("SELECT file FROM personal_1_4 WHERE id = :delete_id");
         $stmt->bindParam(':delete_id', $delete_id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -37,13 +37,13 @@
             }
         }
 
-        $deletestmt = $conn->prepare("DELETE FROM personal_1_2_a WHERE id = :delete_id");
+        $deletestmt = $conn->prepare("DELETE FROM personal_1_4 WHERE id = :delete_id");
         $deletestmt->bindParam(':delete_id', $delete_id);
         $deletestmt->execute();
         
         if ($deletestmt) {
             $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
-            echo "<script>window.location.href = 'index.php?page=1_2_a/index_1_2_a';</script>";
+            echo "<script>window.location.href = 'index.php?page=1_4/index_1_4';</script>";
             exit;
         }
     }
@@ -51,7 +51,7 @@
     if (isset($_GET['edit'])) {
         $_SESSION['edit'] = $_GET['edit'];
         $edit_id = $_GET['edit'];
-        $stmt = $conn->prepare("SELECT * FROM personal_1_2_a WHERE id = ?");
+        $stmt = $conn->prepare("SELECT * FROM personal_1_4 WHERE id = ?");
         $stmt->execute([$edit_id]);
         $data = $stmt->fetch();
     ?>
@@ -78,7 +78,7 @@
 
 <div class="container">
     <div class="pagetitle mt-3">
-        <h1>ก.ภาระงานอาจารย์ที่ปรึกษาหมู่เรียน</h1>
+        <h1>4.ภาระงานกิจกรรมพัฒนานักศึกษา (งานปฐมนิเทศ /ปัจฉิมนิเทศ /งานองค์การ-สโมสรนักศึกษา งานกีฬา งานกำกับดูแลวินัยนักศึกษา การศึกษาดูงานของนักศึกษา งานออกค่ายนักศึกษา หรืองานอื่นที่เกี่ยวข้อง)</h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">ภาระงานอาจารย์ที่ปรึกษาของนักศึกษา</li>
             <li class="breadcrumb-item active">ก.ภาระงานอาจารย์ที่ปรึกษาหมู่เรียน</li>
@@ -110,11 +110,10 @@
     <table class="table table-bordered text-center align-middle">
         <thead class="align-middle table-secondary">
             <tr>
-                <th scope="col">สาขาวิชา</th>
-                <th scope="col">รหัส</th>
-                <th scope="col">ระดับชั้น</th>
-                <th scope="col">หมู่เรียน</th>
-                <th scope="col">จำนวนนักศึกษา</th>
+                <th scope="col">วัน/เดือน/ปี</th>
+                <th scope="col">ชื่อโครงการ/กิจกรรม/งาน</th>
+                <th scope="col">สถานที่/งานที่ควบคุม</th>
+                <th scope="col">ระยะเวลาปฏิบัติ(ชั่วโมง)</th>
                 <th scope="col">จำนวนภาระงาน</th>
                 <th scope="col">อัปโหลดไฟล์</th>
                 <th scope="col">จัดการข้อมูล</th>
@@ -122,7 +121,7 @@
         </thead>
         <tbody>
             <?php
-            $stmt = $conn->query("SELECT * FROM personal_1_2_a");
+            $stmt = $conn->query("SELECT * FROM personal_1_4");
             $stmt->execute();
             $personal = $stmt->fetchAll();
 
@@ -132,11 +131,10 @@
                 foreach ($personal as $per) {
             ?>
                     <tr>
-                        <td style="white-space: nowrap;"><?= $per['major']; ?></td>
-                        <td><?= $per['code']; ?></td>
-                        <td><?= $per['level']; ?></td>
-                        <td><?= $per['group_study']; ?></td>
-                        <td><?= $per['amount_student']; ?></td>
+                        <td style="white-space: nowrap;"><?= $per['date']; ?></td>
+                        <td><?= $per['project_name']; ?></td>
+                        <td><?= $per['location']; ?></td>
+                        <td><?= $per['period']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
@@ -146,7 +144,7 @@
                                         <div class="label">ดูไฟล์</div>
                                     </div>
                                 </a>
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')"  href="?page=1_2_a/index_1_2_a&delete_file=<?= $per['id']; ?>" class="btn btn-warning">
+                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')"  href="?page=1_4/index_1_4&delete_file=<?= $per['id']; ?>" class="btn btn-warning">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;
                                         <div class="label">ลบ</div>
@@ -154,13 +152,13 @@
                                 </a>
                             </td>
                             <td class="d-flex justify-content-center">
-                                <a href="?page=1_2_a/index_1_2_a&edit=<?= $per['id']; ?>" class="btn btn-primary">
+                                <a href="?page=1_4/index_1_4&edit=<?= $per['id']; ?>" class="btn btn-primary">
                                     <div class="icon d-flex">
                                         <i class="bi bi-pencil-square"></i>&nbsp;
                                         <div class="label">แก้ไข</div>
                                     </div>
                                 </a>&nbsp;
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_2_a/index_1_2_a&delete=<?= $per['id']; ?>" class="btn btn-danger">
+                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_4/index_1_4&delete=<?= $per['id']; ?>" class="btn btn-danger">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;
                                         <div class="label">ลบ</div>
@@ -169,7 +167,7 @@
                             </td>
                         <?php } else { ?>
                             <td>
-                                <a style="white-space: nowrap;" href="?page=1_2_a/index_1_2_a&upload=<?= $per['id']; ?>" class="btn btn-warning">
+                                <a style="white-space: nowrap;" href="?page=1_4/index_1_4&upload=<?= $per['id']; ?>" class="btn btn-warning">
                                     <div class="icon d-flex">
                                         <i class="bi bi-upload"></i>&nbsp;
                                         <div class="label">อัปโหลด</div>
@@ -177,13 +175,13 @@
                                 </a>
                             </td>
                             <td class="d-flex justify-content-center">
-                                <a href="?page=1_2_a/index_1_2_a&edit=<?= $per['id']; ?>" class="btn btn-primary">
+                                <a href="?page=1_4/index_1_4&edit=<?= $per['id']; ?>" class="btn btn-primary">
                                     <div class="icon d-flex">
                                         <i class="bi bi-pencil-square"></i>&nbsp;
                                         <div class="label">แก้ไข</div>
                                     </div>
                                 </a>&nbsp;
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_2_a/index_1_2_a&delete=<?= $per['id']; ?>" class="btn btn-danger">
+                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_4/index_1_4&delete=<?= $per['id']; ?>" class="btn btn-danger">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;
                                         <div class="label">ลบ</div>
@@ -198,7 +196,7 @@
             }
             ?>
             <tr>
-                <th scope="row" colspan="5">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+                <th scope="row" colspan="4">รวมจำนวนภาระงานตลอดภาคเรียน</th>
                 <td scope="row">0.00</td>
                 <td colspan="2"></td>
             </tr>
@@ -211,30 +209,26 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="1_2_a/insert_1_2_a.php" method="post">
+                        <form action="1_4/insert_1_4.php" method="post">
                             <div class="mb-3">
-                                <label for="major" class="col-sm-2 col-form-label ">สาขาวิชา</label>
-                                    <input type="text" class="form-control" name="major" required>
+                                <label for="date" class="col-sm-2 col-form-label ">วัน/เดือน/ปี</label>
+                                    <input type="date" class="form-control" name="date" required>
                             </div>
                             <div class="mb-3">
-                                <label for="code" class="col-sm-2 col-form-label">รหัส</label>
-                                <input type="text" class="form-control" name="code" required>
+                                <label for="project_name" class="col-sm-2 col-form-label">ชื่อโครงการ/กิจกรรม/งาน</label>
+                                    <input type="text" class="form-control" name="project_name" required>
                             </div>
                             <div class="mb-3">
-                                <label for="level" class="col-sm-2 col-form-label">ระดับชั้น</label>
-                                <input type="text" class="form-control" name="level" required>
+                                <label for="location" class="col-sm-2 col-form-label">สถานที่/งานที่ควบคุม</label>
+                                    <input type="text" class="form-control" name="location" required>
                             </div>
                             <div class="mb-3">
-                                <label for="group_study" class="col-sm-2 col-form-label">หมู่เรียน</label>
-                                <input type="text" class="form-control" name="group_study" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>
-                                <input type="text" class="form-control" name="amount_student" required>
+                                <label for="period" class="col-sm-2 col-form-label">ระยะเวลาปฏิบัติ(ชั่วโมง)</label>
+                                    <input type="text" class="form-control" name="period" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" class="form-control" name="amount_work" required>
+                                    <input type="text" class="form-control" name="amount_work" required>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -253,30 +247,26 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="1_2_a/edit_1_2_a.php" method="post">
+                        <form action="1_4/edit_1_4.php" method="post">
                             <div class="mb-3">
-                                <label for="major" class="col-sm-2 col-form-label">สาขาวิชา</label>
-                                <input type="text" class="form-control" name="major" value="<?php echo $data['major']; ?>">
+                                <label for="date" class="col-sm-2 col-form-label">วัน/เดือน/ปี</label>
+                                    <input type="date" class="form-control" name="date" value="<?php echo $data['date']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label for="code" class="col-sm-2 col-form-label">รหัส</label>
-                                <input type="text" class="form-control" name="code" value="<?php echo $data['code']; ?>">
+                                <label for="project_name" class="col-sm-2 col-form-label">ชื่อโครงการ/กิจกรรม/งาน</label>
+                                    <input type="text" class="form-control" name="project_name" value="<?php echo $data['project_name']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label for="level" class="col-sm-2 col-form-label">ระดับชั้น</label>
-                                <input type="text" class="form-control" name="level" value="<?php echo $data['level']; ?>">
+                                <label for="location" class="col-sm-2 col-form-label">สถานที่/งานที่ควบคุม</label>
+                                    <input type="text" class="form-control" name="location" value="<?php echo $data['location']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label for="group_study" class="col-sm-2 col-form-label">หมู่เรียน</label>
-                                <input type="text" class="form-control" name="group_study" value="<?php echo $data['group_study']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>
-                                <input type="text" class="form-control" name="amount_student" value="<?php echo $data['amount_student']; ?>">
+                                <label for="period" class="col-sm-2 col-form-label">ระยะเวลาปฏิบัติ(ชั่วโมง)</label>
+                                    <input type="text" class="form-control" name="period" value="<?php echo $data['period']; ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>">
+                                    <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -296,7 +286,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="1_2_a/upload_1_2_a.php" method="post" enctype="multipart/form-data">
+                        <form action="1_4/upload_1_4.php" method="post" enctype="multipart/form-data">
                             <?php
                             ?>
                             <div class="row mb-3">
@@ -323,12 +313,12 @@
 <script>
     $(document).ready(function() {
         $('#modal').on('hidden.bs.modal', function() {
-            window.location.href = 'index.php?page=1_2_a/index_1_2_a';
+            window.location.href = 'index.php?page=1_4/index_1_4';
         });
     });
     $(document).ready(function() {
         $('#uploadModal').on('hidden.bs.modal', function() {
-            window.location.href = 'index.php?page=1_2_a/index_1_2_a';
+            window.location.href = 'index.php?page=1_4/index_1_4';
         });
     });
 

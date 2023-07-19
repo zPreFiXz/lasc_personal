@@ -16,7 +16,7 @@
             if ($file['size'] > 0 && $file['error'] == 0) {
                 move_uploaded_file($file['tmp_name'], $filePath);
     
-                $sql = "UPDATE personal_1_2_a SET file = :file WHERE id = :id";
+                $sql = "UPDATE personal_1_4 SET file = :file WHERE id = :id";
     
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':id', $id);
@@ -29,9 +29,9 @@
         
     if ($stmt) {
         $_SESSION['success'] = "อัปโหลดไฟล์สำเร็จ";
-        header("location: ../index.php?page=1_2_a/index_1_2_a");
+        header("location: ../index.php?page=1_4/index_1_4");
     }else{
         $_SESSION['error'] = "อัปโหลดไฟล์ไม่สำเร็จ";
-        header("location: ../index.php?page=1_2_a/index_1_2_a");
+        header("location: ../index.php?page=1_4/index_1_4");
     }
 ?>

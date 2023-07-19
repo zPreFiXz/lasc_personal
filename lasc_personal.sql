@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 18, 2023 at 07:05 PM
+-- Generation Time: Jul 19, 2023 at 10:41 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -54,6 +54,23 @@ CREATE TABLE `personal_1_2_b` (
   `file` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personal_1_3`
+--
+
+CREATE TABLE `personal_1_3` (
+  `id` int(20) NOT NULL,
+  `Major` varchar(50) NOT NULL,
+  `level` varchar(15) NOT NULL,
+  `amount_student` int(5) NOT NULL,
+  `amount_time` int(5) NOT NULL,
+  `workplace` varchar(50) NOT NULL,
+  `amount_work` int(5) NOT NULL,
+  `file` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -71,6 +88,12 @@ ALTER TABLE `personal_1_2_b`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `personal_1_3`
+--
+ALTER TABLE `personal_1_3`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -78,7 +101,13 @@ ALTER TABLE `personal_1_2_b`
 -- AUTO_INCREMENT for table `personal_1_2_b`
 --
 ALTER TABLE `personal_1_2_b`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
+-- AUTO_INCREMENT for table `personal_1_3`
+--
+ALTER TABLE `personal_1_3`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

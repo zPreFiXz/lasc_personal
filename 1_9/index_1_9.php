@@ -134,9 +134,9 @@
         <thead class="align-middle table-secondary">
         <tr>
             <th scope="col">วัน/เดือน/ปี</th>
-            <th scope="col">โครงการ/เรื่อง</th>
+            <th scope="col">โครงการ/เรื่อง*</th>
             <th scope="col">สถานที่</th>
-            <th scope="col">จำนวนชั่วโมงทำงาน</th>
+            <th scope="col">จำนวนชั่วโมงทำงาน*</th>
             <th scope="col">จำนวนภาระงาน</th>
             <th scope="col">อัปโหลดไฟล์</th>
             <th scope="col">จัดการข้อมูล</th>
@@ -247,7 +247,7 @@
                                 <input type="date" class="form-control" name ="date" required >   
                         </div>                   
                         <div class="mb-3">
-                            <label for="project"  class="col-sm-2 col-form-label">โครงการ/เรื่อง</label>
+                            <label for="project"  class="col-sm-2 col-form-label">โครงการ/เรื่อง*</label>
                                 <input type="text" class="form-control" name ="project" required>
                         </div>
                         <div class="mb-3">
@@ -255,7 +255,7 @@
                                 <input type="text" class="form-control" name ="location" required>
                         </div> 
                         <div class="mb-3">
-                            <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
+                            <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน*</label>
                                 <input type="text" class="form-control" name ="amount_time" required>
                         </div> 
                         <div class="mb-3">
@@ -289,7 +289,7 @@
                                 <input type="date" class="form-control" name ="date" value="<?php echo $data['date']; ?>">
                         </div>  
                         <div class="mb-3">
-                            <label for="project"  class="col-sm-2 col-form-label">โครงการ/เรื่อง</label>
+                            <label for="project"  class="col-sm-2 col-form-label">โครงการ/เรื่อง*</label>
                                 <input type="text" class="form-control" name ="project" value="<?php echo $data['project']; ?>">
                         </div> 
                         <div class="mb-3">
@@ -297,7 +297,7 @@
                                 <input type="text" class="form-control" name ="location" value="<?php echo $data['location']; ?>">
                         </div> 
                         <div class="mb-3">
-                            <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
+                            <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน*</label>
                                 <input type="text" class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>">
                         </div> 
                         <div class="mb-3">

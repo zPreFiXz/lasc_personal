@@ -137,9 +137,9 @@ if (isset($_GET['upload'])) {
                 <th scope="col">ประเภท</th>
                 <th scope="col">ชื่อเรื่อง</th>
                 <th scope="col">ระยะเวลา เริ่มต้น-สิ้นสุด</th>
-                <th scope="col">ลักษณะ เดี่ยว/ร่วม</th>
+                <th scope="col">ลักษณะ เดี่ยว/ร่วม*</th>
                 <th scope="col">ลักษณะงาน</th>
-                <th scope="col">ร้อยละการมีส่วนร่วม</th>
+                <th scope="col">ร้อยละการมีส่วนร่วม*</th>
                 <th scope="col">จำนวนภาระงาน</th>
                 <th scope="col">อัปโหลด</th>
                 <th scope="col">จัดการข้อมูล</th>
@@ -262,23 +262,29 @@ if (isset($_GET['upload'])) {
                         <input type="text" class="form-control" name="amount_time" required>
                     </div>
                     <div class="mb-3">
-                        <label for="type_work_s_j" class="col-sm-2 col-form-label">ลักษณะ เดี่ยว/ร่วม</label>
-                        <select id="type_work_s_j" name="type_work_s_j">
-                            <option value="เดี่ยว">เดี่ยว</option>
-                            <option value="ร่วม">ร่วม</option>
-                        </select>
+                        <label for="type_work_s_j" class="col-sm-2 col-form-label">ลักษณะ เดี่ยว/ร่วม*</label>
+                        <div class="col-sm-12">
+                            <select id="type_work_s_j" name="type_work_s_j" class="form-select">
+                                <option value="" selected>กรุณาเลือก</option>
+                                <option value="เดี่ยว">เดี่ยว</option>
+                                <option value="ร่วม">ร่วม</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>
-                        <select id="type_work" name="type_work" required>
-                            <option value="เอกสารประกอบการสอน">เอกสารประกอบการสอน</option>
-                            <option value="เอกสารคำสอน">เอกสารคำสอน</option>
-                            <option value="หนังสือ/ตำรา">หนังสือ/ตำรา</option>
-                            <option value="VirtualClassroom/E-learning/CAI">VirtualClassroom/E-learning/CAI</option>
-                        </select>
+                        <div class="col-sm-12">
+                            <select id="type_work" name="type_work" class="form-select" required>
+                                <option value="" selected>กรุณาเลือก</option>
+                                <option value="เอกสารประกอบการสอน">เอกสารประกอบการสอน</option>
+                                <option value="เอกสารคำสอน">เอกสารคำสอน</option>
+                                <option value="หนังสือ/ตำรา">หนังสือ/ตำรา</option>
+                                <option value="VirtualClassroom/E-learning/CAI">VirtualClassroom/E-learning/CAI</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label for="participation" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม</label>
+                        <label for="participation" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม*</label>
                         <input type="text" class="form-control" name="participation" required>
                     </div>
                     <div class="mb-3">
@@ -320,22 +326,24 @@ if (isset($_GET['upload'])) {
                         <input type="text" class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>">
                     </div>
                     <div class="mb-3">
-                        <div class="mb-3">
                             <label for="type_work_s_j" class="col-sm-2 col-form-label">ลักษณะ เดี่ยว/ร่วม</label>
-                            <select id="type_work_s_j" name="type_work_s_j">
-                                <option value="เดี่ยว" <?php if ($data['type_work_s_j'] === 'เดี่ยว') echo 'selected'; ?>>เดี่ยว</option>
-                                <option value="ร่วม" <?php if ($data['type_work_s_j'] === 'ร่วม') echo 'selected'; ?>>ร่วม</option>
-                            </select>
-                        </div>
+                            <div class="col-sm-12">
+                                <select id="type_work_s_j" name="type_work_s_j" class="form-select">
+                                    <option value="เดี่ยว" <?php if ($data['type_work_s_j'] === 'เดี่ยว') echo 'selected'; ?>>เดี่ยว</option>
+                                    <option value="ร่วม" <?php if ($data['type_work_s_j'] === 'ร่วม') echo 'selected'; ?>>ร่วม</option>
+                                </select>
+                            </div>    
                     </div>
                     <div class="mb-3">
                         <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>
-                        <select id="type_work" name="type_work">
-                            <option value="เอกสารประกอบการสอน" <?php if ($data['type_work'] === 'เอกสารประกอบการสอน') echo 'selected'; ?>>เอกสารประกอบการสอน</option>
-                            <option value="เอกสารคำสอน" <?php if ($data['type_work'] === 'เอกสารคำสอน') echo 'selected'; ?>>เอกสารคำสอน</option>
-                            <option value="หนังสือ/ตำรา" <?php if ($data['type_work'] === 'หนังสือ/ตำรา') echo 'selected'; ?>>หนังสือ/ตำรา</option>
-                            <option value="VirtualClassroom/E-learning/CAI" <?php if ($data['type_work'] === 'VirtualClassroom/E-learning/CAI') echo 'selected'; ?>>VirtualClassroom/E-learning/CAI</option>
-                        </select>
+                        <div class="col-sm-12">
+                            <select id="type_work" name="type_work" class="form-select">
+                                <option value="เอกสารประกอบการสอน" <?php if ($data['type_work'] === 'เอกสารประกอบการสอน') echo 'selected'; ?>>เอกสารประกอบการสอน</option>
+                                <option value="เอกสารคำสอน" <?php if ($data['type_work'] === 'เอกสารคำสอน') echo 'selected'; ?>>เอกสารคำสอน</option>
+                                <option value="หนังสือ/ตำรา" <?php if ($data['type_work'] === 'หนังสือ/ตำรา') echo 'selected'; ?>>หนังสือ/ตำรา</option>
+                                <option value="VirtualClassroom/E-learning/CAI" <?php if ($data['type_work'] === 'VirtualClassroom/E-learning/CAI') echo 'selected'; ?>>VirtualClassroom/E-learning/CAI</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="participation" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม</label>

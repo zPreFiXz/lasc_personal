@@ -141,10 +141,10 @@ if (isset($_GET['upload'])) {
         <thead class="align-middle table-secondary">
             <tr>
                 <th scope="col">ลำดับที่</th>
-                <th scope="col">ชื่องานวิจัย</th>
+                <th scope="col">ชื่องานวิจัย*</th>
                 <th scope="col">แหล่งเงินทุน</th>
                 <th scope="col">ระยะเวลาเริ่มต้น-สิ้นสุด</th>
-                <th scope="col">ระบบการเผยแพร่ (ประชุม,วารสาร,ผลงาน)</th>
+                <th scope="col">ระบบการเผยแพร่ (ประชุม,วารสาร,ผลงาน)*</th>
                 <th scope="col">จำนวนภาระงาน</th>
                 <th scope="col">อัปโหลด</th>
                 <th scope="col">จัดการข้อมูล</th>
@@ -258,7 +258,7 @@ if (isset($_GET['upload'])) {
                         <input type="text" class="form-control" name="number" required>
                     </div>
                     <div class="mb-3">
-                        <label for="project" class="col-sm-2 col-form-label">ชื่องานวิจัย</label>
+                        <label for="project" class="col-sm-2 col-form-label">ชื่องานวิจัย*</label>
                         <input type="text" class="form-control" name="project" required>
                     </div>
                     <div class="mb-3">
@@ -270,7 +270,7 @@ if (isset($_GET['upload'])) {
                         <input type="text" class="form-control" name="start_end" required>
                     </div>
                     <div class="mb-3">
-                        <label for="publish" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระบบการเผยแพร่ (ประชุม,วารสาร,ผลงาน)</label>
+                        <label for="publish" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระบบการเผยแพร่ (ประชุม,วารสาร,ผลงาน)*</label>
                         <input type="text" class="form-control" name="publish" required>
                     </div>
                     <div class="mb-3">
@@ -304,7 +304,7 @@ if (isset($_GET['upload'])) {
                         <input type="text" class="form-control" name="number" value="<?php echo $data['number']; ?>">
                     </div>
                     <div class="mb-3">
-                        <label for="project" class="col-sm-2 col-form-label">ชื่องานวิจัย</label>
+                        <label for="project" class="col-sm-2 col-form-label">ชื่องานวิจัย*</label>
                         <input type="text" class="form-control" name="project" value="<?php echo $data['project']; ?>">
                     </div>
                     <div class="mb-3">
@@ -316,7 +316,7 @@ if (isset($_GET['upload'])) {
                         <input type="text" class="form-control" name="start_end" value="<?php echo $data['start_end']; ?>">
                     </div>
                     <div class="mb-3">
-                        <label for="publish" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระบบการเผยแพร่ (ประชุม,วารสาร,ผลงาน)</label>
+                        <label for="publish" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระบบการเผยแพร่ (ประชุม,วารสาร,ผลงาน)*</label>
                         <input type="text" class="form-control" name="publish" value="<?php echo $data['publish']; ?>">
                     </div>
                     <div class="mb-3">

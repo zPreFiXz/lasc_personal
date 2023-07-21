@@ -136,9 +136,9 @@ if (isset($_GET['upload'])) {
             <tr>
                 <th scope="col">วัน/เดือน/ปี</th>
                 <th scope="col">งาน/โครงการ/กิจกรรม/โครงการยุทธศาสตร์/วารสาร</th>
-                <th scope="col">ตำแหน่งที่ได้รับ มอบหมายในงาน/โครงการ</th>
-                <th scope="col">ลักษณะงาน</th>
-                <th scope="col">จำนวนชั่วโมงทำงาน</th>
+                <th scope="col">ตำแหน่งที่ได้รับมอบหมายในงาน/โครงการ*</th>
+                <th scope="col">ลักษณะงาน*</th>
+                <th scope="col">จำนวนชั่วโมงทำงาน*</th>
                 <th scope="col">จำนวนภาระงาน</th>
                 <th scope="col">อัปโหลดไฟล์</th>
                 <th scope="col">จัดการข้อมูล</th>
@@ -229,9 +229,9 @@ if (isset($_GET['upload'])) {
             }
 ?>
 <tr>
-    <th scope="row" colspan="4">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+    <th scope="row" colspan="5">รวมจำนวนภาระงานตลอดภาคเรียน</th>
     <td>0.00</td>
-    <td colspan="2"></td>
+    <td colspan="3"></td>
 </tr>
 </tbody>
 <div class="modal fade" id="ExtralargeModal" tabindex="-1">
@@ -249,32 +249,38 @@ if (isset($_GET['upload'])) {
                         <label for="date" class="col-sm-2 col-form-label">วัน/เดือน/ปี</label>
                         <input type="date" class="form-control" name="date" required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" style="white-space: nowrap;">
                         <label for="project" class="col-sm-2 col-form-label">งาน/โครงการ/กิจกรรม/โครงการยุทธศาสตร์/วารสาร</label>
                         <input type="text" class="form-control" name="project" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="position" class="col-sm-2 col-form-label">ตำแหน่งที่ได้รับ มอบหมายในงาน/โครงการ</label>
-                        <select id="position" name="position" required>
-                            <option value="ประธาน">ประธาน</option>
-                            <option value="กรรมการและเลขานุการ">กรรมการและเลขานุการ</option>
-                            <option value="กรรมการและผู้ช่วยเลขานุการ">กรรมการและผู้ช่วยเลขานุการ</option>
-                            <option value="กรรมการ">กรรมการ</option>
-                            <option value="ที่ปรึกษา">ที่ปรึกษา</option>
-                            <option value="ผู้ออกแบบ">ผู้ออกแบบ</option>
-                        </select>
+                    <div class="mb-3" style="white-space: nowrap;">
+                        <label for="position" class="col-sm-2 col-form-label">ตำแหน่งที่ได้รับมอบหมายในงาน/โครงการ*</label>
+                        <div class="col-sm-12">
+                            <select id="position" name="position" class="form-select" required>
+                                <option value="" selected>กรุณาเลือก</option>
+                                <option value="ประธาน">ประธาน</option>
+                                <option value="กรรมการและเลขานุการ">กรรมการและเลขานุการ</option>
+                                <option value="กรรมการและผู้ช่วยเลขานุการ">กรรมการและผู้ช่วยเลขานุการ</option>
+                                <option value="กรรมการ">กรรมการ</option>
+                                <option value="ที่ปรึกษา">ที่ปรึกษา</option>
+                                <option value="ผู้ออกแบบ">ผู้ออกแบบ</option>
+                            </select>
+                        </div>    
                     </div>
                     <div class="mb-3">
-                        <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>
-                        <select id="type_work" name="type_work" required>
-                            <option value="งานต่อเนื่อง">งานต่อเนื่อง</option>
-                            <option value="งานไม่ต่อเนื่อง/ชั่วคราว">งานไม่ต่อเนื่อง/ชั่วคราว</option>
-                            <option value="ออกแบบ/เขียนแบบอาคาร">ออกแบบ/เขียนแบบอาคาร</option>
-                            <option value="ตรวจการจ้างอาคาร">ตรวจการจ้างอาคาร</option>
-                        </select>
+                        <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน*</label>
+                        <div class="col-sm-12">    
+                            <select id="type_work" name="type_work" class="form-select" required>
+                                <option value="" selected>กรุณาเลือก</option>
+                                <option value="งานต่อเนื่อง">งานต่อเนื่อง</option>
+                                <option value="งานไม่ต่อเนื่อง/ชั่วคราว">งานไม่ต่อเนื่อง/ชั่วคราว</option>
+                                <option value="ออกแบบ/เขียนแบบอาคาร">ออกแบบ/เขียนแบบอาคาร</option>
+                                <option value="ตรวจการจ้างอาคาร">ตรวจการจ้างอาคาร</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
+                        <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน*</label>
                         <input type="text" class="form-control" name="amount_time" required>
                     </div>
                     <div class="mb-3">
@@ -307,32 +313,36 @@ if (isset($_GET['upload'])) {
                         <label for="date" class="col-sm-2 col-form-label">วัน/เดือน/ปี</label>
                         <input type="date" class="form-control" name="date" value="<?php echo $data['date']; ?>">
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" style="white-space: nowrap;">
                         <label for="project" class="col-sm-2 col-form-label">งาน/โครงการ/กิจกรรม/โครงการยุทธศาสตร์/วารสาร</label>
                         <input type="text" class="form-control" name="project" value="<?php echo $data['project']; ?>">
                     </div>
-                    <div class="mb-3">
-                        <label for="position" class="col-sm-2 col-form-label">ตำแหน่งที่ได้รับ มอบหมายในงาน/โครงการ</label>
-                        <select id="position" name="position">
-                            <option value="ประธาน" <?php if ($data['position'] === 'ประธาน') echo 'selected'; ?>>ประธาน</option>
-                            <option value="กรรมการและเลขานุการ" <?php if ($data['position'] === 'กรรมการและเลขานุการ') echo 'selected'; ?>>กรรมการและเลขานุการ</option>
-                            <option value="กรรมการและผู้ช่วยเลขานุการ" <?php if ($data['position'] === 'กรรมการและผู้ช่วยเลขานุการ') echo 'selected'; ?>>กรรมการและผู้ช่วยเลขานุการ</option>
-                            <option value="กรรมการ" <?php if ($data['position'] === 'กรรมการ') echo 'selected'; ?>>กรรมการ</option>
-                            <option value="ที่ปรึกษา" <?php if ($data['position'] === 'ที่ปรึกษา') echo 'selected'; ?>>ที่ปรึกษา</option>
-                            <option value="ผู้ออกแบบ" <?php if ($data['position'] === 'ผู้ออกแบบ') echo 'selected'; ?>>ผู้ออกแบบ</option>
-                        </select>
+                    <div class="mb-3" style="white-space: nowrap;">
+                        <label for="position" class="col-sm-2 col-form-label">ตำแหน่งที่ได้รับมอบหมายในงาน/โครงการ*</label>
+                        <div class="col-sm-12"> 
+                            <select id="position" name="position"  class="form-select">
+                                <option value="ประธาน" <?php if ($data['position'] === 'ประธาน') echo 'selected'; ?>>ประธาน</option>
+                                <option value="กรรมการและเลขานุการ" <?php if ($data['position'] === 'กรรมการและเลขานุการ') echo 'selected'; ?>>กรรมการและเลขานุการ</option>
+                                <option value="กรรมการและผู้ช่วยเลขานุการ" <?php if ($data['position'] === 'กรรมการและผู้ช่วยเลขานุการ') echo 'selected'; ?>>กรรมการและผู้ช่วยเลขานุการ</option>
+                                <option value="กรรมการ" <?php if ($data['position'] === 'กรรมการ') echo 'selected'; ?>>กรรมการ</option>
+                                <option value="ที่ปรึกษา" <?php if ($data['position'] === 'ที่ปรึกษา') echo 'selected'; ?>>ที่ปรึกษา</option>
+                                <option value="ผู้ออกแบบ" <?php if ($data['position'] === 'ผู้ออกแบบ') echo 'selected'; ?>>ผู้ออกแบบ</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>
-                        <select id="type_work" name="type_work">
-                            <option value="งานต่อเนื่อง" <?php if ($data['type_work'] === 'งานต่อเนื่อง') echo 'selected'; ?>>งานต่อเนื่อง</option>
-                            <option value="งานไม่ต่อเนื่อง/ชั่วคราว" <?php if ($data['type_work'] === 'งานไม่ต่อเนื่อง/ชั่วคราว') echo 'selected'; ?>>งานไม่ต่อเนื่อง/ชั่วคราว</option>
-                            <option value="ออกแบบ/เขียนแบบอาคาร" <?php if ($data['type_work'] === 'ออกแบบ/เขียนแบบอาคาร') echo 'selected'; ?>>ออกแบบ/เขียนแบบอาคาร</option>
-                            <option value="ตรวจการจ้างอาคาร" <?php if ($data['type_work'] === 'ตรวจการจ้างอาคาร') echo 'selected'; ?>>ตรวจการจ้างอาคาร</option>
-                        </select>
+                        <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน*</label>
+                        <div class="col-sm-12">
+                            <select id="type_work" name="type_work" class="form-select">
+                                <option value="งานต่อเนื่อง" <?php if ($data['type_work'] === 'งานต่อเนื่อง') echo 'selected'; ?>>งานต่อเนื่อง</option>
+                                <option value="งานไม่ต่อเนื่อง/ชั่วคราว" <?php if ($data['type_work'] === 'งานไม่ต่อเนื่อง/ชั่วคราว') echo 'selected'; ?>>งานไม่ต่อเนื่อง/ชั่วคราว</option>
+                                <option value="ออกแบบ/เขียนแบบอาคาร" <?php if ($data['type_work'] === 'ออกแบบ/เขียนแบบอาคาร') echo 'selected'; ?>>ออกแบบ/เขียนแบบอาคาร</option>
+                                <option value="ตรวจการจ้างอาคาร" <?php if ($data['type_work'] === 'ตรวจการจ้างอาคาร') echo 'selected'; ?>>ตรวจการจ้างอาคาร</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
+                        <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน*</label>
                         <input type="text" class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>">
                     </div>
                     <div class="mb-3">

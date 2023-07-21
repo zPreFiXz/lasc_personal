@@ -111,9 +111,9 @@
         <thead class="align-middle table-secondary">
             <tr>
                 <th scope="col">วัน/เดือน/ปี</th>
-                <th scope="col">ชื่อโครงการ/กิจกรรม/งาน</th>
+                <th scope="col">ชื่อโครงการ/กิจกรรม/งาน*</th>
                 <th scope="col">สถานที่/งานที่ควบคุม</th>
-                <th scope="col">ระยะเวลาปฏิบัติ(ชั่วโมง)</th>
+                <th scope="col">ระยะเวลาปฏิบัติ(ชั่วโมง)*</th>
                 <th scope="col">จำนวนภาระงาน</th>
                 <th scope="col">อัปโหลดไฟล์</th>
                 <th scope="col">จัดการข้อมูล</th>
@@ -214,16 +214,16 @@
                                 <label for="date" class="col-sm-2 col-form-label ">วัน/เดือน/ปี</label>
                                     <input type="date" class="form-control" name="date" required>
                             </div>
-                            <div class="mb-3">
-                                <label for="project_name" class="col-sm-2 col-form-label">ชื่อโครงการ/กิจกรรม/งาน</label>
+                            <div class="mb-3" style="white-space: nowrap;">
+                                <label for="project_name" class="col-sm-2 col-form-label">ชื่อโครงการ/กิจกรรม/งาน*</label>
                                     <input type="text" class="form-control" name="project_name" required>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" style="white-space: nowrap;">
                                 <label for="location" class="col-sm-2 col-form-label">สถานที่/งานที่ควบคุม</label>
                                     <input type="text" class="form-control" name="location" required>
                             </div>
-                            <div class="mb-3">
-                                <label for="period" class="col-sm-2 col-form-label">ระยะเวลาปฏิบัติ(ชั่วโมง)</label>
+                            <div class="mb-3" style="white-space: nowrap;">
+                                <label for="period" class="col-sm-2 col-form-label">ระยะเวลาปฏิบัติ(ชั่วโมง)*</label>
                                     <input type="text" class="form-control" name="period" required>
                             </div>
                             <div class="mb-3">
@@ -252,16 +252,16 @@
                                 <label for="date" class="col-sm-2 col-form-label">วัน/เดือน/ปี</label>
                                     <input type="date" class="form-control" name="date" value="<?php echo $data['date']; ?>">
                             </div>
-                            <div class="mb-3">
-                                <label for="project_name" class="col-sm-2 col-form-label">ชื่อโครงการ/กิจกรรม/งาน</label>
+                            <div class="mb-3" style="white-space: nowrap;">
+                                <label for="project_name" class="col-sm-2 col-form-label">ชื่อโครงการ/กิจกรรม/งาน*</label>
                                     <input type="text" class="form-control" name="project_name" value="<?php echo $data['project_name']; ?>">
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" style="white-space: nowrap;">
                                 <label for="location" class="col-sm-2 col-form-label">สถานที่/งานที่ควบคุม</label>
                                     <input type="text" class="form-control" name="location" value="<?php echo $data['location']; ?>">
                             </div>
-                            <div class="mb-3">
-                                <label for="period" class="col-sm-2 col-form-label">ระยะเวลาปฏิบัติ(ชั่วโมง)</label>
+                            <div class="mb-3" style="white-space: nowrap;">
+                                <label for="period" class="col-sm-2 col-form-label">ระยะเวลาปฏิบัติ(ชั่วโมง)*</label>
                                     <input type="text" class="form-control" name="period" value="<?php echo $data['period']; ?>">
                             </div>
                             <div class="mb-3">

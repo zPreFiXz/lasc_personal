@@ -83,7 +83,7 @@
     </div>
     <hr>
     <div class="d-flex justify-content-end">
-        <button class="btn btn-success mb-3" type="button" data-bs-toggle="modal" data-bs-target="#largeModal">
+        <button class="btn btn-success mb-3" type="button" data-bs-toggle="modal" data-bs-target="#ExtralargeModal">
             <div class="icon d-flex">
                 <i class="bi bi-plus-square"></i> &nbsp;
                 <div class="label">เพิ่มข้อมูล</div>
@@ -107,11 +107,11 @@
         <thead class="align-middle table-secondary">
             <tr>
                 <th scope="col">วัน/เดือน/ปี</th>
-                <th scope="col">ประเภทการบริการทางวิชาการ</th>
+                <th scope="col">ประเภทการบริการทางวิชาการ*</th>
                 <th scope="col">เรื่อง</th>
                 <th scope="col">สถานที่</th>
                 <th scope="col">ลักษณะงาน</th>
-                <th scope="col">จำนวนชั่วโมงทำงาน</th>
+                <th scope="col">จำนวนชั่วโมงทำงาน*</th>
                 <th scope="col">จำนวนภาระงาน</th>
                 <th scope="col">อัปโหลดไฟล์</th>
                 <th scope="col">จัดการข้อมูล</th>
@@ -201,8 +201,8 @@
                 <td colspan="2"></td>
             </tr>
         </tbody>
-        <div class="modal fade" id="largeModal" tabindex="-1">
-            <div class="modal-dialog modal-lg">
+        <div class="modal fade" id="ExtralargeModal" tabindex="-1">
+            <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">เพิ่มข้อมูล</h5>
@@ -215,12 +215,20 @@
                                     <input type="date" class="form-control" name="date" required>
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="type" class="col-sm-2 col-form-label">ประเภทการบริการทางวิชาการ</label>
-                                    <input type="text" class="form-control" name="type" required>
+                                <label style="white-space: nowrap;" for="type" class="col-sm-2 col-form-label">ประเภทการบริการทางวิชาการ*</label>
+                                <div class="col-sm-12">
+                                    <select id ="type" name="type" class="form-select" required>
+                                        <option value="" selected>กรุณาเลือก</option>
+                                        <option value="วิทยากร">วิทยากร</option>
+                                        <option value="ผู้ทรงคุณวุฒิ">ผู้ทรงคุณวุฒิ</option>
+                                        <option value="อนุกรรมการอ่านผลงานวิชาการ">อนุกรรมการอ่านผลงานวิชาการ</option>
+                                        <option value="กรรมการอ่านงานวิจัย">กรรมการอ่านงานวิจัย</option>
+                                    </select>
+                                </div>   
                             </div>
                             <div class="mb-3">
                                 <label for="subject" class="col-sm-2 col-form-label">เรื่อง</label>
-                                    <input type="text" class="form-control" name="subject" required>
+                                <input type="text" class="form-control" name="subject" required>
                             </div>
                             <div class="mb-3">
                                 <label for="location" class="col-sm-2 col-form-label">สถานที่</label>
@@ -231,7 +239,7 @@
                                     <input type="text" class="form-control" name="nature_work" required>
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="hours" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
+                                <label style="white-space: nowrap;" for="hours" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน*</label>
                                     <input type="text" class="form-control" name="hours" required>
                             </div>
                             <div class="mb-3">
@@ -261,8 +269,15 @@
                                     <input type="date" class="form-control" name="date" value="<?php echo $data['date']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label for="type" class="col-sm-2 col-form-label">ประเภทการบริการทางวิชาการ</label>
-                                    <input type="text" class="form-control" name="type" value="<?php echo $data['type']; ?>">
+                                <label style="white-space: nowrap;" for="type" class="col-sm-2 col-form-label">ประเภทการบริการทางวิชาการ*</label>
+                                <div class="col-sm-12">
+                                    <select id ="type" name="type" class="form-select" required>
+                                        <option value="วิทยากร" <?php if ($data['type'] === 'วิทยากร') echo 'selected'; ?>>วิทยากร</option>
+                                        <option value="ผู้ทรงคุณวุฒิ" <?php if ($data['type'] === 'ผู้ทรงคุณวุฒิ') echo 'selected'; ?>>ผู้ทรงคุณวุฒิ</option>
+                                        <option value="อนุกรรมการอ่านผลงานวิชาการ" <?php if ($data['type'] === 'อนุกรรมการอ่านผลงานวิชาการ') echo 'selected'; ?>>อนุกรรมการอ่านผลงานวิชาการ</option>
+                                        <option value="กรรมการอ่านงานวิจัย" <?php if ($data['type'] === 'กรรมการอ่านงานวิจัย') echo 'selected'; ?>>กรรมการอ่านงานวิจัย</option>
+                                    </select>
+                                </div>   
                             </div>
                             <div class="mb-3">
                                 <label for="subject" class="col-sm-2 col-form-label">เรื่อง</label>
@@ -277,7 +292,7 @@
                                     <input type="text" class="form-control" name="nature_work" value="<?php echo $data['nature_work']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="hours" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
+                                <label style="white-space: nowrap;" for="hours" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน*</label>
                                     <input type="text" class="form-control" name="hours" value="<?php echo $data['hours']; ?>">
                             </div>
                             <div class="mb-3">

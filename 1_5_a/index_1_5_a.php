@@ -139,7 +139,7 @@
     <table class="table table-bordered text-center">
         <thead class="align-middle table-secondary">
         <tr>
-            <th scope="col">สาขาวิชา</th>
+            <th scope="col">สาขาวิชา*</th>
             <th scope="col">ระดับชั้น</th>
             <th scope="col">ชื่องานวิจัย</th>
             <th scope="col">จำนวนที่ปรึกษา (คน)</th>
@@ -254,7 +254,7 @@
                 <div class="modal-body">
                     <form action = "1_5_a/insert_1_5_a.php" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label for="major"  class="col-sm-2 col-form-label">สาขาวิชา</label>
+                            <label for="major"  class="col-sm-2 col-form-label">สาขาวิชา*</label>
                                 <input type="text" class="form-control" name ="major" required >  
                         </div>                    
                         <div class="mb-3">
@@ -303,7 +303,7 @@
                 <div class="modal-body">
                     <form action = "1_5_a/edit_1_5_a.php" method="post">
                         <div class="mb-3">
-                            <label for="major"  class="col-sm-2 col-form-label">สาขาวิชา</label>
+                            <label for="major"  class="col-sm-2 col-form-label">สาขาวิชา*</label>
                                 <input type="text" class="form-control" name ="major" value="<?php echo $data['major']; ?>">
                         </div>  
                         <div class="mb-3">

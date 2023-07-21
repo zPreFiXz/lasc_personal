@@ -110,17 +110,17 @@
     <table class="table table-bordered text-center align-middle">
         <thead class="align-middle table-secondary">
             <tr>
-                <th scope="col">ลำดับที่</th>
-                <th scope="col">ชื่องานวิจัย</th>
-                <th scope="col">แหล่งเงินทุน</th>
-                <th scope="col">กรอบเงินทุน</th>
+                <th scope="col" style="white-space: nowrap;">ลำดับที่</th>
+                <th scope="col" style="white-space: nowrap;">ชื่องานวิจัย*</th>
+                <th scope="col" style="white-space: nowrap;">แหล่งเงินทุน</th>
+                <th scope="col" style="white-space: nowrap;">กรอบเงินทุน*</th>
                 <th scope="col">ระยะเวลาเริ่มต้น-สิ้นสุด</th>
                 <th scope="col">ลักษณะงานเดี่ยว/กลุ่ม</th>
-                <th scope="col">หัวหน้าโครงการ/ผู้ร่วมโครงการ</th>
-                <th scope="col">ร้อยละการมีส่วนร่วม</th>
-                <th scope="col">จำนวนภาระงาน</th>
-                <th scope="col">อัปโหลดไฟล์</th>
-                <th scope="col">จัดการข้อมูล</th>
+                <th scope="col">หัวหน้าโครงการ/ผู้ร่วมโครงการ*</th>
+                <th scope="col">ร้อยละการมีส่วนร่วม*</th>
+                <th scope="col" style="white-space: nowrap;">จำนวนภาระงาน</th>
+                <th scope="col" style="white-space: nowrap;">อัปโหลดไฟล์</th>
+                <th scope="col" style="white-space: nowrap;">จัดการข้อมูล</th>
             </tr>
         </thead>
         <tbody>
@@ -223,7 +223,7 @@
                                     <input type="text" class="form-control" name="number" required>
                             </div>
                             <div class="mb-3">
-                                <label for="research_name" class="col-sm-2 col-form-label">ชื่องานวิจัย</label>
+                                <label for="research_name" class="col-sm-2 col-form-label">ชื่องานวิจัย*</label>
                                     <input type="text" class="form-control" name="research_name" required>
                             </div>
                             <div class="mb-3">
@@ -231,7 +231,7 @@
                                     <input type="text" class="form-control" name="funding_source" required>
                             </div>
                             <div class="mb-3">
-                                <label for="funding_framework" class="col-sm-2 col-form-label">กรอบเงินทุน</label>
+                                <label for="funding_framework" class="col-sm-2 col-form-label">กรอบเงินทุน*</label>
                                     <input type="text" class="form-control" name="funding_framework" required>
                             </div>
                             <div class="mb-3">
@@ -243,11 +243,11 @@
                                     <input type="text" class="form-control" name="nature_work" required>
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="leader" class="col-sm-2 col-form-label">หัวหน้าโครงการ/ผู้ร่วมโครงการ</label>
+                                <label style="white-space: nowrap;" for="leader" class="col-sm-2 col-form-label">หัวหน้าโครงการ/ผู้ร่วมโครงการ*</label>
                                     <input type="text" class="form-control" name="leader" required>
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="contribute" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม</label>
+                                <label style="white-space: nowrap;" for="contribute" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม*</label>
                                     <input type="text" class="form-control" name="contribute" required>
                             </div>
                             <div class="mb-3">
@@ -277,7 +277,7 @@
                                     <input type="text" class="form-control" name="number" value="<?php echo $data['number']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label for="research_name" class="col-sm-2 col-form-label">ชื่องานวิจัย</label>
+                                <label for="research_name" class="col-sm-2 col-form-label">ชื่องานวิจัย*</label>
                                     <input type="text" class="form-control" name="research_name" value="<?php echo $data['research_name']; ?>">
                             </div>
                             <div class="mb-3">
@@ -285,7 +285,7 @@
                                     <input type="text" class="form-control" name="funding_source" value="<?php echo $data['funding_source']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label for="funding_framework" class="col-sm-2 col-form-label">กรอบเงินทุน</label>
+                                <label for="funding_framework" class="col-sm-2 col-form-label">กรอบเงินทุน*</label>
                                     <input type="text" class="form-control" name="funding_framework" value="<?php echo $data['funding_framework']; ?>">
                             </div>
                             <div class="mb-3">
@@ -297,11 +297,11 @@
                                     <input type="text" class="form-control" name="nature_work" value="<?php echo $data['nature_work']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="leader" class="col-sm-2 col-form-label">หัวหน้าโครงการ/ผู้ร่วมโครงการ</label>
+                                <label style="white-space: nowrap;" for="leader" class="col-sm-2 col-form-label">หัวหน้าโครงการ/ผู้ร่วมโครงการ*</label>
                                     <input type="text" class="form-control" name="leader" value="<?php echo $data['leader']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="contribute" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม</label>
+                                <label style="white-space: nowrap;" for="contribute" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม*</label>
                                     <input type="text" class="form-control" name="contribute" value="<?php echo $data['contribute']; ?>">
                             </div>
                             <div class="mb-3">

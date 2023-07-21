@@ -133,15 +133,14 @@ if (isset($_GET['upload'])) {
     <table class="table table-bordered text-center">
         <thead class="align-middle table-secondary">
             <tr>
-                <th scope="col">สาขาวิชา</th>
+                <th scope="col">สาขาวิชา*</th>
                 <th scope="col">ระดับชั้น</th>
                 <th scope="col">จำนวนนักศึกษา</th>
-                <th scope="col">ระยะเวลาที่ปฏิบัติ</th>
+                <th scope="col">ระยะเวลาที่ปฏิบัติ (ชั่วโมง) * ไม่เกิน 12 ชม./วัน</th>
                 <th scope="col">สถานที่ทำงาน</th>
                 <th scope="col">จำนวนภาระงาน</th>
                 <th scope="col">อัปโหลดไฟล์</th>
                 <th scope="col">จัดการข้อมูล</th>
-
             </tr>
         </thead>
 
@@ -246,7 +245,7 @@ if (isset($_GET['upload'])) {
                     <div class="modal-body">
                         <form action="1_3/insert_1_3.php" method="post" enctype="multipart/form-data">
                             <div class="mb-3">
-                                <label for="Major" class="col-form-label">สาขาวิชา</label>
+                                <label for="Major" class="col-form-label">สาขาวิชา*</label>
                                 <input type="text" required class="form-control" name="Major">
                             </div>
                             <div class="mb-3">
@@ -259,12 +258,12 @@ if (isset($_GET['upload'])) {
                             </div>
 
                             <div class="mb-3">
-                                <label for="amount_time" class="col-form-label">ระยะเวลาที่ปฏิบัติ</label>
+                                <label for="amount_time" class="col-form-label">ระยะเวลาที่ปฏิบัติ (ชั่วโมง) * ไม่เกิน 12 ชม./วัน</label>
                                 <input type="text" required class="form-control" name="amount_time">
                             </div>
 
                             <div class="mb-3">
-                                <label for="workplace" class="col-form-label">สถานที่ทำงาน</label>
+                                <label for="workplace" class="col-form-label">สถานที่ทำงาน/งานที่ควบคุม</label>
                                 <input type="text" required class="form-control" name="workplace">
                             </div>
 
@@ -295,7 +294,7 @@ if (isset($_GET['upload'])) {
 
                         <form action="1_3/edit_1_3.php" method="post">
                             <div class="mb-3">
-                                <label for="Major" class="col-form-label">สาขาวิชา</label>
+                                <label for="Major" class="col-form-label">สาขาวิชา*</label>
                                 <input type="text" required class="form-control" name="Major" value="<?php echo $data['Major']; ?>">
                             </div>
                             <div class="mb-3">
@@ -308,12 +307,12 @@ if (isset($_GET['upload'])) {
                             </div>
 
                             <div class="mb-3">
-                                <label for="amount_time" class="col-form-label">ระยะเวลาที่ปฏิบัติ</label>
+                                <label for="amount_time" class="col-form-label">ระยะเวลาที่ปฏิบัติ (ชั่วโมง) * ไม่เกิน 12 ชม./วัน</label>
                                 <input type="text" required class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>">
                             </div>
 
                             <div class="mb-3">
-                                <label for="workplace" class="col-form-label">สถานที่ทำงาน</label>
+                                <label for="workplace" class="col-form-label">สถานที่ทำงาน/งานที่ควบคุม</label>
                                 <input type="text" required class="form-control" name="workplace" value="<?php echo $data['workplace']; ?>">
                             </div>
 

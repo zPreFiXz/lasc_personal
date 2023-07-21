@@ -13,7 +13,7 @@ require_once "config/db.php";
     <table class="table table-bordered text-center align-middle">
         <thead class="align-middle table-secondary">
             <tr>
-                <th scope="col">ให้ทำเครื่องหมาย <br>✓ ในช่องที่ตรงกับ<br>ตำแหน่งได้รับแต่งตั้ง</th>
+                <th scope="col">ให้ทำเครื่องหมาย <br>✓ ในช่องที่ตรงกับ<br>ตำแหน่งได้รับแต่งตั้ง*</th>
                 <th scope="col">ตำแหน่ง</th>
                 <th scope="col">ขอบข่ายภาระงานที่ปฏิบัติ</th>
                 <th scope="col">จำนวนภาระงาน</th>

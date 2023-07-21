@@ -263,14 +263,14 @@ if (isset($_GET['upload'])) {
                     </div>
                     <div class="mb-3">
                         <label for="type_work_s_j" class="col-sm-2 col-form-label">ลักษณะ เดี่ยว/ร่วม</label>
-                        <select id="type_work_s_j" name="type_work_s_j">
+                        <select id="type_work_s_j" name="type_work_s_j" class="form-select" >
                             <option value="เดี่ยว">เดี่ยว</option>
                             <option value="ร่วม">ร่วม</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>
-                        <select id="type_work" name="type_work" required>
+                        <select id="type_work" name="type_work" class="form-select" required>
                             <option value="เอกสารประกอบการสอน">เอกสารประกอบการสอน</option>
                             <option value="เอกสารคำสอน">เอกสารคำสอน</option>
                             <option value="หนังสือ/ตำรา">หนังสือ/ตำรา</option>
@@ -317,12 +317,12 @@ if (isset($_GET['upload'])) {
                     </div>
                     <div class="mb-3">
                         <label for="amount_time" class="col-sm-2 col-form-label">ระยะเวลา เริ่มต้น-สิ้นสุด</label>
-                        <input type="text" class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>">
+                        <input type="text" class="form-control" name="amount_time" class="form-select" value="<?php echo $data['amount_time']; ?>">
                     </div>
                     <div class="mb-3">
                         <div class="mb-3">
                             <label for="type_work_s_j" class="col-sm-2 col-form-label">ลักษณะ เดี่ยว/ร่วม</label>
-                            <select id="type_work_s_j" name="type_work_s_j">
+                            <select id="type_work_s_j" name="type_work_s_j" class="form-select" >
                                 <option value="เดี่ยว" <?php if ($data['type_work_s_j'] === 'เดี่ยว') echo 'selected'; ?>>เดี่ยว</option>
                                 <option value="ร่วม" <?php if ($data['type_work_s_j'] === 'ร่วม') echo 'selected'; ?>>ร่วม</option>
                             </select>
@@ -330,7 +330,7 @@ if (isset($_GET['upload'])) {
                     </div>
                     <div class="mb-3">
                         <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>
-                        <select id="type_work" name="type_work">
+                        <select id="type_work" name="type_work" class="form-select">
                             <option value="เอกสารประกอบการสอน" <?php if ($data['type_work'] === 'เอกสารประกอบการสอน') echo 'selected'; ?>>เอกสารประกอบการสอน</option>
                             <option value="เอกสารคำสอน" <?php if ($data['type_work'] === 'เอกสารคำสอน') echo 'selected'; ?>>เอกสารคำสอน</option>
                             <option value="หนังสือ/ตำรา" <?php if ($data['type_work'] === 'หนังสือ/ตำรา') echo 'selected'; ?>>หนังสือ/ตำรา</option>

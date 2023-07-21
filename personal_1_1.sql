@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2023 at 01:53 PM
+-- Generation Time: Jul 20, 2023 at 06:07 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -31,7 +31,7 @@ CREATE TABLE `personal_1_1` (
   `id` int(10) NOT NULL,
   `code_course` varchar(50) NOT NULL,
   `name_course` varchar(50) NOT NULL,
-  `amonut_credit` int(10) NOT NULL,
+  `amount_credit` int(10) NOT NULL,
   `describe` int(10) NOT NULL,
   `practice` int(10) NOT NULL,
   `practice_subject` varchar(50) NOT NULL,

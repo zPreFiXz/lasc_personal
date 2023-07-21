@@ -116,7 +116,7 @@ if (isset($_GET['upload'])) {
                 <th scope="col" rowspan="2">ระดับชั้น(หมู่เรียน)</th>
                 <th scope="col" rowspan="2">หมู่เรียนที่</th>
                 <th scope="col" rowspan="2">จำนวนนักศึกษา </th>
-                <th scope="col" rowspan="2">สัดส่วนการสอน</th>
+                <th scope="col" rowspan="2">สัดส่วนการสอน (ป้อนตัวเลขไม่มี%)</th>
                 <th scope="col" rowspan="2">จำนวนชั่วโมงสอน/สัปดาห์ </th>
                 <th scope="col" rowspan="2">จำนวนภาระงาน/สัปดาห์ </th>
                 <th scope="col" rowspan="2">อัปโหลดไฟล์</th>
@@ -138,14 +138,14 @@ if (isset($_GET['upload'])) {
             $personal = $stmt->fetchAll();
 
             if (!$personal) {
-                echo "<tr><td colspan='8' class='text-center'>ไม่มีข้อมูล</td></tr>";
+                echo "<tr><td colspan='15' class='text-center'>ไม่มีข้อมูล</td></tr>";
             } else {
                 foreach ($personal as $per) {
             ?>
                     <tr>
                         <td style="white-space: nowrap;"><?= $per['code_course']; ?></td>
-                        <td><?= $per['name_course']; ?></td>
-                        <td><?= $per['amonut_credit']; ?></td>
+                        <td class="mb-3" style="white-space: nowrap;"><?= $per['name_course']; ?></td>
+                        <td><?= $per['amount_credit']; ?></td>
                         <td><?= $per['describe']; ?></td>
                         <td><?= $per['practice']; ?></td>
                         <td><?= $per['practice_subject']; ?></td>
@@ -216,11 +216,12 @@ if (isset($_GET['upload'])) {
             }
             ?>
             <tr>
-                <th scope="row" colspan="13">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+                <th scope="row" colspan="12">รวมจำนวนภาระงานตลอดภาคเรียน</th>
                 <td scope="row">0.00</td>
                 <td colspan="2"></td>
             </tr>
         </tbody>
+        <!-- เพิ่มข้อมูล -->
         <div class="modal fade" id="largeModal" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -238,60 +239,72 @@ if (isset($_GET['upload'])) {
                                 <label for="name_course" class="col-sm-2 col-form-label ">ชื่อวิชา</label>
                                 <input type="text" class="form-control" name="name_course" required>
                             </div>
-                            <h5>จำนวนหน่วยกิต:</h5>
-                            <div id="amonut_credit" class="m-5">
-                                <div class="mb-3">
-                                    <label for="amonut_credit" class="col-sm-2 col-form-label">จำนวน</label>
-                                    <select id="amonut_credit" name="amonut_credit" required>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
+                            <h5 class="col-sm-2 col-form-label">จำนวนหน่วยกิต</h5>
+                            <div class="m-3">
+                                <div class="row mb-3">
+                                    <label for="amount_credit" class="col-sm-2 col-form-label">จำนวน</label>
+                                    <div class="col-sm-10">
+                                        <select id="amount_credit" name="amount_credit" class="form-select" required>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
+                                <div class="row mb-3">
                                     <label for="describe" class="col-sm-2 col-form-label">บรรยาย</label>
-                                    <select id="describe" name="describe" required>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
+                                    <div class="col-sm-10">
+                                            <select id="describe" name="describe" class="form-select"  required>
+                                                <option value="" selected>กรุณาเลือก</option>
+                                                <option value="0">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                            </select>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
+                                <div class="row mb-3">
                                     <label for="practice" class="col-sm-2 col-form-label">ปฏิบัติ</label>
-                                    <select id="practice" name="practice" required>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
+                                    <div class="col-sm-10">
+                                        <select id="practice" name="practice" class="form-select" required>
+                                            <option value="" selected>กรุณาเลือก</option>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
+                                <div class="row mb-3">
                                     <label for="practice_subject" class="col-sm-2 col-form-label">แบบปฏิบัติ</label>
-                                    <select id="practice_subject" name="practice_subject" required>
-                                        <option value="ทั่วไป">ทั่วไป</option>
-                                        <option value="ฟิสิกส์">ฟิสิกส์</option>
-                                        <option value="เคมี">เคมี</option>
-                                        <option value="ชีววิทยาและจุลชีววิทยา">ชีววิทยาและจุลชีววิทยา</option>
-                                    </select>
+                                    <div class="col-sm-10">
+                                        <select id="practice_subject" name="practice_subject" class="form-select" required>
+                                            <option value="ทั่วไป">ทั่วไป</option>
+                                            <option value="ฟิสิกส์">ฟิสิกส์</option>
+                                            <option value="เคมี">เคมี</option>
+                                            <option value="ชีววิทยาและจุลชีววิทยา">ชีววิทยาและจุลชีววิทยา</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
+                                <div class="row mb-3">
                                     <label for="research" class="col-sm-2 col-form-label">ค้นคว้า</label>
-                                    <select id="research" name="research" required>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
+                                    <div class="col-sm-10">
+                                        <select id="research" name="research" class="form-select" required>
+                                            <option value="" selected>กรุณาเลือก</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -300,13 +313,13 @@ if (isset($_GET['upload'])) {
                             </div>
                             <div class="mb-3">
                                 <label for="group_study" class="col-sm-2 col-form-label">หมู่เรียนที่</label>
-                                <select id="group_study" name="group_study" required>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
+                                    <select id="group_study" name="group_study" class="form-select" required>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>
@@ -316,12 +329,12 @@ if (isset($_GET['upload'])) {
                                 <label for="proportion" class="col-sm-2 col-form-label">สัดส่วนการสอน</label>
                                 <input type="text" class="form-control" name="proportion" required>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" style="white-space: nowrap;">
                                 <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงสอน/สัปดาห์</label>
                                 <input type="text" class="form-control" name="amount_time" required>
                             </div>
-                            <div class="mb-3">
-                                <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน/สัปดาห์</label>
+                            <div class="mb-3" style="white-space: nowrap;">
+                                <label for="amount_work" class="col-sm-2 col-form-label ">จำนวนภาระงาน/สัปดาห์</label>
                                 <input type="text" class="form-control" name="amount_work" required>
                             </div>
                             <div class="modal-footer">
@@ -333,7 +346,7 @@ if (isset($_GET['upload'])) {
                 </div>
             </div>
         </div>
-
+        <!-- แก้ไขข้อมูล -->
         <div class="modal fade" id="modal" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -351,60 +364,70 @@ if (isset($_GET['upload'])) {
                                 <label for="name_course" class="col-sm-2 col-form-label ">ชื่อวิชา</label>
                                 <input type="text" class="form-control" name="name_course" value="<?php echo $data['name_course']; ?>">
                             </div>
-                            <h5>จำนวนหน่วยกิต:</h5>
-                            <div id="amonut_credit" class="m-5">
-                                <div class="mb-3">
-                                    <label for="amonut_credit" class="col-sm-2 col-form-label">จำนวน</label>
-                                    <select id="amonut_credit" name="amonut_credit">
-                                        <option value="1" <?php if ($data['amonut_credit'] === '1') echo 'selected'; ?>>1</option>
-                                        <option value="2" <?php if ($data['amonut_credit'] === '2') echo 'selected'; ?>>2</option>
-                                        <option value="3" <?php if ($data['amonut_credit'] === '3') echo 'selected'; ?>>3</option>
-                                    </select>
+                            <h5 class="col-sm-2 col-form-label">จำนวนหน่วยกิต:</h5>
+                            <div class="m-3">
+                                <div class="row mb-3">
+                                    <label for="amount_credit" class="col-sm-2 col-form-label">จำนวน</label>
+                                    <div class="col-sm-10">
+                                        <select id="amount_credit" name="amount_credit" class="form-select">
+                                            <option value="1" <?php if ($data['amount_credit'] === '1') echo 'selected'; ?>>1</option>
+                                            <option value="2" <?php if ($data['amount_credit'] === '2') echo 'selected'; ?>>2</option>
+                                            <option value="3" <?php if ($data['amount_credit'] === '3') echo 'selected'; ?>>3</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
+                                <div class="row mb-3">
                                     <label for="describe" class="col-sm-2 col-form-label">บรรยาย</label>
-                                    <select id="describe" name="describe">
-                                        <option value="0" <?php if ($data['describe'] === '0') echo 'selected'; ?>>0</option>
-                                        <option value="1" <?php if ($data['describe'] === '1') echo 'selected'; ?>>1</option>
-                                        <option value="2" <?php if ($data['describe'] === '2') echo 'selected'; ?>>2</option>
-                                        <option value="3" <?php if ($data['describe'] === '3') echo 'selected'; ?>>3</option>
-                                        <option value="4" <?php if ($data['describe'] === '4') echo 'selected'; ?>>4</option>
-                                        <option value="5" <?php if ($data['describe'] === '5') echo 'selected'; ?>>5</option>
-                                        <option value="6" <?php if ($data['describe'] === '6') echo 'selected'; ?>>6</option>
-                                    </select>
+                                    <div class="col-sm-10">
+                                        <select id="describe" name="describe" class="form-select">
+                                            <option value="0" <?php if ($data['describe'] === '0') echo 'selected'; ?>>0</option>
+                                            <option value="1" <?php if ($data['describe'] === '1') echo 'selected'; ?>>1</option>
+                                            <option value="2" <?php if ($data['describe'] === '2') echo 'selected'; ?>>2</option>
+                                            <option value="3" <?php if ($data['describe'] === '3') echo 'selected'; ?>>3</option>
+                                            <option value="4" <?php if ($data['describe'] === '4') echo 'selected'; ?>>4</option>
+                                            <option value="5" <?php if ($data['describe'] === '5') echo 'selected'; ?>>5</option>
+                                            <option value="6" <?php if ($data['describe'] === '6') echo 'selected'; ?>>6</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
+                                <div class="row mb-3">
                                     <label for="practice" class="col-sm-2 col-form-label">ปฏิบัติ</label>
-                                    <select id="practice" name="practice">
-                                        <option value="0" <?php if ($data['practice'] === '0') echo 'selected'; ?>>0</option>
-                                        <option value="1" <?php if ($data['practice'] === '1') echo 'selected'; ?>>1</option>
-                                        <option value="2" <?php if ($data['practice'] === '2') echo 'selected'; ?>>2</option>
-                                        <option value="3" <?php if ($data['practice'] === '3') echo 'selected'; ?>>3</option>
-                                        <option value="4" <?php if ($data['practice'] === '4') echo 'selected'; ?>>4</option>
-                                        <option value="5" <?php if ($data['practice'] === '5') echo 'selected'; ?>>5</option>
-                                        <option value="6" <?php if ($data['practice'] === '6') echo 'selected'; ?>>6</option>
-                                    </select>
+                                    <div class="col-sm-10">    
+                                        <select id="practice" name="practice" class="form-select">
+                                            <option value="0" <?php if ($data['practice'] === '0') echo 'selected'; ?>>0</option>
+                                            <option value="1" <?php if ($data['practice'] === '1') echo 'selected'; ?>>1</option>
+                                            <option value="2" <?php if ($data['practice'] === '2') echo 'selected'; ?>>2</option>
+                                            <option value="3" <?php if ($data['practice'] === '3') echo 'selected'; ?>>3</option>
+                                            <option value="4" <?php if ($data['practice'] === '4') echo 'selected'; ?>>4</option>
+                                            <option value="5" <?php if ($data['practice'] === '5') echo 'selected'; ?>>5</option>
+                                            <option value="6" <?php if ($data['practice'] === '6') echo 'selected'; ?>>6</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
+                                <div class="row mb-3">
                                     <label for="practice_subject" class="col-sm-2 col-form-label">แบบปฏิบัติ</label>
-                                    <select id="practice_subject" name="practice_subject">
-                                        <option value="ทั่วไป" <?php if ($data['practice_subject'] === 'ทั่วไป') echo 'selected'; ?>>ทั่วไป</option>
-                                        <option value="ฟิสิกส์" <?php if ($data['practice_subject'] === 'ฟิสิกส์') echo 'selected'; ?>>ฟิสิกส์</option>
-                                        <option value="เคมี" <?php if ($data['practice_subject'] === 'เคมี') echo 'selected'; ?>>เคมี</option>
-                                        <option value="ชีววิทยาและจุลชีววิทยา" <?php if ($data['practice_subject'] === 'ชีววิทยาและจุลชีววิทยา') echo 'selected'; ?>>ชีววิทยาและจุลชีววิทยา</option>
-                                    </select>
+                                    <div class="col-sm-10">
+                                        <select id="practice_subject" name="practice_subject" class="form-select">
+                                            <option value="ทั่วไป" <?php if ($data['practice_subject'] === 'ทั่วไป') echo 'selected'; ?>>ทั่วไป</option>
+                                            <option value="ฟิสิกส์" <?php if ($data['practice_subject'] === 'ฟิสิกส์') echo 'selected'; ?>>ฟิสิกส์</option>
+                                            <option value="เคมี" <?php if ($data['practice_subject'] === 'เคมี') echo 'selected'; ?>>เคมี</option>
+                                            <option value="ชีววิทยาและจุลชีววิทยา" <?php if ($data['practice_subject'] === 'ชีววิทยาและจุลชีววิทยา') echo 'selected'; ?>>ชีววิทยาและจุลชีววิทยา</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
+                                <div class="row mb-3">
                                     <label for="research" class="col-sm-2 col-form-label">ค้นคว้า</label>
-                                    <select id="type_work" name="type_work">
-                                        <option value="0" <?php if ($data['practice'] === '0') echo 'selected'; ?>>0</option>
-                                        <option value="1" <?php if ($data['practice'] === '1') echo 'selected'; ?>>1</option>
-                                        <option value="2" <?php if ($data['practice'] === '2') echo 'selected'; ?>>2</option>
-                                        <option value="3" <?php if ($data['practice'] === '3') echo 'selected'; ?>>3</option>
-                                        <option value="4" <?php if ($data['practice'] === '4') echo 'selected'; ?>>4</option>
-                                        <option value="5" <?php if ($data['practice'] === '5') echo 'selected'; ?>>5</option>
-                                        <option value="6" <?php if ($data['practice'] === '6') echo 'selected'; ?>>6</option>
-                                    </select>
+                                    <div class="col-sm-10">    
+                                        <select id="type_work" name="type_work" class="form-select">
+                                            <option value="0" <?php if ($data['practice'] === '0') echo 'selected'; ?>>0</option>
+                                            <option value="1" <?php if ($data['practice'] === '1') echo 'selected'; ?>>1</option>
+                                            <option value="2" <?php if ($data['practice'] === '2') echo 'selected'; ?>>2</option>
+                                            <option value="3" <?php if ($data['practice'] === '3') echo 'selected'; ?>>3</option>
+                                            <option value="4" <?php if ($data['practice'] === '4') echo 'selected'; ?>>4</option>
+                                            <option value="5" <?php if ($data['practice'] === '5') echo 'selected'; ?>>5</option>
+                                            <option value="6" <?php if ($data['practice'] === '6') echo 'selected'; ?>>6</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -413,12 +436,12 @@ if (isset($_GET['upload'])) {
                             </div>
                             <div class="mb-3">
                                 <label for="group_study" class="col-sm-2 col-form-label">หมู่เรียนที่</label>
-                                <select id="type_work" name="type_work">
-                                    <option value="1" <?php if ($data['practice'] === '1') echo 'selected'; ?>>1</option>
-                                    <option value="2" <?php if ($data['practice'] === '2') echo 'selected'; ?>>2</option>
-                                    <option value="3" <?php if ($data['practice'] === '3') echo 'selected'; ?>>3</option>
-                                    <option value="4" <?php if ($data['practice'] === '4') echo 'selected'; ?>>4</option>
-                                </select>
+                                    <select id="type_work" name="type_work" class="form-select">
+                                        <option value="1" <?php if ($data['practice'] === '1') echo 'selected'; ?>>1</option>
+                                        <option value="2" <?php if ($data['practice'] === '2') echo 'selected'; ?>>2</option>
+                                        <option value="3" <?php if ($data['practice'] === '3') echo 'selected'; ?>>3</option>
+                                        <option value="4" <?php if ($data['practice'] === '4') echo 'selected'; ?>>4</option>
+                                    </select>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>

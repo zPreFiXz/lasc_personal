@@ -5,7 +5,7 @@
     if (isset($_POST['submit'])) {
         $code_course = $_POST['code_course'];
         $name_course = $_POST['name_course'];
-        $amonut_credit = $_POST['amonut_credit'];
+        $amount_credit = $_POST['amount_credit'];
         $describe_column = $_POST['describe'];
         $practice = $_POST['practice'];
         $practice_subject = $_POST['practice_subject'];
@@ -16,13 +16,13 @@
         $amount_time = $_POST['amount_time'];
         $amount_work = $_POST['amount_work'];
 
-        $sql = "INSERT INTO personal_1_1 (code_course, name_course, amonut_credit, `describe`, practice, practice_subject, level, group_study, amount_student, proportion, amount_time, amount_work) 
-        VALUES (:code_course, :name_course, :amonut_credit, :describe_column, :practice, :practice_subject, :level, :group_study, :amount_student, :proportion, :amount_time, :amount_work)";
+        $sql = "INSERT INTO personal_1_1 (code_course, name_course, amount_credit, `describe`, practice, practice_subject, level, group_study, amount_student, proportion, amount_time, amount_work) 
+        VALUES (:code_course, :name_course, :amount_credit, :describe_column, :practice, :practice_subject, :level, :group_study, :amount_student, :proportion, :amount_time, :amount_work)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':code_course', $code_course);
         $stmt->bindParam(':name_course', $name_course);
-        $stmt->bindParam(':amonut_credit', $amonut_credit);
+        $stmt->bindParam(':amount_credit', $amount_credit);
         $stmt->bindParam(':describe_column', $describe_column);
         $stmt->bindParam(':practice', $practice);
         $stmt->bindParam(':practice_subject', $practice_subject);

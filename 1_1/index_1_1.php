@@ -78,12 +78,7 @@ if (isset($_GET['upload'])) {
 
 <div class="container">
     <div class="pagetitle mt-3">
-        <h1>ก. ภาระงานอาจารย์ที่ปรึกษาหมู่เรียน</h1>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">ภาระงานอาจารย์ที่ปรึกษาของนักศึกษา</li>
-            <li class="breadcrumb-item active">ก. ภาระงานอาจารย์ที่ปรึกษาหมู่เรียน</li>
-        </ol>
-        </nav>
+        <h1>1.1 ภาระงานสอน (ภาคปกติ)</h1>
     </div>
     <hr>
     <div class="d-flex justify-content-end">

@@ -323,7 +323,7 @@ if (isset($_GET['upload'])) {
                     </div>
                     <div class="mb-3">
                         <label for="amount_time" class="col-sm-2 col-form-label">ระยะเวลา เริ่มต้น-สิ้นสุด</label>
-                        <input type="text" class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>">
+                        <input type="text" class="form-control" name="amount_time" class="form-select" value="<?php echo $data['amount_time']; ?>">
                     </div>
                     <div class="mb-3">
                             <label for="type_work_s_j" class="col-sm-2 col-form-label">ลักษณะ เดี่ยว/ร่วม</label>

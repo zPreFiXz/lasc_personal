@@ -7,7 +7,7 @@
         <h1>ตอนที่ 2 : แบบสรุปภาระงานรายบุคคล</h1>
     </div>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered mt-3">
         <thead class="align-middle table-secondary text-center">
         <tr>
             <th scope="col">รายการ</th>

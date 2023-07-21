@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2023 at 06:07 PM
+-- Generation Time: Jul 21, 2023 at 05:29 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -46,6 +46,13 @@ CREATE TABLE `personal_1_1` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
+-- Dumping data for table `personal_1_1`
+--
+
+INSERT INTO `personal_1_1` (`id`, `code_course`, `name_course`, `amount_credit`, `describe`, `practice`, `practice_subject`, `level`, `group_study`, `amount_student`, `proportion`, `amount_time`, `amount_work`, `file`, `research`) VALUES
+(6, '65100141119', 'ซอฟต์แวร์จ้า', 2, 2, 2, 'ฟิสิกส์', '2', 0, 100, 1, 1, 1, '', 0);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -63,7 +70,7 @@ ALTER TABLE `personal_1_1`
 -- AUTO_INCREMENT for table `personal_1_1`
 --
 ALTER TABLE `personal_1_1`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

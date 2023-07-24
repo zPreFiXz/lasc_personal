@@ -1,3 +1,8 @@
+<script>
+    function calc(){
+        document.getElementById('amount_work').value = document.getElementById('group_study').value;
+    }
+</script>
 <?php
     require_once "config/db.php";
 
@@ -80,7 +85,7 @@
     <div class="pagetitle mt-3">
         <h1>ก. ภาระงานอาจารย์ที่ปรึกษาหมู่เรียน</h1>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item">ภาระงานอาจารย์ที่ปรึกษาของนักศึกษา</li>
+            <li class="breadcrumb-item">2. ภาระงานอาจารย์ที่ปรึกษาของนักศึกษา (ประจำหมู่เรียน /ชมรม /ชุมนุม /ที่ปรึกษาอื่นๆ)</li>
             <li class="breadcrumb-item active">ก. ภาระงานอาจารย์ที่ปรึกษาหมู่เรียน</li>
         </ol>
         </nav>
@@ -122,7 +127,8 @@
         </thead>
         <tbody>
             <?php
-            $stmt = $conn->query("SELECT * FROM personal_1_2_a");
+            $userId = $_SESSION['userId'];
+            $stmt = $conn->query("SELECT * FROM personal_1_2_a WHERE userId = '$userId'");
             $stmt->execute();
             $personal = $stmt->fetchAll();
 
@@ -211,7 +217,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="1_2_a/insert_1_2_a.php" method="post">
+                        <form action="1_2_a/insert_1_2_a.php" method="post" >
+                            <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
                             <div class="mb-3">
                                 <label for="major" class="col-sm-2 col-form-label ">สาขาวิชา</label>
                                     <input type="text" class="form-control" name="major" required>
@@ -234,7 +241,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" class="form-control" name="amount_work" required>
+                                <input type="text" class="form-control" name="amount_work" disabled>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -276,7 +283,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>">
+                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>

@@ -95,8 +95,8 @@
         <h1>ก. ภาระงานอาจารย์ที่ปรึกษางานวิจัย</h1>
         <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item">ภาระงานอาจารย์ที่ปรึกษางานวิจัย โครงการ ปัญหาพิเศษหรืองานอื่นที่เกี่ยวข้อง</li>
-          <li class="breadcrumb-item">ก. ภาระงานอาจารย์ที่ปรึกษางานวิจัย</li>
+          <li class="breadcrumb-item">5. ภาระงานอาจารย์ที่ปรึกษางานวิจัย โครงการ ปัญหาพิเศษหรืองานอื่นที่เกี่ยวข้อง</li>
+          <li class="breadcrumb-item active">ก. ภาระงานอาจารย์ที่ปรึกษางานวิจัย</li>
         </ol>
       </nav> 
     </div>
@@ -139,12 +139,12 @@
     <table class="table table-bordered text-center">
         <thead class="align-middle table-secondary">
         <tr>
-            <th scope="col">สาขาวิชา*</th>
+            <th scope="col">สาขาวิชา</th>
             <th scope="col">ระดับชั้น</th>
             <th scope="col">ชื่องานวิจัย</th>
             <th scope="col">จำนวนที่ปรึกษา (คน)</th>
             <th scope="col">ที่ปรึกษาหลัก/ร่วม</th>
-            <th scope="col">จำนวนนักศึกษา (คน)</th>
+            <th scope="col">จำนวนนักศึกษา</th>
             <th scope="col">จำนวนภาระงาน</th>
             <th scope="col">อัปโหลดไฟล์</th>
             <th scope="col">จัดการข้อมูล</th>
@@ -153,7 +153,8 @@
 
         <tbody>
         <?php
-            $stmt = $conn->query("SELECT*FROM personal_1_5_a"); // ดึงข้อมูลจากตาราง personal_1_5_a
+            $userId = $_SESSION['userId'];
+            $stmt = $conn->query("SELECT*FROM personal_1_5_a WHERE userId = '$userId'"); // ดึงข้อมูลจากตาราง personal_1_5_a
             $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
             $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
             // ตรวจสอบว่ามีข้อมูลหรือไม่
@@ -253,8 +254,9 @@
                 </div>
                 <div class="modal-body">
                     <form action = "1_5_a/insert_1_5_a.php" method="post" enctype="multipart/form-data">
+                        <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
                         <div class="mb-3">
-                            <label for="major"  class="col-sm-2 col-form-label">สาขาวิชา*</label>
+                            <label for="major"  class="col-sm-2 col-form-label">สาขาวิชา</label>
                                 <input type="text" class="form-control" name ="major" required >  
                         </div>                    
                         <div class="mb-3">
@@ -274,12 +276,12 @@
                                 <input type="text" class="form-control" name="teacher" required>
                         </div> 
                         <div class="mb-3">
-                            <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา (คน)</label>
+                            <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>
                                 <input type="text" class="form-control" name="amount_student" required>
                         </div> 
                         <div class="mb-3">
                             <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" class="form-control" name="amount_work" required>
+                                <input type="text" class="form-control" name="amount_work" disabled>
                         </div>  
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -303,7 +305,7 @@
                 <div class="modal-body">
                     <form action = "1_5_a/edit_1_5_a.php" method="post">
                         <div class="mb-3">
-                            <label for="major"  class="col-sm-2 col-form-label">สาขาวิชา*</label>
+                            <label for="major"  class="col-sm-2 col-form-label">สาขาวิชา</label>
                                 <input type="text" class="form-control" name ="major" value="<?php echo $data['major']; ?>">
                         </div>  
                         <div class="mb-3">
@@ -328,7 +330,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>">
+                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
                         </div> 
 
                         <div class="modal-footer">

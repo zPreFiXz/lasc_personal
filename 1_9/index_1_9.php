@@ -134,9 +134,9 @@
         <thead class="align-middle table-secondary">
         <tr>
             <th scope="col">วัน/เดือน/ปี</th>
-            <th scope="col">โครงการ/เรื่อง*</th>
+            <th scope="col">โครงการ/เรื่อง</th>
             <th scope="col">สถานที่</th>
-            <th scope="col">จำนวนชั่วโมงทำงาน*</th>
+            <th scope="col">จำนวนชั่วโมงทำงาน</th>
             <th scope="col">จำนวนภาระงาน</th>
             <th scope="col">อัปโหลดไฟล์</th>
             <th scope="col">จัดการข้อมูล</th>
@@ -145,7 +145,8 @@
 
         <tbody>
         <?php
-            $stmt = $conn->query("SELECT*FROM personal_1_9"); // ดึงข้อมูลจากตาราง personal_1_5_a
+            $userId = $_SESSION['userId'];
+            $stmt = $conn->query("SELECT*FROM personal_1_9 WHERE userId = '$userId'"); // ดึงข้อมูลจากตาราง personal_1_5_a
             $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
             $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
             // ตรวจสอบว่ามีข้อมูลหรือไม่
@@ -242,12 +243,13 @@
                 </div>
                 <div class="modal-body">
                     <form action = "1_9/insert_1_9.php" method="post" enctype="multipart/form-data">
+                        <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
                         <div class="mb-3">
                             <label for="date"  class="col-sm-2 col-form-label">วัน/เดือน/ปี</label>
                                 <input type="date" class="form-control" name ="date" required >   
                         </div>                   
                         <div class="mb-3">
-                            <label for="project"  class="col-sm-2 col-form-label">โครงการ/เรื่อง*</label>
+                            <label for="project"  class="col-sm-2 col-form-label">โครงการ/เรื่อง</label>
                                 <input type="text" class="form-control" name ="project" required>
                         </div>
                         <div class="mb-3">
@@ -255,12 +257,12 @@
                                 <input type="text" class="form-control" name ="location" required>
                         </div> 
                         <div class="mb-3">
-                            <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน*</label>
+                            <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
                                 <input type="text" class="form-control" name ="amount_time" required>
                         </div> 
                         <div class="mb-3">
                             <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" class="form-control" name="amount_work" required>
+                                <input type="text" class="form-control" name="amount_work" disabled>
                         </div> 
 
                         <div class="modal-footer">
@@ -289,7 +291,7 @@
                                 <input type="date" class="form-control" name ="date" value="<?php echo $data['date']; ?>">
                         </div>  
                         <div class="mb-3">
-                            <label for="project"  class="col-sm-2 col-form-label">โครงการ/เรื่อง*</label>
+                            <label for="project"  class="col-sm-2 col-form-label">โครงการ/เรื่อง</label>
                                 <input type="text" class="form-control" name ="project" value="<?php echo $data['project']; ?>">
                         </div> 
                         <div class="mb-3">
@@ -297,12 +299,12 @@
                                 <input type="text" class="form-control" name ="location" value="<?php echo $data['location']; ?>">
                         </div> 
                         <div class="mb-3">
-                            <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน*</label>
+                            <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
                                 <input type="text" class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>">
                         </div> 
                         <div class="mb-3">
                             <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>">
+                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
                         </div> 
 
                         <div class="modal-footer">

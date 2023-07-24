@@ -133,11 +133,11 @@ if (isset($_GET['upload'])) {
     <table class="table table-bordered text-center">
         <thead class="align-middle table-secondary">
             <tr>
-                <th scope="col">สาขาวิชา*</th>
+                <th scope="col">สาขาวิชา</th>
                 <th scope="col">ระดับชั้น</th>
                 <th scope="col">จำนวนนักศึกษา</th>
-                <th scope="col">ระยะเวลาที่ปฏิบัติ (ชั่วโมง) * ไม่เกิน 12 ชม./วัน</th>
-                <th scope="col">สถานที่ทำงาน</th>
+                <th scope="col">ระยะเวลาที่ปฏิบัติ (ชั่วโมง) ไม่เกิน 12 ชม./วัน</th>
+                <th scope="col">สถานที่ทำงาน/งานที่ควบคุม</th>
                 <th scope="col">จำนวนภาระงาน</th>
                 <th scope="col">อัปโหลดไฟล์</th>
                 <th scope="col">จัดการข้อมูล</th>
@@ -146,7 +146,8 @@ if (isset($_GET['upload'])) {
 
         <tbody>
             <?php
-            $stmt = $conn->query("SELECT*FROM personal_1_3"); // ดึงข้อมูลจากตาราง personal_1_3
+            $userId = $_SESSION['userId'];
+            $stmt = $conn->query("SELECT*FROM personal_1_3 WHERE userId = '$userId'"); // ดึงข้อมูลจากตาราง personal_1_3
             $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
             $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
             // ตรวจสอบว่ามีข้อมูลหรือไม่
@@ -244,8 +245,9 @@ if (isset($_GET['upload'])) {
                     </div>
                     <div class="modal-body">
                         <form action="1_3/insert_1_3.php" method="post" enctype="multipart/form-data">
+                            <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
                             <div class="mb-3">
-                                <label for="Major" class="col-form-label">สาขาวิชา*</label>
+                                <label for="Major" class="col-form-label">สาขาวิชา</label>
                                 <input type="text" required class="form-control" name="Major">
                             </div>
                             <div class="mb-3">
@@ -258,7 +260,7 @@ if (isset($_GET['upload'])) {
                             </div>
 
                             <div class="mb-3">
-                                <label for="amount_time" class="col-form-label">ระยะเวลาที่ปฏิบัติ (ชั่วโมง) * ไม่เกิน 12 ชม./วัน</label>
+                                <label for="amount_time" class="col-form-label">ระยะเวลาที่ปฏิบัติ (ชั่วโมง) ไม่เกิน 12 ชม./วัน</label>
                                 <input type="text" required class="form-control" name="amount_time">
                             </div>
 
@@ -269,7 +271,7 @@ if (isset($_GET['upload'])) {
 
                             <div class="mb-3">
                                 <label for="amount_work" class="col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" required class="form-control" name="amount_work">
+                                <input type="text" required class="form-control" name="amount_work" disabled>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -294,7 +296,7 @@ if (isset($_GET['upload'])) {
 
                         <form action="1_3/edit_1_3.php" method="post">
                             <div class="mb-3">
-                                <label for="Major" class="col-form-label">สาขาวิชา*</label>
+                                <label for="Major" class="col-form-label">สาขาวิชา</label>
                                 <input type="text" required class="form-control" name="Major" value="<?php echo $data['Major']; ?>">
                             </div>
                             <div class="mb-3">
@@ -307,7 +309,7 @@ if (isset($_GET['upload'])) {
                             </div>
 
                             <div class="mb-3">
-                                <label for="amount_time" class="col-form-label">ระยะเวลาที่ปฏิบัติ (ชั่วโมง) * ไม่เกิน 12 ชม./วัน</label>
+                                <label for="amount_time" class="col-form-label">ระยะเวลาที่ปฏิบัติ (ชั่วโมง) ไม่เกิน 12 ชม./วัน</label>
                                 <input type="text" required class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>">
                             </div>
 
@@ -318,7 +320,7 @@ if (isset($_GET['upload'])) {
 
                             <div class="mb-3">
                                 <label for="amount_work" class="col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" required class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>">
+                                <input type="text" required class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>

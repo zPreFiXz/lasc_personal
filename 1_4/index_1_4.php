@@ -79,10 +79,6 @@
 <div class="container">
     <div class="pagetitle mt-3">
         <h1>4. ภาระงานกิจกรรมพัฒนานักศึกษา (งานปฐมนิเทศ /ปัจฉิมนิเทศ /งานองค์การ-สโมสรนักศึกษา งานกีฬา งานกำกับดูแลวินัยนักศึกษา การศึกษาดูงานของนักศึกษา งานออกค่ายนักศึกษา หรืองานอื่นที่เกี่ยวข้อง)</h1>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">ภาระงานอาจารย์ที่ปรึกษาของนักศึกษา</li>
-            <li class="breadcrumb-item active">ก. ภาระงานอาจารย์ที่ปรึกษาหมู่เรียน</li>
-        </ol>
         </nav>
     </div>
     <hr>
@@ -111,9 +107,9 @@
         <thead class="align-middle table-secondary">
             <tr>
                 <th scope="col">วัน/เดือน/ปี</th>
-                <th scope="col">ชื่อโครงการ/กิจกรรม/งาน*</th>
+                <th scope="col">ชื่อโครงการ/กิจกรรม/งาน</th>
                 <th scope="col">สถานที่/งานที่ควบคุม</th>
-                <th scope="col">ระยะเวลาปฏิบัติ(ชั่วโมง)*</th>
+                <th scope="col">ระยะเวลาปฏิบัติ (ชั่วโมง)</th>
                 <th scope="col">จำนวนภาระงาน</th>
                 <th scope="col">อัปโหลดไฟล์</th>
                 <th scope="col">จัดการข้อมูล</th>
@@ -121,7 +117,8 @@
         </thead>
         <tbody>
             <?php
-            $stmt = $conn->query("SELECT * FROM personal_1_4");
+            $userId = $_SESSION['userId'];
+            $stmt = $conn->query("SELECT * FROM personal_1_4 WHERE userId = '$userId'");
             $stmt->execute();
             $personal = $stmt->fetchAll();
 
@@ -210,12 +207,13 @@
                     </div>
                     <div class="modal-body">
                         <form action="1_4/insert_1_4.php" method="post">
+                            <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
                             <div class="mb-3">
                                 <label for="date" class="col-sm-2 col-form-label ">วัน/เดือน/ปี</label>
                                     <input type="date" class="form-control" name="date" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
-                                <label for="project_name" class="col-sm-2 col-form-label">ชื่อโครงการ/กิจกรรม/งาน*</label>
+                                <label for="project_name" class="col-sm-2 col-form-label">ชื่อโครงการ/กิจกรรม/งาน</label>
                                     <input type="text" class="form-control" name="project_name" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
@@ -223,12 +221,12 @@
                                     <input type="text" class="form-control" name="location" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
-                                <label for="period" class="col-sm-2 col-form-label">ระยะเวลาปฏิบัติ(ชั่วโมง)*</label>
+                                <label for="period" class="col-sm-2 col-form-label">ระยะเวลาปฏิบัติ (ชั่วโมง)</label>
                                     <input type="text" class="form-control" name="period" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                    <input type="text" class="form-control" name="amount_work" required>
+                                    <input type="text" class="form-control" name="amount_work" disabled>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -253,7 +251,7 @@
                                     <input type="date" class="form-control" name="date" value="<?php echo $data['date']; ?>">
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
-                                <label for="project_name" class="col-sm-2 col-form-label">ชื่อโครงการ/กิจกรรม/งาน*</label>
+                                <label for="project_name" class="col-sm-2 col-form-label">ชื่อโครงการ/กิจกรรม/งาน</label>
                                     <input type="text" class="form-control" name="project_name" value="<?php echo $data['project_name']; ?>">
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
@@ -261,12 +259,12 @@
                                     <input type="text" class="form-control" name="location" value="<?php echo $data['location']; ?>">
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
-                                <label for="period" class="col-sm-2 col-form-label">ระยะเวลาปฏิบัติ(ชั่วโมง)*</label>
+                                <label for="period" class="col-sm-2 col-form-label">ระยะเวลาปฏิบัติ (ชั่วโมง)</label>
                                     <input type="text" class="form-control" name="period" value="<?php echo $data['period']; ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                    <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>">
+                                    <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>

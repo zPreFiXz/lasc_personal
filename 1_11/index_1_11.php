@@ -9,11 +9,10 @@ require_once "config/db.php";
         <h1>11. ภาระงานด้านการบริหาร (เฉพาะผู้ได้รับการแต่งตั้งให้ดำรงตำแหน่งบริหาร)</h1>
         </nav>
     </div>
-    <hr>
     <table class="table table-bordered text-center align-middle">
         <thead class="align-middle table-secondary">
             <tr>
-                <th scope="col">ให้ทำเครื่องหมาย <br>✓ ในช่องที่ตรงกับ<br>ตำแหน่งได้รับแต่งตั้ง*</th>
+                <th scope="col">ให้ทำเครื่องหมาย <br>✓ ในช่องที่ตรงกับ<br>ตำแหน่งได้รับแต่งตั้ง</th>
                 <th scope="col">ตำแหน่ง</th>
                 <th scope="col">ขอบข่ายภาระงานที่ปฏิบัติ</th>
                 <th scope="col">จำนวนภาระงาน</th>

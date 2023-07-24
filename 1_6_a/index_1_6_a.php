@@ -80,7 +80,7 @@
     <div class="pagetitle mt-3">
         <h1>ก.การสร้างงานวิจัย</h1>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item">ภาระงานงานวิจัย</li>
+            <li class="breadcrumb-item">6. ภาระงานวิจัย (งานวิจัยพื้นฐาน/งานวิจัยประยุกต์)</li>
             <li class="breadcrumb-item active">ก.การสร้างงานวิจัย</li>
         </ol>
         </nav>
@@ -111,13 +111,13 @@
         <thead class="align-middle table-secondary">
             <tr>
                 <th scope="col" style="white-space: nowrap;">ลำดับที่</th>
-                <th scope="col" style="white-space: nowrap;">ชื่องานวิจัย*</th>
+                <th scope="col" style="white-space: nowrap;">ชื่องานวิจัย</th>
                 <th scope="col" style="white-space: nowrap;">แหล่งเงินทุน</th>
-                <th scope="col" style="white-space: nowrap;">กรอบเงินทุน*</th>
+                <th scope="col" style="white-space: nowrap;">กรอบเงินทุน</th>
                 <th scope="col">ระยะเวลาเริ่มต้น-สิ้นสุด</th>
                 <th scope="col">ลักษณะงานเดี่ยว/กลุ่ม</th>
-                <th scope="col">หัวหน้าโครงการ/ผู้ร่วมโครงการ*</th>
-                <th scope="col">ร้อยละการมีส่วนร่วม*</th>
+                <th scope="col">หัวหน้าโครงการ/ผู้ร่วมโครงการ</th>
+                <th scope="col">ร้อยละการมีส่วนร่วม</th>
                 <th scope="col" style="white-space: nowrap;">จำนวนภาระงาน</th>
                 <th scope="col" style="white-space: nowrap;">อัปโหลดไฟล์</th>
                 <th scope="col" style="white-space: nowrap;">จัดการข้อมูล</th>
@@ -125,7 +125,8 @@
         </thead>
         <tbody>
             <?php
-            $stmt = $conn->query("SELECT * FROM personal_1_6_a");
+            $userId = $_SESSION['userId'];
+            $stmt = $conn->query("SELECT * FROM personal_1_6_a WHERE userId = '$userId'");
             $stmt->execute();
             $personal = $stmt->fetchAll();
 
@@ -218,12 +219,13 @@
                     </div>
                     <div class="modal-body">
                         <form action="1_6_a/insert_1_6_a.php" method="post">
+                            <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
                             <div class="mb-3">
                                 <label for="number" class="col-sm-2 col-form-label ">ลำดับที่</label>
                                     <input type="text" class="form-control" name="number" required>
                             </div>
                             <div class="mb-3">
-                                <label for="research_name" class="col-sm-2 col-form-label">ชื่องานวิจัย*</label>
+                                <label for="research_name" class="col-sm-2 col-form-label">ชื่องานวิจัย</label>
                                     <input type="text" class="form-control" name="research_name" required>
                             </div>
                             <div class="mb-3">
@@ -231,7 +233,7 @@
                                     <input type="text" class="form-control" name="funding_source" required>
                             </div>
                             <div class="mb-3">
-                                <label for="funding_framework" class="col-sm-2 col-form-label">กรอบเงินทุน*</label>
+                                <label for="funding_framework" class="col-sm-2 col-form-label">กรอบเงินทุน</label>
                                     <input type="text" class="form-control" name="funding_framework" required>
                             </div>
                             <div class="mb-3">
@@ -243,16 +245,16 @@
                                     <input type="text" class="form-control" name="nature_work" required>
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="leader" class="col-sm-2 col-form-label">หัวหน้าโครงการ/ผู้ร่วมโครงการ*</label>
+                                <label style="white-space: nowrap;" for="leader" class="col-sm-2 col-form-label">หัวหน้าโครงการ/ผู้ร่วมโครงการ</label>
                                     <input type="text" class="form-control" name="leader" required>
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="contribute" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม*</label>
+                                <label style="white-space: nowrap;" for="contribute" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม</label>
                                     <input type="text" class="form-control" name="contribute" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                    <input type="text" class="form-control" name="amount_work" required>
+                                    <input type="text" class="form-control" name="amount_work" disabled>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -277,7 +279,7 @@
                                     <input type="text" class="form-control" name="number" value="<?php echo $data['number']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label for="research_name" class="col-sm-2 col-form-label">ชื่องานวิจัย*</label>
+                                <label for="research_name" class="col-sm-2 col-form-label">ชื่องานวิจัย</label>
                                     <input type="text" class="form-control" name="research_name" value="<?php echo $data['research_name']; ?>">
                             </div>
                             <div class="mb-3">
@@ -285,7 +287,7 @@
                                     <input type="text" class="form-control" name="funding_source" value="<?php echo $data['funding_source']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label for="funding_framework" class="col-sm-2 col-form-label">กรอบเงินทุน*</label>
+                                <label for="funding_framework" class="col-sm-2 col-form-label">กรอบเงินทุน</label>
                                     <input type="text" class="form-control" name="funding_framework" value="<?php echo $data['funding_framework']; ?>">
                             </div>
                             <div class="mb-3">
@@ -297,16 +299,16 @@
                                     <input type="text" class="form-control" name="nature_work" value="<?php echo $data['nature_work']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="leader" class="col-sm-2 col-form-label">หัวหน้าโครงการ/ผู้ร่วมโครงการ*</label>
+                                <label style="white-space: nowrap;" for="leader" class="col-sm-2 col-form-label">หัวหน้าโครงการ/ผู้ร่วมโครงการ</label>
                                     <input type="text" class="form-control" name="leader" value="<?php echo $data['leader']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="contribute" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม*</label>
+                                <label style="white-space: nowrap;" for="contribute" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม</label>
                                     <input type="text" class="form-control" name="contribute" value="<?php echo $data['contribute']; ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                    <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>">
+                                    <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>

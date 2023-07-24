@@ -92,7 +92,7 @@ if (isset($_GET['upload'])) {
 
 <div class="container">
     <div class="pagetitle mt-3">
-        <h1>1.10 ภาระงานเฉพาะกิจที่เกี่ยวข้อง นอกจากข้อ 1-9 (งานที่มหาวิทยาลัยมอบหมายเป็นการเฉพาะกิจภายในคณะสำนัก สถาบัน วิทยาลัย ศูนย์ หรือภายนอกมหาวิทยาลัย)</h1>
+        <h1>10. ภาระงานเฉพาะกิจที่เกี่ยวข้อง นอกจากข้อ 1-9 (งานที่มหาวิทยาลัยมอบหมายเป็นการเฉพาะกิจภายในคณะสำนัก สถาบัน วิทยาลัย ศูนย์ หรือภายนอกมหาวิทยาลัย)</h1>
     </div>
     <hr> <!-- เส้น -->
     <!-- ปุ่มเพิ่มข้อมูล -->
@@ -136,9 +136,9 @@ if (isset($_GET['upload'])) {
             <tr>
                 <th scope="col">วัน/เดือน/ปี</th>
                 <th scope="col">งาน/โครงการ/กิจกรรม/โครงการยุทธศาสตร์/วารสาร</th>
-                <th scope="col">ตำแหน่งที่ได้รับมอบหมายในงาน/โครงการ*</th>
-                <th scope="col">ลักษณะงาน*</th>
-                <th scope="col">จำนวนชั่วโมงทำงาน*</th>
+                <th scope="col">ตำแหน่งที่ได้รับมอบหมายในงาน/โครงการ</th>
+                <th scope="col">ลักษณะงาน</th>
+                <th scope="col">จำนวนชั่วโมงทำงาน</th>
                 <th scope="col">จำนวนภาระงาน</th>
                 <th scope="col">อัปโหลดไฟล์</th>
                 <th scope="col">จัดการข้อมูล</th>
@@ -147,7 +147,8 @@ if (isset($_GET['upload'])) {
 
         <tbody>
             <?php
-            $stmt = $conn->query("SELECT*FROM personal_1_10"); // ดึงข้อมูลจากตาราง personal_1_10
+            $userId = $_SESSION['userId'];
+            $stmt = $conn->query("SELECT*FROM personal_1_10 WHERE userId = '$userId'"); // ดึงข้อมูลจากตาราง personal_1_10
             $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
             $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
             // ตรวจสอบว่ามีข้อมูลหรือไม่
@@ -245,6 +246,7 @@ if (isset($_GET['upload'])) {
             </div>
             <div class="modal-body">
                 <form action="1_10/insert_1_10.php" method="post" enctype="multipart/form-data">
+                    <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
                     <div class="mb-3">
                         <label for="date" class="col-sm-2 col-form-label">วัน/เดือน/ปี</label>
                         <input type="date" class="form-control" name="date" required>
@@ -254,7 +256,7 @@ if (isset($_GET['upload'])) {
                         <input type="text" class="form-control" name="project" required>
                     </div>
                     <div class="mb-3" style="white-space: nowrap;">
-                        <label for="position" class="col-sm-2 col-form-label">ตำแหน่งที่ได้รับมอบหมายในงาน/โครงการ*</label>
+                        <label for="position" class="col-sm-2 col-form-label">ตำแหน่งที่ได้รับมอบหมายในงาน/โครงการ</label>
                         <div class="col-sm-12">
                             <select id="position" name="position" class="form-select" required>
                                 <option value="" selected>กรุณาเลือก</option>
@@ -268,7 +270,7 @@ if (isset($_GET['upload'])) {
                         </div>    
                     </div>
                     <div class="mb-3">
-                        <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน*</label>
+                        <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>
                         <div class="col-sm-12">    
                             <select id="type_work" name="type_work" class="form-select" required>
                                 <option value="" selected>กรุณาเลือก</option>
@@ -280,12 +282,12 @@ if (isset($_GET['upload'])) {
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน*</label>
+                        <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
                         <input type="text" class="form-control" name="amount_time" required>
                     </div>
                     <div class="mb-3">
                         <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                        <input type="text" class="form-control" name="amount_work" required>
+                        <input type="text" class="form-control" name="amount_work" disabled>
                     </div>
 
                     <div class="modal-footer">
@@ -318,7 +320,7 @@ if (isset($_GET['upload'])) {
                         <input type="text" class="form-control" name="project" value="<?php echo $data['project']; ?>">
                     </div>
                     <div class="mb-3" style="white-space: nowrap;">
-                        <label for="position" class="col-sm-2 col-form-label">ตำแหน่งที่ได้รับมอบหมายในงาน/โครงการ*</label>
+                        <label for="position" class="col-sm-2 col-form-label">ตำแหน่งที่ได้รับมอบหมายในงาน/โครงการ</label>
                         <div class="col-sm-12"> 
                             <select id="position" name="position"  class="form-select">
                                 <option value="ประธาน" <?php if ($data['position'] === 'ประธาน') echo 'selected'; ?>>ประธาน</option>
@@ -331,7 +333,7 @@ if (isset($_GET['upload'])) {
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน*</label>
+                        <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>
                         <div class="col-sm-12">
                             <select id="type_work" name="type_work" class="form-select">
                                 <option value="งานต่อเนื่อง" <?php if ($data['type_work'] === 'งานต่อเนื่อง') echo 'selected'; ?>>งานต่อเนื่อง</option>
@@ -342,12 +344,12 @@ if (isset($_GET['upload'])) {
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน*</label>
+                        <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
                         <input type="text" class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>">
                     </div>
                     <div class="mb-3">
                         <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                        <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>">
+                        <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
                     </div>
 
                     <div class="modal-footer">

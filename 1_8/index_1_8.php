@@ -107,11 +107,11 @@
         <thead class="align-middle table-secondary">
             <tr>
                 <th scope="col">วัน/เดือน/ปี</th>
-                <th scope="col">ประเภทการบริการทางวิชาการ*</th>
+                <th scope="col">ประเภทการบริการทางวิชาการ</th>
                 <th scope="col">เรื่อง</th>
                 <th scope="col">สถานที่</th>
                 <th scope="col">ลักษณะงาน</th>
-                <th scope="col">จำนวนชั่วโมงทำงาน*</th>
+                <th scope="col">จำนวนชั่วโมงทำงาน</th>
                 <th scope="col">จำนวนภาระงาน</th>
                 <th scope="col">อัปโหลดไฟล์</th>
                 <th scope="col">จัดการข้อมูล</th>
@@ -119,7 +119,8 @@
         </thead>
         <tbody>
             <?php
-            $stmt = $conn->query("SELECT * FROM personal_1_8");
+            $userId = $_SESSION['userId'];
+            $stmt = $conn->query("SELECT * FROM personal_1_8 WHERE userId = '$userId'");
             $stmt->execute();
             $personal = $stmt->fetchAll();
 
@@ -210,12 +211,13 @@
                     </div>
                     <div class="modal-body">
                         <form action="1_8/insert_1_8.php" method="post">
+                            <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
                             <div class="mb-3">
                                 <label for="date" class="col-sm-2 col-form-label ">วัน/เดือน/ปี</label>
                                     <input type="date" class="form-control" name="date" required>
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="type" class="col-sm-2 col-form-label">ประเภทการบริการทางวิชาการ*</label>
+                                <label style="white-space: nowrap;" for="type" class="col-sm-2 col-form-label">ประเภทการบริการทางวิชาการ</label>
                                 <div class="col-sm-12">
                                     <select id ="type" name="type" class="form-select" required>
                                         <option value="" selected>กรุณาเลือก</option>
@@ -239,12 +241,12 @@
                                     <input type="text" class="form-control" name="nature_work" required>
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="hours" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน*</label>
+                                <label style="white-space: nowrap;" for="hours" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
                                     <input type="text" class="form-control" name="hours" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                    <input type="text" class="form-control" name="amount_work" required>
+                                    <input type="text" class="form-control" name="amount_work" disabled>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -269,7 +271,7 @@
                                     <input type="date" class="form-control" name="date" value="<?php echo $data['date']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="type" class="col-sm-2 col-form-label">ประเภทการบริการทางวิชาการ*</label>
+                                <label style="white-space: nowrap;" for="type" class="col-sm-2 col-form-label">ประเภทการบริการทางวิชาการ</label>
                                 <div class="col-sm-12">
                                     <select id ="type" name="type" class="form-select" required>
                                         <option value="วิทยากร" <?php if ($data['type'] === 'วิทยากร') echo 'selected'; ?>>วิทยากร</option>
@@ -292,12 +294,12 @@
                                     <input type="text" class="form-control" name="nature_work" value="<?php echo $data['nature_work']; ?>">
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="hours" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน*</label>
+                                <label style="white-space: nowrap;" for="hours" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
                                     <input type="text" class="form-control" name="hours" value="<?php echo $data['hours']; ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                    <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>">
+                                    <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>

@@ -1,5 +1,11 @@
 <?php
   session_start();
+  require_once 'config/db.php';
+
+  if (!isset($_SESSION['userId'])) {
+      $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
+      header('location: signin.php');
+  }
 ?>
 
 <!DOCTYPE html>
@@ -31,15 +37,9 @@
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Updated: May 30 2023 with Bootstrap v5.3.0
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
- 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -277,7 +277,7 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link " href="index.php?page=">
+        <a class="nav-link " href="index.php?page=dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -422,9 +422,6 @@
         <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         </ul>
       </li><!-- End Components Nav -->
-
-
-
   </aside><!-- End Sidebar-->
 
   <main>

@@ -3,6 +3,7 @@
     require_once '../config/db.php';
 
     if (isset($_POST['submit'])) {
+        $userId = $_POST['userId'];
         $major = $_POST['major'];
         $code = $_POST['code'];
         $level = $_POST['level'];
@@ -10,10 +11,11 @@
         $amount_student = $_POST['amount_student'];
         $amount_work = $_POST['amount_work'];
 
-        $sql = "INSERT INTO personal_1_2_a (major,code,level,group_study,amount_student,amount_work) 
-        VALUES (:major, :code, :level, :group_study, :amount_student, :amount_work)";
+        $sql = "INSERT INTO personal_1_2_a (userId,major,code,level,group_study,amount_student,amount_work) 
+        VALUES (:userId,:major, :code, :level, :group_study, :amount_student, :amount_work)";
 
         $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':userId', $userId);
         $stmt->bindParam(':major', $major);
         $stmt->bindParam(':code', $code);
         $stmt->bindParam(':level', $level);

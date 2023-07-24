@@ -78,7 +78,7 @@ if (isset($_GET['upload'])) {
 
 <div class="container">
     <div class="pagetitle mt-3">
-        <h1>1.1 ภาระงานสอน (ภาคปกติ)</h1>
+        <h1>1. ภาระงานสอน (ภาคปกติ)</h1>
     </div>
     <hr>
     <div class="d-flex justify-content-end">
@@ -92,8 +92,8 @@ if (isset($_GET['upload'])) {
     <?php if (isset($_SESSION['success'])) { ?>
         <div class="alert alert-success" id="alert-success">
             <?php
-            echo $_SESSION['success'];
-            unset($_SESSION['success']);
+                echo $_SESSION['success'];
+                unset($_SESSION['success']);
             ?>
         </div>
         <script>
@@ -128,7 +128,8 @@ if (isset($_GET['upload'])) {
         </thead>
         <tbody>
             <?php
-            $stmt = $conn->query("SELECT * FROM personal_1_1");
+            $userId = $_SESSION['userId'];
+            $stmt = $conn->query("SELECT * FROM personal_1_1 WHERE userId = '$userId'");
             $stmt->execute();
             $personal = $stmt->fetchAll();
 
@@ -226,6 +227,7 @@ if (isset($_GET['upload'])) {
                     </div>
                     <div class="modal-body">
                         <form action="1_1/insert_1_1.php" method="post">
+                        <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
                             <div class="mb-3">
                                 <label for="code_course" class="col-sm-2 col-form-label ">รหัสวิชา</label>
                                 <input type="text" class="form-control" name="code_course" required>
@@ -240,6 +242,7 @@ if (isset($_GET['upload'])) {
                                     <label for="amount_credit" class="col-sm-2 col-form-label">จำนวน</label>
                                     <div class="col-sm-10">
                                         <select id="amount_credit" name="amount_credit" class="form-select" required>
+                                            <option value="" selected>กรุณาเลือก</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -330,7 +333,7 @@ if (isset($_GET['upload'])) {
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
                                 <label for="amount_work" class="col-sm-2 col-form-label ">จำนวนภาระงาน/สัปดาห์</label>
-                                <input type="text" class="form-control" name="amount_work" required>
+                                <input type="text" class="form-control" name="amount_work" disabled>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>

@@ -3,6 +3,7 @@
     require_once "../config/db.php";
 
     if(isset($_POST['submit'])) {
+        $userId = $_POST['userId'];
         $type = $_POST['type'];
         $title = $_POST['title'];
         $amount_time = $_POST['amount_time'];
@@ -11,10 +12,11 @@
         $participation = $_POST['participation'];
         $amount_work = $_POST['amount_work'];
 
-        $sql = "INSERT INTO personal_1_7 (type, title, amount_time, type_work_s_j, type_work, participation, amount_work)
-        VALUES (:type, :title, :amount_time, :type_work_s_j, :type_work, :participation, :amount_work)";
+        $sql = "INSERT INTO personal_1_7 (userId,type, title, amount_time, type_work_s_j, type_work, participation, amount_work)
+        VALUES (:userId,:type, :title, :amount_time, :type_work_s_j, :type_work, :participation, :amount_work)";
 
         $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':userId', $userId);
         $stmt->bindParam(':type', $type);
         $stmt->bindParam(':title', $title);
         $stmt->bindParam(':amount_time', $amount_time);

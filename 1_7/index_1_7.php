@@ -152,6 +152,9 @@ if (isset($_GET['upload'])) {
             $stmt = $conn->query("SELECT*FROM personal_1_7 WHERE userId = '$userId'"); // ดึงข้อมูลจากตาราง personal_1_7
             $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
             $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
+
+            $totalAmountWork = 0.00;
+
             // ตรวจสอบว่ามีข้อมูลหรือไม่
             if (!$personal) { // ไม่มีข้อมูล
                 echo " <tr><td colspan='9' class='text-center'>ไม่มีข้อมูล</td></tr>";
@@ -168,11 +171,11 @@ if (isset($_GET['upload'])) {
                         <td><?= $per['type_work']; ?></td>
                         <td><?= $per['participation']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
-
+                        <?php $totalAmountWork += floatval($per['amount_work']);?>
 
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
-                                <a href="<?= "uploads/" . $per['file']; ?>" class="btn btn-secondary">
+                                <a href="<?= "uploads/" . $per['file']; ?>" target="_blank" class="btn btn-secondary">
                                     <div class="icon d-flex">
                                         <i class="bi bi-eye"></i>&nbsp;
                                         <div class="label">ดูไฟล์</div>
@@ -234,14 +237,14 @@ if (isset($_GET['upload'])) {
 ?>
 <tr>
     <th scope="row" colspan="6">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-    <td>0.00</td>
+    <td><?= number_format($totalAmountWork, 2); ?></td>
     <td colspan="2"></td>
 </tr>
 </tbody>
 <div class="modal fade" id="ExtralargeModal" tabindex="-1">
 
     <!-- หน้าเพิ่มข้อมูล -->
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">เพิ่มข้อมูล</h5>
@@ -251,8 +254,8 @@ if (isset($_GET['upload'])) {
 
                 <form action="1_7/insert_1_7.php" method="post" enctype="multipart/form-data">
                     <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
-                    <label for="type" class="col-sm-2 col-form-label">ประเภท</label>
                     <div class="mb-3">
+                         <label for="type" class="col-sm-2 col-form-label">ประเภท</label>
                         <input type="text" class="form-control" name="type" required>
                     </div>
                     <div class="mb-3">
@@ -260,38 +263,34 @@ if (isset($_GET['upload'])) {
                         <input type="text" class="form-control" name="title" required>
                     </div>
                     <div class="mb-3">
-                        <label for="amount_time" class="col-sm-2 col-form-label">ระยะเวลา เริ่มต้น-สิ้นสุด</label>
+                        <label for="amount_time" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลา เริ่มต้น-สิ้นสุด</label>
                         <input type="text" class="form-control" name="amount_time" required>
                     </div>
                     <div class="mb-3">
                         <label for="type_work_s_j" class="col-sm-2 col-form-label">ลักษณะ เดี่ยว/ร่วม</label>
-                        <div class="col-sm-12">
-                            <select id="type_work_s_j" name="type_work_s_j" class="form-select">
-                                <option value="" selected>กรุณาเลือก</option>
-                                <option value="เดี่ยว">เดี่ยว</option>
-                                <option value="ร่วม">ร่วม</option>
-                            </select>
-                        </div>
+                        <select id="type_work_s_j" name="type_work_s_j" class="form-select" required>
+                            <option value="" selected>กรุณาเลือก</option>
+                            <option value="เดี่ยว">เดี่ยว</option>
+                            <option value="ร่วม">ร่วม</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>
-                        <div class="col-sm-12">
-                            <select id="type_work" name="type_work" class="form-select" required>
-                                <option value="" selected>กรุณาเลือก</option>
-                                <option value="เอกสารประกอบการสอน">เอกสารประกอบการสอน</option>
-                                <option value="เอกสารคำสอน">เอกสารคำสอน</option>
-                                <option value="หนังสือ/ตำรา">หนังสือ/ตำรา</option>
-                                <option value="VirtualClassroom/E-learning/CAI">VirtualClassroom/E-learning/CAI</option>
-                            </select>
-                        </div>
+                        <select id="type_work1" name="type_work" class="form-select" onchange="calc1()" required>
+                            <option value="" selected>กรุณาเลือก</option>
+                            <option value="เอกสารประกอบการสอน">เอกสารประกอบการสอน</option>
+                            <option value="เอกสารคำสอน">เอกสารคำสอน</option>
+                            <option value="หนังสือ/ตำรา">หนังสือ/ตำรา</option>
+                            <option value="VirtualClassroom/E-learning/CAI">VirtualClassroom/E-learning/CAI</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="participation" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม</label>
-                        <input type="text" class="form-control" name="participation" required>
+                        <input type="text" class="form-control" name="participation" id="participation1" oninput="calc1()" required>
                     </div>
                     <div class="mb-3">
                         <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                        <input type="text" class="form-control" name="amount_work" disabled>
+                        <input type="text" class="form-control" name="amount_work" id="amount_work1" readonly>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -306,7 +305,7 @@ if (isset($_GET['upload'])) {
 
 <!-- แก้ไขข้อมูล -->
 <div class="modal fade" id="modal" tabindex="-1">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">แก้ไขข้อมูล</h5>
@@ -317,43 +316,39 @@ if (isset($_GET['upload'])) {
                 <form action="1_7/edit_1_7.php" method="post">
                     <div class="mb-3">
                         <label for="type" class="col-sm-2 col-form-label">ประเภท</label>
-                        <input type="text" class="form-control" name="type" value="<?php echo $data['type']; ?>">
+                        <input type="text" class="form-control" name="type" value="<?php echo $data['type']; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="title" class="col-sm-2 col-form-label">ชื่อเรื่อง</label>
-                        <input type="text" class="form-control" name="title" value="<?php echo $data['title']; ?>">
+                        <input type="text" class="form-control" name="title" value="<?php echo $data['title']; ?>" required>
                     </div>
                     <div class="mb-3">
-                        <label for="amount_time" class="col-sm-2 col-form-label">ระยะเวลา เริ่มต้น-สิ้นสุด</label>
-                        <input type="text" class="form-control" name="amount_time" class="form-select" value="<?php echo $data['amount_time']; ?>">
+                        <label for="amount_time" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลา เริ่มต้น-สิ้นสุด</label>
+                        <input type="text" class="form-control" name="amount_time" class="form-select" value="<?php echo $data['amount_time']; ?>" required>
                     </div>
                     <div class="mb-3">
-                            <label for="type_work_s_j" class="col-sm-2 col-form-label">ลักษณะ เดี่ยว/ร่วม</label>
-                            <div class="col-sm-12">
-                                <select id="type_work_s_j" name="type_work_s_j" class="form-select">
-                                    <option value="เดี่ยว" <?php if ($data['type_work_s_j'] === 'เดี่ยว') echo 'selected'; ?>>เดี่ยว</option>
-                                    <option value="ร่วม" <?php if ($data['type_work_s_j'] === 'ร่วม') echo 'selected'; ?>>ร่วม</option>
-                                </select>
-                            </div>    
+                        <label for="type_work_s_j" class="col-sm-2 col-form-label">ลักษณะ เดี่ยว/ร่วม</label>
+                        <select id="type_work_s_j" name="type_work_s_j" class="form-select" required>
+                            <option value="เดี่ยว" <?php if ($data['type_work_s_j'] === 'เดี่ยว') echo 'selected'; ?>>เดี่ยว</option>
+                            <option value="ร่วม" <?php if ($data['type_work_s_j'] === 'ร่วม') echo 'selected'; ?>>ร่วม</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>
-                        <div class="col-sm-12">
-                            <select id="type_work" name="type_work" class="form-select">
-                                <option value="เอกสารประกอบการสอน" <?php if ($data['type_work'] === 'เอกสารประกอบการสอน') echo 'selected'; ?>>เอกสารประกอบการสอน</option>
-                                <option value="เอกสารคำสอน" <?php if ($data['type_work'] === 'เอกสารคำสอน') echo 'selected'; ?>>เอกสารคำสอน</option>
-                                <option value="หนังสือ/ตำรา" <?php if ($data['type_work'] === 'หนังสือ/ตำรา') echo 'selected'; ?>>หนังสือ/ตำรา</option>
-                                <option value="VirtualClassroom/E-learning/CAI" <?php if ($data['type_work'] === 'VirtualClassroom/E-learning/CAI') echo 'selected'; ?>>VirtualClassroom/E-learning/CAI</option>
-                            </select>
-                        </div>
+                        <select id="type_work2" name="type_work" class="form-select" onchange="calc2()" required>
+                            <option value="เอกสารประกอบการสอน" <?php if ($data['type_work'] === 'เอกสารประกอบการสอน') echo 'selected'; ?>>เอกสารประกอบการสอน</option>
+                            <option value="เอกสารคำสอน" <?php if ($data['type_work'] === 'เอกสารคำสอน') echo 'selected'; ?>>เอกสารคำสอน</option>
+                            <option value="หนังสือ/ตำรา" <?php if ($data['type_work'] === 'หนังสือ/ตำรา') echo 'selected'; ?>>หนังสือ/ตำรา</option>
+                            <option value="VirtualClassroom/E-learning/CAI" <?php if ($data['type_work'] === 'VirtualClassroom/E-learning/CAI') echo 'selected'; ?>>VirtualClassroom/E-learning/CAI</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="participation" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม</label>
-                        <input type="text" class="form-control" name="participation" value="<?php echo $data['participation']; ?>">
+                        <input type="text" class="form-control" name="participation" id="participation2" value="<?php echo $data['participation']; ?>" oninput="calc2()" required>
                     </div>
                     <div class="mb-3">
                         <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                        <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
+                        <input type="text" class="form-control" name="amount_work" id="amount_work2" value="<?php echo $data['amount_work']; ?>" readonly>
                     </div>
 
                     <div class="modal-footer">
@@ -369,7 +364,7 @@ if (isset($_GET['upload'])) {
 
 <!-- อัพโหลดไฟล์ -->
 <div class="modal fade" id="uploadModal" tabindex="-1">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">อัพโหลดไฟล์</h5>
@@ -429,4 +424,46 @@ if (isset($_GET['upload'])) {
             previewFile.src = URL.createObjectURL(file); // สร้าง URL object สำหรับไฟล์และกำหนดให้ภาพตัวอย่างแสดงรูปภาพ
         }
     });
+    function calc1() {
+        var type_work = document.getElementById('type_work1').value;
+        var participation = document.getElementById('participation1').value;
+
+        if (type_work == 'เอกสารประกอบการสอน'){
+            var calculatedAmountWork = 5*(participation/100);
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }else if (type_work == 'เอกสารคำสอน'){
+            var calculatedAmountWork = 8*(participation/100);
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }else if (type_work == 'หนังสือ/ตำรา'){
+            var calculatedAmountWork = 12*(participation/100);
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }else if (type_work == 'VirtualClassroom/E-learning/CAI'){
+            var calculatedAmountWork = 5*(participation/100);
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }else{
+            var calculatedAmountWork = 0;
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }
+    }
+    function calc2() {
+        var type_work = document.getElementById('type_work2').value;
+        var participation = document.getElementById('participation2').value;
+
+        if (type_work == 'เอกสารประกอบการสอน'){
+            var calculatedAmountWork = 5*(participation/100);
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }else if (type_work == 'เอกสารคำสอน'){
+            var calculatedAmountWork = 8*(participation/100);
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }else if (type_work == 'หนังสือ/ตำรา'){
+            var calculatedAmountWork = 12*(participation/100);
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }else if (type_work == 'VirtualClassroom/E-learning/CAI'){
+            var calculatedAmountWork = 5*(participation/100);
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }else{
+            var calculatedAmountWork = 0;
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }
+    }
 </script>

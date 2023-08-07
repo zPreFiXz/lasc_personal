@@ -287,10 +287,9 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_1/index_1_1">
-          <i class="bi bi-menu-button-wide"></i><span>1. ภาระงานสอน(ภาคปกติ)</span>
+          <i class="bi bi-menu-button-wide"></i>
+          <span>1. ภาระงานสอน(ภาคปกติ)</span>
         </a>
-        <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        </ul>
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
@@ -315,16 +314,12 @@
         <a class="nav-link collapsed" href="index.php?page=1_3/index_1_3">
           <i class="bi bi-menu-button-wide"></i><span>3. ภาระงานอาจารย์นิเทศ</span>
         </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        </ul>
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_4/index_1_4">
           <i class="bi bi-menu-button-wide"></i><span>4. ภาระงานกิจกรรมพัฒนานักศึกษา</span>
         </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        </ul>
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
@@ -367,40 +362,30 @@
         <a class="nav-link collapsed" href="index.php?page=1_7/index_1_7">
           <i class="bi bi-menu-button-wide"></i><span>7. ภาระงานผลิตผลงานทางวิชาการ</span>
         </a>
-        <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        </ul>
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_8/index_1_8">
           <i class="bi bi-menu-button-wide"></i><span>8. ภาระงานด้านบริการวิชาการ</span>
         </a>
-        <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        </ul>
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_9/index_1_9">
           <i class="bi bi-menu-button-wide"></i><span>9. ภาระงานทำนุบำรุงศิลปวัฒนธรรม</span>
         </a>
-        <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        </ul>
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_10/index_1_10">
           <i class="bi bi-menu-button-wide"></i><span>10. ภาระงานเฉพาะกิจที่เกี่ยวข้อง นอกจากข้อ 1-9</span>
         </a>
-        <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        </ul>
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_11/index_1_11">
           <i class="bi bi-menu-button-wide"></i><span>11. ภาระงานด้านการบริหาร</span>
         </a>
-        <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        </ul>
       </li><!-- End Components Nav -->
 
       <li class="nav-heading">ตอนที่ 2</li>
@@ -409,8 +394,6 @@
         <a class="nav-link collapsed" href="index.php?page=2/index_2">
           <i class="bi bi-menu-button-wide"></i><span>แบบสรุปภาระงานรายบุคคล</span>
         </a>
-        <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        </ul>
       </li><!-- End Components Nav -->
 
       <li class="nav-heading">ประเมินผลการปฏิบัติงาน</li>
@@ -419,8 +402,6 @@
         <a class="nav-link collapsed" href="index.php?page=3/index_3">
           <i class="bi bi-menu-button-wide"></i><span>แบบประเมินผลการปฏิบัติงาน(สายวิชาการ)</span>
         </a>
-        <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        </ul>
       </li><!-- End Components Nav -->
   </aside><!-- End Sidebar-->
 

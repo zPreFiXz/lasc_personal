@@ -1,8 +1,3 @@
-<script>
-    function calc(){
-        document.getElementById('amount_work').value = document.getElementById('group_study').value;
-    }
-</script>
 <?php
     require_once "config/db.php";
 
@@ -127,10 +122,13 @@
         </thead>
         <tbody>
             <?php
+            
             $userId = $_SESSION['userId'];
             $stmt = $conn->query("SELECT * FROM personal_1_2_a WHERE userId = '$userId'");
             $stmt->execute();
             $personal = $stmt->fetchAll();
+
+            $totalAmountWork = 0.00;
 
             if (!$personal) {
                 echo "<tr><td colspan='8' class='text-center'>ไม่มีข้อมูล</td></tr>";
@@ -144,18 +142,19 @@
                         <td><?= $per['group_study']; ?></td>
                         <td><?= $per['amount_student']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
+                        <?php $totalAmountWork += floatval($per['amount_work']);?>
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
-                                <a href="uploads/<?= $per['file']; ?>"  class="btn btn-secondary">
+                                <a href="uploads/<?= $per['file']; ?>" target="_blank" class="btn btn-secondary">
                                     <div class="icon d-flex">
                                         <i class="bi bi-eye"></i>&nbsp;
                                         <div class="label">ดูไฟล์</div>
                                     </div>
                                 </a>
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')"  href="?page=1_2_a/index_1_2_a&delete_file=<?= $per['id']; ?>" class="btn btn-warning">
+                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')"  href="?page=1_2_a/index_1_2_a&delete_file=<?= $per['id']; ?>" class="btn btn-danger">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;
-                                        <div class="label">ลบ</div>
+                                        <div class="label">ลบไฟล์</div>
                                     </div>
                                 </a>
                             </td>
@@ -205,7 +204,7 @@
             ?>
             <tr>
                 <th scope="row" colspan="5">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-                <td scope="row">0.00</td>
+                <td scope="row"><?= number_format($totalAmountWork, 2); ?></td>
                 <td colspan="2"></td>
             </tr>
         </tbody>
@@ -217,7 +216,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="1_2_a/insert_1_2_a.php" method="post" >
+                        <form action="1_2_a/insert_1_2_a.php" method="post">
                             <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
                             <div class="mb-3">
                                 <label for="major" class="col-sm-2 col-form-label ">สาขาวิชา</label>
@@ -233,7 +232,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="group_study" class="col-sm-2 col-form-label">หมู่เรียน</label>
-                                <input type="text" class="form-control" name="group_study" required>
+                                <input type="text" class="form-control" name="group_study" id="group_study" oninput="calc()" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>
@@ -241,7 +240,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" class="form-control" name="amount_work" disabled>
+                                <input type="text" class="form-control" name="amount_work" id="amount_work" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -263,27 +262,27 @@
                         <form action="1_2_a/edit_1_2_a.php" method="post">
                             <div class="mb-3">
                                 <label for="major" class="col-sm-2 col-form-label">สาขาวิชา</label>
-                                <input type="text" class="form-control" name="major" value="<?php echo $data['major']; ?>">
+                                <input type="text" class="form-control" name="major" value="<?php echo $data['major']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="code" class="col-sm-2 col-form-label">รหัส</label>
-                                <input type="text" class="form-control" name="code" value="<?php echo $data['code']; ?>">
+                                <input type="text" class="form-control" name="code" value="<?php echo $data['code']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="level" class="col-sm-2 col-form-label">ระดับชั้น</label>
-                                <input type="text" class="form-control" name="level" value="<?php echo $data['level']; ?>">
+                                <input type="text" class="form-control" name="level" value="<?php echo $data['level']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="group_study" class="col-sm-2 col-form-label">หมู่เรียน</label>
-                                <input type="text" class="form-control" name="group_study" value="<?php echo $data['group_study']; ?>">
+                                <input type="text" class="form-control" name="group_study" value="<?php echo $data['group_study']; ?>"required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>
-                                <input type="text" class="form-control" name="amount_student" value="<?php echo $data['amount_student']; ?>">
+                                <input type="text" class="form-control" name="amount_student" value="<?php echo $data['amount_student']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
+                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -346,6 +345,17 @@
         const [file] = fileInput.files;
         if (file) {
             previewFile.src = URL.createObjectURL(file);
+        }
+    }
+
+    function calc(){
+        var group_study = parseFloat(document.getElementById('group_study').value);
+
+        if (!isNaN(group_study)){
+            var calculatedAmountWork = 2;
+            document.getElementById('amount_work').value = calculatedAmountWork.toFixed(2);
+        }else{
+            document.getElementById('amount_work').value = '0.00';
         }
     }
 </script>

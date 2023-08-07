@@ -3,6 +3,7 @@
     require_once "../config/db.php";
 
     if(isset($_POST['submit'])) {
+        $userId = $_POST['userId'];
         $number = $_POST['number'];
         $project = $_POST['project'];
         $funding = $_POST['funding'];
@@ -10,10 +11,11 @@
         $publish = $_POST['publish'];
         $amount_work = $_POST['amount_work'];
 
-        $sql = "INSERT INTO personal_1_6_b (number, project, funding, start_end, publish, amount_work)
-        VALUES (:number, :project, :funding, :start_end, :publish, :amount_work)";
+        $sql = "INSERT INTO personal_1_6_b (userId,number, project, funding, start_end, publish, amount_work)
+        VALUES (:userId,:number, :project, :funding, :start_end, :publish, :amount_work)";
 
         $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':userId', $userId);
         $stmt->bindParam(':number', $number);
         $stmt->bindParam(':project', $project);
         $stmt->bindParam(':funding', $funding);

@@ -150,6 +150,9 @@ if (isset($_GET['upload'])) {
             $stmt = $conn->query("SELECT*FROM personal_1_3 WHERE userId = '$userId'"); // ดึงข้อมูลจากตาราง personal_1_3
             $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
             $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
+
+            $totalAmountWork = 0.00;
+
             // ตรวจสอบว่ามีข้อมูลหรือไม่
             if (!$personal) { // ไม่มีข้อมูล
                 echo " <tr><td colspan='8' class='text-center'>ไม่มีข้อมูล</td></tr>";
@@ -165,10 +168,10 @@ if (isset($_GET['upload'])) {
                         <td><?php echo $per['amount_time']; ?></td>
                         <td><?php echo $per['workplace']; ?></td>
                         <td><?php echo $per['amount_work']; ?></td>
-
+                        <?php $totalAmountWork += floatval($per['amount_work']);?>
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
-                                <a href="<?= "uploads/" . $per['file']; ?>" class="btn btn-secondary">
+                                <a href="<?= "uploads/" . $per['file']; ?>" target="_blank" class="btn btn-secondary">
                                     <div class="icon d-flex">
                                         <i class="bi bi-eye"></i>&nbsp;
                                         <div class="label">ดูไฟล์</div>
@@ -230,14 +233,14 @@ if (isset($_GET['upload'])) {
             ?>
             <tr>
                 <th scope="row" colspan="5">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-                <td>0.00</td>
+                <td><?= number_format($totalAmountWork, 2); ?></td>
                 <td colspan="2"></td>
             </tr>
         </tbody>
         <div class="modal fade" id="ExtralargeModal" tabindex="-1">
 
             <!-- หน้าเพิ่มข้อมูล -->
-            <div class="modal-dialog modal-xl">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">เพิ่มข้อมูล</h5>
@@ -248,30 +251,30 @@ if (isset($_GET['upload'])) {
                             <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
                             <div class="mb-3">
                                 <label for="Major" class="col-form-label">สาขาวิชา</label>
-                                <input type="text" required class="form-control" name="Major">
+                                <input type="text" required class="form-control" name="Major" required>
                             </div>
                             <div class="mb-3">
                                 <label for="level" class="col-form-label">ระดับชั้น</label>
-                                <input type="text" required class="form-control" name="level">
+                                <input type="text" required class="form-control" name="level" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_student" class="col-form-label">จำนวนนักศึกษา</label>
-                                <input type="text" required class="form-control" name="amount_student">
+                                <input type="text" required class="form-control" name="amount_student" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="amount_time" class="col-form-label">ระยะเวลาที่ปฏิบัติ (ชั่วโมง) ไม่เกิน 12 ชม./วัน</label>
-                                <input type="text" required class="form-control" name="amount_time">
+                                <input type="text" required class="form-control" name="amount_time" id="amount_time1" oninput="calc1()" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="workplace" class="col-form-label">สถานที่ทำงาน/งานที่ควบคุม</label>
-                                <input type="text" required class="form-control" name="workplace">
+                                <input type="text" required class="form-control" name="workplace" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="amount_work" class="col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" required class="form-control" name="amount_work" disabled>
+                                <input type="text" required class="form-control" name="amount_work" id="amount_work1" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -282,11 +285,9 @@ if (isset($_GET['upload'])) {
                 </div>
             </div>
         </div>
-
-
         <!-- แก้ไขข้อมูล -->
         <div class="modal fade" id="modal" tabindex="-1">
-            <div class="modal-dialog modal-xl">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">แก้ไขข้อมูล</h5>
@@ -297,30 +298,30 @@ if (isset($_GET['upload'])) {
                         <form action="1_3/edit_1_3.php" method="post">
                             <div class="mb-3">
                                 <label for="Major" class="col-form-label">สาขาวิชา</label>
-                                <input type="text" required class="form-control" name="Major" value="<?php echo $data['Major']; ?>">
+                                <input type="text" class="form-control" name="Major" value="<?php echo $data['Major']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="level" class="col-form-label">ระดับชั้น</label>
-                                <input type="text" required class="form-control" name="level" value="<?php echo $data['level']; ?>">
+                                <input type="text" class="form-control" name="level" value="<?php echo $data['level']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_student" class="col-form-label">จำนวนนักศึกษา</label>
-                                <input type="text" required class="form-control" name="amount_student" value="<?php echo $data['amount_student']; ?>">
+                                <input type="text" class="form-control" name="amount_student" value="<?php echo $data['amount_student']; ?>" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="amount_time" class="col-form-label">ระยะเวลาที่ปฏิบัติ (ชั่วโมง) ไม่เกิน 12 ชม./วัน</label>
-                                <input type="text" required class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>">
+                                <input type="text" class="form-control" name="amount_time" id="amount_time2" value="<?php echo $data['amount_time']; ?>" oninput="calc2()" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="workplace" class="col-form-label">สถานที่ทำงาน/งานที่ควบคุม</label>
-                                <input type="text" required class="form-control" name="workplace" value="<?php echo $data['workplace']; ?>">
+                                <input type="text" class="form-control" name="workplace" value="<?php echo $data['workplace']; ?>" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="amount_work" class="col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" required class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
+                                <input type="text" class="form-control" name="amount_work" id="amount_work2" value="<?php echo $data['amount_work']; ?>" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -335,7 +336,7 @@ if (isset($_GET['upload'])) {
 
 <!-- อัพโหลดไฟล์ -->
 <div class="modal fade" id="uploadModal" tabindex="-1">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">อัพโหลดไฟล์</h5>
@@ -395,4 +396,25 @@ if (isset($_GET['upload'])) {
             previewFile.src = URL.createObjectURL(file); // สร้าง URL object สำหรับไฟล์และกำหนดให้ภาพตัวอย่างแสดงรูปภาพ
         }
     });
+
+    function calc1() {
+        var amountTime = parseFloat(document.getElementById('amount_time1').value);
+
+        if (!isNaN(amountTime)) {
+            var calculatedAmountWork = amountTime / 15;
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        } else {
+            document.getElementById('amount_work1').value = "0.00";
+        }
+    }
+    function calc2() {
+        var amountTime = parseFloat(document.getElementById('amount_time2').value);
+
+        if (!isNaN(amountTime)) {
+            var calculatedAmountWork = amountTime / 15;
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        } else {
+            document.getElementById('amount_work2').value = "0.00";
+        }
+    }
 </script>

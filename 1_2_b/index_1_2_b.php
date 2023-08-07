@@ -157,6 +157,11 @@
             $stmt = $conn->query("SELECT*FROM personal_1_2_b WHERE userId = '$userId'"); // ดึงข้อมูลจากตาราง personal_1_2_b
             $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
             $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
+
+            $totalgroupStudy = 0.00;
+            $totalAmountTime = 0.00;
+            $totalAmountWork = 0.00;
+
             // ตรวจสอบว่ามีข้อมูลหรือไม่
             if (!$personal) { // ไม่มีข้อมูล
                 echo " <tr><td colspan='8' class='text-center'>ไม่มีข้อมูล</td></tr>";
@@ -172,10 +177,12 @@
             <td><?= $per['group_study']; ?></td>
             <td><?= $per['amount_time']; ?></td>
             <td><?= $per['amount_work']; ?></td>
-            
+            <?php $totalgroupStudy += floatval($per['group_study']);?>
+            <?php $totalAmountTime += floatval($per['amount_time']);?>
+            <?php $totalAmountWork += floatval($per['amount_work']);?>
             <?php if ($per['file']) { ?> 
                 <td style="white-space: nowrap;">
-                    <a href="<?= "uploads/". $per['file']; ?>" class="btn btn-secondary">
+                    <a href="<?= "uploads/". $per['file']; ?>" target="_blank" class="btn btn-secondary">
                         <div class="icon d-flex">
                             <i class="bi bi-eye"></i>&nbsp;
                             <div class="label">ดูไฟล์</div>
@@ -237,16 +244,15 @@
                 ?>    
         <tr>
             <th scope="row" colspan="3">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-            <td>0</td>
-            <td>0</td>
-            <td>0.00</td>
+            <td><?= number_format($totalgroupStudy); ?></td>
+            <td><?= number_format($totalAmountTime); ?></td>
+            <td><?= number_format($totalAmountWork, 2); ?></td>
             <td colspan="2"></td>
         </tr>
         </tbody>
         <div class="modal fade" id="ExtralargeModal" tabindex="-1">
-        
         <!-- หน้าเพิ่มข้อมูล -->
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">เพิ่มข้อมูล</h5>
@@ -257,7 +263,7 @@
                         <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
                         <div class="mb-3">
                             <label for="club"  class="col-sm-2 col-form-label" style="white-space: nowrap;">ชื่อชมรม ชุมนุม หรือที่ปรึกษาอื่นๆ</label>
-                                <input type="text" class="form-control" name ="club" required >               
+                                <input type="text" class="form-control" name ="club" id="club" onblur="calc()" required >               
                         </div>
                         <div class="mb-3">
                             <label for="level"  class="col-sm-2 col-form-label">ระดับชั้น</label>
@@ -277,7 +283,7 @@
                         </div> 
                         <div class="mb-3">
                             <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" class="form-control" name="amount_work" disabled>
+                                <input type="text" class="form-control" name="amount_work" id="amount_work" readonly>
                         </div>  
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -292,7 +298,7 @@
 
     <!-- แก้ไขข้อมูล -->
     <div class="modal fade" id="modal" tabindex="-1">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">แก้ไขข้อมูล</h5>
@@ -302,27 +308,27 @@
                     <form action = "1_2_b/edit_1_2_b.php" method="post">
                         <div class="mb-3">
                             <label for="club"  class="col-sm-2 col-form-label" style="white-space: nowrap;">ชื่อชมรม ชุมนุม หรือที่ปรึกษาอื่นๆ</label>
-                                <input type="text" class="form-control" name ="club" value="<?php echo $data['club']; ?>">
+                                <input type="text" class="form-control" name ="club" value="<?php echo $data['club']; ?>" required>
                         </div>  
                         <div class="mb-3">
                             <label for="level"  class="col-sm-2 col-form-label">ระดับชั้น</label>
-                                <input type="text" class="form-control" name ="level" value="<?php echo $data['level']; ?>">
+                                <input type="text" class="form-control" name ="level" value="<?php echo $data['level']; ?>" required>
                         </div> 
                         <div class="mb-3">
                             <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>
-                                <input type="text" class="form-control" name ="amount_student" value="<?php echo $data['amount_student']; ?>">
+                                <input type="text" class="form-control" name ="amount_student" value="<?php echo $data['amount_student']; ?>" required>
                         </div> 
                         <div class="mb-3">
                             <label for="group_study" class="col-sm-2 col-form-label">หมู่เรียน</label>
-                                <input type="text" class="form-control" name="group_study" value="<?php echo $data['group_study']; ?>">
+                                <input type="text" class="form-control" name="group_study" value="<?php echo $data['group_study']; ?>" required>
                         </div> 
                         <div class="mb-3">
                             <label for="amount_time" class="col-sm-2 col-form-label" style="white-space: nowrap;">จำนวนชั่วโมงทำงานต่อสัปดาห์ต่อภาค</label>
-                                <input type="text" class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>">
+                                <input type="text" class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>" required>
                         </div> 
                         <div class="mb-3">
                             <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
+                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" readonly>
                         </div> 
 
                         <div class="modal-footer">
@@ -338,7 +344,7 @@
 
         <!-- อัพโหลดไฟล์ -->
     <div class="modal fade" id="uploadModal" tabindex="-1">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">อัพโหลดไฟล์</h5>
@@ -398,4 +404,8 @@
             previewFile.src = URL.createObjectURL(file); // สร้าง URL object สำหรับไฟล์และกำหนดให้ภาพตัวอย่างแสดงรูปภาพ
         }
     });
+
+     function calc(){
+        document.getElementById('amount_work').value = 2;
+    }
 </script>

@@ -122,6 +122,8 @@
             $stmt->execute();
             $personal = $stmt->fetchAll();
 
+            $totalAmountWork = 0.00;
+
             if (!$personal) {
                 echo "<tr><td colspan='8' class='text-center'>ไม่มีข้อมูล</td></tr>";
             } else {
@@ -133,18 +135,19 @@
                         <td><?= $per['location']; ?></td>
                         <td><?= $per['period']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
+                        <?php $totalAmountWork += floatval($per['amount_work']);?>
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
-                                <a href="uploads/<?= $per['file']; ?>"  class="btn btn-secondary">
+                                <a href="uploads/<?= $per['file']; ?>" target="_blank" class="btn btn-secondary">
                                     <div class="icon d-flex">
                                         <i class="bi bi-eye"></i>&nbsp;
                                         <div class="label">ดูไฟล์</div>
                                     </div>
                                 </a>
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')"  href="?page=1_4/index_1_4&delete_file=<?= $per['id']; ?>" class="btn btn-warning">
+                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')"  href="?page=1_4/index_1_4&delete_file=<?= $per['id']; ?>" class="btn btn-danger">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;
-                                        <div class="label">ลบ</div>
+                                        <div class="label">ลบไฟล์</div>
                                     </div>
                                 </a>
                             </td>
@@ -194,7 +197,7 @@
             ?>
             <tr>
                 <th scope="row" colspan="4">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-                <td scope="row">0.00</td>
+                <td scope="row"><?= number_format($totalAmountWork, 2); ?></td>
                 <td colspan="2"></td>
             </tr>
         </tbody>
@@ -210,23 +213,23 @@
                             <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
                             <div class="mb-3">
                                 <label for="date" class="col-sm-2 col-form-label ">วัน/เดือน/ปี</label>
-                                    <input type="date" class="form-control" name="date" required>
+                                <input type="date" class="form-control" name="date" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
                                 <label for="project_name" class="col-sm-2 col-form-label">ชื่อโครงการ/กิจกรรม/งาน</label>
-                                    <input type="text" class="form-control" name="project_name" required>
+                                <input type="text" class="form-control" name="project_name" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
                                 <label for="location" class="col-sm-2 col-form-label">สถานที่/งานที่ควบคุม</label>
-                                    <input type="text" class="form-control" name="location" required>
+                                <input type="text" class="form-control" name="location" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
                                 <label for="period" class="col-sm-2 col-form-label">ระยะเวลาปฏิบัติ (ชั่วโมง)</label>
-                                    <input type="text" class="form-control" name="period" required>
+                                <input type="text" class="form-control" name="period" id="period1" oninput="calc1()" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                    <input type="text" class="form-control" name="amount_work" disabled>
+                                <input type="text" class="form-control" name="amount_work" id="amount_work1" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -248,23 +251,23 @@
                         <form action="1_4/edit_1_4.php" method="post">
                             <div class="mb-3">
                                 <label for="date" class="col-sm-2 col-form-label">วัน/เดือน/ปี</label>
-                                    <input type="date" class="form-control" name="date" value="<?php echo $data['date']; ?>">
+                                    <input type="date" class="form-control" name="date" value="<?php echo $data['date']; ?>" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
                                 <label for="project_name" class="col-sm-2 col-form-label">ชื่อโครงการ/กิจกรรม/งาน</label>
-                                    <input type="text" class="form-control" name="project_name" value="<?php echo $data['project_name']; ?>">
+                                    <input type="text" class="form-control" name="project_name" value="<?php echo $data['project_name']; ?>" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
                                 <label for="location" class="col-sm-2 col-form-label">สถานที่/งานที่ควบคุม</label>
-                                    <input type="text" class="form-control" name="location" value="<?php echo $data['location']; ?>">
+                                    <input type="text" class="form-control" name="location" value="<?php echo $data['location']; ?>" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
                                 <label for="period" class="col-sm-2 col-form-label">ระยะเวลาปฏิบัติ (ชั่วโมง)</label>
-                                    <input type="text" class="form-control" name="period" value="<?php echo $data['period']; ?>">
+                                    <input type="text" class="form-control" name="period" id="period2" value="<?php echo $data['period']; ?>" oninput="calc2()" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                    <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
+                                    <input type="text" class="form-control" name="amount_work" id="amount_work2" value="<?php echo $data['amount_work']; ?>" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -327,6 +330,26 @@
         const [file] = fileInput.files;
         if (file) {
             previewFile.src = URL.createObjectURL(file);
+        }
+    }
+    function calc1() {
+        var amountTime = parseFloat(document.getElementById('period1').value);
+
+        if (!isNaN(amountTime)) {
+            var calculatedAmountWork = amountTime / 15;
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        } else {
+            document.getElementById('amount_work1').value = "";
+        }
+    }
+    function calc2() {
+        var amountTime = parseFloat(document.getElementById('period2').value);
+
+        if (!isNaN(amountTime)) {
+            var calculatedAmountWork = amountTime / 15;
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        } else {
+            document.getElementById('amount_work2').value = "";
         }
     }
 </script>

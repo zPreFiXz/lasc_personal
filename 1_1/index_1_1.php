@@ -160,10 +160,10 @@ if (isset($_GET['upload'])) {
                                         <div class="label">ดูไฟล์</div>
                                     </div>
                                 </a>
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_1/index_1_1&delete_file=<?= $per['id']; ?>" class="btn btn-warning">
+                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_1/index_1_1&delete_file=<?= $per['id']; ?>" class="btn btn-danger">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;
-                                        <div class="label">ลบ</div>
+                                        <div class="label">ลบไฟล์</div>
                                     </div>
                                 </a>
                             </td>
@@ -241,7 +241,7 @@ if (isset($_GET['upload'])) {
                                 <div class="row mb-3">
                                     <label for="amount_credit" class="col-sm-2 col-form-label">จำนวน</label>
                                     <div class="col-sm-10">
-                                        <select id="amount_credit" name="amount_credit" class="form-select" required>
+                                        <select id="amount_credit" name="amount_credit" class="form-select" onchange="calc1()" required>
                                             <option value="" selected>กรุณาเลือก</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -252,7 +252,7 @@ if (isset($_GET['upload'])) {
                                 <div class="row mb-3">
                                     <label for="describe" class="col-sm-2 col-form-label">บรรยาย</label>
                                     <div class="col-sm-10">
-                                            <select id="describe" name="describe" class="form-select"  required>
+                                            <select id="describe1" name="describe" class="form-select" onchange="calc1()" required>
                                                 <option value="" selected>กรุณาเลือก</option>
                                                 <option value="0">0</option>
                                                 <option value="1">1</option>
@@ -267,7 +267,7 @@ if (isset($_GET['upload'])) {
                                 <div class="row mb-3">
                                     <label for="practice" class="col-sm-2 col-form-label">ปฏิบัติ</label>
                                     <div class="col-sm-10">
-                                        <select id="practice" name="practice" class="form-select" required>
+                                        <select id="practice1" name="practice" class="form-select" onchange="calc1()" required>
                                             <option value="" selected>กรุณาเลือก</option>
                                             <option value="0">0</option>
                                             <option value="1">1</option>
@@ -282,7 +282,7 @@ if (isset($_GET['upload'])) {
                                 <div class="row mb-3">
                                     <label for="practice_subject" class="col-sm-2 col-form-label">แบบปฏิบัติ</label>
                                     <div class="col-sm-10">
-                                        <select id="practice_subject" name="practice_subject" class="form-select" required>
+                                        <select id="practice_subject1" name="practice_subject" class="form-select" onchange="calc1()" required>
                                             <option value="ทั่วไป">ทั่วไป</option>
                                             <option value="ฟิสิกส์">ฟิสิกส์</option>
                                             <option value="เคมี">เคมี</option>
@@ -311,7 +311,7 @@ if (isset($_GET['upload'])) {
                             </div>
                             <div class="mb-3">
                                 <label for="group_study" class="col-sm-2 col-form-label">หมู่เรียนที่</label>
-                                    <select id="group_study" name="group_study" class="form-select" required>
+                                    <select id="group_study1" name="group_study" class="form-select" onchange="calc1()" required>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -321,11 +321,11 @@ if (isset($_GET['upload'])) {
                             </div>
                             <div class="mb-3">
                                 <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>
-                                <input type="text" class="form-control" name="amount_student" required>
+                                <input type="text" class="form-control" name="amount_student" id="amount_student1" oninput="calc1()" required>
                             </div>
                             <div class="mb-3">
                                 <label for="proportion" class="col-sm-2 col-form-label">สัดส่วนการสอน</label>
-                                <input type="text" class="form-control" name="proportion" required>
+                                <input type="text" class="form-control" name="proportion" id="proportion1" oninput="calc1()" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
                                 <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงสอน/สัปดาห์</label>
@@ -333,7 +333,7 @@ if (isset($_GET['upload'])) {
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
                                 <label for="amount_work" class="col-sm-2 col-form-label ">จำนวนภาระงาน/สัปดาห์</label>
-                                <input type="text" class="form-control" name="amount_work" disabled>
+                                <input type="text" class="form-control" name="amount_work" id="amount_work1" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -356,18 +356,18 @@ if (isset($_GET['upload'])) {
                         <form action="1_1/edit_1_1.php" method="post">
                             <div class="mb-3">
                                 <label for="code_course" class="col-sm-2 col-form-label ">รหัสวิชา</label>
-                                <input type="text" class="form-control" name="code_course" value="<?php echo $data['code_course']; ?>">
+                                <input type="text" class="form-control" name="code_course" value="<?php echo $data['code_course']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="name_course" class="col-sm-2 col-form-label ">ชื่อวิชา</label>
-                                <input type="text" class="form-control" name="name_course" value="<?php echo $data['name_course']; ?>">
+                                <input type="text" class="form-control" name="name_course" value="<?php echo $data['name_course']; ?>" required>
                             </div>
                             <h5 class="col-sm-2 col-form-label">จำนวนหน่วยกิต:</h5>
                             <div class="m-3">
                                 <div class="row mb-3">
                                     <label for="amount_credit" class="col-sm-2 col-form-label">จำนวน</label>
                                     <div class="col-sm-10">
-                                        <select id="amount_credit" name="amount_credit" class="form-select">
+                                        <select id="amount_credit" name="amount_credit" class="form-select" required>
                                             <option value="1" <?php if ($data['amount_credit'] === '1') echo 'selected'; ?>>1</option>
                                             <option value="2" <?php if ($data['amount_credit'] === '2') echo 'selected'; ?>>2</option>
                                             <option value="3" <?php if ($data['amount_credit'] === '3') echo 'selected'; ?>>3</option>
@@ -377,7 +377,7 @@ if (isset($_GET['upload'])) {
                                 <div class="row mb-3">
                                     <label for="describe" class="col-sm-2 col-form-label">บรรยาย</label>
                                     <div class="col-sm-10">
-                                        <select id="describe" name="describe" class="form-select">
+                                        <select id="describe" name="describe" class="form-select" required>
                                             <option value="0" <?php if ($data['describe'] === '0') echo 'selected'; ?>>0</option>
                                             <option value="1" <?php if ($data['describe'] === '1') echo 'selected'; ?>>1</option>
                                             <option value="2" <?php if ($data['describe'] === '2') echo 'selected'; ?>>2</option>
@@ -391,7 +391,7 @@ if (isset($_GET['upload'])) {
                                 <div class="row mb-3">
                                     <label for="practice" class="col-sm-2 col-form-label">ปฏิบัติ</label>
                                     <div class="col-sm-10">    
-                                        <select id="practice" name="practice" class="form-select">
+                                        <select id="practice" name="practice" class="form-select" required>
                                             <option value="0" <?php if ($data['practice'] === '0') echo 'selected'; ?>>0</option>
                                             <option value="1" <?php if ($data['practice'] === '1') echo 'selected'; ?>>1</option>
                                             <option value="2" <?php if ($data['practice'] === '2') echo 'selected'; ?>>2</option>
@@ -405,7 +405,7 @@ if (isset($_GET['upload'])) {
                                 <div class="row mb-3">
                                     <label for="practice_subject" class="col-sm-2 col-form-label">แบบปฏิบัติ</label>
                                     <div class="col-sm-10">
-                                        <select id="practice_subject" name="practice_subject" class="form-select">
+                                        <select id="practice_subject" name="practice_subject" class="form-select" required>
                                             <option value="ทั่วไป" <?php if ($data['practice_subject'] === 'ทั่วไป') echo 'selected'; ?>>ทั่วไป</option>
                                             <option value="ฟิสิกส์" <?php if ($data['practice_subject'] === 'ฟิสิกส์') echo 'selected'; ?>>ฟิสิกส์</option>
                                             <option value="เคมี" <?php if ($data['practice_subject'] === 'เคมี') echo 'selected'; ?>>เคมี</option>
@@ -416,7 +416,7 @@ if (isset($_GET['upload'])) {
                                 <div class="row mb-3">
                                     <label for="research" class="col-sm-2 col-form-label">ค้นคว้า</label>
                                     <div class="col-sm-10">    
-                                        <select id="type_work" name="type_work" class="form-select">
+                                        <select id="type_work" name="type_work" class="form-select" required>
                                             <option value="0" <?php if ($data['practice'] === '0') echo 'selected'; ?>>0</option>
                                             <option value="1" <?php if ($data['practice'] === '1') echo 'selected'; ?>>1</option>
                                             <option value="2" <?php if ($data['practice'] === '2') echo 'selected'; ?>>2</option>
@@ -430,11 +430,11 @@ if (isset($_GET['upload'])) {
                             </div>
                             <div class="mb-3">
                                 <label for="level" class="col-sm-2 col-form-label">ระดับชั้น(หมู่เรียน)</label>
-                                <input type="text" class="form-control" name="level" value="<?php echo $data['level']; ?>">
+                                <input type="text" class="form-control" name="level" value="<?php echo $data['level']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="group_study" class="col-sm-2 col-form-label">หมู่เรียนที่</label>
-                                    <select id="type_work" name="type_work" class="form-select">
+                                    <select id="type_work" name="type_work" class="form-select" required>
                                         <option value="1" <?php if ($data['practice'] === '1') echo 'selected'; ?>>1</option>
                                         <option value="2" <?php if ($data['practice'] === '2') echo 'selected'; ?>>2</option>
                                         <option value="3" <?php if ($data['practice'] === '3') echo 'selected'; ?>>3</option>
@@ -443,19 +443,19 @@ if (isset($_GET['upload'])) {
                             </div>
                             <div class="mb-3">
                                 <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>
-                                <input type="text" class="form-control" name="amount_student" value="<?php echo $data['amount_student']; ?>">
+                                <input type="text" class="form-control" name="amount_student" value="<?php echo $data['amount_student']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="proportion" class="col-sm-2 col-form-label">สัดส่วนการสอน</label>
-                                <input type="text" class="form-control" name="proportion" value="<?php echo $data['proportion']; ?>">
+                                <input type="text" class="form-control" name="proportion" value="<?php echo $data['proportion']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงสอน/สัปดาห์</label>
-                                <input type="text" class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>">
+                                <input type="text" class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน/สัปดาห์</label>
-                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>">
+                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -518,5 +518,56 @@ if (isset($_GET['upload'])) {
         if (file) {
             previewFile.src = URL.createObjectURL(file);
         }
+    }
+    function calc1() {
+        var describe = document.getElementById('describe1').value;
+        var practice = document.getElementById('practice1').value;
+        var practice_subject = document.getElementById('practice_subject1').value;
+        var group_study = document.getElementById('group_study1').value;
+        var amount_student = document.getElementById('amount_student1').value;
+        var proportion = document.getElementById('proportion1').value;
+
+        if (group_study == 1){
+            var calculatedAmountWork;
+            if (amount_student <= 40){
+                if (describe > 0){
+                    var calculatedAmountWork = describe*3;
+                    if (practice > 0){
+                        calculatedAmountWork = calculatedAmountWork+2;
+                        if (practice_subject == 'ฟิสิกส์'){
+                            calculatedAmountWork = calculatedAmountWork+4;
+                            proportion = proportion/100;
+                            calculatedAmountWork = calculatedAmountWork+proportion;
+
+                            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+                        }
+
+
+
+                    }
+
+
+
+
+
+
+
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+                }
+            }
+        }
+
     }
 </script>

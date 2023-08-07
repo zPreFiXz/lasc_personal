@@ -157,6 +157,9 @@ if (isset($_GET['upload'])) {
             $stmt = $conn->query("SELECT*FROM personal_1_6_b WHERE userId = '$userId'"); // ดึงข้อมูลจากตาราง personal_1_6_b
             $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
             $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
+
+            $totalAmountWork = 0.00;
+
             // ตรวจสอบว่ามีข้อมูลหรือไม่
             if (!$personal) { // ไม่มีข้อมูล
                 echo " <tr><td colspan='9' class='text-center'>ไม่มีข้อมูล</td></tr>";
@@ -172,11 +175,11 @@ if (isset($_GET['upload'])) {
                         <td><?= $per['start_end']; ?></td>
                         <td style="white-space: nowrap;"><?= $per['publish']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
-
+                        <?php $totalAmountWork += floatval($per['amount_work']);?>
 
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
-                                <a href="<?= "uploads/" . $per['file']; ?>" class="btn btn-secondary">
+                                <a href="<?= "uploads/" . $per['file']; ?>" target="_blank" class="btn btn-secondary">
                                     <div class="icon d-flex">
                                         <i class="bi bi-eye"></i>&nbsp;
                                         <div class="label">ดูไฟล์</div>
@@ -238,14 +241,14 @@ if (isset($_GET['upload'])) {
 ?>
 <tr>
     <th scope="row" colspan="5">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-    <td>0.00</td>
+    <td><?= number_format($totalAmountWork, 2); ?></td>
     <td colspan="2"></td>
 </tr>
 </tbody>
 <div class="modal fade" id="ExtralargeModal" tabindex="-1">
 
     <!-- หน้าเพิ่มข้อมูล -->
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">เพิ่มข้อมูล</h5>
@@ -255,8 +258,8 @@ if (isset($_GET['upload'])) {
 
                 <form action="1_6_b/insert_1_6_b.php" method="post" enctype="multipart/form-data">
                     <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
-                    <label for="number" class="col-sm-2 col-form-label">ลำดับที่</label>
                     <div class="mb-3">
+                        <label for="number" class="col-sm-2 col-form-label">ลำดับที่</label>
                         <input type="text" class="form-control" name="number" required>
                     </div>
                     <div class="mb-3">
@@ -268,16 +271,23 @@ if (isset($_GET['upload'])) {
                         <input type="text" class="form-control" name="funding" required>
                     </div>
                     <div class="mb-3">
-                        <label for="start_end" class="col-sm-2 col-form-label">ระยะเวลาเริ่มต้น-สิ้นสุด</label>
+                        <label for="start_end" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลาเริ่มต้น-สิ้นสุด</label>
                         <input type="text" class="form-control" name="start_end" required>
                     </div>
                     <div class="mb-3">
                         <label for="publish" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระบบการเผยแพร่ (ประชุม,วารสาร,ผลงาน)</label>
-                        <input type="text" class="form-control" name="publish" required>
+                        <select type="text" class="form-select" name="publish" id="publish1" onchange="calc1()" required>
+                            <option value="" selected>กรุณาเลือก</option>
+                            <option value="ประชุมวิชาการระดับชาติ">ประชุมวิชาการระดับชาติ</option>
+                            <option value="ประชุมวิชาการระดับนานาชาติ">ประชุมวิชาการระดับนานาชาติ</option>
+                            <option value="TCI 2">TCI 2</option>
+                            <option value="TCI 1">TCI 1</option>
+                            <option value="SJR/SCI/SCI/SCOPUS">SJR/SCI/SCI/SCOPUS</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                        <input type="text" class="form-control" name="amount_work" disabled>
+                        <input type="text" class="form-control" name="amount_work" id="amount_work1" readonly>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -292,7 +302,7 @@ if (isset($_GET['upload'])) {
 
 <!-- แก้ไขข้อมูล -->
 <div class="modal fade" id="modal" tabindex="-1">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">แก้ไขข้อมูล</h5>
@@ -303,27 +313,33 @@ if (isset($_GET['upload'])) {
                 <form action="1_6_b/edit_1_6_b.php" method="post">
                     <div class="mb-3">
                         <label for="number" class="col-sm-2 col-form-label">ลำดับที่</label>
-                        <input type="text" class="form-control" name="number" value="<?php echo $data['number']; ?>">
+                        <input type="text" class="form-control" name="number" value="<?php echo $data['number']; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="project" class="col-sm-2 col-form-label">ชื่องานวิจัย</label>
-                        <input type="text" class="form-control" name="project" value="<?php echo $data['project']; ?>">
+                        <input type="text" class="form-control" name="project" value="<?php echo $data['project']; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="funding" class="col-sm-2 col-form-label">แหล่งเงินทุน</label>
-                        <input type="text" class="form-control" name="funding" value="<?php echo $data['funding']; ?>">
+                        <input type="text" class="form-control" name="funding" value="<?php echo $data['funding']; ?>" required>
                     </div>
                     <div class="mb-3">
-                        <label for="start_end" class="col-sm-2 col-form-label">ระยะเวลาเริ่มต้น-สิ้นสุด</label>
-                        <input type="text" class="form-control" name="start_end" value="<?php echo $data['start_end']; ?>">
+                        <label for="start_end" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลาเริ่มต้น-สิ้นสุด</label>
+                        <input type="text" class="form-control" name="start_end" value="<?php echo $data['start_end']; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="publish" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระบบการเผยแพร่ (ประชุม,วารสาร,ผลงาน)</label>
-                        <input type="text" class="form-control" name="publish" value="<?php echo $data['publish']; ?>">
+                        <select type="text" class="form-select" name="publish" id="publish2"  onchange="calc2()" required>
+                            <option value="ประชุมวิชาการระดับชาติ" <?php if ($data['publish'] === 'ประชุมวิชาการระดับชาติ') echo 'selected' ?>>ประชุมวิชาการระดับชาติ</option>
+                            <option value="ประชุมวิชาการระดับนานาชาติ" <?php if ($data['publish'] === 'ประชุมวิชาการระดับนานาชาติ') echo 'selected' ?>>ประชุมวิชาการระดับนานาชาติ</option>
+                            <option value="TCI 2" <?php if ($data['publish'] === 'TCI 2') echo 'selected' ?>>TCI 2</option>
+                            <option value="TCI 1" <?php if ($data['publish'] === 'TCI 1') echo 'selected' ?>>TCI 1</option>
+                            <option value="SJR/SCI/SCI/SCOPUS" <?php if ($data['publish'] === 'SJR/SCI/SCI/SCOPUS') echo 'selected' ?>>SJR/SCI/SCI/SCOPUS</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                        <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
+                        <input type="text" class="form-control" name="amount_work" id="amount_work2" value="<?php echo $data['amount_work']; ?>" readonly>
                     </div>
 
                     <div class="modal-footer">
@@ -339,7 +355,7 @@ if (isset($_GET['upload'])) {
 
 <!-- อัพโหลดไฟล์ -->
 <div class="modal fade" id="uploadModal" tabindex="-1">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">อัพโหลดไฟล์</h5>
@@ -399,4 +415,50 @@ if (isset($_GET['upload'])) {
             previewFile.src = URL.createObjectURL(file); // สร้าง URL object สำหรับไฟล์และกำหนดให้ภาพตัวอย่างแสดงรูปภาพ
         }
     });
+    function calc1() {
+        var publish = document.getElementById('publish1').value;
+
+        if (publish == 'ประชุมวิชาการระดับชาติ'){
+            var calculatedAmountWork = 5;
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }else if (publish == 'ประชุมวิชาการระดับนานาชาติ'){
+            var calculatedAmountWork = 10;
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }else if (publish == 'TCI 2'){
+            var calculatedAmountWork = 7;
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }else if (publish == 'TCI 1'){
+            var calculatedAmountWork = 10;
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }else if (publish == 'SJR/SCI/SCI/SCOPUS'){
+            var calculatedAmountWork = 15;
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }else{
+            var calculatedAmountWork = 0;
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }
+    }
+    function calc2() {
+        var publish = document.getElementById('publish2').value;
+
+        if (publish == 'ประชุมวิชาการระดับชาติ'){
+            var calculatedAmountWork = 5;
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }else if (publish == 'ประชุมวิชาการระดับนานาชาติ'){
+            var calculatedAmountWork = 10;
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }else if (publish == 'TCI 2'){
+            var calculatedAmountWork = 7;
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }else if (publish == 'TCI 1'){
+            var calculatedAmountWork = 10;
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }else if (publish == 'SJR/SCI/SCI/SCOPUS'){
+            var calculatedAmountWork = 15;
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }else{
+            var calculatedAmountWork = 0;
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }
+    }
 </script>

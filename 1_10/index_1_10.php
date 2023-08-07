@@ -151,6 +151,9 @@ if (isset($_GET['upload'])) {
             $stmt = $conn->query("SELECT*FROM personal_1_10 WHERE userId = '$userId'"); // ดึงข้อมูลจากตาราง personal_1_10
             $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
             $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
+
+            $totalAmountWork = 0.00;
+
             // ตรวจสอบว่ามีข้อมูลหรือไม่
             if (!$personal) { // ไม่มีข้อมูล
                 echo " <tr><td colspan='9' class='text-center'>ไม่มีข้อมูล</td></tr>";
@@ -166,10 +169,11 @@ if (isset($_GET['upload'])) {
                         <td><?= $per['type_work']; ?></td>
                         <td><?= $per['amount_time']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
+                        <?php $totalAmountWork += floatval($per['amount_work']);?>
 
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
-                                <a href="<?= "uploads/" . $per['file']; ?>" class="btn btn-secondary">
+                                <a href="<?= "uploads/" . $per['file']; ?>" target="_blank" class="btn btn-secondary">
                                     <div class="icon d-flex">
                                         <i class="bi bi-eye"></i>&nbsp;
                                         <div class="label">ดูไฟล์</div>
@@ -231,14 +235,14 @@ if (isset($_GET['upload'])) {
 ?>
 <tr>
     <th scope="row" colspan="5">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-    <td>0.00</td>
+    <td><?= number_format($totalAmountWork, 2); ?></td>
     <td colspan="3"></td>
 </tr>
 </tbody>
 <div class="modal fade" id="ExtralargeModal" tabindex="-1">
 
     <!-- หน้าเพิ่มข้อมูล -->
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">เพิ่มข้อมูล</h5>
@@ -257,8 +261,7 @@ if (isset($_GET['upload'])) {
                     </div>
                     <div class="mb-3" style="white-space: nowrap;">
                         <label for="position" class="col-sm-2 col-form-label">ตำแหน่งที่ได้รับมอบหมายในงาน/โครงการ</label>
-                        <div class="col-sm-12">
-                            <select id="position" name="position" class="form-select" required>
+                            <select name="position" class="form-select" id="position1" onchange="calc1()" required>
                                 <option value="" selected>กรุณาเลือก</option>
                                 <option value="ประธาน">ประธาน</option>
                                 <option value="กรรมการและเลขานุการ">กรรมการและเลขานุการ</option>
@@ -266,20 +269,17 @@ if (isset($_GET['upload'])) {
                                 <option value="กรรมการ">กรรมการ</option>
                                 <option value="ที่ปรึกษา">ที่ปรึกษา</option>
                                 <option value="ผู้ออกแบบ">ผู้ออกแบบ</option>
-                            </select>
-                        </div>    
+                            </select> 
                     </div>
                     <div class="mb-3">
-                        <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>
-                        <div class="col-sm-12">    
-                            <select id="type_work" name="type_work" class="form-select" required>
+                        <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>   
+                            <select name="type_work" class="form-select" id="type_work1" onchange="calc1()" required>
                                 <option value="" selected>กรุณาเลือก</option>
                                 <option value="งานต่อเนื่อง">งานต่อเนื่อง</option>
                                 <option value="งานไม่ต่อเนื่อง/ชั่วคราว">งานไม่ต่อเนื่อง/ชั่วคราว</option>
                                 <option value="ออกแบบ/เขียนแบบอาคาร">ออกแบบ/เขียนแบบอาคาร</option>
                                 <option value="ตรวจการจ้างอาคาร">ตรวจการจ้างอาคาร</option>
                             </select>
-                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
@@ -287,7 +287,7 @@ if (isset($_GET['upload'])) {
                     </div>
                     <div class="mb-3">
                         <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                        <input type="text" class="form-control" name="amount_work" disabled>
+                        <input type="text" class="form-control" name="amount_work" id="amount_work1" readonly>
                     </div>
 
                     <div class="modal-footer">
@@ -303,7 +303,7 @@ if (isset($_GET['upload'])) {
 
 <!-- แก้ไขข้อมูล -->
 <div class="modal fade" id="modal" tabindex="-1">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">แก้ไขข้อมูล</h5>
@@ -313,43 +313,39 @@ if (isset($_GET['upload'])) {
                 <form action="1_10/edit_1_10.php" method="post">
                     <div class="mb-3">
                         <label for="date" class="col-sm-2 col-form-label">วัน/เดือน/ปี</label>
-                        <input type="date" class="form-control" name="date" value="<?php echo $data['date']; ?>">
+                        <input type="date" class="form-control" name="date" value="<?php echo $data['date']; ?>" required>
                     </div>
                     <div class="mb-3" style="white-space: nowrap;">
                         <label for="project" class="col-sm-2 col-form-label">งาน/โครงการ/กิจกรรม/โครงการยุทธศาสตร์/วารสาร</label>
-                        <input type="text" class="form-control" name="project" value="<?php echo $data['project']; ?>">
+                        <input type="text" class="form-control" name="project" value="<?php echo $data['project']; ?>" required> 
                     </div>
                     <div class="mb-3" style="white-space: nowrap;">
                         <label for="position" class="col-sm-2 col-form-label">ตำแหน่งที่ได้รับมอบหมายในงาน/โครงการ</label>
-                        <div class="col-sm-12"> 
-                            <select id="position" name="position"  class="form-select">
-                                <option value="ประธาน" <?php if ($data['position'] === 'ประธาน') echo 'selected'; ?>>ประธาน</option>
-                                <option value="กรรมการและเลขานุการ" <?php if ($data['position'] === 'กรรมการและเลขานุการ') echo 'selected'; ?>>กรรมการและเลขานุการ</option>
-                                <option value="กรรมการและผู้ช่วยเลขานุการ" <?php if ($data['position'] === 'กรรมการและผู้ช่วยเลขานุการ') echo 'selected'; ?>>กรรมการและผู้ช่วยเลขานุการ</option>
-                                <option value="กรรมการ" <?php if ($data['position'] === 'กรรมการ') echo 'selected'; ?>>กรรมการ</option>
-                                <option value="ที่ปรึกษา" <?php if ($data['position'] === 'ที่ปรึกษา') echo 'selected'; ?>>ที่ปรึกษา</option>
-                                <option value="ผู้ออกแบบ" <?php if ($data['position'] === 'ผู้ออกแบบ') echo 'selected'; ?>>ผู้ออกแบบ</option>
-                            </select>
-                        </div>
+                        <select name="position"  class="form-select" id="position2" onchange="calc2()" required>
+                            <option value="ประธาน" <?php if ($data['position'] === 'ประธาน') echo 'selected'; ?>>ประธาน</option>
+                            <option value="กรรมการและเลขานุการ" <?php if ($data['position'] === 'กรรมการและเลขานุการ') echo 'selected'; ?>>กรรมการและเลขานุการ</option>
+                            <option value="กรรมการและผู้ช่วยเลขานุการ" <?php if ($data['position'] === 'กรรมการและผู้ช่วยเลขานุการ') echo 'selected'; ?>>กรรมการและผู้ช่วยเลขานุการ</option>
+                            <option value="กรรมการ" <?php if ($data['position'] === 'กรรมการ') echo 'selected'; ?>>กรรมการ</option>
+                            <option value="ที่ปรึกษา" <?php if ($data['position'] === 'ที่ปรึกษา') echo 'selected'; ?>>ที่ปรึกษา</option>
+                            <option value="ผู้ออกแบบ" <?php if ($data['position'] === 'ผู้ออกแบบ') echo 'selected'; ?>>ผู้ออกแบบ</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="type_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>
-                        <div class="col-sm-12">
-                            <select id="type_work" name="type_work" class="form-select">
+                            <select name="type_work" class="form-select" id="type_work2" onchange="calc2()" required>
                                 <option value="งานต่อเนื่อง" <?php if ($data['type_work'] === 'งานต่อเนื่อง') echo 'selected'; ?>>งานต่อเนื่อง</option>
                                 <option value="งานไม่ต่อเนื่อง/ชั่วคราว" <?php if ($data['type_work'] === 'งานไม่ต่อเนื่อง/ชั่วคราว') echo 'selected'; ?>>งานไม่ต่อเนื่อง/ชั่วคราว</option>
                                 <option value="ออกแบบ/เขียนแบบอาคาร" <?php if ($data['type_work'] === 'ออกแบบ/เขียนแบบอาคาร') echo 'selected'; ?>>ออกแบบ/เขียนแบบอาคาร</option>
                                 <option value="ตรวจการจ้างอาคาร" <?php if ($data['type_work'] === 'ตรวจการจ้างอาคาร') echo 'selected'; ?>>ตรวจการจ้างอาคาร</option>
                             </select>
-                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
-                        <input type="text" class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>">
+                        <input type="text" class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                        <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
+                        <input type="text" class="form-control" name="amount_work" id="amount_work2" value="<?php echo $data['amount_work']; ?>" readonly>
                     </div>
 
                     <div class="modal-footer">
@@ -365,7 +361,7 @@ if (isset($_GET['upload'])) {
 
 <!-- อัพโหลดไฟล์ -->
 <div class="modal fade" id="uploadModal" tabindex="-1">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">อัพโหลดไฟล์</h5>
@@ -417,12 +413,160 @@ if (isset($_GET['upload'])) {
     let fileInput = document.getElementById('fileInput'); //ใช้ getElementById() เพื่อเข้าถึงองค์ประกอบที่มี id เป็น 'fileInput'
     let previewFile = document.getElementById('previewFile'); //ใช้ getElementById() เพื่อเข้าถึงองค์ประกอบที่มี id เป็น 'previewFile'
 
-    fileInput.addEventListener('change', function(evt) { // เมื่อมีการเปลี่ยนแปลงในองค์ประกอบ <input type="file"> โดยจะรับอินสแตนซ์ evt เป็นอาร์กิวเมนต์ของฟังก์ชัน
-        // ดึงไฟล์ที่ถูกเลือกจากองค์ประกอบ <input type="file">
-        // เราใช้การกำหนดตัวแปรแบบ Array destructuring ([file]) เพื่อรับเฉพาะไฟล์แรกที่ถูกเลือก
-        const [file] = fileInput.files;
-        if (file) { // ตรวจสอบว่ามีไฟล์ถูกเลือกหรือไม่
-            previewFile.src = URL.createObjectURL(file); // สร้าง URL object สำหรับไฟล์และกำหนดให้ภาพตัวอย่างแสดงรูปภาพ
+    function calc1() {
+        var position = document.getElementById('position1').value;
+        var type_work = document.getElementById('type_work1').value;
+
+
+        if (type_work == 'งานต่อเนื่อง'){
+            if (position == 'ประธาน'){
+                var calculatedAmountWork = 3;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการและเลขานุการ'){
+                var calculatedAmountWork = 2.5;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการและผู้ช่วยเลขานุการ'){
+                var calculatedAmountWork = 2;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการ'){
+                var calculatedAmountWork = 1.5;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'ที่ปรึกษา'){
+                var calculatedAmountWork = 1;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else{
+                var calculatedAmountWork = 0;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }
+        }else if (type_work == 'งานไม่ต่อเนื่อง/ชั่วคราว'){
+            if (position == 'ประธาน'){
+                var calculatedAmountWork = 2;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการและเลขานุการ'){
+                var calculatedAmountWork = 1.5;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการและผู้ช่วยเลขานุการ'){
+                var calculatedAmountWork = 1;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการ'){
+                var calculatedAmountWork = 0.5;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else{
+                var calculatedAmountWork = 0;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }
+        }else if (type_work == 'ออกแบบ/เขียนแบบอาคาร'){
+            if (position == 'ประธาน'){
+                var calculatedAmountWork = 2.5;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการและเลขานุการ'){
+                var calculatedAmountWork = 1.5;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการ'){
+                var calculatedAmountWork = 1;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'ผู้ออกแบบ'){
+                var calculatedAmountWork = 2;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else{
+                var calculatedAmountWork = 0;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }
+        }else if (type_work == 'ตรวจการจ้างอาคาร'){
+            if (position == 'ประธาน'){
+                var calculatedAmountWork = 4;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการและเลขานุการ'){
+                var calculatedAmountWork = 3;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการ'){
+                var calculatedAmountWork = 2;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }else {
+                var calculatedAmountWork = 0;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+            }
+        }else{
+                var calculatedAmountWork = 0;
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
         }
-    });
+    }
+    function calc2() {
+        var position = document.getElementById('position2').value;
+        var type_work = document.getElementById('type_work2').value;
+
+
+        if (type_work == 'งานต่อเนื่อง'){
+            if (position == 'ประธาน'){
+                var calculatedAmountWork = 3;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการและเลขานุการ'){
+                var calculatedAmountWork = 2.5;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการและผู้ช่วยเลขานุการ'){
+                var calculatedAmountWork = 2;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการ'){
+                var calculatedAmountWork = 1.5;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'ที่ปรึกษา'){
+                var calculatedAmountWork = 1;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else{
+                var calculatedAmountWork = 0;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }
+        }else if (type_work == 'งานไม่ต่อเนื่อง/ชั่วคราว'){
+            if (position == 'ประธาน'){
+                var calculatedAmountWork = 2;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการและเลขานุการ'){
+                var calculatedAmountWork = 1.5;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการและผู้ช่วยเลขานุการ'){
+                var calculatedAmountWork = 1;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการ'){
+                var calculatedAmountWork = 0.5;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else{
+                var calculatedAmountWork = 0;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }
+        }else if (type_work == 'ออกแบบ/เขียนแบบอาคาร'){
+            if (position == 'ประธาน'){
+                var calculatedAmountWork = 2.5;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการและเลขานุการ'){
+                var calculatedAmountWork = 1.5;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการ'){
+                var calculatedAmountWork = 1;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'ผู้ออกแบบ'){
+                var calculatedAmountWork = 2;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else{
+                var calculatedAmountWork = 0;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }
+        }else if (type_work == 'ตรวจการจ้างอาคาร'){
+            if (position == 'ประธาน'){
+                var calculatedAmountWork = 4;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการและเลขานุการ'){
+                var calculatedAmountWork = 3;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else if (position == 'กรรมการ'){
+                var calculatedAmountWork = 2;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }else {
+                var calculatedAmountWork = 0;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+            }
+        }else{
+                var calculatedAmountWork = 0;
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }
+    }
 </script>

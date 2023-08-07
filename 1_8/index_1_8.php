@@ -124,6 +124,8 @@
             $stmt->execute();
             $personal = $stmt->fetchAll();
 
+            $totalAmountWork = 0.00;
+
             if (!$personal) {
                 echo "<tr><td colspan='9' class='text-center'>ไม่มีข้อมูล</td></tr>";
             } else {
@@ -137,18 +139,20 @@
                         <td><?= $per['nature_work']; ?></td>
                         <td><?= $per['hours']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
+                        <?php $totalAmountWork += floatval($per['amount_work']);?>
+
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
-                                <a href="uploads/<?= $per['file']; ?>"  class="btn btn-secondary">
+                                <a href="uploads/<?= $per['file']; ?>" target="_blank" class="btn btn-secondary">
                                     <div class="icon d-flex">
                                         <i class="bi bi-eye"></i>&nbsp;
                                         <div class="label">ดูไฟล์</div>
                                     </div>
                                 </a>
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')"  href="?page=1_8/index_1_8&delete_file=<?= $per['id']; ?>" class="btn btn-warning">
+                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')"  href="?page=1_8/index_1_8&delete_file=<?= $per['id']; ?>" class="btn btn-danger">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;
-                                        <div class="label">ลบ</div>
+                                        <div class="label">ลบไฟล์</div>
                                     </div>
                                 </a>
                             </td>
@@ -198,12 +202,12 @@
             ?>
             <tr>
                 <th scope="row" colspan="6">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-                <td scope="row">0.00</td>
+                <td scope="row"><?= number_format($totalAmountWork, 2); ?></td>
                 <td colspan="2"></td>
             </tr>
         </tbody>
         <div class="modal fade" id="ExtralargeModal" tabindex="-1">
-            <div class="modal-dialog modal-xl">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">เพิ่มข้อมูล</h5>
@@ -214,15 +218,16 @@
                             <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
                             <div class="mb-3">
                                 <label for="date" class="col-sm-2 col-form-label ">วัน/เดือน/ปี</label>
-                                    <input type="date" class="form-control" name="date" required>
+                                <input type="date" class="form-control" name="date" required>
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="type" class="col-sm-2 col-form-label">ประเภทการบริการทางวิชาการ</label>
                                 <div class="col-sm-12">
-                                    <select id ="type" name="type" class="form-select" required>
+                                    <select name="type" class="form-select" id="type1" onchange="calc1()" required>
                                         <option value="" selected>กรุณาเลือก</option>
                                         <option value="วิทยากร">วิทยากร</option>
                                         <option value="ผู้ทรงคุณวุฒิ">ผู้ทรงคุณวุฒิ</option>
+                                        <option value="โครงการบริการวิชาการ">โครงการบริการวิชาการ</option>
                                         <option value="อนุกรรมการอ่านผลงานวิชาการ">อนุกรรมการอ่านผลงานวิชาการ</option>
                                         <option value="กรรมการอ่านงานวิจัย">กรรมการอ่านงานวิจัย</option>
                                     </select>
@@ -242,11 +247,11 @@
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="hours" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
-                                    <input type="text" class="form-control" name="hours" required>
+                                    <input type="text" class="form-control" name="hours" id="hours1" oninput="calca1()" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                    <input type="text" class="form-control" name="amount_work" disabled>
+                                    <input type="text" class="form-control" name="amount_work" id="amount_work1" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -268,14 +273,15 @@
                         <form action="1_8/edit_1_8.php" method="post">
                             <div class="mb-3">
                                 <label for="date" class="col-sm-2 col-form-label">วัน/เดือน/ปี</label>
-                                    <input type="date" class="form-control" name="date" value="<?php echo $data['date']; ?>">
+                                <input type="date" class="form-control" name="date" value="<?php echo $data['date']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="type" class="col-sm-2 col-form-label">ประเภทการบริการทางวิชาการ</label>
                                 <div class="col-sm-12">
-                                    <select id ="type" name="type" class="form-select" required>
+                                    <select id ="type2" name="type" class="form-select" onchange="calc2()" required>
                                         <option value="วิทยากร" <?php if ($data['type'] === 'วิทยากร') echo 'selected'; ?>>วิทยากร</option>
                                         <option value="ผู้ทรงคุณวุฒิ" <?php if ($data['type'] === 'ผู้ทรงคุณวุฒิ') echo 'selected'; ?>>ผู้ทรงคุณวุฒิ</option>
+                                        <option value="โครงการบริการวิชาการ" <?php if ($data['type'] === 'โครงการบริการวิชาการ') echo 'selected'; ?>>โครงการบริการวิชาการ</option>
                                         <option value="อนุกรรมการอ่านผลงานวิชาการ" <?php if ($data['type'] === 'อนุกรรมการอ่านผลงานวิชาการ') echo 'selected'; ?>>อนุกรรมการอ่านผลงานวิชาการ</option>
                                         <option value="กรรมการอ่านงานวิจัย" <?php if ($data['type'] === 'กรรมการอ่านงานวิจัย') echo 'selected'; ?>>กรรมการอ่านงานวิจัย</option>
                                     </select>
@@ -283,23 +289,23 @@
                             </div>
                             <div class="mb-3">
                                 <label for="subject" class="col-sm-2 col-form-label">เรื่อง</label>
-                                    <input type="text" class="form-control" name="subject" value="<?php echo $data['subject']; ?>">
+                                <input type="text" class="form-control" name="subject" value="<?php echo $data['subject']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="location" class="col-sm-2 col-form-label">สถานที่</label>
-                                    <input type="text" class="form-control" name="location" value="<?php echo $data['location']; ?>">
+                                 <input type="text" class="form-control" name="location" value="<?php echo $data['location']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="nature_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>
-                                    <input type="text" class="form-control" name="nature_work" value="<?php echo $data['nature_work']; ?>">
+                                <input type="text" class="form-control" name="nature_work" value="<?php echo $data['nature_work']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="hours" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
-                                    <input type="text" class="form-control" name="hours" value="<?php echo $data['hours']; ?>">
+                                <input type="text" class="form-control" name="hours" id="hours2" value="<?php echo $data['hours']; ?>" oninput="calc2()" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                    <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" disabled>
+                                <input type="text" class="form-control" name="amount_work" id="amount_work2" value="<?php echo $data['amount_work']; ?>" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -362,6 +368,54 @@
         const [file] = fileInput.files;
         if (file) {
             previewFile.src = URL.createObjectURL(file);
+        }
+    }
+    function calc1() {
+        var type = document.getElementById('type1').value;
+        var hours = document.getElementById('hours1').value;
+
+        if (type == 'วิทยากร'){
+            var calculatedAmountWork = hours/15;
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }else if (type == 'โครงการบริการวิชาการ'){
+            var calculatedAmountWork = hours/15;
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }else if (type == 'ผู้ทรงคุณวุฒิ'){
+            var calculatedAmountWork = 1;
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }else if (type == 'อนุกรรมการอ่านผลงานวิชาการ'){
+            var calculatedAmountWork = 1;
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }else if (type == 'กรรมการอ่านงานวิจัย'){
+            var calculatedAmountWork = 1;
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }else{
+            var calculatedAmountWork = 0;
+            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+        }
+    }
+    function calc2() {
+        var type = document.getElementById('type2').value;
+        var hours = document.getElementById('hours2').value;
+
+        if (type == 'วิทยากร'){
+            var calculatedAmountWork = hours/15;
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }else if (type == 'โครงการบริการวิชาการ'){
+            var calculatedAmountWork = hours/15;
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }else if (type == 'ผู้ทรงคุณวุฒิ'){
+            var calculatedAmountWork = 1;
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }else if (type == 'อนุกรรมการอ่านผลงานวิชาการ'){
+            var calculatedAmountWork = 1;
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }else if (type == 'กรรมการอ่านงานวิจัย'){
+            var calculatedAmountWork = 1;
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+        }else{
+            var calculatedAmountWork = 0;
+            document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
         }
     }
 </script>

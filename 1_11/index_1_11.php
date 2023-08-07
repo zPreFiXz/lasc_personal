@@ -1,5 +1,10 @@
 <?php
-require_once "config/db.php";
+    require_once "config/db.php";
+    $userId = $_SESSION['userId'];
+
+    $stmt = $conn->query("SELECT*FROM personal_1_11 WHERE userId = '$userId'");
+    $stmt->execute();
+    $personal = $stmt->fetchAll(); 
 
 
 ?>
@@ -7,9 +12,8 @@ require_once "config/db.php";
 <div class="container">
     <div class="pagetitle mt-3">
         <h1>11. ภาระงานด้านการบริหาร (เฉพาะผู้ได้รับการแต่งตั้งให้ดำรงตำแหน่งบริหาร)</h1>
-        </nav>
     </div>
-    <table class="table table-bordered text-center align-middle">
+    <table class="table table-bordered text-center align-middle mt-3">
         <thead class="align-middle table-secondary">
             <tr>
                 <th scope="col">ให้ทำเครื่องหมาย <br>✓ ในช่องที่ตรงกับ<br>ตำแหน่งได้รับแต่งตั้ง</th>
@@ -18,98 +22,106 @@ require_once "config/db.php";
                 <th scope="col">จำนวนภาระงาน</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
-                <td>อธิการบดี</td>
-                <td><input type="text" class="form-control" name="scope1" oninput="saveValue(this, 'input1')"></td>
-                <td class="score">40</td>
-            </tr>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
-                <td>รองอธิการบดี</td>
-                <td><input type="text" class="form-control" name="scope2" oninput="saveValue(this, 'input2')""></td>
-                <td class=" score">30</td>
-            </tr>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
-                <td>คณบดี</td>
-                <td><input type="text" class="form-control" name="scope3" oninput="saveValue(this, 'input3')"></td>
-                <td class="score">30</td>
-            </tr>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
-                <td>ผู้ช่วยอธิการบดี</td>
-                <td><input type="text" class="form-control" name="scope4" oninput="saveValue(this, 'input4')"></td>
-                <td class="score">25</td>
-            </tr>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
-                <td>รองคณบดี</td>
-                <td><input type="text" class="form-control" name="scope5" oninput="saveValue(this, 'input5')"></td>
-                <td class="score">25</td>
-            </tr>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
-                <td>ผู้อำนวยการสำนัก</td>
-                <td><input type="text" class="form-control" name="scope6" oninput="saveValue(this, 'input6')"></td>
-                <td class="score">30</td>
-            </tr>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
-                <td>ผู้อำนวยการกอง</td>
-                <td><input type="text" class="form-control" name="scope7" oninput="saveValue(this, 'input7')"></td>
-                <td class="score">20</td>
-            </tr>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
-                <td>รองผู้อำนวยการสำนัก</td>
-                <td><input type="text" class="form-control" name="scope8" oninput="saveValue(this, 'input8')"></td>
-                <td class="score">20</td>
-            </tr>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
-                <td>หัวหน้าสำนัก</td>
-                <td><input type="text" class="form-control" name="scope9" oninput="saveValue(this, 'input9')"></td>
-                <td class="score">20</td>
-            </tr>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
-                <td>หัวหน้ากลุ่มงาน</td>
-                <td><input type="text" class="form-control" name="scope10" oninput="saveValue(this, 'input10')"></td>
-                <td class="score">20</td>
-            </tr>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
-                <td>หัวหน้างาน</td>
-                <td><input type="text" class="form-control" name="scope11" oninput="saveValue(this, 'input11')"></td>
-                <td class="score">20</td>
-            </tr>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
-                <td>ประธานสาขาวิชา</td>
-                <td><input type="text" class="form-control" name="scope12" oninput="saveValue(this, 'input12')"></td>
-                <td class="score">10</td>
-            </tr>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
-                <td>หัวหน้าฝ่าย</td>
-                <td><input type="text" class="form-control" name="scope13" oninput="saveValue(this, 'input13')"></td>
-                <td class="score">10</td>
-            </tr>
-            <tr>
-                <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
-                <td>ประธานพันธกิจ</td>
-                <td><input type="text" class="form-control" name="scope14" oninput="saveValue(this, 'input14')"></td>
-                <td class="score">5</td>
-            </tr>
+        <form action="1_11/insert_1_11.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="userId" value="<?=$userId?>">
+            <tbody>
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" id="gridCheck1[]" name="gridCheck1" value="checked"></td>
+                    <td>อธิการบดี</td>
+                    <td><input type="text" class="form-control" name="scope1" oninput="saveValue(this, 'input1')"></td>
+                    <td class="score">40</td>
+                </tr>
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
+                    <td>รองอธิการบดี</td>
+                    <td><input type="text" class="form-control" name="scope2" oninput="saveValue(this, 'input2')""></td>
+                    <td class=" score">30</td>
+                </tr>
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
+                    <td>คณบดี</td>
+                    <td><input type="text" class="form-control" name="scope3" oninput="saveValue(this, 'input3')"></td>
+                    <td class="score">30</td>
+                </tr>
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
+                    <td>ผู้ช่วยอธิการบดี</td>
+                    <td><input type="text" class="form-control" name="scope4" oninput="saveValue(this, 'input4')"></td>
+                    <td class="score">25</td>
+                </tr>
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
+                    <td>รองคณบดี</td>
+                    <td><input type="text" class="form-control" name="scope5" oninput="saveValue(this, 'input5')"></td>
+                    <td class="score">25</td>
+                </tr>
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
+                    <td>ผู้อำนวยการสำนัก</td>
+                    <td><input type="text" class="form-control" name="scope6" oninput="saveValue(this, 'input6')"></td>
+                    <td class="score">30</td>
+                </tr>
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
+                    <td>ผู้อำนวยการกอง</td>
+                    <td><input type="text" class="form-control" name="scope7" oninput="saveValue(this, 'input7')"></td>
+                    <td class="score">20</td>
+                </tr>
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
+                    <td>รองผู้อำนวยการสำนัก</td>
+                    <td><input type="text" class="form-control" name="scope8" oninput="saveValue(this, 'input8')"></td>
+                    <td class="score">20</td>
+                </tr>
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
+                    <td>หัวหน้าสำนัก</td>
+                    <td><input type="text" class="form-control" name="scope9" oninput="saveValue(this, 'input9')"></td>
+                    <td class="score">20</td>
+                </tr>
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
+                    <td>หัวหน้ากลุ่มงาน</td>
+                    <td><input type="text" class="form-control" name="scope10" oninput="saveValue(this, 'input10')"></td>
+                    <td class="score">20</td>
+                </tr>
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
+                    <td>หัวหน้างาน</td>
+                    <td><input type="text" class="form-control" name="scope11" oninput="saveValue(this, 'input11')"></td>
+                    <td class="score">20</td>
+                </tr>
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
+                    <td>ประธานสาขาวิชา</td>
+                    <td><input type="text" class="form-control" name="scope12" oninput="saveValue(this, 'input12')"></td>
+                    <td class="score">10</td>
+                </tr>
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
+                    <td>หัวหน้าฝ่าย</td>
+                    <td><input type="text" class="form-control" name="scope13" oninput="saveValue(this, 'input13')"></td>
+                    <td class="score">10</td>
+                </tr>
+                <tr>
+                    <td><input class="form-check-input" type="checkbox" id="gridCheck1"></td>
+                    <td>ประธานพันธกิจ</td>
+                    <td><input type="text" class="form-control" name="scope14" oninput="saveValue(this, 'input14')"></td>
+                    <td class="score">5</td>
+                </tr>
 
-            <tr>
-                <th scope="row" colspan="3">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-                <td scope="row" class="total-score">0</td>
-            </tr>
-        </tbody>
+                <tr>
+                    <th scope="row" colspan="3">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+                    <td scope="row" class="total-score">0</td>
+                </tr>
+            </tbody>
+            <div class="d-flex justify-content-end ">
+                <button type="submit" name="submit" class="btn btn-primary">บันทึกร่าง</button>
+            </div>
+        </form>
+    </table>
 </div>
+
 <script>
     // JavaScript
     const checkboxes = document.querySelectorAll('.form-check-input');

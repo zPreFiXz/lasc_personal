@@ -1,80 +1,84 @@
 <?php
-    require_once "config/db.php";
+require_once "config/db.php";
 
-    if(isset($_GET['delete_file'])){
-        $delete_file_id = $_GET['delete_file'];
-        $stmt = $conn->prepare("SELECT file FROM personal_1_4 WHERE id = :delete_file_id");
-        $stmt->bindParam(':delete_file_id', $delete_file_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $currentFile = $row['file'];
+$stmt = $conn->query("SELECT * FROM `term&year` where id = 1");
+$stmt->execute();
+$term_year = $stmt->fetch();
 
-        if ($currentFile) {
-            $filePath = 'uploads/' . $currentFile;
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-        }
+if (isset($_GET['delete_file'])) {
+    $delete_file_id = $_GET['delete_file'];
+    $stmt = $conn->prepare("SELECT file FROM personal_1_4 WHERE id = :delete_file_id");
+    $stmt->bindParam(':delete_file_id', $delete_file_id);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $currentFile = $row['file'];
 
-        $delete_file = $conn->prepare("UPDATE personal_1_4 SET file = '' WHERE id = :delete_file_id");
-        $delete_file->bindParam(':delete_file_id', $delete_file_id);
-        $delete_file->execute();
-    }
-
-    if (isset($_GET['delete'])) {
-        $delete_id = $_GET['delete'];
-        
-        $stmt = $conn->prepare("SELECT file FROM personal_1_4 WHERE id = :delete_id");
-        $stmt->bindParam(':delete_id', $delete_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $currentFile = $row['file'];
-
-        if ($currentFile) {
-            $filePath = 'uploads/' . $currentFile;
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-        }
-
-        $deletestmt = $conn->prepare("DELETE FROM personal_1_4 WHERE id = :delete_id");
-        $deletestmt->bindParam(':delete_id', $delete_id);
-        $deletestmt->execute();
-        
-        if ($deletestmt) {
-            $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
-            echo "<script>window.location.href = 'index.php?page=1_4/index_1_4';</script>";
-            exit;
+    if ($currentFile) {
+        $filePath = 'uploads/' . $currentFile;
+        if (file_exists($filePath)) {
+            unlink($filePath);
         }
     }
 
-    if (isset($_GET['edit'])) {
-        $_SESSION['edit'] = $_GET['edit'];
-        $edit_id = $_GET['edit'];
-        $stmt = $conn->prepare("SELECT * FROM personal_1_4 WHERE id = ?");
-        $stmt->execute([$edit_id]);
-        $data = $stmt->fetch();
-    ?>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var modal = new bootstrap.Modal(document.getElementById("modal"));
-                modal.show();
-            });
-        </script>
-    <?php
+    $delete_file = $conn->prepare("UPDATE personal_1_4 SET file = '' WHERE id = :delete_file_id");
+    $delete_file->bindParam(':delete_file_id', $delete_file_id);
+    $delete_file->execute();
+}
+
+if (isset($_GET['delete'])) {
+    $delete_id = $_GET['delete'];
+
+    $stmt = $conn->prepare("SELECT file FROM personal_1_4 WHERE id = :delete_id");
+    $stmt->bindParam(':delete_id', $delete_id);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $currentFile = $row['file'];
+
+    if ($currentFile) {
+        $filePath = 'uploads/' . $currentFile;
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
     }
 
-    if (isset($_GET['upload'])) {
-        $_SESSION['upload'] = $_GET['upload'];
-        $upload_id = $_SESSION['upload'];
-    ?>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var modal = new bootstrap.Modal(document.getElementById("uploadModal"));
-                modal.show();
-            });
-        </script>
-    <?php } ?>
+    $deletestmt = $conn->prepare("DELETE FROM personal_1_4 WHERE id = :delete_id");
+    $deletestmt->bindParam(':delete_id', $delete_id);
+    $deletestmt->execute();
+
+    if ($deletestmt) {
+        $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
+        echo "<script>window.location.href = 'index.php?page=1_4/index_1_4';</script>";
+        exit;
+    }
+}
+
+if (isset($_GET['edit'])) {
+    $_SESSION['edit'] = $_GET['edit'];
+    $edit_id = $_GET['edit'];
+    $stmt = $conn->prepare("SELECT * FROM personal_1_4 WHERE id = ?");
+    $stmt->execute([$edit_id]);
+    $data = $stmt->fetch();
+?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var modal = new bootstrap.Modal(document.getElementById("modal"));
+            modal.show();
+        });
+    </script>
+<?php
+}
+
+if (isset($_GET['upload'])) {
+    $_SESSION['upload'] = $_GET['upload'];
+    $upload_id = $_SESSION['upload'];
+?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var modal = new bootstrap.Modal(document.getElementById("uploadModal"));
+            modal.show();
+        });
+    </script>
+<?php } ?>
 
 <div class="container">
     <div class="pagetitle mt-3">
@@ -118,7 +122,9 @@
         <tbody>
             <?php
             $userId = $_SESSION['userId'];
-            $stmt = $conn->query("SELECT * FROM personal_1_4 WHERE userId = '$userId'");
+            $term =  $term_year['term'];
+            $year =  $term_year['year'];
+            $stmt = $conn->query("SELECT * FROM personal_1_4 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
             $stmt->execute();
             $personal = $stmt->fetchAll();
 
@@ -135,7 +141,7 @@
                         <td><?= $per['location']; ?></td>
                         <td><?= $per['period']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
-                        <?php $totalAmountWork += floatval($per['amount_work']);?>
+                        <?php $totalAmountWork += floatval($per['amount_work']); ?>
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
                                 <a href="uploads/<?= $per['file']; ?>" target="_blank" class="btn btn-secondary">
@@ -144,7 +150,7 @@
                                         <div class="label">ดูไฟล์</div>
                                     </div>
                                 </a>
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')"  href="?page=1_4/index_1_4&delete_file=<?= $per['id']; ?>" class="btn btn-danger">
+                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_4/index_1_4&delete_file=<?= $per['id']; ?>" class="btn btn-danger">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;
                                         <div class="label">ลบไฟล์</div>
@@ -210,7 +216,10 @@
                     </div>
                     <div class="modal-body">
                         <form action="1_4/insert_1_4.php" method="post">
-                            <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
+                            <input type="hidden" class="form-control" name="userId" value="<?= $userId ?>">
+                            <input type="hidden" class="form-control" name="term" value="<?=$term_year['term'];?>">
+                            <input type="hidden" class="form-control" name="year" value="<?=$term_year['year'];?>">
+                            
                             <div class="mb-3">
                                 <label for="date" class="col-sm-2 col-form-label ">วัน/เดือน/ปี</label>
                                 <input type="date" class="form-control" name="date" required>
@@ -251,23 +260,23 @@
                         <form action="1_4/edit_1_4.php" method="post">
                             <div class="mb-3">
                                 <label for="date" class="col-sm-2 col-form-label">วัน/เดือน/ปี</label>
-                                    <input type="date" class="form-control" name="date" value="<?php echo $data['date']; ?>" required>
+                                <input type="date" class="form-control" name="date" value="<?php echo $data['date']; ?>" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
                                 <label for="project_name" class="col-sm-2 col-form-label">ชื่อโครงการ/กิจกรรม/งาน</label>
-                                    <input type="text" class="form-control" name="project_name" value="<?php echo $data['project_name']; ?>" required>
+                                <input type="text" class="form-control" name="project_name" value="<?php echo $data['project_name']; ?>" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
                                 <label for="location" class="col-sm-2 col-form-label">สถานที่/งานที่ควบคุม</label>
-                                    <input type="text" class="form-control" name="location" value="<?php echo $data['location']; ?>" required>
+                                <input type="text" class="form-control" name="location" value="<?php echo $data['location']; ?>" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
                                 <label for="period" class="col-sm-2 col-form-label">ระยะเวลาปฏิบัติ (ชั่วโมง)</label>
-                                    <input type="text" class="form-control" name="period" id="period2" value="<?php echo $data['period']; ?>" oninput="calc2()" required>
+                                <input type="text" class="form-control" name="period" id="period2" value="<?php echo $data['period']; ?>" oninput="calc2()" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                    <input type="text" class="form-control" name="amount_work" id="amount_work2" value="<?php echo $data['amount_work']; ?>" readonly>
+                                <input type="text" class="form-control" name="amount_work" id="amount_work2" value="<?php echo $data['amount_work']; ?>" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -332,6 +341,7 @@
             previewFile.src = URL.createObjectURL(file);
         }
     }
+
     function calc1() {
         var amountTime = parseFloat(document.getElementById('period1').value);
 
@@ -342,6 +352,7 @@
             document.getElementById('amount_work1').value = "";
         }
     }
+
     function calc2() {
         var amountTime = parseFloat(document.getElementById('period2').value);
 

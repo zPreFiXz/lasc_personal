@@ -10,10 +10,12 @@
         $type_work_s_j = $_POST['type_work_s_j'];
         $type_work = $_POST['type_work'];
         $participation = $_POST['participation'];
+        $term = $_POST['term'];
+        $year = $_POST['year'];
         $amount_work = $_POST['amount_work'];
 
-        $sql = "INSERT INTO personal_1_7 (userId,type, title, amount_time, type_work_s_j, type_work, participation, amount_work)
-        VALUES (:userId,:type, :title, :amount_time, :type_work_s_j, :type_work, :participation, :amount_work)";
+        $sql = "INSERT INTO personal_1_7 (userId,type, title, amount_time, type_work_s_j, type_work, participation,term, year, amount_work)
+        VALUES (:userId,:type, :title, :amount_time, :type_work_s_j, :type_work, :participation,:term, :year, :amount_work)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userId', $userId);
@@ -23,6 +25,8 @@
         $stmt->bindParam(':type_work_s_j', $type_work_s_j);
         $stmt->bindParam(':type_work', $type_work);
         $stmt->bindParam(':participation', $participation);
+        $stmt->bindParam(':term', $term);
+        $stmt->bindParam(':year', $year);
         $stmt->bindParam(':amount_work', $amount_work);
         $stmt->execute();
     }

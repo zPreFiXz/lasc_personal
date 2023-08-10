@@ -9,10 +9,12 @@
         $amount_student = $_POST['amount_student'];
         $group_study = $_POST['group_study'];
         $amount_time = $_POST['amount_time'];
+        $term = $_POST['term'];
+        $year = $_POST['year'];
         $amount_work = $_POST['amount_work'];
 
-        $sql = "INSERT INTO personal_1_2_b (userId,club, level, amount_student, group_study, amount_time, amount_work)
-        VALUES (:userId,:club, :level, :amount_student, :group_study, :amount_time, :amount_work)";
+        $sql = "INSERT INTO personal_1_2_b (userId,club, level, amount_student, group_study, amount_time,term, year, amount_work)
+        VALUES (:userId,:club, :level, :amount_student, :group_study, :amount_time, :term , :year ,:amount_work)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userId', $userId);
@@ -21,6 +23,8 @@
         $stmt->bindParam(':amount_student', $amount_student);
         $stmt->bindParam(':group_study', $group_study);
         $stmt->bindParam(':amount_time', $amount_time);
+        $stmt->bindParam(':term', $term);
+        $stmt->bindParam(':year', $year);
         $stmt->bindParam(':amount_work', $amount_work);
         $stmt->execute();
     }

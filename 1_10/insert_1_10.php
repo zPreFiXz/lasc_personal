@@ -9,10 +9,12 @@
         $position = $_POST['position'];
         $type_work = $_POST['type_work'];
         $amount_time = $_POST['amount_time'];
+        $term = $_POST['term'];
+        $year = $_POST['year'];
         $amount_work = $_POST['amount_work'];
 
-        $sql = "INSERT INTO personal_1_10 (userId,date, project, position,type_work, amount_time, amount_work)
-        VALUES (:userId,:date, :project, :position, :type_work, :amount_time, :amount_work)";
+        $sql = "INSERT INTO personal_1_10 (userId,date, project, position,type_work, amount_time,term, year, amount_work)
+        VALUES (:userId,:date, :project, :position, :type_work, :amount_time, :term, :year, :amount_work)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userId', $userId);
@@ -21,6 +23,8 @@
         $stmt->bindParam(':position', $position);
         $stmt->bindParam(':type_work', $type_work);
         $stmt->bindParam(':amount_time', $amount_time);
+        $stmt->bindParam(':term', $term);
+        $stmt->bindParam(':year', $year);
         $stmt->bindParam(':amount_work', $amount_work);
         $stmt->execute();
     }

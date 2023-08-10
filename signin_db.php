@@ -32,7 +32,7 @@
                         if (password_verify($password, $row['password'])) {
                             if ($row['urole'] == 'admin') {
                                 $_SESSION['adminId'] = $row['firstname'];
-                                header("location: admin.php");
+                                header("location: index_admin.php");
                             } else {
                                 $_SESSION['userId'] = $row['firstname'];
                                 header("location: index.php?page=dashboard");

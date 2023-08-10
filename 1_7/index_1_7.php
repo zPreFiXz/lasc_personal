@@ -1,5 +1,10 @@
 <?php
 require_once "config/db.php";
+
+// ดึงตาราง term&year
+$stmt = $conn->query("SELECT * FROM `term&year` where id = 1");
+$stmt->execute();
+$term_year = $stmt->fetch();
 //delete file
 if (isset($_GET['delete_file'])) {
     $delete_file_id = $_GET['delete_file']; // รับค่า ID ที่ต้องการลบ
@@ -149,7 +154,9 @@ if (isset($_GET['upload'])) {
         <tbody>
             <?php
             $userId = $_SESSION['userId'];
-            $stmt = $conn->query("SELECT*FROM personal_1_7 WHERE userId = '$userId'"); // ดึงข้อมูลจากตาราง personal_1_7
+            $term =  $term_year['term'];
+            $year =  $term_year['year'];
+            $stmt = $conn->query("SELECT*FROM personal_1_7 WHERE userId = '$userId' AND term = '$term' AND year = '$year'"); // ดึงข้อมูลจากตาราง personal_1_7
             $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
             $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
 
@@ -171,7 +178,7 @@ if (isset($_GET['upload'])) {
                         <td><?= $per['type_work']; ?></td>
                         <td><?= $per['participation']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
-                        <?php $totalAmountWork += floatval($per['amount_work']);?>
+                        <?php $totalAmountWork += floatval($per['amount_work']); ?>
 
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
@@ -253,9 +260,12 @@ if (isset($_GET['upload'])) {
             <div class="modal-body">
 
                 <form action="1_7/insert_1_7.php" method="post" enctype="multipart/form-data">
-                    <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
+                    <input type="hidden" class="form-control" name="userId" value="<?= $userId ?>">
+                    <input type="hidden" class="form-control" name="term" value="<?= $term_year['term']; ?>">
+                    <input type="hidden" class="form-control" name="year" value="<?= $term_year['year']; ?>">
+                    
                     <div class="mb-3">
-                         <label for="type" class="col-sm-2 col-form-label">ประเภท</label>
+                        <label for="type" class="col-sm-2 col-form-label">ประเภท</label>
                         <input type="text" class="form-control" name="type" required>
                     </div>
                     <div class="mb-3">
@@ -424,44 +434,46 @@ if (isset($_GET['upload'])) {
             previewFile.src = URL.createObjectURL(file); // สร้าง URL object สำหรับไฟล์และกำหนดให้ภาพตัวอย่างแสดงรูปภาพ
         }
     });
+
     function calc1() {
         var type_work = document.getElementById('type_work1').value;
         var participation = document.getElementById('participation1').value;
 
-        if (type_work == 'เอกสารประกอบการสอน'){
-            var calculatedAmountWork = 5*(participation/100);
+        if (type_work == 'เอกสารประกอบการสอน') {
+            var calculatedAmountWork = 5 * (participation / 100);
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-        }else if (type_work == 'เอกสารคำสอน'){
-            var calculatedAmountWork = 8*(participation/100);
+        } else if (type_work == 'เอกสารคำสอน') {
+            var calculatedAmountWork = 8 * (participation / 100);
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-        }else if (type_work == 'หนังสือ/ตำรา'){
-            var calculatedAmountWork = 12*(participation/100);
+        } else if (type_work == 'หนังสือ/ตำรา') {
+            var calculatedAmountWork = 12 * (participation / 100);
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-        }else if (type_work == 'VirtualClassroom/E-learning/CAI'){
-            var calculatedAmountWork = 5*(participation/100);
+        } else if (type_work == 'VirtualClassroom/E-learning/CAI') {
+            var calculatedAmountWork = 5 * (participation / 100);
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-        }else{
+        } else {
             var calculatedAmountWork = 0;
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
         }
     }
+
     function calc2() {
         var type_work = document.getElementById('type_work2').value;
         var participation = document.getElementById('participation2').value;
 
-        if (type_work == 'เอกสารประกอบการสอน'){
-            var calculatedAmountWork = 5*(participation/100);
+        if (type_work == 'เอกสารประกอบการสอน') {
+            var calculatedAmountWork = 5 * (participation / 100);
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-        }else if (type_work == 'เอกสารคำสอน'){
-            var calculatedAmountWork = 8*(participation/100);
+        } else if (type_work == 'เอกสารคำสอน') {
+            var calculatedAmountWork = 8 * (participation / 100);
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-        }else if (type_work == 'หนังสือ/ตำรา'){
-            var calculatedAmountWork = 12*(participation/100);
+        } else if (type_work == 'หนังสือ/ตำรา') {
+            var calculatedAmountWork = 12 * (participation / 100);
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-        }else if (type_work == 'VirtualClassroom/E-learning/CAI'){
-            var calculatedAmountWork = 5*(participation/100);
+        } else if (type_work == 'VirtualClassroom/E-learning/CAI') {
+            var calculatedAmountWork = 5 * (participation / 100);
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-        }else{
+        } else {
             var calculatedAmountWork = 0;
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
         }

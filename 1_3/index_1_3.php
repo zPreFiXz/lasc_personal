@@ -1,5 +1,9 @@
 <?php
 require_once "config/db.php";
+// ดึงตาราง term&year
+$stmt = $conn->query("SELECT * FROM `term&year` where id = 1");
+$stmt->execute();
+$term_year = $stmt->fetch(); 
 
 if (isset($_GET['delete_file'])) {
     $delete_file_id = $_GET['delete_file']; // รับค่า ID ที่ต้องการลบ
@@ -138,8 +142,8 @@ if (isset($_GET['upload'])) {
                 <th scope="col">จำนวนนักศึกษา</th>
                 <th scope="col">ระยะเวลาที่ปฏิบัติ (ชั่วโมง) ไม่เกิน 12 ชม./วัน</th>
                 <th scope="col">สถานที่ทำงาน/งานที่ควบคุม</th>
-                <th scope="col">จำนวนภาระงาน</th>
-                <th scope="col">อัปโหลดไฟล์</th>
+                <th scope="col">ภาคการศึกษา</th>
+                <th scope="col">ปีการศึกษา</th>
                 <th scope="col">จัดการข้อมูล</th>
             </tr>
         </thead>
@@ -147,7 +151,11 @@ if (isset($_GET['upload'])) {
         <tbody>
             <?php
             $userId = $_SESSION['userId'];
-            $stmt = $conn->query("SELECT*FROM personal_1_3 WHERE userId = '$userId'"); // ดึงข้อมูลจากตาราง personal_1_3
+            $term =  $term_year['term'];
+            $year =  $term_year['year'];
+            $stmt = $conn->query("SELECT * FROM personal_1_3 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+
+ // ดึงข้อมูลจากตาราง personal_1_3
             $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
             $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
 
@@ -249,6 +257,9 @@ if (isset($_GET['upload'])) {
                     <div class="modal-body">
                         <form action="1_3/insert_1_3.php" method="post" enctype="multipart/form-data">
                             <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
+                            <input type="hidden" class="form-control" name="term" value="<?=$term_year['term'];?>">
+                            <input type="hidden" class="form-control" name="year" value="<?=$term_year['year'];?>">
+
                             <div class="mb-3">
                                 <label for="Major" class="col-form-label">สาขาวิชา</label>
                                 <input type="text" required class="form-control" name="Major" required>

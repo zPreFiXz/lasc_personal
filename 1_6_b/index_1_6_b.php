@@ -1,5 +1,10 @@
 <?php
 require_once "config/db.php";
+
+// ดึงตาราง term&year
+$stmt = $conn->query("SELECT * FROM `term&year` where id = 1");
+$stmt->execute();
+$term_year = $stmt->fetch();
 //delete file
 if (isset($_GET['delete_file'])) {
     $delete_file_id = $_GET['delete_file']; // รับค่า ID ที่ต้องการลบ
@@ -154,7 +159,9 @@ if (isset($_GET['upload'])) {
         <tbody>
             <?php
             $userId = $_SESSION['userId'];
-            $stmt = $conn->query("SELECT*FROM personal_1_6_b WHERE userId = '$userId'"); // ดึงข้อมูลจากตาราง personal_1_6_b
+            $term =  $term_year['term'];
+            $year =  $term_year['year'];
+            $stmt = $conn->query("SELECT*FROM personal_1_6_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'"); // ดึงข้อมูลจากตาราง personal_1_6_b
             $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
             $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
 
@@ -175,7 +182,7 @@ if (isset($_GET['upload'])) {
                         <td><?= $per['start_end']; ?></td>
                         <td style="white-space: nowrap;"><?= $per['publish']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
-                        <?php $totalAmountWork += floatval($per['amount_work']);?>
+                        <?php $totalAmountWork += floatval($per['amount_work']); ?>
 
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
@@ -257,7 +264,10 @@ if (isset($_GET['upload'])) {
             <div class="modal-body">
 
                 <form action="1_6_b/insert_1_6_b.php" method="post" enctype="multipart/form-data">
-                    <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
+                    <input type="hidden" class="form-control" name="userId" value="<?= $userId ?>">
+                    <input type="hidden" class="form-control" name="term" value="<?= $term_year['term']; ?>">
+                    <input type="hidden" class="form-control" name="year" value="<?= $term_year['year']; ?>">
+
                     <div class="mb-3">
                         <label for="number" class="col-sm-2 col-form-label">ลำดับที่</label>
                         <input type="text" class="form-control" name="number" required>
@@ -329,7 +339,7 @@ if (isset($_GET['upload'])) {
                     </div>
                     <div class="mb-3">
                         <label for="publish" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระบบการเผยแพร่ (ประชุม,วารสาร,ผลงาน)</label>
-                        <select type="text" class="form-select" name="publish" id="publish2"  onchange="calc2()" required>
+                        <select type="text" class="form-select" name="publish" id="publish2" onchange="calc2()" required>
                             <option value="ประชุมวิชาการระดับชาติ" <?php if ($data['publish'] === 'ประชุมวิชาการระดับชาติ') echo 'selected' ?>>ประชุมวิชาการระดับชาติ</option>
                             <option value="ประชุมวิชาการระดับนานาชาติ" <?php if ($data['publish'] === 'ประชุมวิชาการระดับนานาชาติ') echo 'selected' ?>>ประชุมวิชาการระดับนานาชาติ</option>
                             <option value="TCI 2" <?php if ($data['publish'] === 'TCI 2') echo 'selected' ?>>TCI 2</option>
@@ -415,48 +425,50 @@ if (isset($_GET['upload'])) {
             previewFile.src = URL.createObjectURL(file); // สร้าง URL object สำหรับไฟล์และกำหนดให้ภาพตัวอย่างแสดงรูปภาพ
         }
     });
+
     function calc1() {
         var publish = document.getElementById('publish1').value;
 
-        if (publish == 'ประชุมวิชาการระดับชาติ'){
+        if (publish == 'ประชุมวิชาการระดับชาติ') {
             var calculatedAmountWork = 5;
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-        }else if (publish == 'ประชุมวิชาการระดับนานาชาติ'){
+        } else if (publish == 'ประชุมวิชาการระดับนานาชาติ') {
             var calculatedAmountWork = 10;
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-        }else if (publish == 'TCI 2'){
+        } else if (publish == 'TCI 2') {
             var calculatedAmountWork = 7;
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-        }else if (publish == 'TCI 1'){
+        } else if (publish == 'TCI 1') {
             var calculatedAmountWork = 10;
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-        }else if (publish == 'SJR/SCI/SCI/SCOPUS'){
+        } else if (publish == 'SJR/SCI/SCI/SCOPUS') {
             var calculatedAmountWork = 15;
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-        }else{
+        } else {
             var calculatedAmountWork = 0;
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
         }
     }
+
     function calc2() {
         var publish = document.getElementById('publish2').value;
 
-        if (publish == 'ประชุมวิชาการระดับชาติ'){
+        if (publish == 'ประชุมวิชาการระดับชาติ') {
             var calculatedAmountWork = 5;
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-        }else if (publish == 'ประชุมวิชาการระดับนานาชาติ'){
+        } else if (publish == 'ประชุมวิชาการระดับนานาชาติ') {
             var calculatedAmountWork = 10;
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-        }else if (publish == 'TCI 2'){
+        } else if (publish == 'TCI 2') {
             var calculatedAmountWork = 7;
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-        }else if (publish == 'TCI 1'){
+        } else if (publish == 'TCI 1') {
             var calculatedAmountWork = 10;
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-        }else if (publish == 'SJR/SCI/SCI/SCOPUS'){
+        } else if (publish == 'SJR/SCI/SCI/SCOPUS') {
             var calculatedAmountWork = 15;
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-        }else{
+        } else {
             var calculatedAmountWork = 0;
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
         }

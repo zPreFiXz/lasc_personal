@@ -6,6 +6,8 @@
         $userId = $_POST['userId'];
         $checkbox = $_POST['gridCheck1'];
         $scope = $_POST['scope1'];
+        $term = $_POST['term'];
+        $year = $_POST['year'];
         // $date = $_POST['date'];
         // $type = $_POST['type'];
         // $subject = $_POST['subject'];
@@ -14,13 +16,15 @@
         // $hours = $_POST['hours'];
         // $amount_work = $_POST['amount_work'];
 
-        $sql = "INSERT INTO personal_1_11 (userId,chancellor_check,chancellor) 
-        VALUES (:userId,:chancellor_check,:chancellor)";
+        $sql = "INSERT INTO personal_1_11 (userId,chancellor_check,chancellor,term,year) 
+        VALUES (:userId,:chancellor_check,:chancellor,:term,    :year)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userId', $userId);
         $stmt->bindParam(':chancellor_check', $checkbox);
         $stmt->bindParam(':chancellor', $scope);
+        $stmt->bindParam(':term', $term);
+        $stmt->bindParam(':year', $year);
         
         // $stmt->bindParam(':date', $date);
         // $stmt->bindParam(':type', $type);

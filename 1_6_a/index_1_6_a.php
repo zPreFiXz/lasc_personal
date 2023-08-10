@@ -1,80 +1,85 @@
 <?php
-    require_once "config/db.php";
+require_once "config/db.php";
 
-    if(isset($_GET['delete_file'])){
-        $delete_file_id = $_GET['delete_file'];
-        $stmt = $conn->prepare("SELECT file FROM personal_1_6_a WHERE id = :delete_file_id");
-        $stmt->bindParam(':delete_file_id', $delete_file_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $currentFile = $row['file'];
+// ดึงตาราง term&year
+$stmt = $conn->query("SELECT * FROM `term&year` where id = 1");
+$stmt->execute();
+$term_year = $stmt->fetch();
 
-        if ($currentFile) {
-            $filePath = 'uploads/' . $currentFile;
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-        }
+if (isset($_GET['delete_file'])) {
+    $delete_file_id = $_GET['delete_file'];
+    $stmt = $conn->prepare("SELECT file FROM personal_1_6_a WHERE id = :delete_file_id");
+    $stmt->bindParam(':delete_file_id', $delete_file_id);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $currentFile = $row['file'];
 
-        $delete_file = $conn->prepare("UPDATE personal_1_6_a SET file = '' WHERE id = :delete_file_id");
-        $delete_file->bindParam(':delete_file_id', $delete_file_id);
-        $delete_file->execute();
-    }
-
-    if (isset($_GET['delete'])) {
-        $delete_id = $_GET['delete'];
-        
-        $stmt = $conn->prepare("SELECT file FROM personal_1_6_a WHERE id = :delete_id");
-        $stmt->bindParam(':delete_id', $delete_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $currentFile = $row['file'];
-
-        if ($currentFile) {
-            $filePath = 'uploads/' . $currentFile;
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-        }
-
-        $deletestmt = $conn->prepare("DELETE FROM personal_1_6_a WHERE id = :delete_id");
-        $deletestmt->bindParam(':delete_id', $delete_id);
-        $deletestmt->execute();
-        
-        if ($deletestmt) {
-            $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
-            echo "<script>window.location.href = 'index.php?page=1_6_a/index_1_6_a';</script>";
-            exit;
+    if ($currentFile) {
+        $filePath = 'uploads/' . $currentFile;
+        if (file_exists($filePath)) {
+            unlink($filePath);
         }
     }
 
-    if (isset($_GET['edit'])) {
-        $_SESSION['edit'] = $_GET['edit'];
-        $edit_id = $_GET['edit'];
-        $stmt = $conn->prepare("SELECT * FROM personal_1_6_a WHERE id = ?");
-        $stmt->execute([$edit_id]);
-        $data = $stmt->fetch();
-    ?>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var modal = new bootstrap.Modal(document.getElementById("modal"));
-                modal.show();
-            });
-        </script>
-    <?php
+    $delete_file = $conn->prepare("UPDATE personal_1_6_a SET file = '' WHERE id = :delete_file_id");
+    $delete_file->bindParam(':delete_file_id', $delete_file_id);
+    $delete_file->execute();
+}
+
+if (isset($_GET['delete'])) {
+    $delete_id = $_GET['delete'];
+
+    $stmt = $conn->prepare("SELECT file FROM personal_1_6_a WHERE id = :delete_id");
+    $stmt->bindParam(':delete_id', $delete_id);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $currentFile = $row['file'];
+
+    if ($currentFile) {
+        $filePath = 'uploads/' . $currentFile;
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
     }
 
-    if (isset($_GET['upload'])) {
-        $_SESSION['upload'] = $_GET['upload'];
-        $upload_id = $_SESSION['upload'];
-    ?>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var modal = new bootstrap.Modal(document.getElementById("uploadModal"));
-                modal.show();
-            });
-        </script>
-    <?php } ?>
+    $deletestmt = $conn->prepare("DELETE FROM personal_1_6_a WHERE id = :delete_id");
+    $deletestmt->bindParam(':delete_id', $delete_id);
+    $deletestmt->execute();
+
+    if ($deletestmt) {
+        $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
+        echo "<script>window.location.href = 'index.php?page=1_6_a/index_1_6_a';</script>";
+        exit;
+    }
+}
+
+if (isset($_GET['edit'])) {
+    $_SESSION['edit'] = $_GET['edit'];
+    $edit_id = $_GET['edit'];
+    $stmt = $conn->prepare("SELECT * FROM personal_1_6_a WHERE id = ?");
+    $stmt->execute([$edit_id]);
+    $data = $stmt->fetch();
+?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var modal = new bootstrap.Modal(document.getElementById("modal"));
+            modal.show();
+        });
+    </script>
+<?php
+}
+
+if (isset($_GET['upload'])) {
+    $_SESSION['upload'] = $_GET['upload'];
+    $upload_id = $_SESSION['upload'];
+?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var modal = new bootstrap.Modal(document.getElementById("uploadModal"));
+            modal.show();
+        });
+    </script>
+<?php } ?>
 
 <div class="container">
     <div class="pagetitle mt-3">
@@ -126,10 +131,12 @@
         <tbody>
             <?php
             $userId = $_SESSION['userId'];
-            $stmt = $conn->query("SELECT * FROM personal_1_6_a WHERE userId = '$userId'");
+            $term =  $term_year['term'];
+            $year =  $term_year['year'];
+            $stmt = $conn->query("SELECT * FROM personal_1_6_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
             $stmt->execute();
             $personal = $stmt->fetchAll();
-            
+
             $totalAmountWork = 0.00;
 
             if (!$personal) {
@@ -144,10 +151,10 @@
                         <td><?= $per['funding_framework']; ?></td>
                         <td><?= $per['start_end']; ?></td>
                         <td><?= $per['nature_work']; ?></td>
-                        <td><?= $per['leader']; ?></td> 
+                        <td><?= $per['leader']; ?></td>
                         <td><?= $per['contribute']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
-                        <?php $totalAmountWork += floatval($per['amount_work']);?>
+                        <?php $totalAmountWork += floatval($per['amount_work']); ?>
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
                                 <a href="uploads/<?= $per['file']; ?>" target="_blank" class="btn btn-secondary">
@@ -156,7 +163,7 @@
                                         <div class="label">ดูไฟล์</div>
                                     </div>
                                 </a>
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')"  href="?page=1_6_a/index_1_6_a&delete_file=<?= $per['id']; ?>" class="btn btn-danger">
+                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_6_a/index_1_6_a&delete_file=<?= $per['id']; ?>" class="btn btn-danger">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;
                                         <div class="label">ลบไฟล์</div>
@@ -222,37 +229,41 @@
                     </div>
                     <div class="modal-body">
                         <form action="1_6_a/insert_1_6_a.php" method="post">
-                            <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
+                            <input type="hidden" class="form-control" name="userId" value="<?= $userId ?>">
+                            <input type="hidden" class="form-control" name="term" value="<?=$term_year['term'];?>">
+                            <input type="hidden" class="form-control" name="year" value="<?=$term_year['year'];?>">
+                            
                             <div class="mb-3">
                                 <label for="number" class="col-sm-2 col-form-label ">ลำดับที่</label>
-                                    <input type="text" class="form-control" name="number" required>
+                                <input type="text" class="form-control" name="number" required>
                             </div>
                             <div class="mb-3">
                                 <label for="research_name" class="col-sm-2 col-form-label">ชื่องานวิจัย</label>
-                                    <input type="text" class="form-control" name="research_name" required>
+                                <input type="text" class="form-control" name="research_name" required>
                             </div>
                             <div class="mb-3">
                                 <label for="funding_source" class="col-sm-2 col-form-label">แหล่งเงินทุน</label>
-                                    <input type="text" class="form-control" name="funding_source" required>
+                                <input type="text" class="form-control" name="funding_source" required>
                             </div>
                             <div class="mb-3">
-                            <label for="funding_framework" class="col-sm-2 col-form-label">กรอบเงินทุน</label>
-                            <select type="text" class="form-select" name="funding_framework" id="funding_framework1" onchange="calc1()">
-                                <option value="" selected>กรุณาเลือก</option>
-                                <option value="<50,000"><50,000</option>
-                                <option value="50,000-100,000">50,000-100,000</option>
-                                <option value="100,000-500,000">100,000-500,000</option>
-                                <option value="500,000-1,000,000">500,000-1,000,000</option>
-                                <option value=">1,000,000">>1,000,000</option>
-                            </select>
+                                <label for="funding_framework" class="col-sm-2 col-form-label">กรอบเงินทุน</label>
+                                <select type="text" class="form-select" name="funding_framework" id="funding_framework1" onchange="calc1()">
+                                    <option value="" selected>กรุณาเลือก</option>
+                                    <option value="<50,000">
+                                        <50,000< /option>
+                                    <option value="50,000-100,000">50,000-100,000</option>
+                                    <option value="100,000-500,000">100,000-500,000</option>
+                                    <option value="500,000-1,000,000">500,000-1,000,000</option>
+                                    <option value=">1,000,000">>1,000,000</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="start_end" class="col-sm-2 col-form-label">ระยะเวลาเริ่มต้น-สิ้นสุด</label>
-                                    <input type="text" class="form-control" name="start_end" required>
+                                <input type="text" class="form-control" name="start_end" required>
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="nature_work" class="col-sm-2 col-form-label">ลักษณะงานเดี่ยว/กลุ่ม</label>
-                                    <input type="text" class="form-control" name="nature_work" required>
+                                <input type="text" class="form-control" name="nature_work" required>
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="leader" class="col-sm-2 col-form-label">หัวหน้าโครงการ/ผู้ร่วมโครงการ</label>
@@ -264,11 +275,11 @@
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="contribute" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม</label>
-                                    <input type="text" class="form-control" name="contribute" required>
+                                <input type="text" class="form-control" name="contribute" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                    <input type="text" class="form-control" name="amount_work" id="amount_work1" readonly>
+                                <input type="text" class="form-control" name="amount_work" id="amount_work1" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -303,11 +314,11 @@
                             <div class="mb-3">
                                 <label for="funding_framework" class="col-sm-2 col-form-label">กรอบเงินทุน</label>
                                 <select type="text" class="form-select" name="funding_framework" id="funding_framework2" onchange="calc2()" required>
-                                    <option value="<50,000" <?php if($data['funding_framework'] === '<50,000') echo 'selected'?>><50,000</option>
-                                    <option value="50,000-100,000" <?php if($data['funding_framework'] === '50,000-100,000') echo 'selected'?>>50,000-100,000</option>
-                                    <option value="100,000-500,000" <?php if($data['funding_framework'] === '100,000-500,000') echo 'selected'?>>100,000-500,000</option>
-                                    <option value="500,000-1,000,000" <?php if($data['funding_framework'] === '500,000-1,000,000') echo 'selected'?>>500,000-1,000,000</option>
-                                    <option value=">1,000,000" <?php if($data['funding_framework'] === '>1,000,000') echo 'selected'?>>>1,000,000</option>
+                                    <option value="<50,000" <?php if ($data['funding_framework'] === '<50,000') echo 'selected' ?>>50,000<< /option>
+                                    <option value="50,000-100,000" <?php if ($data['funding_framework'] === '50,000-100,000') echo 'selected' ?>>50,000-100,000</option>
+                                    <option value="100,000-500,000" <?php if ($data['funding_framework'] === '100,000-500,000') echo 'selected' ?>>100,000-500,000</option>
+                                    <option value="500,000-1,000,000" <?php if ($data['funding_framework'] === '500,000-1,000,000') echo 'selected' ?>>500,000-1,000,000</option>
+                                    <option value=">1,000,000" <?php if ($data['funding_framework'] === '>1,000,000') echo 'selected' ?>>>1,000,000</option>
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -321,8 +332,8 @@
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="leader" class="col-sm-2 col-form-label">หัวหน้าโครงการ/ผู้ร่วมโครงการ</label>
                                 <select type="text" class="form-select" name="leader" id="leader2" onchange="calc2()" required>
-                                    <option value="หัวหน้าโครงการ" <?php if($data['leader'] === 'หัวหน้าโครงการ') echo 'selected'?>>หัวหน้าโครงการ</option>
-                                    <option value="ผู้ร่วมโครงการ" <?php if($data['leader'] === 'ผู้ร่วมโครงการ') echo 'selected'?>>ผู้ร่วมโครงการ</option>
+                                    <option value="หัวหน้าโครงการ" <?php if ($data['leader'] === 'หัวหน้าโครงการ') echo 'selected' ?>>หัวหน้าโครงการ</option>
+                                    <option value="ผู้ร่วมโครงการ" <?php if ($data['leader'] === 'ผู้ร่วมโครงการ') echo 'selected' ?>>ผู้ร่วมโครงการ</option>
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -396,125 +407,117 @@
             previewFile.src = URL.createObjectURL(file);
         }
     }
+
     function calc1() {
         var funding = document.getElementById('funding_framework1').value;
         var leader = document.getElementById('leader1').value;
 
         if (funding == '<50,000') {
-            if (leader == 'หัวหน้าโครงการ'){
+            if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 4;
                 document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-            }
-            else if (leader == 'ผู้ร่วมโครงการ'){
+            } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 2;
                 document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-            }else{
+            } else {
                 var calculatedAmountWork = 0.00;
                 document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
             }
-        } else if (funding == '50,000-100,000'){
-            if (leader == 'หัวหน้าโครงการ'){
+        } else if (funding == '50,000-100,000') {
+            if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 6;
                 document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-            }
-            else if (leader == 'ผู้ร่วมโครงการ'){
+            } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 3;
                 document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-            }else{
+            } else {
                 var calculatedAmountWork = 0.00;
                 document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
             }
-        } else if (funding == '100,000-500,000'){
-            if (leader == 'หัวหน้าโครงการ'){
+        } else if (funding == '100,000-500,000') {
+            if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 8;
                 document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-            }
-            else if (leader == 'ผู้ร่วมโครงการ'){
+            } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 4;
                 document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-            }else{
+            } else {
                 var calculatedAmountWork = 0.00;
                 document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
             }
-        } else if (funding == '500,000-1,000,000'){
-            if (leader == 'หัวหน้าโครงการ'){
+        } else if (funding == '500,000-1,000,000') {
+            if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 10;
                 document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-            }
-            else if (leader == 'ผู้ร่วมโครงการ'){
+            } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 5;
                 document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-            }else{
+            } else {
                 var calculatedAmountWork = 0.00;
                 document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
             }
-        } else if (funding == '>1,000,000'){
-            if (leader == 'หัวหน้าโครงการ'){
+        } else if (funding == '>1,000,000') {
+            if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 12;
                 document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-            }
-            else if (leader == 'ผู้ร่วมโครงการ'){
+            } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 6;
                 document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-            }else{
+            } else {
                 var calculatedAmountWork = 0.00;
                 document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
             }
-        }else{
+        } else {
             var calculatedAmountWork = 0;
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
         }
     }
+
     function calc2() {
         var funding = document.getElementById('funding_framework2').value;
         var leader = document.getElementById('leader2').value;
 
         if (funding == '<50,000') {
-            if (leader == 'หัวหน้าโครงการ'){
+            if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 4;
                 document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-            }
-            else if (leader == 'ผู้ร่วมโครงการ'){
+            } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 2;
                 document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
             }
-        } else if (funding == '50,000-100,000'){
-            if (leader == 'หัวหน้าโครงการ'){
+        } else if (funding == '50,000-100,000') {
+            if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 6;
                 document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-            }
-            else if (leader == 'ผู้ร่วมโครงการ'){
+            } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 3;
                 document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
             }
-        } else if (funding == '100,000-500,000'){
-            if (leader == 'หัวหน้าโครงการ'){
+        } else if (funding == '100,000-500,000') {
+            if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 8;
                 document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-            }
-            else if (leader == 'ผู้ร่วมโครงการ'){
+            } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 4;
                 document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
             }
-        } else if (funding == '500,000-1,000,000'){
-            if (leader == 'หัวหน้าโครงการ'){
+        } else if (funding == '500,000-1,000,000') {
+            if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 10;
                 document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-            }
-            else if (leader == 'ผู้ร่วมโครงการ'){
+            } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 5;
                 document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
             }
-        } else if (funding == '>1,000,000'){
-            if (leader == 'หัวหน้าโครงการ'){
+        } else if (funding == '>1,000,000') {
+            if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 12;
                 document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-            }
-            else if (leader == 'ผู้ร่วมโครงการ'){
+            } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 6;
                 document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
             }
-        
+
         }
     }
 </script>

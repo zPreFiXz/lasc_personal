@@ -1,5 +1,10 @@
 <?php
 require_once "config/db.php";
+
+// ดึงตาราง term&year
+$stmt = $conn->query("SELECT * FROM `term&year` where id = 1");
+$stmt->execute();
+$term_year = $stmt->fetch();
 //delete file
 if (isset($_GET['delete_file'])) {
     $delete_file_id = $_GET['delete_file']; // รับค่า ID ที่ต้องการลบ
@@ -155,10 +160,12 @@ if (isset($_GET['upload'])) {
         <tbody>
             <?php
             $userId = $_SESSION['userId'];
-            $stmt = $conn->query("SELECT*FROM personal_1_5_b WHERE userId = '$userId'"); // ดึงข้อมูลจากตาราง personal_1_5_b
+            $term =  $term_year['term'];
+            $year =  $term_year['year'];
+            $stmt = $conn->query("SELECT*FROM personal_1_5_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'"); // ดึงข้อมูลจากตาราง personal_1_5_b
             $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
             $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
-            
+
             $totalAmountWork = 0.00;
 
             // ตรวจสอบว่ามีข้อมูลหรือไม่
@@ -177,7 +184,7 @@ if (isset($_GET['upload'])) {
                         <td><?= $per['teacher']; ?></td>
                         <td><?= $per['amount_time']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
-                        <?php $totalAmountWork += floatval($per['amount_work']);?>
+                        <?php $totalAmountWork += floatval($per['amount_work']); ?>
 
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
@@ -259,7 +266,10 @@ if (isset($_GET['upload'])) {
             <div class="modal-body">
 
                 <form action="1_5_b/insert_1_5_b.php" method="post" enctype="multipart/form-data">
-                    <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
+                    <input type="hidden" class="form-control" name="userId" value="<?= $userId ?>">
+                    <input type="hidden" class="form-control" name="term" value="<?= $term_year['term']; ?>">
+                    <input type="hidden" class="form-control" name="year" value="<?= $term_year['year']; ?>">
+
                     <div class="mb-3">
                         <label for="major" class="col-sm-2 col-form-label">สาขาวิชา</label>
                         <input type="text" class="form-control" name="major" id="major" oninput="calc()" required>
@@ -412,7 +422,8 @@ if (isset($_GET['upload'])) {
             previewFile.src = URL.createObjectURL(file); // สร้าง URL object สำหรับไฟล์และกำหนดให้ภาพตัวอย่างแสดงรูปภาพ
         }
     });
-    function calc(){
+
+    function calc() {
         document.getElementById('amount_work').value = 1;
     }
 </script>

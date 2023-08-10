@@ -1,10 +1,17 @@
 <?php
-    require_once "config/db.php";
-    $userId = $_SESSION['userId'];
+require_once "config/db.php";
 
-    $stmt = $conn->query("SELECT*FROM personal_1_11 WHERE userId = '$userId'");
-    $stmt->execute();
-    $personal = $stmt->fetchAll(); 
+// ดึงตาราง term&year
+$stmt = $conn->query("SELECT * FROM `term&year` where id = 1");
+$stmt->execute();
+$term_year = $stmt->fetch();
+
+$userId = $_SESSION['userId'];
+$term =  $term_year['term'];
+$year =  $term_year['year'];
+$stmt = $conn->query("SELECT*FROM personal_1_11 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+$stmt->execute();
+$personal = $stmt->fetchAll();
 
 
 ?>
@@ -23,7 +30,9 @@
             </tr>
         </thead>
         <form action="1_11/insert_1_11.php" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="userId" value="<?=$userId?>">
+            <input type="hidden" name="userId" value="<?= $userId ?>">
+            <input type="hidden" class="form-control" name="term" value="<?= $term_year['term']; ?>">
+            <input type="hidden" class="form-control" name="year" value="<?= $term_year['year']; ?>">
             <tbody>
                 <tr>
                     <td><input class="form-check-input" type="checkbox" id="gridCheck1[]" name="gridCheck1" value="checked"></td>

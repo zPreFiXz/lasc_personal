@@ -1,80 +1,85 @@
 <?php
-    require_once "config/db.php";
+require_once "config/db.php";
 
-    if(isset($_GET['delete_file'])){
-        $delete_file_id = $_GET['delete_file'];
-        $stmt = $conn->prepare("SELECT file FROM personal_1_8 WHERE id = :delete_file_id");
-        $stmt->bindParam(':delete_file_id', $delete_file_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $currentFile = $row['file'];
+// ดึงตาราง term&year
+$stmt = $conn->query("SELECT * FROM `term&year` where id = 1");
+$stmt->execute();
+$term_year = $stmt->fetch();
 
-        if ($currentFile) {
-            $filePath = 'uploads/' . $currentFile;
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-        }
+if (isset($_GET['delete_file'])) {
+    $delete_file_id = $_GET['delete_file'];
+    $stmt = $conn->prepare("SELECT file FROM personal_1_8 WHERE id = :delete_file_id");
+    $stmt->bindParam(':delete_file_id', $delete_file_id);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $currentFile = $row['file'];
 
-        $delete_file = $conn->prepare("UPDATE personal_1_8 SET file = '' WHERE id = :delete_file_id");
-        $delete_file->bindParam(':delete_file_id', $delete_file_id);
-        $delete_file->execute();
-    }
-
-    if (isset($_GET['delete'])) {
-        $delete_id = $_GET['delete'];
-        
-        $stmt = $conn->prepare("SELECT file FROM personal_1_8 WHERE id = :delete_id");
-        $stmt->bindParam(':delete_id', $delete_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $currentFile = $row['file'];
-
-        if ($currentFile) {
-            $filePath = 'uploads/' . $currentFile;
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-        }
-
-        $deletestmt = $conn->prepare("DELETE FROM personal_1_8 WHERE id = :delete_id");
-        $deletestmt->bindParam(':delete_id', $delete_id);
-        $deletestmt->execute();
-        
-        if ($deletestmt) {
-            $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
-            echo "<script>window.location.href = 'index.php?page=1_8/index_1_8';</script>";
-            exit;
+    if ($currentFile) {
+        $filePath = 'uploads/' . $currentFile;
+        if (file_exists($filePath)) {
+            unlink($filePath);
         }
     }
 
-    if (isset($_GET['edit'])) {
-        $_SESSION['edit'] = $_GET['edit'];
-        $edit_id = $_GET['edit'];
-        $stmt = $conn->prepare("SELECT * FROM personal_1_8 WHERE id = ?");
-        $stmt->execute([$edit_id]);
-        $data = $stmt->fetch();
-    ?>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var modal = new bootstrap.Modal(document.getElementById("modal"));
-                modal.show();
-            });
-        </script>
-    <?php
+    $delete_file = $conn->prepare("UPDATE personal_1_8 SET file = '' WHERE id = :delete_file_id");
+    $delete_file->bindParam(':delete_file_id', $delete_file_id);
+    $delete_file->execute();
+}
+
+if (isset($_GET['delete'])) {
+    $delete_id = $_GET['delete'];
+
+    $stmt = $conn->prepare("SELECT file FROM personal_1_8 WHERE id = :delete_id");
+    $stmt->bindParam(':delete_id', $delete_id);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $currentFile = $row['file'];
+
+    if ($currentFile) {
+        $filePath = 'uploads/' . $currentFile;
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
     }
 
-    if (isset($_GET['upload'])) {
-        $_SESSION['upload'] = $_GET['upload'];
-        $upload_id = $_SESSION['upload'];
-    ?>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var modal = new bootstrap.Modal(document.getElementById("uploadModal"));
-                modal.show();
-            });
-        </script>
-    <?php } ?>
+    $deletestmt = $conn->prepare("DELETE FROM personal_1_8 WHERE id = :delete_id");
+    $deletestmt->bindParam(':delete_id', $delete_id);
+    $deletestmt->execute();
+
+    if ($deletestmt) {
+        $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
+        echo "<script>window.location.href = 'index.php?page=1_8/index_1_8';</script>";
+        exit;
+    }
+}
+
+if (isset($_GET['edit'])) {
+    $_SESSION['edit'] = $_GET['edit'];
+    $edit_id = $_GET['edit'];
+    $stmt = $conn->prepare("SELECT * FROM personal_1_8 WHERE id = ?");
+    $stmt->execute([$edit_id]);
+    $data = $stmt->fetch();
+?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var modal = new bootstrap.Modal(document.getElementById("modal"));
+            modal.show();
+        });
+    </script>
+<?php
+}
+
+if (isset($_GET['upload'])) {
+    $_SESSION['upload'] = $_GET['upload'];
+    $upload_id = $_SESSION['upload'];
+?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var modal = new bootstrap.Modal(document.getElementById("uploadModal"));
+            modal.show();
+        });
+    </script>
+<?php } ?>
 
 <div class="container">
     <div class="pagetitle mt-3">
@@ -120,7 +125,9 @@
         <tbody>
             <?php
             $userId = $_SESSION['userId'];
-            $stmt = $conn->query("SELECT * FROM personal_1_8 WHERE userId = '$userId'");
+            $term =  $term_year['term'];
+            $year =  $term_year['year'];
+            $stmt = $conn->query("SELECT * FROM personal_1_8 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
             $stmt->execute();
             $personal = $stmt->fetchAll();
 
@@ -139,7 +146,7 @@
                         <td><?= $per['nature_work']; ?></td>
                         <td><?= $per['hours']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
-                        <?php $totalAmountWork += floatval($per['amount_work']);?>
+                        <?php $totalAmountWork += floatval($per['amount_work']); ?>
 
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
@@ -149,7 +156,7 @@
                                         <div class="label">ดูไฟล์</div>
                                     </div>
                                 </a>
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')"  href="?page=1_8/index_1_8&delete_file=<?= $per['id']; ?>" class="btn btn-danger">
+                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_8/index_1_8&delete_file=<?= $per['id']; ?>" class="btn btn-danger">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;
                                         <div class="label">ลบไฟล์</div>
@@ -215,7 +222,10 @@
                     </div>
                     <div class="modal-body">
                         <form action="1_8/insert_1_8.php" method="post">
-                            <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
+                            <input type="hidden" class="form-control" name="userId" value="<?= $userId ?>">
+                            <input type="hidden" class="form-control" name="term" value="<?=$term_year['term'];?>">
+                            <input type="hidden" class="form-control" name="year" value="<?=$term_year['year'];?>">
+                            
                             <div class="mb-3">
                                 <label for="date" class="col-sm-2 col-form-label ">วัน/เดือน/ปี</label>
                                 <input type="date" class="form-control" name="date" required>
@@ -231,7 +241,7 @@
                                         <option value="อนุกรรมการอ่านผลงานวิชาการ">อนุกรรมการอ่านผลงานวิชาการ</option>
                                         <option value="กรรมการอ่านงานวิจัย">กรรมการอ่านงานวิจัย</option>
                                     </select>
-                                </div>   
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="subject" class="col-sm-2 col-form-label">เรื่อง</label>
@@ -239,19 +249,19 @@
                             </div>
                             <div class="mb-3">
                                 <label for="location" class="col-sm-2 col-form-label">สถานที่</label>
-                                    <input type="text" class="form-control" name="location" required>
+                                <input type="text" class="form-control" name="location" required>
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="nature_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>
-                                    <input type="text" class="form-control" name="nature_work" required>
+                                <input type="text" class="form-control" name="nature_work" required>
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="hours" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
-                                    <input type="text" class="form-control" name="hours" id="hours1" oninput="calca1()" required>
+                                <input type="text" class="form-control" name="hours" id="hours1" oninput="calca1()" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                    <input type="text" class="form-control" name="amount_work" id="amount_work1" readonly>
+                                <input type="text" class="form-control" name="amount_work" id="amount_work1" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -278,14 +288,14 @@
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="type" class="col-sm-2 col-form-label">ประเภทการบริการทางวิชาการ</label>
                                 <div class="col-sm-12">
-                                    <select id ="type2" name="type" class="form-select" onchange="calc2()" required>
+                                    <select id="type2" name="type" class="form-select" onchange="calc2()" required>
                                         <option value="วิทยากร" <?php if ($data['type'] === 'วิทยากร') echo 'selected'; ?>>วิทยากร</option>
                                         <option value="ผู้ทรงคุณวุฒิ" <?php if ($data['type'] === 'ผู้ทรงคุณวุฒิ') echo 'selected'; ?>>ผู้ทรงคุณวุฒิ</option>
                                         <option value="โครงการบริการวิชาการ" <?php if ($data['type'] === 'โครงการบริการวิชาการ') echo 'selected'; ?>>โครงการบริการวิชาการ</option>
                                         <option value="อนุกรรมการอ่านผลงานวิชาการ" <?php if ($data['type'] === 'อนุกรรมการอ่านผลงานวิชาการ') echo 'selected'; ?>>อนุกรรมการอ่านผลงานวิชาการ</option>
                                         <option value="กรรมการอ่านงานวิจัย" <?php if ($data['type'] === 'กรรมการอ่านงานวิจัย') echo 'selected'; ?>>กรรมการอ่านงานวิจัย</option>
                                     </select>
-                                </div>   
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="subject" class="col-sm-2 col-form-label">เรื่อง</label>
@@ -293,7 +303,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="location" class="col-sm-2 col-form-label">สถานที่</label>
-                                 <input type="text" class="form-control" name="location" value="<?php echo $data['location']; ?>" required>
+                                <input type="text" class="form-control" name="location" value="<?php echo $data['location']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="nature_work" class="col-sm-2 col-form-label">ลักษณะงาน</label>
@@ -370,50 +380,52 @@
             previewFile.src = URL.createObjectURL(file);
         }
     }
+
     function calc1() {
         var type = document.getElementById('type1').value;
         var hours = document.getElementById('hours1').value;
 
-        if (type == 'วิทยากร'){
-            var calculatedAmountWork = hours/15;
+        if (type == 'วิทยากร') {
+            var calculatedAmountWork = hours / 15;
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-        }else if (type == 'โครงการบริการวิชาการ'){
-            var calculatedAmountWork = hours/15;
+        } else if (type == 'โครงการบริการวิชาการ') {
+            var calculatedAmountWork = hours / 15;
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-        }else if (type == 'ผู้ทรงคุณวุฒิ'){
+        } else if (type == 'ผู้ทรงคุณวุฒิ') {
             var calculatedAmountWork = 1;
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-        }else if (type == 'อนุกรรมการอ่านผลงานวิชาการ'){
+        } else if (type == 'อนุกรรมการอ่านผลงานวิชาการ') {
             var calculatedAmountWork = 1;
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-        }else if (type == 'กรรมการอ่านงานวิจัย'){
+        } else if (type == 'กรรมการอ่านงานวิจัย') {
             var calculatedAmountWork = 1;
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-        }else{
+        } else {
             var calculatedAmountWork = 0;
             document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
         }
     }
+
     function calc2() {
         var type = document.getElementById('type2').value;
         var hours = document.getElementById('hours2').value;
 
-        if (type == 'วิทยากร'){
-            var calculatedAmountWork = hours/15;
+        if (type == 'วิทยากร') {
+            var calculatedAmountWork = hours / 15;
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-        }else if (type == 'โครงการบริการวิชาการ'){
-            var calculatedAmountWork = hours/15;
+        } else if (type == 'โครงการบริการวิชาการ') {
+            var calculatedAmountWork = hours / 15;
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-        }else if (type == 'ผู้ทรงคุณวุฒิ'){
+        } else if (type == 'ผู้ทรงคุณวุฒิ') {
             var calculatedAmountWork = 1;
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-        }else if (type == 'อนุกรรมการอ่านผลงานวิชาการ'){
+        } else if (type == 'อนุกรรมการอ่านผลงานวิชาการ') {
             var calculatedAmountWork = 1;
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-        }else if (type == 'กรรมการอ่านงานวิจัย'){
+        } else if (type == 'กรรมการอ่านงานวิจัย') {
             var calculatedAmountWork = 1;
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
-        }else{
+        } else {
             var calculatedAmountWork = 0;
             document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
         }

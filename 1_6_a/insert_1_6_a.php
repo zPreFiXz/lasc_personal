@@ -12,10 +12,12 @@
         $nature_work = $_POST['nature_work'];
         $leader = $_POST['leader'];
         $contribute = $_POST['contribute'];
+        $term = $_POST['term'];
+        $year = $_POST['year'];
         $amount_work = $_POST['amount_work'];
 
-        $sql = "INSERT INTO personal_1_6_a (userId,number,research_name,funding_source,funding_framework,start_end,nature_work,leader,contribute,amount_work) 
-        VALUES (:userId,:number, :research_name, :funding_source, :funding_framework, :start_end, :nature_work,:leader,:contribute,:amount_work)";
+        $sql = "INSERT INTO personal_1_6_a (userId,number,research_name,funding_source,funding_framework,start_end,nature_work,leader,contribute,term, year,amount_work) 
+        VALUES (:userId,:number, :research_name, :funding_source, :funding_framework, :start_end, :nature_work,:leader,:contribute,:term,:year,:amount_work)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userId', $userId);
@@ -27,6 +29,8 @@
         $stmt->bindParam(':nature_work', $nature_work);
         $stmt->bindParam(':leader', $leader);
         $stmt->bindParam(':contribute', $contribute);
+        $stmt->bindParam(':term', $term);
+        $stmt->bindParam(':year', $year);
         $stmt->bindParam(':amount_work', $amount_work);
         $stmt->execute();
         }

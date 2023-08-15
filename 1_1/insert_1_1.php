@@ -6,33 +6,27 @@
         $userId = $_POST['userId'];
         $code_course = $_POST['code_course'];
         $name_course = $_POST['name_course'];
-        $amount_credit = $_POST['amount_credit'];
-        $describe_column = $_POST['describe'];
-        $practice = $_POST['practice'];
+        $unit = $_POST['unit'];
         $practice_subject = $_POST['practice_subject'];
         $level = $_POST['level'];
         $group_study = $_POST['group_study'];
         $amount_student = $_POST['amount_student'];
         $proportion = $_POST['proportion'];
-        $amount_time = $_POST['amount_time'];
         $amount_work = $_POST['amount_work'];
 
-        $sql = "INSERT INTO personal_1_1 (userId,code_course, name_course, amount_credit, `describe`, practice, practice_subject, level, group_study, amount_student, proportion, amount_time, amount_work) 
-        VALUES (:userId,:code_course, :name_course, :amount_credit, :describe_column, :practice, :practice_subject, :level, :group_study, :amount_student, :proportion, :amount_time, :amount_work)";
+        $sql = "INSERT INTO personal_1_1 (userId,code_course, name_course, unit, practice_subject, level, group_study, amount_student, proportion, amount_work) 
+        VALUES (:userId,:code_course, :name_course, :unit, :practice_subject, :level, :group_study, :amount_student, :proportion, :amount_work)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userId', $userId);
         $stmt->bindParam(':code_course', $code_course);
         $stmt->bindParam(':name_course', $name_course);
-        $stmt->bindParam(':amount_credit', $amount_credit);
-        $stmt->bindParam(':describe_column', $describe_column);
-        $stmt->bindParam(':practice', $practice);
+        $stmt->bindParam(':unit', $unit);
         $stmt->bindParam(':practice_subject', $practice_subject);
         $stmt->bindParam(':level', $level);
         $stmt->bindParam(':group_study', $group_study);
         $stmt->bindParam(':amount_student', $amount_student);
         $stmt->bindParam(':proportion', $proportion);
-        $stmt->bindParam(':amount_time', $amount_time);
         $stmt->bindParam(':amount_work', $amount_work);
         $stmt->execute();
     }

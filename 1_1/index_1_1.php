@@ -105,24 +105,29 @@ if (isset($_GET['upload'])) {
     <table class="table table-bordered text-center align-middle">
         <thead class="align-middle table-secondary">
             <tr>
-                <th scope="col" rowspan="2">รหัสวิชา</th>
-                <th scope="col" rowspan="2">ชื่อวิชา</th>
-                <th scope="col" colspan="5">จำนวนหน่วยกิต</th>
-                <th scope="col" rowspan="2">ระดับชั้น(หมู่เรียน)</th>
-                <th scope="col" rowspan="2">หมู่เรียนที่</th>
+                <th scope="col" rowspan="2" style="white-space: nowrap;">รหัสวิชา</th>
+                <th scope="col" rowspan="2" style="white-space: nowrap;">ชื่อวิชา</th>
+                <th scope="col" rowspan="2" style="white-space: nowrap;">หน่วยกิต<br>(ทฤษฎี-ปฏิบัติ-ค้นคว้า)</th>
+                <th scope="col" colspan="3">ทฤษฎี (ชั่วโมง/สัปดาห์)</th>
+                <th scope="col" colspan="4">ปฏิบัติ (ชั่วโมง/สัปดาห์)</th>
+                <th scope="col" rowspan="2" style="white-space: nowrap;">ระดับชั้น(หมู่เรียน)</th>
+                <th scope="col" rowspan="2" style="white-space: nowrap;">หมู่เรียนที่</th>
                 <th scope="col" rowspan="2">จำนวนนักศึกษา </th>
                 <th scope="col" rowspan="2">สัดส่วนการสอน (ป้อนตัวเลขไม่มี%)</th>
-                <th scope="col" rowspan="2">จำนวนชั่วโมงสอน/สัปดาห์ </th>
-                <th scope="col" rowspan="2">จำนวนภาระงาน/สัปดาห์ </th>
+                <th scope="col" rowspan="2">รวมจำนวนภาระงาน/สัปดาห์ </th>
                 <th scope="col" rowspan="2">อัปโหลดไฟล์</th>
                 <th scope="col" rowspan="2">จัดการข้อมูล</th>
             </tr>
             <tr>
-                <th scope="col">จำนวน</th>
-                <th scope="col">บรรยาย</th>
-                <th scope="col">ปฏิบัติ</th>
+                <th scope="col">เตรียมสอนทฤษฎี</th>
+                <th scope="col">ชั่วโมงบรรยายตามจริง</th>
+                <th scope="col">ตรวจงาน</th>
+                <th scope="col">เตรียมสอนปฏิบัติ</th>
+                <th scope="col">ชั่วโมงปฏิบัติตามจริง</th>
+                <th scope="col">ตรวจงาน</th>
                 <th scope="col">แบบปฏิบัติ</th>
-                <th scope="col">ค้นคว้า</th>
+
+
 
             </tr>
         </thead>
@@ -134,23 +139,25 @@ if (isset($_GET['upload'])) {
             $personal = $stmt->fetchAll();
 
             if (!$personal) {
-                echo "<tr><td colspan='15' class='text-center'>ไม่มีข้อมูล</td></tr>";
+                echo "<tr><td colspan='18' class='text-center'>ไม่มีข้อมูล</td></tr>";
             } else {
                 foreach ($personal as $per) {
             ?>
                     <tr>
                         <td style="white-space: nowrap;"><?= $per['code_course']; ?></td>
                         <td class="mb-3" style="white-space: nowrap;"><?= $per['name_course']; ?></td>
-                        <td><?= $per['amount_credit']; ?></td>
-                        <td><?= $per['describe']; ?></td>
-                        <td><?= $per['practice']; ?></td>
-                        <td><?= $per['practice_subject']; ?></td>
-                        <td><?= $per['research']; ?></td>
+                        <td><?= $per['unit']; ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="white-space: nowrap;"><?= $per['practice_subject']; ?></td>
                         <td><?= $per['level']; ?></td>
                         <td><?= $per['group_study']; ?></td>
                         <td><?= $per['amount_student']; ?></td>
                         <td><?= $per['proportion']; ?></td>
-                        <td><?= $per['amount_time']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
@@ -212,7 +219,7 @@ if (isset($_GET['upload'])) {
             }
             ?>
             <tr>
-                <th scope="row" colspan="12">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+                <th scope="row" colspan="14">รวมจำนวนภาระงานตลอดภาคเรียน</th>
                 <td scope="row">0.00</td>
                 <td colspan="2"></td>
             </tr>
@@ -236,53 +243,66 @@ if (isset($_GET['upload'])) {
                                 <label for="name_course" class="col-sm-2 col-form-label ">ชื่อวิชา</label>
                                 <input type="text" class="form-control" name="name_course" required>
                             </div>
-                            <h5 class="col-sm-2 col-form-label">จำนวนหน่วยกิต</h5>
-                            <div class="m-3">
+                            <div class="mb-3">
+                                <label for="unit" class="col-sm-2 col-form-label" style="white-space: nowrap;">หน่วยกิต (ทฤษฎี-ปฏิบัติ-ค้นคว้า)</label>
+                                    <select id="unit" name="unit" class="form-select" onchange="calc1()" required>
+                                        <option value="" selected>กรุณาเลือก</option>
+                                        <option value="3(3-0-6)">3(3-0-6)</option>
+                                        <option value="3(2-2-5)">3(2-2-5)</option>
+                                        <option value="3(1-1-4)">3(1-1-4)</option>
+                                        <option value="2(2-0-4)">2(2-0-4)</option>
+                                        <option value="2(1-3-4)">2(1-3-4)</option>
+                                        <option value="2(1-2-3)">2(1-2-3)</option>
+                                        <option value="1(0-2-1)">1(0-2-1)</option>
+                                        <option value="1(0-3-1)">1(0-3-1)</option>
+                                    </select>
+                            </div>
+                            <h5 class="col-sm-2 col-form-label" style="white-space: nowrap;">ทฤษฎี (ชั่วโมง/สัปดาห์) :</h5>
+                            <div class="ms-5">
                                 <div class="row mb-3">
-                                    <label for="amount_credit" class="col-sm-2 col-form-label">จำนวน</label>
-                                    <div class="col-sm-10">
-                                        <select id="amount_credit" name="amount_credit" class="form-select" onchange="calc1()" required>
-                                            <option value="" selected>กรุณาเลือก</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                        </select>
+                                    <label for="prepare_theory" class="col-sm-2 col-form-label" style="white-space: nowrap;">เตรียมสอนทฤษฎี</label>
+                                    <div class="col-sm-8">    
+                                        <input type="text" class="form-control ms-4" name="prepare_theory" readonly>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <label for="describe" class="col-sm-2 col-form-label">บรรยาย</label>
-                                    <div class="col-sm-10">
-                                            <select id="describe1" name="describe" class="form-select" onchange="calc1()" required>
-                                                <option value="" selected>กรุณาเลือก</option>
-                                                <option value="0">0</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                            </select>
+                                <div class=" row mb-3">
+                                    <label for="hour_lecture" class="col-sm-2 col-form-label" style="white-space: nowrap;">ชั่วโมงบรรยายตามจริง</label>
+                                    <div class="col-sm-8">    
+                                        <input type="text" class="form-control ms-4" name="hour_lecture" readonly>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <label for="practice" class="col-sm-2 col-form-label">ปฏิบัติ</label>
-                                    <div class="col-sm-10">
-                                        <select id="practice1" name="practice" class="form-select" onchange="calc1()" required>
-                                            <option value="" selected>กรุณาเลือก</option>
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                        </select>
+                                <div class=" row mb-3">
+                                    <label for="check_work" class="col-sm-2 col-form-label" style="white-space: nowrap;">ตรวจงาน</label>
+                                    <div class="col-sm-8">    
+                                        <input type="text" class="form-control ms-4" name="check_work" readonly>
                                     </div>
                                 </div>
+                            </div>
+
+                            <h5 class="col-sm-2 col-form-label" style="white-space: nowrap;">ปฏิบัติ (ชั่วโมง/สัปดาห์) :</h5>
+                            <div class="ms-5">
                                 <div class="row mb-3">
+                                    <label for="prepare_practice" class="col-sm-2 col-form-label" style="white-space: nowrap;">เตรียมสอนปฏิบัติ</label>
+                                    <div class="col-sm-8">    
+                                        <input type="text" class="form-control ms-4" name="prepare_practice" readonly>
+                                    </div>
+                                </div>
+                                <div class=" row mb-3">
+                                    <label for="hour_practice" class="col-sm-2 col-form-label" style="white-space: nowrap;">ชั่วโมงปฏิบัติตามจริง</label>
+                                    <div class="col-sm-8">    
+                                        <input type="text" class="form-control ms-4" name="hour_practice" readonly>
+                                    </div>
+                                </div>
+                                <div class=" row mb-3">
+                                    <label for="check_work" class="col-sm-2 col-form-label" style="white-space: nowrap;">ตรวจงาน</label>
+                                    <div class="col-sm-8">    
+                                        <input type="text" class="form-control ms-4" name="check_work" readonly>
+                                    </div>
+                                </div>
+                                <div class=" row mb-3">
                                     <label for="practice_subject" class="col-sm-2 col-form-label">แบบปฏิบัติ</label>
-                                    <div class="col-sm-10">
-                                        <select id="practice_subject1" name="practice_subject" class="form-select" onchange="calc1()" required>
+                                    <div class="col-sm-8">    
+                                        <select id="practice_subject1" name="practice_subject" class="form-select ms-4" onchange="calc1()" required>
                                             <option value="ทั่วไป">ทั่วไป</option>
                                             <option value="ฟิสิกส์">ฟิสิกส์</option>
                                             <option value="เคมี">เคมี</option>
@@ -290,21 +310,8 @@ if (isset($_GET['upload'])) {
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <label for="research" class="col-sm-2 col-form-label">ค้นคว้า</label>
-                                    <div class="col-sm-10">
-                                        <select id="research" name="research" class="form-select" required>
-                                            <option value="" selected>กรุณาเลือก</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
+
                             <div class="mb-3">
                                 <label for="level" class="col-sm-2 col-form-label">ระดับชั้น(หมู่เรียน)</label>
                                 <input type="text" class="form-control" name="level" required>
@@ -328,11 +335,7 @@ if (isset($_GET['upload'])) {
                                 <input type="text" class="form-control" name="proportion" id="proportion1" oninput="calc1()" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
-                                <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงสอน/สัปดาห์</label>
-                                <input type="text" class="form-control" name="amount_time" required>
-                            </div>
-                            <div class="mb-3" style="white-space: nowrap;">
-                                <label for="amount_work" class="col-sm-2 col-form-label ">จำนวนภาระงาน/สัปดาห์</label>
+                                <label for="amount_work" class="col-sm-2 col-form-label ">รวมจำนวนภาระงาน/สัปดาห์</label>
                                 <input type="text" class="form-control" name="amount_work" id="amount_work1" readonly>
                             </div>
                             <div class="modal-footer">
@@ -362,68 +365,69 @@ if (isset($_GET['upload'])) {
                                 <label for="name_course" class="col-sm-2 col-form-label ">ชื่อวิชา</label>
                                 <input type="text" class="form-control" name="name_course" value="<?php echo $data['name_course']; ?>" required>
                             </div>
-                            <h5 class="col-sm-2 col-form-label">จำนวนหน่วยกิต:</h5>
-                            <div class="m-3">
+                            <div class="mb-3">
+                                <label for="unit" class="col-sm-2 col-form-label" style="white-space: nowrap;">หน่วยกิต (ทฤษฎี-ปฏิบัติ-ค้นคว้า)</label>
+                                    <select id="unit" name="unit" class="form-select" onchange="calc1()" required>
+                                        <option value="3(3-0-6)" <?php if ($data['unit'] === '3(3-0-6)') echo 'selected'; ?>>3(3-0-6)</option>
+                                        <option value="3(2-2-5)" <?php if ($data['unit'] === '3(2-2-5)') echo 'selected'; ?>>3(2-2-5)</option>
+                                        <option value="3(1-1-4)" <?php if ($data['unit'] === '3(1-1-4)') echo 'selected'; ?>>3(1-1-4)</option>
+                                        <option value="2(2-0-4)" <?php if ($data['unit'] === '2(2-0-4)') echo 'selected'; ?>>2(2-0-4)</option>
+                                        <option value="2(1-3-4)" <?php if ($data['unit'] === '2(1-3-4)') echo 'selected'; ?>>2(1-3-4)</option>
+                                        <option value="2(1-2-3)" <?php if ($data['unit'] === '2(1-2-3)') echo 'selected'; ?>>2(1-2-3)</option>
+                                        <option value="1(0-2-1)" <?php if ($data['unit'] === '1(0-2-1)') echo 'selected'; ?>>1(0-2-1)</option>
+                                        <option value="1(0-3-1)" <?php if ($data['unit'] === '1(0-3-1)') echo 'selected'; ?>>1(0-3-1)</option>
+                                    </select>
+                            </div>
+                            <h5 class="col-sm-2 col-form-label" style="white-space: nowrap;">ทฤษฎี (ชั่วโมง/สัปดาห์) :</h5>
+                            <div class="ms-5">
                                 <div class="row mb-3">
-                                    <label for="amount_credit" class="col-sm-2 col-form-label">จำนวน</label>
-                                    <div class="col-sm-10">
-                                        <select id="amount_credit" name="amount_credit" class="form-select" required>
-                                            <option value="1" <?php if ($data['amount_credit'] === '1') echo 'selected'; ?>>1</option>
-                                            <option value="2" <?php if ($data['amount_credit'] === '2') echo 'selected'; ?>>2</option>
-                                            <option value="3" <?php if ($data['amount_credit'] === '3') echo 'selected'; ?>>3</option>
-                                        </select>
+                                    <label for="prepare_theory" class="col-sm-2 col-form-label" style="white-space: nowrap;">เตรียมสอนทฤษฎี</label>
+                                    <div class="col-sm-8">    
+                                        <input type="text" class="form-control ms-4" name="prepare_theory" readonly>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <label for="describe" class="col-sm-2 col-form-label">บรรยาย</label>
-                                    <div class="col-sm-10">
-                                        <select id="describe" name="describe" class="form-select" required>
-                                            <option value="0" <?php if ($data['describe'] === '0') echo 'selected'; ?>>0</option>
-                                            <option value="1" <?php if ($data['describe'] === '1') echo 'selected'; ?>>1</option>
-                                            <option value="2" <?php if ($data['describe'] === '2') echo 'selected'; ?>>2</option>
-                                            <option value="3" <?php if ($data['describe'] === '3') echo 'selected'; ?>>3</option>
-                                            <option value="4" <?php if ($data['describe'] === '4') echo 'selected'; ?>>4</option>
-                                            <option value="5" <?php if ($data['describe'] === '5') echo 'selected'; ?>>5</option>
-                                            <option value="6" <?php if ($data['describe'] === '6') echo 'selected'; ?>>6</option>
-                                        </select>
+                                <div class=" row mb-3">
+                                    <label for="hour_lecture" class="col-sm-2 col-form-label" style="white-space: nowrap;">ชั่วโมงบรรยายตามจริง</label>
+                                    <div class="col-sm-8">    
+                                        <input type="text" class="form-control ms-4" name="hour_lecture" readonly>
                                     </div>
                                 </div>
+                                <div class=" row mb-3">
+                                    <label for="check_work" class="col-sm-2 col-form-label" style="white-space: nowrap;">ตรวจงาน</label>
+                                    <div class="col-sm-8">    
+                                        <input type="text" class="form-control ms-4" name="check_work" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h5 class="col-sm-2 col-form-label" style="white-space: nowrap;">ปฏิบัติ (ชั่วโมง/สัปดาห์) :</h5>
+                            <div class="ms-5">
                                 <div class="row mb-3">
-                                    <label for="practice" class="col-sm-2 col-form-label">ปฏิบัติ</label>
-                                    <div class="col-sm-10">    
-                                        <select id="practice" name="practice" class="form-select" required>
-                                            <option value="0" <?php if ($data['practice'] === '0') echo 'selected'; ?>>0</option>
-                                            <option value="1" <?php if ($data['practice'] === '1') echo 'selected'; ?>>1</option>
-                                            <option value="2" <?php if ($data['practice'] === '2') echo 'selected'; ?>>2</option>
-                                            <option value="3" <?php if ($data['practice'] === '3') echo 'selected'; ?>>3</option>
-                                            <option value="4" <?php if ($data['practice'] === '4') echo 'selected'; ?>>4</option>
-                                            <option value="5" <?php if ($data['practice'] === '5') echo 'selected'; ?>>5</option>
-                                            <option value="6" <?php if ($data['practice'] === '6') echo 'selected'; ?>>6</option>
-                                        </select>
+                                    <label for="prepare_practice" class="col-sm-2 col-form-label" style="white-space: nowrap;">เตรียมสอนปฏิบัติ</label>
+                                    <div class="col-sm-8">    
+                                        <input type="text" class="form-control ms-4" name="prepare_practice" readonly>
+                                    </div>
+                                </div>
+                                <div class=" row mb-3">
+                                    <label for="hour_practice" class="col-sm-2 col-form-label" style="white-space: nowrap;">ชั่วโมงปฏิบัติตามจริง</label>
+                                    <div class="col-sm-8">    
+                                        <input type="text" class="form-control ms-4" name="hour_practice" readonly>
+                                    </div>
+                                </div>
+                                <div class=" row mb-3">
+                                    <label for="check_work" class="col-sm-2 col-form-label" style="white-space: nowrap;">ตรวจงาน</label>
+                                    <div class="col-sm-8">    
+                                        <input type="text" class="form-control ms-4" name="check_work" readonly>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="practice_subject" class="col-sm-2 col-form-label">แบบปฏิบัติ</label>
-                                    <div class="col-sm-10">
-                                        <select id="practice_subject" name="practice_subject" class="form-select" required>
+                                    <div class="col-sm-8">
+                                        <select id="practice_subject" name="practice_subject" class="form-select sm-4" required>
                                             <option value="ทั่วไป" <?php if ($data['practice_subject'] === 'ทั่วไป') echo 'selected'; ?>>ทั่วไป</option>
                                             <option value="ฟิสิกส์" <?php if ($data['practice_subject'] === 'ฟิสิกส์') echo 'selected'; ?>>ฟิสิกส์</option>
                                             <option value="เคมี" <?php if ($data['practice_subject'] === 'เคมี') echo 'selected'; ?>>เคมี</option>
                                             <option value="ชีววิทยาและจุลชีววิทยา" <?php if ($data['practice_subject'] === 'ชีววิทยาและจุลชีววิทยา') echo 'selected'; ?>>ชีววิทยาและจุลชีววิทยา</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="research" class="col-sm-2 col-form-label">ค้นคว้า</label>
-                                    <div class="col-sm-10">    
-                                        <select id="type_work" name="type_work" class="form-select" required>
-                                            <option value="0" <?php if ($data['practice'] === '0') echo 'selected'; ?>>0</option>
-                                            <option value="1" <?php if ($data['practice'] === '1') echo 'selected'; ?>>1</option>
-                                            <option value="2" <?php if ($data['practice'] === '2') echo 'selected'; ?>>2</option>
-                                            <option value="3" <?php if ($data['practice'] === '3') echo 'selected'; ?>>3</option>
-                                            <option value="4" <?php if ($data['practice'] === '4') echo 'selected'; ?>>4</option>
-                                            <option value="5" <?php if ($data['practice'] === '5') echo 'selected'; ?>>5</option>
-                                            <option value="6" <?php if ($data['practice'] === '6') echo 'selected'; ?>>6</option>
                                         </select>
                                     </div>
                                 </div>
@@ -434,11 +438,12 @@ if (isset($_GET['upload'])) {
                             </div>
                             <div class="mb-3">
                                 <label for="group_study" class="col-sm-2 col-form-label">หมู่เรียนที่</label>
-                                    <select id="type_work" name="type_work" class="form-select" required>
-                                        <option value="1" <?php if ($data['practice'] === '1') echo 'selected'; ?>>1</option>
-                                        <option value="2" <?php if ($data['practice'] === '2') echo 'selected'; ?>>2</option>
-                                        <option value="3" <?php if ($data['practice'] === '3') echo 'selected'; ?>>3</option>
-                                        <option value="4" <?php if ($data['practice'] === '4') echo 'selected'; ?>>4</option>
+                                    <select id="group_study" name="group_study" class="form-select" required>
+                                        <option value="1" <?php if ($data['group_study'] === '1') echo 'selected'; ?>>1</option>
+                                        <option value="2" <?php if ($data['group_study'] === '2') echo 'selected'; ?>>2</option>
+                                        <option value="3" <?php if ($data['group_study'] === '3') echo 'selected'; ?>>3</option>
+                                        <option value="4" <?php if ($data['group_study'] === '4') echo 'selected'; ?>>4</option>
+                                        <option value="5" <?php if ($data['group_study'] === '5') echo 'selected'; ?>>5</option>
                                     </select>
                             </div>
                             <div class="mb-3">
@@ -450,11 +455,7 @@ if (isset($_GET['upload'])) {
                                 <input type="text" class="form-control" name="proportion" value="<?php echo $data['proportion']; ?>" required>
                             </div>
                             <div class="mb-3">
-                                <label for="amount_time" class="col-sm-2 col-form-label">จำนวนชั่วโมงสอน/สัปดาห์</label>
-                                <input type="text" class="form-control" name="amount_time" value="<?php echo $data['amount_time']; ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน/สัปดาห์</label>
+                                <label for="amount_work" class="col-sm-2 col-form-label">รวมจำนวนภาระงาน/สัปดาห์</label>
                                 <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" readonly>
                             </div>
                             <div class="modal-footer">

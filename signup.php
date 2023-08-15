@@ -79,11 +79,11 @@
             <?php } ?>
 
             <div class="mb-3">
-                <label for="firstname" class="form-label">First name</label>
+                <label for="firstname" class="form-label">Firstname</label>
                 <input type="text" class="form-control" name="firstname" aria-describedby="firstname">
             </div>
             <div class="mb-3">
-                <label for="lastname" class="form-label">Last name</label>
+                <label for="lastname" class="form-label">Lastname</label>
                 <input type="text" class="form-control" name="lastname" aria-describedby="lastname">
             </div>
             <div class="mb-3">

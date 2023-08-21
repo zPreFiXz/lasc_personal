@@ -1,8 +1,9 @@
 <?php
-    require "config/db.php";
-    $stmt = $conn->query("SELECT * FROM `term&year` where id = 1"); // ดึงข้อมูลจากตาราง personal โดยใช้ ID
-    $stmt->execute();
-    $data = $stmt->fetch();
+require "config/db.php";
+$stmt = $conn->query("SELECT * FROM `term&year` where id = 1"); // ดึงข้อมูลจากตาราง personal โดยใช้ ID
+$stmt->execute();
+$data = $stmt->fetch();
+$year = date("Y") + 543;
 ?>
 <div class="container">
     <div class="pagetitle mt-3">
@@ -17,6 +18,94 @@
             </div>
         </button>
     </div>
+    <table class="table table-bordered text-center align-middle">
+        <thead class="align-middle table-secondary">
+            <tr>
+                <th rowspan="3">ชื่อ</th>
+                <th colspan="8">จำนวนภาระงาน</th>
+            </tr>
+            <tr>
+                <th colspan="4">
+                    ปีการศึกษา <?= $year - 1 ?>
+                </th>
+                <th colspan="4">
+                    ปีการศึกษา <?= $year ?>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="2">เทอม 1</th>
+                <th colspan="2">เทอม 2</th>
+                <th colspan="2">เทอม 1</th>
+                <th colspan="2">เทอม 2</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <?php
+            $year = $year - 1;
+            $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year'");
+            $stmt->execute();
+            $users = $stmt->fetchAll();
+
+            $year = $year + 1;
+            $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year'");
+            $stmt->execute();
+            $userss = $stmt->fetchAll();
+            
+            if (!$users) {
+                echo "<tr><td colspan='8' class='text-center'>ไม่มีข้อมูล</td></tr>";
+            } else {
+                foreach ($users as $user) {
+            ?>
+                    <tr>
+                        <td><?= $user['firstname'], " ", $user["lastname"] ?></td>
+
+                        <td><?= $user['term1'] ?></td>
+                        <td>
+                            <button class="btn btn-primary">รายระเอียด</button>
+                        </td>
+
+                        <td><?= $user['term2'] ?></td>
+                        <td>
+                            <button class="btn btn-primary">รายระเอียด</button>
+                        </td>
+
+                        <?php
+                        $found = false;
+                        foreach ($userss as $userss_entry) {
+                            if ($userss_entry['firstname'] == $user['firstname'] && $userss_entry['lastname'] == $user['lastname']) {
+                                $found = true;
+                        ?>
+                                <td><?= $userss_entry['term1'] ?></td>
+                                <td>
+                                    <button class="btn btn-primary">รายระเอียด</button>
+                                </td>
+                                <td><?= $userss_entry['term2'] ?></td>
+                                <td>
+                                    <button class="btn btn-primary">รายระเอียด</button>
+                                </td>
+                            <?php
+                                break;
+                            }
+                        }
+
+                        if (!$found) {
+                            ?>
+                            <td>0</td>
+                            <td>
+                                <button class="btn btn-primary">รายระเอียด</button>
+                            </td>
+
+                            <td>0</td>
+                            <td>
+                                <button class="btn btn-primary">รายระเอียด</button>
+                            </td>
+                    </tr>
+        </tbody>
+<?php }
+                    }
+                } ?>
+    </table>
 </div>
 
 <div class="modal fade" id="largeModal" tabindex="-1">
@@ -33,8 +122,8 @@
 
                     <label for="term" class="col-sm-2 col-form-label">ภาคการศึกษา</label>
                     <select type="text" class="form-select" name="term" required>
-                        <option value="1" <?php if($data['term'] === '1') echo 'selected'?>>1</option>
-                        <option value="2" <?php if($data['term'] === '2') echo 'selected'?>>2</option>
+                        <option value="1" <?php if ($data['term'] === '1') echo 'selected' ?>>1</option>
+                        <option value="2" <?php if ($data['term'] === '2') echo 'selected' ?>>2</option>
                     </select>
                 </div>
                 <div class="modal-footer">

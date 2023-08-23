@@ -26,10 +26,10 @@ $year = date("Y") + 543;
             </tr>
             <tr>
                 <th colspan="4">
-                    ปีการศึกษา <?= $year - 1 ?>
+                    ปีการศึกษา <?= $year  ?>
                 </th>
                 <th colspan="4">
-                    ปีการศึกษา <?= $year ?>
+                    ปีการศึกษา <?= $year - 6 ?>
                 </th>
             </tr>
             <tr>
@@ -42,12 +42,12 @@ $year = date("Y") + 543;
         </thead>
         <tbody>
             <?php
-            $year = $year - 1;
+           
             $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year'");
             $stmt->execute();
             $users = $stmt->fetchAll();
 
-            $year = $year + 1;
+            $year = $year - 1;
             $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year'");
             $stmt->execute();
             $userss = $stmt->fetchAll();
@@ -134,3 +134,4 @@ $year = date("Y") + 543;
         </div>
     </div>
 </div>
+

@@ -3,7 +3,7 @@ require_once "config/db.php";
 
 
 // ดึงตาราง term&year
-$stmt = $conn->query("SELECT * FROM `term&year` where id = 1");
+$stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
 $stmt->execute();
 $term_year = $stmt->fetch();
 

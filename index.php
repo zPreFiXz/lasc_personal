@@ -277,7 +277,7 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link " href="index.php?page=dashboard">
+        <a class="nav-link " href="index.php?page=users/dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 13, 2023 at 11:48 AM
+-- Generation Time: Aug 24, 2023 at 08:21 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -54,14 +54,14 @@ CREATE TABLE `personal_1_1` (
 
 CREATE TABLE `personal_1_2_a` (
   `userId` varchar(50) NOT NULL,
-  `id` int(11) NOT NULL,
+  `id` int(20) NOT NULL,
   `term` int(1) NOT NULL,
   `year` int(4) NOT NULL,
   `major` varchar(50) NOT NULL,
-  `code` varchar(20) NOT NULL,
-  `level` varchar(20) NOT NULL,
-  `group_study` varchar(20) NOT NULL,
-  `amount_student` int(4) NOT NULL,
+  `code` varchar(50) NOT NULL,
+  `level` varchar(50) NOT NULL,
+  `group_study` varchar(50) NOT NULL,
+  `amount_student` int(5) NOT NULL,
   `amount_work` float NOT NULL,
   `file` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -78,12 +78,12 @@ CREATE TABLE `personal_1_2_b` (
   `term` int(1) NOT NULL,
   `year` int(4) NOT NULL,
   `club` varchar(50) NOT NULL,
-  `level` varchar(15) NOT NULL,
+  `level` varchar(50) NOT NULL,
   `amount_student` int(5) NOT NULL,
-  `group_study` varchar(15) NOT NULL,
+  `group_study` int(5) NOT NULL,
   `amount_time` int(5) NOT NULL,
   `amount_work` float NOT NULL,
-  `file` varchar(30) NOT NULL
+  `file` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -95,15 +95,15 @@ CREATE TABLE `personal_1_2_b` (
 CREATE TABLE `personal_1_3` (
   `userId` varchar(50) NOT NULL,
   `id` int(20) NOT NULL,
+  `term` int(1) NOT NULL,
+  `year` int(4) NOT NULL,
   `Major` varchar(50) NOT NULL,
-  `level` varchar(15) NOT NULL,
+  `level` varchar(50) NOT NULL,
   `amount_student` int(5) NOT NULL,
   `amount_time` int(5) NOT NULL,
   `workplace` varchar(50) NOT NULL,
   `amount_work` float NOT NULL,
-  `file` varchar(30) NOT NULL,
-  `term` int(1) NOT NULL,
-  `year` int(4) NOT NULL
+  `file` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -114,12 +114,12 @@ CREATE TABLE `personal_1_3` (
 
 CREATE TABLE `personal_1_4` (
   `userId` varchar(50) NOT NULL,
-  `id` int(11) NOT NULL,
+  `id` int(20) NOT NULL,
   `term` int(1) NOT NULL,
   `year` int(4) NOT NULL,
   `date` date NOT NULL,
   `project_name` varchar(50) NOT NULL,
-  `location` varchar(100) NOT NULL,
+  `location` varchar(50) NOT NULL,
   `period` int(5) NOT NULL,
   `amount_work` float NOT NULL,
   `file` varchar(50) NOT NULL
@@ -134,13 +134,13 @@ CREATE TABLE `personal_1_4` (
 CREATE TABLE `personal_1_5_a` (
   `userId` varchar(50) NOT NULL,
   `id` int(20) NOT NULL,
-  `term` int(11) NOT NULL,
-  `year` int(11) NOT NULL,
+  `term` int(1) NOT NULL,
+  `year` int(4) NOT NULL,
   `major` varchar(50) NOT NULL,
-  `level` varchar(15) NOT NULL,
+  `level` varchar(50) NOT NULL,
   `name_project` varchar(50) NOT NULL,
-  `amount_teacher` int(10) NOT NULL,
-  `teacher` int(10) NOT NULL,
+  `amount_teacher` int(5) NOT NULL,
+  `teacher` varchar(50) NOT NULL,
   `amount_student` int(5) NOT NULL,
   `amount_work` float NOT NULL,
   `file` varchar(50) NOT NULL
@@ -158,10 +158,10 @@ CREATE TABLE `personal_1_5_b` (
   `term` int(1) NOT NULL,
   `year` int(4) NOT NULL,
   `major` varchar(50) NOT NULL,
-  `level` varchar(15) NOT NULL,
+  `level` varchar(50) NOT NULL,
   `name_project` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `amount_teacher` int(10) NOT NULL,
-  `teacher` int(10) NOT NULL,
+  `amount_teacher` int(5) NOT NULL,
+  `teacher` varchar(50) NOT NULL,
   `amount_time` int(5) NOT NULL,
   `amount_work` float NOT NULL,
   `file` varchar(50) NOT NULL
@@ -175,17 +175,17 @@ CREATE TABLE `personal_1_5_b` (
 
 CREATE TABLE `personal_1_6_a` (
   `userId` varchar(50) NOT NULL,
-  `id` int(5) NOT NULL,
-  `term` int(11) NOT NULL,
-  `year` int(11) NOT NULL,
+  `id` int(20) NOT NULL,
+  `term` int(1) NOT NULL,
+  `year` int(4) NOT NULL,
   `number` int(5) NOT NULL,
-  `research_name` varchar(100) NOT NULL,
-  `funding_source` varchar(100) NOT NULL,
+  `research_name` varchar(50) NOT NULL,
+  `funding_source` varchar(50) NOT NULL,
   `funding_framework` varchar(50) NOT NULL,
   `start_end` varchar(50) NOT NULL,
   `nature_work` varchar(50) NOT NULL,
   `leader` varchar(50) NOT NULL,
-  `contribute` varchar(50) NOT NULL,
+  `contribute` int(5) NOT NULL,
   `amount_work` float NOT NULL,
   `file` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -198,14 +198,14 @@ CREATE TABLE `personal_1_6_a` (
 
 CREATE TABLE `personal_1_6_b` (
   `userId` varchar(50) NOT NULL,
-  `id` int(5) NOT NULL,
+  `id` int(20) NOT NULL,
   `term` int(1) NOT NULL,
   `year` int(4) NOT NULL,
   `number` int(5) NOT NULL,
-  `project` varchar(100) NOT NULL,
-  `funding` varchar(100) NOT NULL,
+  `project` varchar(50) NOT NULL,
+  `funding` varchar(50) NOT NULL,
   `start_end` varchar(50) NOT NULL,
-  `publish` varchar(100) NOT NULL,
+  `publish` varchar(50) NOT NULL,
   `amount_work` float NOT NULL,
   `file` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -222,7 +222,7 @@ CREATE TABLE `personal_1_7` (
   `term` int(1) NOT NULL,
   `year` int(4) NOT NULL,
   `type` varchar(50) NOT NULL,
-  `title` varchar(100) NOT NULL,
+  `title` varchar(50) NOT NULL,
   `amount_time` varchar(50) NOT NULL,
   `type_work_s_j` varchar(50) NOT NULL,
   `type_work` varchar(50) NOT NULL,
@@ -239,13 +239,13 @@ CREATE TABLE `personal_1_7` (
 
 CREATE TABLE `personal_1_8` (
   `userId` varchar(50) NOT NULL,
-  `id` int(11) NOT NULL,
+  `id` int(20) NOT NULL,
   `term` int(1) NOT NULL,
   `year` int(4) NOT NULL,
   `date` date NOT NULL,
   `type` varchar(50) NOT NULL,
   `subject` varchar(50) NOT NULL,
-  `location` varchar(100) NOT NULL,
+  `location` varchar(50) NOT NULL,
   `nature_work` varchar(50) NOT NULL,
   `hours` int(5) NOT NULL,
   `amount_work` float NOT NULL,
@@ -260,15 +260,15 @@ CREATE TABLE `personal_1_8` (
 
 CREATE TABLE `personal_1_9` (
   `userId` varchar(50) NOT NULL,
-  `id` int(10) NOT NULL,
+  `id` int(20) NOT NULL,
   `term` int(1) NOT NULL,
   `year` int(4) NOT NULL,
   `date` date NOT NULL,
-  `project` varchar(100) NOT NULL,
-  `location` varchar(100) NOT NULL,
+  `project` varchar(50) NOT NULL,
+  `location` varchar(50) NOT NULL,
   `amount_time` int(5) NOT NULL,
   `amount_work` float NOT NULL,
-  `file` varchar(30) NOT NULL
+  `file` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -279,16 +279,16 @@ CREATE TABLE `personal_1_9` (
 
 CREATE TABLE `personal_1_10` (
   `userId` varchar(50) NOT NULL,
-  `id` int(50) NOT NULL,
+  `id` int(20) NOT NULL,
   `term` int(1) NOT NULL,
   `year` int(4) NOT NULL,
-  `date` varchar(15) NOT NULL,
+  `date` date NOT NULL,
   `project` varchar(50) NOT NULL,
   `position` varchar(50) NOT NULL,
   `type_work` varchar(50) NOT NULL,
-  `amount_time` int(10) NOT NULL,
+  `amount_time` int(5) NOT NULL,
   `amount_work` float NOT NULL,
-  `file` varchar(100) NOT NULL
+  `file` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -302,35 +302,70 @@ CREATE TABLE `personal_1_11` (
   `id` int(50) NOT NULL,
   `term` int(1) NOT NULL,
   `year` int(4) NOT NULL,
-  `chancellor_check` varchar(50) NOT NULL,
-  `chancellor` varchar(50) NOT NULL
+  `checkbox` varchar(50) NOT NULL,
+  `scope` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `personal_1_11`
---
-
-INSERT INTO `personal_1_11` (`userId`, `id`, `term`, `year`, `chancellor_check`, `chancellor`) VALUES
-('Phakphoom', 4, 0, 0, 'checked', 'Hello');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `term&year`
+-- Table structure for table `personal_3`
 --
 
-CREATE TABLE `term&year` (
+CREATE TABLE `personal_3` (
+  `userId` varchar(20) NOT NULL,
   `term` int(1) NOT NULL,
   `year` int(4) NOT NULL,
-  `id` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `name` varchar(50) NOT NULL,
+  `branch` varchar(50) NOT NULL,
+  `amount_work` int(5) NOT NULL,
+  `quality_work` int(5) NOT NULL,
+  `efficiency_work` int(5) NOT NULL,
+  `effectiveness_work` int(5) NOT NULL,
+  `score_work` int(5) NOT NULL,
+  `quality_ethics` int(5) NOT NULL,
+  `efficiency_ethics` int(5) NOT NULL,
+  `effectiveness_ethics` int(5) NOT NULL,
+  `score_ethics` int(5) NOT NULL,
+  `quality_capacity` int(5) NOT NULL,
+  `efficiency_capacity` int(5) NOT NULL,
+  `effectiveness_capacity` int(5) NOT NULL,
+  `score_capacity` int(5) NOT NULL,
+  `quality_more` int(5) NOT NULL,
+  `efficiency_more` int(5) NOT NULL,
+  `effectiveness_more` int(5) NOT NULL,
+  `score_more` int(5) NOT NULL,
+  `quality_total` int(5) NOT NULL,
+  `efficiency_total` int(5) NOT NULL,
+  `effectiveness_total` int(5) NOT NULL,
+  `score_total` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `term&year`
+-- Dumping data for table `personal_3`
 --
 
-INSERT INTO `term&year` (`term`, `year`, `id`) VALUES
-(1, 2566, 1);
+INSERT INTO `personal_3` (`userId`, `term`, `year`, `name`, `branch`, `amount_work`, `quality_work`, `efficiency_work`, `effectiveness_work`, `score_work`, `quality_ethics`, `efficiency_ethics`, `effectiveness_ethics`, `score_ethics`, `quality_capacity`, `efficiency_capacity`, `effectiveness_capacity`, `score_capacity`, `quality_more`, `efficiency_more`, `effectiveness_more`, `score_more`, `quality_total`, `efficiency_total`, `effectiveness_total`, `score_total`) VALUES
+('Phakphoom', 1, 2566, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `term_year`
+--
+
+CREATE TABLE `term_year` (
+  `id` int(1) NOT NULL,
+  `term` int(1) NOT NULL,
+  `year` int(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `term_year`
+--
+
+INSERT INTO `term_year` (`id`, `term`, `year`) VALUES
+(1, 1, 2566);
 
 -- --------------------------------------------------------
 
@@ -446,6 +481,18 @@ ALTER TABLE `personal_1_11`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `personal_3`
+--
+ALTER TABLE `personal_3`
+  ADD PRIMARY KEY (`userId`);
+
+--
+-- Indexes for table `term_year`
+--
+ALTER TABLE `term_year`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -465,79 +512,85 @@ ALTER TABLE `personal_1_1`
 -- AUTO_INCREMENT for table `personal_1_2_a`
 --
 ALTER TABLE `personal_1_2_a`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `personal_1_2_b`
 --
 ALTER TABLE `personal_1_2_b`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `personal_1_3`
 --
 ALTER TABLE `personal_1_3`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `personal_1_4`
 --
 ALTER TABLE `personal_1_4`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `personal_1_5_a`
 --
 ALTER TABLE `personal_1_5_a`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `personal_1_5_b`
 --
 ALTER TABLE `personal_1_5_b`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `personal_1_6_a`
 --
 ALTER TABLE `personal_1_6_a`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `personal_1_6_b`
 --
 ALTER TABLE `personal_1_6_b`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `personal_1_7`
 --
 ALTER TABLE `personal_1_7`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `personal_1_8`
 --
 ALTER TABLE `personal_1_8`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `personal_1_9`
 --
 ALTER TABLE `personal_1_9`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `personal_1_10`
 --
 ALTER TABLE `personal_1_10`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `personal_1_11`
 --
 ALTER TABLE `personal_1_11`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `term_year`
+--
+ALTER TABLE `term_year`
+  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 24, 2023 at 08:21 AM
+-- Generation Time: Aug 24, 2023 at 08:32 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `lasc_personal`
 --
+CREATE DATABASE IF NOT EXISTS `lasc_personal` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `lasc_personal`;
 
 -- --------------------------------------------------------
 

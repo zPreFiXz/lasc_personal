@@ -26,8 +26,11 @@
         $insertStmt->bindParam(':year', $year);
         
         $insertStmt->execute();
-    }
 
+        if ($insertStmt) {
+            echo "<script>window.location.href = 'index.php?page=3/index_3';</script>";
+        }
+    }
     foreach($personal as $per)
 ?>
 <div class="container">

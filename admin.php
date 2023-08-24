@@ -1,6 +1,6 @@
 <?php
 require "config/db.php";
-$stmt = $conn->query("SELECT * FROM `term&year` where id = 1"); // ดึงข้อมูลจากตาราง personal โดยใช้ ID
+$stmt = $conn->query("SELECT * FROM `term_year` where id = 1"); // ดึงข้อมูลจากตาราง personal โดยใช้ ID
 $stmt->execute();
 $data = $stmt->fetch();
 $year = date("Y") + 543;
@@ -29,7 +29,7 @@ $year = date("Y") + 543;
                     ปีการศึกษา <?= $year  ?>
                 </th>
                 <th colspan="4">
-                    ปีการศึกษา <?= $year - 6 ?>
+                    ปีการศึกษา <?= $year - 1 ?>
                 </th>
             </tr>
             <tr>
@@ -42,7 +42,7 @@ $year = date("Y") + 543;
         </thead>
         <tbody>
             <?php
-           
+
             $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year'");
             $stmt->execute();
             $users = $stmt->fetchAll();
@@ -51,7 +51,7 @@ $year = date("Y") + 543;
             $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year'");
             $stmt->execute();
             $userss = $stmt->fetchAll();
-            
+
             if (!$users) {
                 echo "<tr><td colspan='8' class='text-center'>ไม่มีข้อมูล</td></tr>";
             } else {
@@ -62,12 +62,12 @@ $year = date("Y") + 543;
 
                         <td><?= $user['term1'] ?></td>
                         <td>
-                            <button class="btn btn-primary">รายระเอียด</button>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#details">รายระเอียด</button>
                         </td>
 
                         <td><?= $user['term2'] ?></td>
                         <td>
-                            <button class="btn btn-primary">รายระเอียด</button>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#details">รายระเอียด</button>
                         </td>
 
                         <?php
@@ -78,11 +78,11 @@ $year = date("Y") + 543;
                         ?>
                                 <td><?= $userss_entry['term1'] ?></td>
                                 <td>
-                                    <button class="btn btn-primary">รายระเอียด</button>
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#details">รายระเอียด</button>
                                 </td>
                                 <td><?= $userss_entry['term2'] ?></td>
                                 <td>
-                                    <button class="btn btn-primary">รายระเอียด</button>
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#details">รายระเอียด</button>
                                 </td>
                             <?php
                                 break;
@@ -93,12 +93,16 @@ $year = date("Y") + 543;
                             ?>
                             <td>0</td>
                             <td>
-                                <button class="btn btn-primary">รายระเอียด</button>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#details">
+                                    รายระเอียด
+                                </button>
                             </td>
 
                             <td>0</td>
                             <td>
-                                <button class="btn btn-primary">รายระเอียด</button>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#details">
+                                    รายระเอียด
+                                </button>
                             </td>
                     </tr>
         </tbody>
@@ -115,7 +119,7 @@ $year = date("Y") + 543;
                 <h5 class="modal-title">เปลี่ยนปีการศึกษาและภาคเรียน</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="term&year/term&year.php" method="post">
+            <form action="term_year/term_year.php" method="post">
                 <div class="modal-body">
                     <label for="year" class="col-sm-2 col-form-label">ปีการศึกษา</label>
                     <input type="text" class="form-control" name="year" value="<?php echo $data['year']; ?>" required>
@@ -135,3 +139,23 @@ $year = date("Y") + 543;
     </div>
 </div>
 
+
+<div class="modal fade" id="details" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">รายระเอียด</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <?php require './2/index_2.php' ?>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                <button type="button" class="btn btn-primary">รายละเอียด</button>
+            </div>
+        </div>
+    </div>
+</div>

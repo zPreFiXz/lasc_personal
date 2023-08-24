@@ -5,7 +5,7 @@
         $year = $_POST['year'];
         $term = $_POST['term'];
 
-        $sql = "UPDATE `term&year` SET year = :year , term = :term  WHERE id = 1 ";
+        $sql = "UPDATE `term_year` SET year = :year , term = :term  WHERE id = 1 ";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':year', $year);

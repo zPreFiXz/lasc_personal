@@ -1,166 +1,22 @@
 <?php
-session_start();
-require_once 'config/db.php';
+  session_start();
+  require_once 'config/db.php';
 
-if (!isset($_SESSION['userId'])) {
-  $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
-  header('location: signin.php');
-}
+  if (!isset($_SESSION['adminId'])) {
+      $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
+      header('location: signin.php');
+  }
+  if (isset($_POST['userId'])) {
+    $_SESSION['user'] = $_POST['userId'];
+  }
 
-$userId = $_SESSION['userId'];
+  if (isset($_POST['term'])) {
+      $_SESSION['term'] = $_POST['term'];
+  }
 
-$stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
-$stmt->execute();
-$term_year = $stmt->fetch();
-$term =  $term_year['term'];
-$year =  $term_year['year'];
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_2_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_2_a = $stmt->fetchAll();
-
-$totalAmountWork_1_2_a = 0;
-foreach ($personal_1_2_a as $per_1_2_a) {
-  $totalAmountWork_1_2_a += floatval($per_1_2_a['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_2_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_2_b = $stmt->fetchAll();
-
-$totalAmountWork_1_2_b = 0;
-foreach ($personal_1_2_b as $per_1_2_b) {
-  $totalAmountWork_1_2_b += floatval($per_1_2_b['amount_work']);
-}
-$totalAmountWork_1_2 = $totalAmountWork_1_2_a + $totalAmountWork_1_2_b;
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_3 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_3 = $stmt->fetchAll();
-
-$totalAmountWork_1_3 = 0;
-foreach ($personal_1_3 as $per_1_3) {
-  $totalAmountWork_1_3 += floatval($per_1_3['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_4 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_4 = $stmt->fetchAll();
-
-$totalAmountWork_1_4 = 0;
-foreach ($personal_1_4 as $per_1_4) {
-  $totalAmountWork_1_4 += floatval($per_1_4['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_5_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_5_a = $stmt->fetchAll();
-
-$totalAmountWork_1_5_a = 0;
-foreach ($personal_1_5_a as $per_1_5_a) {
-  $totalAmountWork_1_5_a += floatval($per_1_5_a['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_5_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_5_b = $stmt->fetchAll();
-
-$totalAmountWork_1_5_b = 0;
-foreach ($personal_1_5_b as $per_1_5_b) {
-  $totalAmountWork_1_5_b += floatval($per_1_5_b['amount_work']);
-}
-$totalAmountWork_1_5 = $totalAmountWork_1_5_a + $totalAmountWork_1_5_b;
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_6_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_6_a = $stmt->fetchAll();
-
-$totalAmountWork_1_6_a = 0;
-foreach ($personal_1_6_a as $per_1_6_a) {
-  $totalAmountWork_1_6_a += floatval($per_1_6_a['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_6_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_6_b = $stmt->fetchAll();
-
-$totalAmountWork_1_6_b = 0;
-foreach ($personal_1_6_b as $per_1_6_b) {
-  $totalAmountWork_1_6_b += floatval($per_1_6_b['amount_work']);
-}
-$totalAmountWork_1_6 = $totalAmountWork_1_6_a + $totalAmountWork_1_6_b;
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_7 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_7 = $stmt->fetchAll();
-
-$totalAmountWork_1_7 = 0;
-foreach ($personal_1_7 as $per_1_7) {
-  $totalAmountWork_1_7 += floatval($per_1_7['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_8 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_8 = $stmt->fetchAll();
-
-$totalAmountWork_1_8 = 0;
-foreach ($personal_1_8 as $per_1_8) {
-  $totalAmountWork_1_8 += floatval($per_1_8['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_9 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_9 = $stmt->fetchAll();
-
-$totalAmountWork_1_9 = 0;
-foreach ($personal_1_9 as $per_1_9) {
-  $totalAmountWork_1_9 += floatval($per_1_9['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_10 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_10 = $stmt->fetchAll();
-
-$totalAmountWork_1_10 = 0;
-foreach ($personal_1_10 as $per_1_10) {
-  $totalAmountWork_1_10 += floatval($per_1_10['amount_work']);
-}
-
-$totalAmountWork = $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10;
-
-$stmt = $conn->prepare("SELECT * FROM Vadmin WHERE userId = :userId AND term = :term AND year = :year");
-$stmt->bindParam(':userId', $userId);
-$stmt->bindParam(':term', $term);
-$stmt->bindParam(':year', $year);
-$stmt->execute();
-$users = $stmt->fetch();
-
-$stmt = $conn->prepare("SELECT * FROM users WHERE firstname = :userId");
-$stmt->bindParam(':userId', $userId);
-$stmt->execute();
-$user = $stmt->fetch();
-
-$firstname = $user['firstname'];
-$lastname = $user['lastname'];
-
-if (empty($users)) {
-
-  $insertStmt = $conn->prepare("INSERT INTO Vadmin (userId, term, `year`, firstname, lastname, amount_work) VALUES (:userId, :term, :year, :firstname, :lastname, :amount_work)");
-  $insertStmt->bindParam(':userId', $userId);
-  $insertStmt->bindParam(':term', $term);
-  $insertStmt->bindParam(':year', $year);
-  $insertStmt->bindParam(':firstname', $firstname);
-  $insertStmt->bindParam(':lastname', $lastname);
-  $insertStmt->bindParam(':amount_work', $totalAmountWork);
-  $insertStmt->execute();
-} else {
-  $updateStmt = $conn->prepare("UPDATE Vadmin SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND `year` = :year ");
-  $updateStmt->bindParam(':userId', $userId);
-  $updateStmt->bindParam(':term', $term);
-  $updateStmt->bindParam(':year', $year);
-  $updateStmt->bindParam(':amount_work', $totalAmountWork);
-  $updateStmt->execute();
-}
+  if (isset($_POST['year'])) {
+      $_SESSION['year'] = $_POST['year'];
+  }
 ?>
 
 <!DOCTYPE html>
@@ -170,7 +26,7 @@ if (empty($users)) {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <title>admin - NiceAdmin Bootstrap Template</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -432,16 +288,16 @@ if (empty($users)) {
 
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link " href="index.php?page=users/dashboard">
+        <a class="nav-link " href="index_admin.php?page=admin">
           <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
+          <span>กลับ</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li><!-- End back Nav -->
 
       <li class="nav-heading">ตอนที่ 1</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php?page=1_1/index_1_1">
+        <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/1_1">
           <i class="bi bi-menu-button-wide"></i>
           <span>1. ภาระงานสอน(ภาคปกติ)</span>
         </a>
@@ -453,12 +309,12 @@ if (empty($users)) {
         </a>
         <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="index.php?page=1_2_a/index_1_2_a">
+            <a href="index_details_personal.php?page=lasc_personal_admin/1_2_a">
               <i class="bi bi-circle"></i><span>ก. ภาระงานอาจารย์ที่ปรึกษาหมู่เรียน</span>
             </a>
           </li>
           <li>
-            <a href="index.php?page=1_2_b/index_1_2_b">
+            <a href="index_details_personal.php?page=lasc_personal_admin/1_2_b">
               <i class="bi bi-circle"></i><span>ข. ภาระงานอาจารย์ที่ปรึกษาชมรม ชุมนุม หรือที่ปรึกษาอื่น</span>
             </a>
           </li>
@@ -466,13 +322,13 @@ if (empty($users)) {
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php?page=1_3/index_1_3">
+        <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/1_3">
           <i class="bi bi-menu-button-wide"></i><span>3. ภาระงานอาจารย์นิเทศ</span>
         </a>
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php?page=1_4/index_1_4">
+        <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/1_4">
           <i class="bi bi-menu-button-wide"></i><span>4. ภาระงานกิจกรรมพัฒนานักศึกษา</span>
         </a>
       </li><!-- End Components Nav -->
@@ -483,12 +339,12 @@ if (empty($users)) {
         </a>
         <ul id="components-nav2" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="index.php?page=1_5_a/index_1_5_a">
+            <a href="index_details_personal.php?page=lasc_personal_admin/1_5_a">
               <i class="bi bi-circle"></i><span>ก. ภาระงานอาจารย์ที่ปรึกษางานวิจัย</span>
             </a>
           </li>
           <li>
-            <a href="index.php?page=1_5_b/index_1_5_b">
+            <a href="index_details_personal.php?page=lasc_personal_admin/1_5_b">
               <i class="bi bi-circle"></i><span>ข. ภาระงานอาจารย์ที่ปรึกษาโครงการ</span>
             </a>
           </li>
@@ -501,12 +357,12 @@ if (empty($users)) {
         </a>
         <ul id="components-nav3" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="index.php?page=1_6_a/index_1_6_a">
+            <a href="index_details_personal.php?page=lasc_personal_admin/1_6_a">
               <i class="bi bi-circle"></i><span>ก. การสร้างงานวิจัย</span>
             </a>
           </li>
           <li>
-            <a href="index.php?page=1_6_b/index_1_6_b">
+            <a href="index_details_personal.php?page=lasc_personal_admin/1_6_b">
               <i class="bi bi-circle"></i><span>ข. การเผยแพร่ รับรางวัล หรือจดสิทธิบัตร</span>
             </a>
           </li>
@@ -514,64 +370,46 @@ if (empty($users)) {
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php?page=1_7/index_1_7">
+        <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/1_7">
           <i class="bi bi-menu-button-wide"></i><span>7. ภาระงานผลิตผลงานทางวิชาการ</span>
         </a>
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php?page=1_8/index_1_8">
+        <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/1_8">
           <i class="bi bi-menu-button-wide"></i><span>8. ภาระงานด้านบริการวิชาการ</span>
         </a>
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php?page=1_9/index_1_9">
+        <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/1_9">
           <i class="bi bi-menu-button-wide"></i><span>9. ภาระงานทำนุบำรุงศิลปวัฒนธรรม</span>
         </a>
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php?page=1_10/index_1_10">
+        <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/1_10">
           <i class="bi bi-menu-button-wide"></i><span>10. ภาระงานเฉพาะกิจที่เกี่ยวข้อง นอกจากข้อ 1-9</span>
         </a>
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php?page=1_11/index_1_11">
+        <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/1_11">
           <i class="bi bi-menu-button-wide"></i><span>11. ภาระงานด้านการบริหาร</span>
         </a>
       </li><!-- End Components Nav -->
+      
 
-      <li class="nav-heading">ตอนที่ 2</li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php?page=2/index_2">
-          <i class="bi bi-menu-button-wide"></i><span>แบบสรุปภาระงานรายบุคคล</span>
-        </a>
-      </li><!-- End Components Nav -->
-
-      <li class="nav-heading">ประเมินผลการปฏิบัติงาน</li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php?page=3/index_3">
-          <i class="bi bi-menu-button-wide"></i><span>แบบประเมินผลการปฏิบัติงาน(สายวิชาการ)</span>
-        </a>
-      </li><!-- End Components Nav -->
   </aside><!-- End Sidebar-->
 
   <main>
     <br>
     <br>
     <br>
-
     <?php
-
-    $page = $_GET['page'];
-    include $page . ('.php');
-
-    ?>
-
+      @$page = $_GET['page'];
+      @include $page.('.php');
+     ?> 
   </main>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -590,5 +428,4 @@ if (empty($users)) {
   <script src="assets/js/main.js"></script>
 
 </body>
-
 </html>

@@ -142,8 +142,8 @@ if (isset($_GET['upload'])) {
                 <th scope="col">จำนวนนักศึกษา</th>
                 <th scope="col">ระยะเวลาที่ปฏิบัติ (ชั่วโมง) ไม่เกิน 12 ชม./วัน</th>
                 <th scope="col">สถานที่ทำงาน/งานที่ควบคุม</th>
-                <th scope="col">ภาคการศึกษา</th>
-                <th scope="col">ปีการศึกษา</th>
+                <th scope="col">จำนวนภาระงาน</th>
+                <th scope="col">อัปโหลดไฟล์</th>
                 <th scope="col">จัดการข้อมูล</th>
             </tr>
         </thead>

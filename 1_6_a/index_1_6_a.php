@@ -249,8 +249,7 @@ if (isset($_GET['upload'])) {
                                 <label for="funding_framework" class="col-sm-2 col-form-label">กรอบเงินทุน</label>
                                 <select type="text" class="form-select" name="funding_framework" id="funding_framework1" onchange="calc1()">
                                     <option value="" selected>กรุณาเลือก</option>
-                                    <option value="<50,000">
-                                        <50,000< /option>
+                                    <option value="<50,000">50,000</option>
                                     <option value="50,000-100,000">50,000-100,000</option>
                                     <option value="100,000-500,000">100,000-500,000</option>
                                     <option value="500,000-1,000,000">500,000-1,000,000</option>

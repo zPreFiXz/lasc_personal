@@ -19,7 +19,7 @@
         $userId = $_SESSION['userId'];
         $term = $term_year['term'];
         $year = $term_year['year'];
-
+        
         $insertStmt = $conn->prepare("INSERT INTO personal_3 (userId, term, year) VALUES (:userId, :term, :year)");
         $insertStmt->bindParam(':userId', $userId);
         $insertStmt->bindParam(':term', $term);

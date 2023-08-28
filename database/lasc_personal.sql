@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 24, 2023 at 08:32 AM
+-- Generation Time: Aug 28, 2023 at 05:12 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -348,7 +348,9 @@ CREATE TABLE `personal_3` (
 --
 
 INSERT INTO `personal_3` (`userId`, `term`, `year`, `name`, `branch`, `amount_work`, `quality_work`, `efficiency_work`, `effectiveness_work`, `score_work`, `quality_ethics`, `efficiency_ethics`, `effectiveness_ethics`, `score_ethics`, `quality_capacity`, `efficiency_capacity`, `effectiveness_capacity`, `score_capacity`, `quality_more`, `efficiency_more`, `effectiveness_more`, `score_more`, `quality_total`, `efficiency_total`, `effectiveness_total`, `score_total`) VALUES
-('Phakphoom', 1, 2566, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+('Bongkotmas', 1, 2566, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('Phakphoom', 1, 2566, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('บงกชมาศ', 1, 2566, 'นางสาวบงกชมาศ บุญศักดิ์', 'วิศวกรรม', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -377,8 +379,10 @@ INSERT INTO `term_year` (`id`, `term`, `year`) VALUES
 
 CREATE TABLE `users` (
   `id` int(10) NOT NULL,
+  `nametitle` varchar(30) NOT NULL,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
+  `branch` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `urole` varchar(50) NOT NULL,
@@ -389,10 +393,40 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `password`, `urole`, `created_at`) VALUES
-(14, 'Phakphoom', 'Sukkhachat', 'prefix.2pm@gmail.com', '$2y$10$AqsqgTaJsZl5RoM/FCVQtegyhyne5JE5J2tJlhGuuiIggGCdhbCHS', 'user', '2023-07-24 12:05:08'),
-(15, 'Bongkotmas', 'Boonsak', 'Cream.cxz@gmail.com', '$2y$10$L1tf6qoRc6aOmdE72lEJk.nX8cKDoKtEUYw5qKBvlR665qDwi4yBu', 'user', '2023-07-26 08:25:39'),
-(16, 'Sarawut', 'Potjanat', 'gvgx831@gmail.com', '$2y$10$3AWb72ZgQt44tsq2vbk95u.P6bP/7Y1CIt7bhLeqVbLC9zUtkutri', 'admin', '2023-08-08 11:03:16');
+INSERT INTO `users` (`id`, `nametitle`, `firstname`, `lastname`, `branch`, `email`, `password`, `urole`, `created_at`) VALUES
+(14, '', 'Phakphoom', 'Sukkhachat', '', 'prefix.2pm@gmail.com', '$2y$10$AqsqgTaJsZl5RoM/FCVQtegyhyne5JE5J2tJlhGuuiIggGCdhbCHS', 'user', '2023-07-24 12:05:08'),
+(15, '', 'Bongkotmas', 'Boonsak', '', 'Cream.cxz@gmail.com', '$2y$10$L1tf6qoRc6aOmdE72lEJk.nX8cKDoKtEUYw5qKBvlR665qDwi4yBu', 'user', '2023-07-26 08:25:39'),
+(16, '', 'Sarawut', 'Potjanat', '', 'gvgx831@gmail.com', '$2y$10$3AWb72ZgQt44tsq2vbk95u.P6bP/7Y1CIt7bhLeqVbLC9zUtkutri', 'admin', '2023-08-08 11:03:16'),
+(22, 'นางสาว', 'บงกชมาศ', 'บุญศักดิ์', 'วิศวกรรม', 'cream333@gmail.com', '$2y$10$sRpAmkUeiTpeIzkMgRxzP.tb9J7e/rM2fMotRQHIitFlaACtXYsWK', 'user', '2023-08-28 08:08:38');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vadmin`
+--
+
+CREATE TABLE `vadmin` (
+  `userId` varchar(50) NOT NULL,
+  `id` int(10) NOT NULL,
+  `term` int(1) NOT NULL,
+  `year` int(4) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `amount_work` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `vadmin`
+--
+
+INSERT INTO `vadmin` (`userId`, `id`, `term`, `year`, `firstname`, `lastname`, `amount_work`) VALUES
+('apex', 26, 1, 2566, 'apex', 'inwza007', 34.4),
+('apex', 27, 1, 2565, 'apex', 'inwza007', 2),
+('apex', 28, 2, 2565, 'apex', 'inwza007', 4),
+('apex', 29, 2, 2566, 'apex', 'inwza007', 8.4),
+('ss', 30, 1, 2566, 'ss', 'dd', 7.8),
+('Phakphoom', 31, 1, 2566, 'Phakphoom', 'Sukkhachat', 0),
+('บงกชมาศ', 32, 1, 2566, 'บงกชมาศ', 'บุญศักดิ์', 0);
 
 --
 -- Indexes for dumped tables
@@ -501,6 +535,12 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `vadmin`
+--
+ALTER TABLE `vadmin`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -598,7 +638,13 @@ ALTER TABLE `term_year`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `vadmin`
+--
+ALTER TABLE `vadmin`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

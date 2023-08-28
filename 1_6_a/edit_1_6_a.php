@@ -36,5 +36,5 @@
             $_SESSION['error'] = "แก้ไขข้อมูลไม่สำเร็จ";
             header("location: ../index.php?page=1_6_a/index_1_6_a");
         }
-}
+    }
 ?>

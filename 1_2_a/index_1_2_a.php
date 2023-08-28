@@ -1,83 +1,83 @@
 <?php
-require_once "config/db.php";
-// ดึงตาราง term&year
-$stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
-$stmt->execute();
-$term_year = $stmt->fetch();
-
-if (isset($_GET['delete_file'])) {
-    $delete_file_id = $_GET['delete_file'];
-    $stmt = $conn->prepare("SELECT file FROM personal_1_2_a WHERE id = :delete_file_id");
-    $stmt->bindParam(':delete_file_id', $delete_file_id);
+    require_once "config/db.php";
+    
+    $stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
     $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $currentFile = $row['file'];
+    $term_year = $stmt->fetch();
 
-    if ($currentFile) {
-        $filePath = 'uploads/' . $currentFile;
-        if (file_exists($filePath)) {
-            unlink($filePath);
+    if (isset($_GET['delete_file'])) {
+        $delete_file_id = $_GET['delete_file'];
+        $stmt = $conn->prepare("SELECT file FROM personal_1_2_a WHERE id = :delete_file_id");
+        $stmt->bindParam(':delete_file_id', $delete_file_id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $currentFile = $row['file'];
+
+        if ($currentFile) {
+            $filePath = 'uploads/' . $currentFile;
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+
+        $delete_file = $conn->prepare("UPDATE personal_1_2_a SET file = '' WHERE id = :delete_file_id");
+        $delete_file->bindParam(':delete_file_id', $delete_file_id);
+        $delete_file->execute();
+    }
+
+    if (isset($_GET['delete'])) {
+        $delete_id = $_GET['delete'];
+
+        $stmt = $conn->prepare("SELECT file FROM personal_1_2_a WHERE id = :delete_id");
+        $stmt->bindParam(':delete_id', $delete_id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $currentFile = $row['file'];
+
+        if ($currentFile) {
+            $filePath = 'uploads/' . $currentFile;
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+
+        $deletestmt = $conn->prepare("DELETE FROM personal_1_2_a WHERE id = :delete_id");
+        $deletestmt->bindParam(':delete_id', $delete_id);
+        $deletestmt->execute();
+
+        if ($deletestmt) {
+            $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
+            echo "<script>window.location.href = 'index.php?page=1_2_a/index_1_2_a';</script>";
+            exit;
         }
     }
 
-    $delete_file = $conn->prepare("UPDATE personal_1_2_a SET file = '' WHERE id = :delete_file_id");
-    $delete_file->bindParam(':delete_file_id', $delete_file_id);
-    $delete_file->execute();
-}
-
-if (isset($_GET['delete'])) {
-    $delete_id = $_GET['delete'];
-
-    $stmt = $conn->prepare("SELECT file FROM personal_1_2_a WHERE id = :delete_id");
-    $stmt->bindParam(':delete_id', $delete_id);
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $currentFile = $row['file'];
-
-    if ($currentFile) {
-        $filePath = 'uploads/' . $currentFile;
-        if (file_exists($filePath)) {
-            unlink($filePath);
-        }
+    if (isset($_GET['edit'])) {
+        $_SESSION['edit'] = $_GET['edit'];
+        $edit_id = $_GET['edit'];
+        $stmt = $conn->prepare("SELECT * FROM personal_1_2_a WHERE id = ?");
+        $stmt->execute([$edit_id]);
+        $data = $stmt->fetch();
+    ?>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var modal = new bootstrap.Modal(document.getElementById("modal"));
+                modal.show();
+            });
+        </script>
+    <?php
     }
 
-    $deletestmt = $conn->prepare("DELETE FROM personal_1_2_a WHERE id = :delete_id");
-    $deletestmt->bindParam(':delete_id', $delete_id);
-    $deletestmt->execute();
-
-    if ($deletestmt) {
-        $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
-        echo "<script>window.location.href = 'index.php?page=1_2_a/index_1_2_a';</script>";
-        exit;
-    }
-}
-
-if (isset($_GET['edit'])) {
-    $_SESSION['edit'] = $_GET['edit'];
-    $edit_id = $_GET['edit'];
-    $stmt = $conn->prepare("SELECT * FROM personal_1_2_a WHERE id = ?");
-    $stmt->execute([$edit_id]);
-    $data = $stmt->fetch();
-?>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var modal = new bootstrap.Modal(document.getElementById("modal"));
-            modal.show();
-        });
-    </script>
-<?php
-}
-
-if (isset($_GET['upload'])) {
-    $_SESSION['upload'] = $_GET['upload'];
-    $upload_id = $_SESSION['upload'];
-?>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var modal = new bootstrap.Modal(document.getElementById("uploadModal"));
-            modal.show();
-        });
-    </script>
+    if (isset($_GET['upload'])) {
+        $_SESSION['upload'] = $_GET['upload'];
+        $upload_id = $_SESSION['upload'];
+    ?>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var modal = new bootstrap.Modal(document.getElementById("uploadModal"));
+                modal.show();
+            });
+        </script>
 <?php } ?>
 
 <div class="container">
@@ -101,8 +101,8 @@ if (isset($_GET['upload'])) {
     <?php if (isset($_SESSION['success'])) { ?>
         <div class="alert alert-success" id="alert-success">
             <?php
-            echo $_SESSION['success'];
-            unset($_SESSION['success']);
+                echo $_SESSION['success'];
+                unset($_SESSION['success']);
             ?>
         </div>
         <script>
@@ -126,20 +126,19 @@ if (isset($_GET['upload'])) {
         </thead>
         <tbody>
             <?php
+                $userId = $_SESSION['userId'];
+                $term =  $term_year['term'];
+                $year =  $term_year['year'];
+                $stmt = $conn->query("SELECT * FROM personal_1_2_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+                $stmt->execute();
+                $personal = $stmt->fetchAll();
 
-            $userId = $_SESSION['userId'];
-            $term =  $term_year['term'];
-            $year =  $term_year['year'];
-            $stmt = $conn->query("SELECT * FROM personal_1_2_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-            $stmt->execute();
-            $personal = $stmt->fetchAll();
+                $totalAmountWork = 0.00;
 
-            $totalAmountWork = 0.00;
-
-            if (!$personal) {
-                echo "<tr><td colspan='8' class='text-center'>ไม่มีข้อมูล</td></tr>";
-            } else {
-                foreach ($personal as $per) {
+                if (!$personal) {
+                    echo "<tr><td colspan='8' class='text-center'>ไม่มีข้อมูล</td></tr>";
+                } else {
+                    foreach ($personal as $per) {
             ?>
                     <tr>
                         <td style="white-space: nowrap;"><?= $per['major']; ?></td>
@@ -202,12 +201,8 @@ if (isset($_GET['upload'])) {
                                 </a>
                             </td>
                         <?php } ?>
-
                     </tr>
-            <?php
-                }
-            }
-            ?>
+            <?php }}?>
             <tr>
                 <th scope="row" colspan="5">รวมจำนวนภาระงานตลอดภาคเรียน</th>
                 <td scope="row"><?= number_format($totalAmountWork, 2); ?></td>
@@ -299,7 +294,6 @@ if (isset($_GET['upload'])) {
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>

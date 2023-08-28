@@ -11,7 +11,6 @@
         $stmt->bindParam(':year', $year);
         $stmt->bindParam(':term', $term);
         $stmt->execute();
-        
     }
     header("location: ../index_admin.php?page=admin");
 ?>

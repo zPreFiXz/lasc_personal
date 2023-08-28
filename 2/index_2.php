@@ -121,72 +121,69 @@
    }
 
    $totalAmountWork = $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10;
-   
 ?>
 
 <div class="container">
-    <div class="pagetitle mt-3">
-        <h1>ตอนที่ 2 : แบบสรุปภาระงานรายบุคคล</h1>
-    </div>
-
-    <table class="table table-bordered mt-3">
-        <thead class="align-middle table-secondary text-center">
-        <tr>
+   <div class="pagetitle mt-3">
+      <h1>ตอนที่ 2 : แบบสรุปภาระงานรายบุคคล</h1>
+   </div>
+   <table class="table table-bordered mt-3">
+      <thead class="align-middle table-secondary text-center">
+         <tr>
             <th scope="col">รายการ</th>
             <th scope="col">จำนวนภาระงาน</th>
-        </tr>
-        </thead>
-
-        <tbody>    
-        <tr>
-           <td>1. ภาระงานการสอน (ภาคปกติ)</td>
-           <td class="text-center">0.00</td> 
-        </tr>
-        <tr>
-           <td>2. ภาระงานอาจารย์ที่ปรึกษาของนักศึกษา (หมู่เรียน ชมรม ชุมนุม หรือที่ปรึกษาอื่น)</td>
-           <td class="text-center"><?= number_format($totalAmountWork_1_2, 2); ?></td> 
-        </tr>
-        <tr>
-           <td>3. ภาระงานอาจารย์นิเทศ /อาจารย์ผู้ควบคุมการฝึกประสบการณ์วิชาชีพ</td>
-           <td class="text-center"><?= number_format($totalAmountWork_1_3, 2); ?></td> 
-        </tr>
-        <tr>
-           <td>4. ภาระงานกิจกรรมพัฒนานักศึกษา</td>
-           <td class="text-center"><?= number_format($totalAmountWork_1_4, 2); ?></td> 
-        </tr>
-        <tr>
-           <td>5. ภาระงานอาจารย์ที่ปรึกษางานวิจัย โครงการ ปัญหาพิเศษ หรืองานวิจัยอื่นที่เกี่ยวข้อง</td>
-           <td class="text-center"><?= number_format($totalAmountWork_1_5, 2); ?></td> 
-        </tr>
-        <tr>
-           <td>6. ภาระงานวิจัย</td>
-           <td class="text-center"><?= number_format($totalAmountWork_1_6, 2); ?></td> 
-        </tr>
-        <tr>
-           <td>7. ภาระผลิตผลงานทางวิชาการ</td>
-           <td class="text-center"><?= number_format($totalAmountWork_1_7, 2); ?></td> 
-        </tr>
-        <tr>
-           <td>8. ภาระงานด้านบริการวิชาการ</td>
-           <td class="text-center"><?= number_format($totalAmountWork_1_8, 2); ?></td> 
-        </tr>
-        <tr>
-           <td>9. ภาระงานทำนุบำรุงศิลปวัฒนธรรม</td>
-           <td class="text-center"><?= number_format($totalAmountWork_1_9, 2); ?></td> 
-        </tr>
-        <tr>
-           <td>10. ภาระงานเฉพาะกิจที่เกี่ยวข้อง นอกจากข้อ 1-9</td>
-           <td class="text-center"><?= number_format($totalAmountWork_1_10, 2); ?></td> 
-        </tr>
-        <tr>
-           <td>11. ภาระงานด้านการบริหาร (เฉพาะผู้ที่ได้รับการแต่งตั้งให้ดำรงตำแหน่งบริหาร)</td>
-           <td class="text-center">0.00</td> 
-        </tr>
-        <tr>
-           <th class="text-center">รวมภาระงานตลอดภาคเรียน</th>
-           <td class="text-center"><?= number_format($totalAmountWork, 2); ?></td> 
-        </tr>
-        </tbody>
-    </table>
-    <p>(หมายเหตุ รวมภาระงานตลอดภาคเรียนต้องไม่ต่ำกว่า 40 ภาระงาน)</p>
+         </tr>
+      </thead>
+      <tbody>    
+         <tr>
+            <td>1. ภาระงานการสอน (ภาคปกติ)</td>
+            <td class="text-center">0.00</td> 
+         </tr>
+         <tr>
+            <td>2. ภาระงานอาจารย์ที่ปรึกษาของนักศึกษา (หมู่เรียน ชมรม ชุมนุม หรือที่ปรึกษาอื่น)</td>
+            <td class="text-center"><?= number_format($totalAmountWork_1_2, 2); ?></td> 
+         </tr>
+         <tr>
+            <td>3. ภาระงานอาจารย์นิเทศ /อาจารย์ผู้ควบคุมการฝึกประสบการณ์วิชาชีพ</td>
+            <td class="text-center"><?= number_format($totalAmountWork_1_3, 2); ?></td> 
+         </tr>
+         <tr>
+            <td>4. ภาระงานกิจกรรมพัฒนานักศึกษา</td>
+            <td class="text-center"><?= number_format($totalAmountWork_1_4, 2); ?></td> 
+         </tr>
+         <tr>
+            <td>5. ภาระงานอาจารย์ที่ปรึกษางานวิจัย โครงการ ปัญหาพิเศษ หรืองานวิจัยอื่นที่เกี่ยวข้อง</td>
+            <td class="text-center"><?= number_format($totalAmountWork_1_5, 2); ?></td> 
+         </tr>
+         <tr>
+            <td>6. ภาระงานวิจัย</td>
+            <td class="text-center"><?= number_format($totalAmountWork_1_6, 2); ?></td> 
+         </tr>
+         <tr>
+            <td>7. ภาระผลิตผลงานทางวิชาการ</td>
+            <td class="text-center"><?= number_format($totalAmountWork_1_7, 2); ?></td> 
+         </tr>
+         <tr>
+            <td>8. ภาระงานด้านบริการวิชาการ</td>
+            <td class="text-center"><?= number_format($totalAmountWork_1_8, 2); ?></td> 
+         </tr>
+         <tr>
+            <td>9. ภาระงานทำนุบำรุงศิลปวัฒนธรรม</td>
+            <td class="text-center"><?= number_format($totalAmountWork_1_9, 2); ?></td> 
+         </tr>
+         <tr>
+            <td>10. ภาระงานเฉพาะกิจที่เกี่ยวข้อง นอกจากข้อ 1-9</td>
+            <td class="text-center"><?= number_format($totalAmountWork_1_10, 2); ?></td> 
+         </tr>
+         <tr>
+            <td>11. ภาระงานด้านการบริหาร (เฉพาะผู้ที่ได้รับการแต่งตั้งให้ดำรงตำแหน่งบริหาร)</td>
+            <td class="text-center">0.00</td> 
+         </tr>
+         <tr>
+            <th class="text-center">รวมภาระงานตลอดภาคเรียน</th>
+            <td class="text-center"><?= number_format($totalAmountWork, 2); ?></td> 
+         </tr>
+      </tbody>
+   </table>
+   <p>(หมายเหตุ รวมภาระงานตลอดภาคเรียนต้องไม่ต่ำกว่า 40 ภาระงาน)</p>
 </div>

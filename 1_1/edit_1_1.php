@@ -29,6 +29,7 @@
         $stmt->bindParam(':proportion', $proportion);
         $stmt->bindParam(':amount_work', $amount_work);
         $stmt->execute();
+        unset( $_SESSION['edit']);
 
         if ($stmt) {
             $_SESSION['success'] = "แก้ไขข้อมูลสำเร็จ";

@@ -71,5 +71,4 @@
             header("location: ../index.php?page=3/index_3");
         }
     }
-
 ?>

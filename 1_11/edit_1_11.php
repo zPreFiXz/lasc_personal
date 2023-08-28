@@ -24,6 +24,7 @@
         $stmt->bindParam(':hours', $hours);
         $stmt->bindParam(':amount_work', $amount_work);
         $stmt->execute();
+        unset( $_SESSION['edit']);
 
         if ($stmt) {
             $_SESSION['success'] = "แก้ไขข้อมูลสำเร็จ";
@@ -32,5 +33,5 @@
             $_SESSION['error'] = "แก้ไขข้อมูลไม่สำเร็จ";
             header("location: ../index.php?page=1_8/index_1_8");
         }
-}
+    }
 ?>

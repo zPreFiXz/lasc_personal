@@ -29,11 +29,11 @@
         $stmt->execute();
     }
         
-            if ($stmt) {
-                $_SESSION['success'] = "เพิ่มข้อมูลสำเร็จ";
-                header("location: ../index.php?page=1_6_b/index_1_6_b");
-            }else {
-                $_SESSION['error'] = "เพิ่มข้อมูลไม่สำเร็จ";
-                header("location: ../index.php?page=1_6_b/index_1_6_b");
-            }
+    if ($stmt) {
+        $_SESSION['success'] = "เพิ่มข้อมูลสำเร็จ";
+        header("location: ../index.php?page=1_6_b/index_1_6_b");
+    }else {
+        $_SESSION['error'] = "เพิ่มข้อมูลไม่สำเร็จ";
+        header("location: ../index.php?page=1_6_b/index_1_6_b");
+    }
 ?>

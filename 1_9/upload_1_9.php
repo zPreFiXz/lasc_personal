@@ -35,6 +35,7 @@
             }
         }
     }
+    
     if ($stmt) {
         $_SESSION['success'] = "อัปโหลดไฟล์สำเร็จ";
         header("location: ../index.php?page=1_9/index_1_9"); // นำทางไปยังหน้า index.php?page=1_5_a

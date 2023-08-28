@@ -25,7 +25,7 @@
         $stmt->bindParam(':year', $year);
         $stmt->bindParam(':amount_work', $amount_work);
         $stmt->execute();
-        }
+    }
 
     if ($stmt) {
         $_SESSION['success'] = "เพิ่มข้อมูลสำเร็จ";

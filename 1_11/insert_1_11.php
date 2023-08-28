@@ -24,9 +24,8 @@
         $stmt->bindParam(':scope', $scope);
         $stmt->bindParam(':term', $term);
         $stmt->bindParam(':year', $year);
-        
         $stmt->execute();
-        }
+    }
 
     if ($stmt) {
         $_SESSION['success'] = "เพิ่มข้อมูลสำเร็จ";

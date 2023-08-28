@@ -30,5 +30,4 @@
             header("location: ../index.php?page=1_9/index_1_9");
         }
     }
-
 ?>

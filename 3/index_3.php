@@ -4,7 +4,6 @@
     $stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
     $stmt->execute();
     $term_year = $stmt->fetch();
-
     $term =  $term_year['term'];
     $year =  $term_year['year'];
 
@@ -24,13 +23,13 @@
         $insertStmt->bindParam(':userId', $userId);
         $insertStmt->bindParam(':term', $term);
         $insertStmt->bindParam(':year', $year);
-        
         $insertStmt->execute();
 
         if ($insertStmt) {
             echo "<script>window.location.href = 'index.php?page=3/index_3';</script>";
         }
     }
+
     foreach($personal as $per)
 ?>
 <div class="container">

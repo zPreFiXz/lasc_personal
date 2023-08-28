@@ -1,5 +1,11 @@
 <?php
     $userId = $_SESSION['userId'];
+    $nametitle = $_SESSION['nametitle'];
+    $lastname = $_SESSION['lastname'];
+    $branch = $_SESSION['branch'];
+
+    $name = $nametitle . $userId ." ". $lastname;
+    
 
     $stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
     $stmt->execute();
@@ -19,10 +25,13 @@
         $term = $term_year['term'];
         $year = $term_year['year'];
         
-        $insertStmt = $conn->prepare("INSERT INTO personal_3 (userId, term, year) VALUES (:userId, :term, :year)");
+        $insertStmt = $conn->prepare("INSERT INTO personal_3 (userId, term, year,name,branch) VALUES (:userId, :term, :year, :name, :branch)");
         $insertStmt->bindParam(':userId', $userId);
         $insertStmt->bindParam(':term', $term);
         $insertStmt->bindParam(':year', $year);
+        $insertStmt->bindParam(':name', $name);
+        $insertStmt->bindParam(':branch', $branch);
+        
         $insertStmt->execute();
 
         if ($insertStmt) {

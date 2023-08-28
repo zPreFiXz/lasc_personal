@@ -35,6 +35,9 @@
                                 header("location: index_admin.php");
                             } else {
                                 $_SESSION['userId'] = $row['firstname'];
+                                $_SESSION['nametitle'] = $row['nametitle'];
+                                $_SESSION['lastname'] = $row['lastname'];
+                                $_SESSION['branch'] = $row['branch'];
                                 header("location: index.php?page=dashboard");
                             }
                         } else {

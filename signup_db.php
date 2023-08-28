@@ -3,18 +3,26 @@
     require_once 'config/db.php';
 
     if (isset($_POST['signup'])) {
+        $nametitle = $_POST['nametitle'];
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
+        $branch = $_POST['branch'];
         $email = $_POST['email'];
         $password = $_POST['password'];
         $c_password = $_POST['c_password'];
         $urole = 'user';
 
-        if (empty($firstname)) {
+        if (empty($nametitle)) {
+            $_SESSION['error'] = 'กรุณากรอกคำนำหน้า';
+            header("location: signup.php");
+        } else if (empty($firstname)) {
             $_SESSION['error'] = 'กรุณากรอกชื่อ';
             header("location: signup.php");
         } else if (empty($lastname)) {
             $_SESSION['error'] = 'กรุณากรอกนามสกุล';
+            header("location: signup.php");
+        } else if (empty($branch)) {
+            $_SESSION['error'] = 'กรุณากรอกสาขาวิชา';
             header("location: signup.php");
         } else if (empty($email)) {
             $_SESSION['error'] = 'กรุณากรอกอีเมล';
@@ -46,10 +54,12 @@
                     header("location: signup.php");
                 } else if (!isset($_SESSION['error'])) {
                     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                    $stmt = $conn->prepare("INSERT INTO users(firstname, lastname, email, password, urole) 
-                                            VALUES(:firstname, :lastname, :email, :password, :urole)");
+                    $stmt = $conn->prepare("INSERT INTO users(nametitle,firstname, lastname, branch, email, password, urole) 
+                                            VALUES(:nametitle, :firstname, :lastname, :branch, :email, :password, :urole)");
+                    $stmt->bindParam(":nametitle", $nametitle);
                     $stmt->bindParam(":firstname", $firstname);
                     $stmt->bindParam(":lastname", $lastname);
+                    $stmt->bindParam(":branch", $branch);
                     $stmt->bindParam(":email", $email);
                     $stmt->bindParam(":password", $passwordHash);
                     $stmt->bindParam(":urole", $urole);

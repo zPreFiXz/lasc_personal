@@ -77,28 +77,36 @@
                     }, 3000);
                 </script>
             <?php } ?>
-
+            
             <div class="mb-3">
-                <label for="firstname" class="form-label">Firstname</label>
+                <label for="nametitle" class="form-label">คำนำหน้าชื่อ</label>
+                <input type="text" class="form-control" name="nametitle" aria-describedby="nametitle">
+            </div>
+            <div class="mb-3">
+                <label for="firstname" class="form-label">ชื่อ</label>
                 <input type="text" class="form-control" name="firstname" aria-describedby="firstname">
             </div>
             <div class="mb-3">
-                <label for="lastname" class="form-label">Lastname</label>
+                <label for="lastname" class="form-label">นามสกุล</label>
                 <input type="text" class="form-control" name="lastname" aria-describedby="lastname">
             </div>
             <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
+                <label for="branch" class="form-label">สาขาวิชา</label>
+                <input type="text" class="form-control" name="branch" aria-describedby="branch">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">อีเมล</label>
                 <input type="email" class="form-control" name="email" aria-describedby="email">
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label">รหัสผ่าน</label>
                 <input type="password" class="form-control" name="password">
             </div>
             <div class="mb-3">
-                <label for="confirm password" class="form-label">Confirm Password</label>
+                <label for="confirm password" class="form-label">ยืนยันรหัสผ่าน</label>
                 <input type="password" class="form-control" name="c_password">
             </div>
-            <button type="submit" name="signup" class="btn btn-primary">Sign Up</button>
+            <button type="submit" name="signup" class="btn btn-primary">ลงทะเบียน</button>
         </form>
         <hr>
         <p>เป็นสมาชิกแล้วใช่ไหม คลิ๊กที่นี่เพื่อ <a href="signin.php">เข้าสู่ระบบ</a></p>

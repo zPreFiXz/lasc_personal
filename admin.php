@@ -238,7 +238,7 @@ $ranks = $stmt->fetchAll();
                         <td>
                             <a href="?page=admin&userId=<?= $CYT1['userId']; ?>&term=<?= $CYT1['term'] ?>&year=<?= $CYT1['year'] ?>" class="btn btn-primary">
                                 <div class="icon d-flex">
-                                    <div class="label">รายระเอียด</div>
+                                    <div class="label">รายละเอียด</div>
                                 </div>
                         </td>
 
@@ -252,7 +252,7 @@ $ranks = $stmt->fetchAll();
                                 <td>
                                     <a href="?page=admin&userId=<?= $CYT2['userId']; ?>&term=<?= $CYT2['term'] ?>&year=<?= $CYT2['year'] ?>" class="btn btn-primary">
                                         <div class="icon d-flex">
-                                            <div class="label">รายระเอียด</div>
+                                            <div class="label">รายละเอียด</div>
                                         </div>
                                 </td>
                             <?php
@@ -262,7 +262,7 @@ $ranks = $stmt->fetchAll();
                         if (!$found) { ?>
                             <td>0</td>
                             <td>
-                                <button class="btn btn-primary">รายระเอียด</button>
+                                <button class="btn btn-primary">รายละเอียด</button>
                             </td>
                         <?php
                         }
@@ -279,7 +279,7 @@ $ranks = $stmt->fetchAll();
                                 <td>
                                     <a href="?page=admin&userId=<?= $LYT1['userId']; ?>&term=<?= $LYT1['term'] ?>&year=<?= $LYT1['year'] ?>" class="btn btn-primary">
                                         <div class="icon d-flex">
-                                            <div class="label">รายระเอียด</div>
+                                            <div class="label">รายละเอียด</div>
                                         </div>
                                 </td>
                             <?php
@@ -289,7 +289,7 @@ $ranks = $stmt->fetchAll();
                         if (!$found) { ?>
                             <td>0</td>
                             <td>
-                                <button class="btn btn-primary">รายระเอียด</button>
+                                <button class="btn btn-primary">รายละเอียด</button>
                             </td>
                         <?php
                         }
@@ -306,7 +306,7 @@ $ranks = $stmt->fetchAll();
                                 <td>
                                     <a href="?page=admin&userId=<?= $LYT2['userId']; ?>&term=<?= $LYT2['term'] ?>&year=<?= $LYT2['year'] ?>" class="btn btn-primary">
                                         <div class="icon d-flex">
-                                            <div class="label">รายระเอียด</div>
+                                            <div class="label">รายละเอียด</div>
                                         </div>
                                     </a>
                                 </td>
@@ -317,7 +317,7 @@ $ranks = $stmt->fetchAll();
                         if (!$found) { ?>
                             <td>0</td>
                             <td>
-                                <button class="btn btn-primary">รายระเอียด</button>
+                                <button class="btn btn-primary">รายละเอียด</button>
                             </td>
                         <?php
                         }
@@ -339,7 +339,7 @@ $ranks = $stmt->fetchAll();
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">รายระเอียด</h5>
+                <h5 class="modal-title">รายละเอียด</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -416,7 +416,7 @@ $ranks = $stmt->fetchAll();
                     <input type="hidden" id ="userId" name="userId" value="<?= $_GET['userId']?>">
                     <input type="hidden" id ="term" name="term" value="<?= $_GET['term']?>">
                     <input type="hidden" id ="year" name="year" value="<?= $_GET['year']?>">
-                    <button class="btn btn-primary" type="submit">รายระเอียด</button>
+                    <button class="btn btn-primary" type="submit">รายละเอียด</button>
                 </form>
             </div>
         </div>

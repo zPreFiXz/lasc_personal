@@ -7,7 +7,6 @@
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
         }
     ?>
-    
     <h3 class="mt-4">ยินดีต้อนรับ, <?php echo $row['nametitle'].$row['firstname'] . ' ' . $row['lastname'] ?></h3>
     <a href="logout.php" class="btn btn-danger">Logout</a>
 </div>

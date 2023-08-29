@@ -6,7 +6,6 @@
 
     $name = $nametitle . $userId ." ". $lastname;
     
-
     $stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
     $stmt->execute();
     $term_year = $stmt->fetch();

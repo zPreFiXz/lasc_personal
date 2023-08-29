@@ -1,5 +1,4 @@
 <?php 
-
     session_start();
     require_once 'config/db.php';
 
@@ -27,18 +26,17 @@
                 $check_data->execute();
                 $row = $check_data->fetch(PDO::FETCH_ASSOC);
                 if ($check_data->rowCount() > 0) {
-
                     if ($email == $row['email']) {
                         if (password_verify($password, $row['password'])) {
                             if ($row['urole'] == 'admin') {
                                 $_SESSION['adminId'] = $row['firstname'];
-                                header("location: index_admin.php");
+                                header("location: index_admin.php?page=admin");
                             } else {
                                 $_SESSION['userId'] = $row['firstname'];
                                 $_SESSION['nametitle'] = $row['nametitle'];
                                 $_SESSION['lastname'] = $row['lastname'];
                                 $_SESSION['branch'] = $row['branch'];
-                                header("location: index.php?page=dashboard");
+                                header("location: index.php?page=users/dashboard");
                             }
                         } else {
                             $_SESSION['error'] = 'รหัสผ่านผิด';
@@ -52,12 +50,9 @@
                     $_SESSION['error'] = "ไม่มีข้อมูลในระบบ";
                     header("location: signin.php");
                 }
-
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }
         }
     }
-
-
 ?>

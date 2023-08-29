@@ -4,7 +4,6 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -32,7 +31,6 @@
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="container">
         <h3 class="mt-4">สมัครสมาชิก</h3>
@@ -77,7 +75,6 @@
                     }, 3000);
                 </script>
             <?php } ?>
-            
             <div class="mb-3">
                 <label for="nametitle" class="form-label">คำนำหน้าชื่อ</label>
                 <input type="text" class="form-control" name="nametitle" aria-describedby="nametitle">
@@ -112,5 +109,4 @@
         <p>เป็นสมาชิกแล้วใช่ไหม คลิ๊กที่นี่เพื่อ <a href="signin.php">เข้าสู่ระบบ</a></p>
     </div>
 </body>
-
 </html>

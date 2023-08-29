@@ -122,7 +122,6 @@
 
    $totalAmountWork = $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10;
 ?>
-
 <div class="container">
    <div class="pagetitle mt-3">
       <h1>ตอนที่ 2 : แบบสรุปภาระงานรายบุคคล</h1>

@@ -58,28 +58,25 @@
         $stmt = $conn->prepare("SELECT * FROM personal_1_2_a WHERE id = ?");
         $stmt->execute([$edit_id]);
         $data = $stmt->fetch();
-    ?>
+?>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 var modal = new bootstrap.Modal(document.getElementById("modal"));
                 modal.show();
             });
         </script>
-    <?php
-    }
-
-    if (isset($_GET['upload'])) {
-        $_SESSION['upload'] = $_GET['upload'];
-        $upload_id = $_SESSION['upload'];
-    ?>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var modal = new bootstrap.Modal(document.getElementById("uploadModal"));
-                modal.show();
-            });
-        </script>
+    <?php } ?>
+<?php if (isset($_GET['upload'])) {
+    $_SESSION['upload'] = $_GET['upload'];
+    $upload_id = $_SESSION['upload'];
+?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var modal = new bootstrap.Modal(document.getElementById("uploadModal"));
+            modal.show();
+        });
+    </script>
 <?php } ?>
-
 <div class="container">
     <div class="pagetitle mt-3">
         <h1>ก. ภาระงานอาจารย์ที่ปรึกษาหมู่เรียน</h1>

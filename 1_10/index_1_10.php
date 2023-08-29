@@ -1,84 +1,81 @@
 <?php
-require_once "config/db.php";
+    require_once "config/db.php";
 
-// ดึงตาราง term&year
-$stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
-$stmt->execute();
-$term_year = $stmt->fetch();
-
-//delete file
-if (isset($_GET['delete_file'])) {
-    $delete_file_id = $_GET['delete_file']; // รับค่า ID ที่ต้องการลบ
-    $stmt = $conn->prepare("SELECT file FROM personal_1_10 WHERE id = :delete_file_id");
-    $stmt->bindParam(':delete_file_id', $delete_file_id);
+    // ดึงตาราง term&year
+    $stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
     $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $currentFile = $row['file'];
+    $term_year = $stmt->fetch();
 
-    if ($currentFile) {
-        $filePath = 'uploads/' . $currentFile;
-        if (file_exists($filePath)) {
-            unlink($filePath);
+    //delete file
+    if (isset($_GET['delete_file'])) {
+        $delete_file_id = $_GET['delete_file']; // รับค่า ID ที่ต้องการลบ
+        $stmt = $conn->prepare("SELECT file FROM personal_1_10 WHERE id = :delete_file_id");
+        $stmt->bindParam(':delete_file_id', $delete_file_id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $currentFile = $row['file'];
+
+        if ($currentFile) {
+            $filePath = 'uploads/' . $currentFile;
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+
+        $delete_file = $conn->prepare("UPDATE personal_1_10 SET file = '' WHERE id = :delete_file_id");
+        $delete_file->bindParam(':delete_file_id', $delete_file_id);
+        $delete_file->execute();
+    }
+    //delete 
+    if (isset($_GET['delete'])) {
+        $delete_id = $_GET['delete'];
+
+        $stmt = $conn->prepare("SELECT file FROM personal_1_10 WHERE id = :delete_id");
+        $stmt->bindParam(':delete_id', $delete_id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $currentFile = $row['file'];
+
+        if ($currentFile) {
+            $filePath = 'uploads/' . $currentFile;
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+
+        $deletestmt = $conn->prepare("DELETE FROM personal_1_10 WHERE id = :delete_id");
+        $deletestmt->bindParam(':delete_id', $delete_id);
+        $deletestmt->execute();
+
+        if ($deletestmt) {
+            $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
+            echo "<script>window.location.href = 'index.php?page=1_10/index_1_10';</script>";
+            exit;
         }
     }
-
-    $delete_file = $conn->prepare("UPDATE personal_1_10 SET file = '' WHERE id = :delete_file_id");
-    $delete_file->bindParam(':delete_file_id', $delete_file_id);
-    $delete_file->execute();
-}
-//delete 
-if (isset($_GET['delete'])) {
-    $delete_id = $_GET['delete'];
-
-
-    $stmt = $conn->prepare("SELECT file FROM personal_1_10 WHERE id = :delete_id");
-    $stmt->bindParam(':delete_id', $delete_id);
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $currentFile = $row['file'];
-
-    if ($currentFile) {
-        $filePath = 'uploads/' . $currentFile;
-        if (file_exists($filePath)) {
-            unlink($filePath);
-        }
-    }
-
-    $deletestmt = $conn->prepare("DELETE FROM personal_1_10 WHERE id = :delete_id");
-    $deletestmt->bindParam(':delete_id', $delete_id);
-    $deletestmt->execute();
-
-    if ($deletestmt) {
-        $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
-        echo "<script>window.location.href = 'index.php?page=1_10/index_1_10';</script>";
-        exit;
-    }
-}
-
-//edit
-if (isset($_GET['edit'])) {
-    // เก็บค่า ID ที่ต้องการแก้ไขในตัวแปร session ชื่อ 'edit'
-    $_SESSION['edit'] = $_GET['edit'];
-    $edit_id = $_SESSION['edit'];
-    // เตรียมคำสั่ง SQL สำหรับเลือกข้อมูลที่ต้องการแก้ไขจากตาราง personal_1_10 โดยใช้ ID
-    $stmt = $conn->prepare("SELECT * FROM personal_1_10 WHERE id = ?");
-    $stmt->execute([$edit_id]);
-    // เก็บข้อมูลที่ได้จากการคิวรีในตัวแปร $data
-    $data = $stmt->fetch();
+    //edit
+    if (isset($_GET['edit'])) {
+        // เก็บค่า ID ที่ต้องการแก้ไขในตัวแปร session ชื่อ 'edit'
+        $_SESSION['edit'] = $_GET['edit'];
+        $edit_id = $_SESSION['edit'];
+        // เตรียมคำสั่ง SQL สำหรับเลือกข้อมูลที่ต้องการแก้ไขจากตาราง personal_1_10 โดยใช้ ID
+        $stmt = $conn->prepare("SELECT * FROM personal_1_10 WHERE id = ?");
+        $stmt->execute([$edit_id]);
+        // เก็บข้อมูลที่ได้จากการคิวรีในตัวแปร $data
+        $data = $stmt->fetch();
 ?>
-    <script>
-        // ถูกเรียกใช้เมื่อหน้าเว็บโหลดเสร็จสมบูรณ์ 
-        document.addEventListener("DOMContentLoaded", function() {
-            // สร้างอ็อบเจกต์ Modal
-            var modal = new bootstrap.Modal(document.getElementById("modal"));
-            // แสดงหน้าต่าง Modal
-            modal.show();
-        });
-    </script>
-<?php
-}
-//upload file
-if (isset($_GET['upload'])) {
+        <script>
+            // ถูกเรียกใช้เมื่อหน้าเว็บโหลดเสร็จสมบูรณ์ 
+            document.addEventListener("DOMContentLoaded", function() {
+                // สร้างอ็อบเจกต์ Modal
+                var modal = new bootstrap.Modal(document.getElementById("modal"));
+                // แสดงหน้าต่าง Modal
+                modal.show();
+            });
+        </script>
+    <?php } ?>
+<!-- upload file -->
+<?php if (isset($_GET['upload'])) {
     // เก็บค่า ID ที่ต้องการแก้ไขในตัวแปร session ชื่อ 'upload'
     $_SESSION['upload'] = $_GET['upload'];
     $upload_id = $_SESSION['upload'];
@@ -92,10 +89,7 @@ if (isset($_GET['upload'])) {
             modal.show();
         });
     </script>
-<?php
-}
-?>
-
+<?php } ?>
 <div class="container">
     <div class="pagetitle mt-3">
         <h1>10. ภาระงานเฉพาะกิจที่เกี่ยวข้อง นอกจากข้อ 1-9 (งานที่มหาวิทยาลัยมอบหมายเป็นการเฉพาะกิจภายในคณะสำนัก สถาบัน วิทยาลัย ศูนย์ หรือภายนอกมหาวิทยาลัย)</h1>
@@ -110,13 +104,12 @@ if (isset($_GET['upload'])) {
             </div>
         </button>
     </div>
-    <?php
-    // ตรวจสอบว่ามีตัวแปร session ชื่อ 'success' อยู่หรือไม่
-    if (isset($_SESSION['success'])) { ?>
+    <!-- ตรวจสอบว่ามีตัวแปร session ชื่อ 'success' อยู่หรือไม่ -->
+    <?php if (isset($_SESSION['success'])) { ?>
         <div class="alert alert-success" id="alert-success">
             <?php
-            echo $_SESSION['success']; // แสดงข้อความที่เก็บในตัวแปร session 'success'
-            unset($_SESSION['success']); // ลบค่าในตัวแปร session 'success'
+                echo $_SESSION['success']; // แสดงข้อความที่เก็บในตัวแปร session 'success'
+                unset($_SESSION['success']); // ลบค่าในตัวแปร session 'success'
             ?>
         </div>
         <script>
@@ -125,18 +118,13 @@ if (isset($_GET['upload'])) {
             }, 3000);
         </script>
     <?php } ?>
-
-    <?php
-    // ตรวจสอบว่ามีพารามิเตอร์ 'id' ใน URL หรือไม่
-    if (isset($_GET['id'])) {
-        $id = $_GET['id']; // รับค่าพารามิเตอร์ 'id' จาก URL
-        $stmt = $conn->query("SELECT * FROM personal where id =$id"); // ดึงข้อมูลจากตาราง personal โดยใช้ ID
-        $stmt->execute();
-        $data = $stmt->fetch();  // เก็บข้อมูลที่ได้จากการคิวรีในตัวแปร $data
-
-    }
-    ?>
-
+    <!-- ตรวจสอบว่ามีพารามิเตอร์ 'id' ใน URL หรือไม่ -->
+    <?php if (isset($_GET['id'])) {
+            $id = $_GET['id']; // รับค่าพารามิเตอร์ 'id' จาก URL
+            $stmt = $conn->query("SELECT * FROM personal where id =$id"); // ดึงข้อมูลจากตาราง personal โดยใช้ ID
+            $stmt->execute();
+            $data = $stmt->fetch();  // เก็บข้อมูลที่ได้จากการคิวรีในตัวแปร $data
+    } ?>
     <table class="table table-bordered text-center">
         <thead class="align-middle table-secondary">
             <tr>
@@ -150,24 +138,23 @@ if (isset($_GET['upload'])) {
                 <th scope="col">จัดการข้อมูล</th>
             </tr>
         </thead>
-
         <tbody>
             <?php
-            $userId = $_SESSION['userId'];
-            $term =  $term_year['term'];
-            $year =  $term_year['year'];
-            $stmt = $conn->query("SELECT*FROM personal_1_10 WHERE userId = '$userId' AND term = '$term' AND year = '$year'"); // ดึงข้อมูลจากตาราง personal_1_10
-            $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
-            $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
+                $userId = $_SESSION['userId'];
+                $term =  $term_year['term'];
+                $year =  $term_year['year'];
+                $stmt = $conn->query("SELECT*FROM personal_1_10 WHERE userId = '$userId' AND term = '$term' AND year = '$year'"); // ดึงข้อมูลจากตาราง personal_1_10
+                $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
+                $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
 
-            $totalAmountWork = 0.00;
+                $totalAmountWork = 0.00;
 
-            // ตรวจสอบว่ามีข้อมูลหรือไม่
-            if (!$personal) { // ไม่มีข้อมูล
-                echo " <tr><td colspan='9' class='text-center'>ไม่มีข้อมูล</td></tr>";
-            } else {
-                // วนลูปแสดงข้อมูลที่ดึงมา
-                foreach ($personal as $per) {
+                // ตรวจสอบว่ามีข้อมูลหรือไม่
+                if (!$personal) { // ไม่มีข้อมูล
+                    echo " <tr><td colspan='9' class='text-center'>ไม่มีข้อมูล</td></tr>";
+                } else {
+                    // วนลูปแสดงข้อมูลที่ดึงมา
+                    foreach ($personal as $per) {
             ?>
                     <tr> <!-- แสดงแถวของตาราง (row) โดยใช้ข้อมูลจากตัวแปร $per ในแต่ละคอลัมน์ของตาราง -->
 
@@ -178,7 +165,6 @@ if (isset($_GET['upload'])) {
                         <td><?= $per['amount_time']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
                         <?php $totalAmountWork += floatval($per['amount_work']); ?>
-
                         <?php if ($per['file']) { ?>
                             <td style="white-space: nowrap;">
                                 <a href="<?= "uploads/" . $per['file']; ?>" target="_blank" class="btn btn-secondary">
@@ -194,7 +180,6 @@ if (isset($_GET['upload'])) {
                                     </div>
                                 </a>
                             </td>
-
                             <td class="d-flex justify-content-center">
                                 <!-- ปุ่มแก้ไข ส่งแบบ get มี url-->
                                 <a href="?page=1_10/index_1_10&edit=<?= $per['id']; ?>" class="btn btn-primary">
@@ -207,48 +192,44 @@ if (isset($_GET['upload'])) {
                                     <div class="icon"></div>
                                     <i class="bi bi-trash"></i>&nbsp;
                                     <div class="label">ลบ</div>
+                                </a>
+                            </td>
+                        <?php } else { ?>
+                            <td>
+                                <a style="white-space: nowrap;" href="?page=1_10/index_1_10&upload=<?= $per['id']; ?>" class="btn btn-warning">
+                                    <div class="icon d-flex">
+                                        <i class="bi bi-upload"></i>&nbsp;
+                                        <div class="label">อัปโหลด</div>
+                                    </div>
+                                </a>
+                            </td>
+                            <td class="d-flex justify-content-center">
+                                <!-- ปุ่มแก้ไข ส่งแบบ get มี url-->
+                                <a href="?page=1_10/index_1_10&edit=<?= $per['id']; ?>" class="btn btn-primary">
+                                    <div class="icon d-flex">
+                                        <i class="bi bi-pencil-square"></i>&nbsp;
+                                        <div class="label">แก้ไข</div>
+                                    </div>
+                                </a>&nbsp; <!--ปุ่มลบ -->
+                                <a onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่?'); " href="?page=1_10/index_1_10&delete=<?= $per['id'] ?>" class="btn btn-danger">
+                                    <div class="icon d-flex">
+                                        <i class="bi bi-trash"></i>&nbsp;
+                                        <div class="label">ลบ</div>
+                                    </div>
+                                </a>
+                            </td>
+                        <?php } ?>
+                    </tr>
+            <?php } } ?>
+            <tr>
+                <th scope="row" colspan="5">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+                <td><?= number_format($totalAmountWork, 2); ?></td>
+                <td colspan="3"></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
-</a>
-</td>
-<?php } else { ?>
-    <td>
-        <a style="white-space: nowrap;" href="?page=1_10/index_1_10&upload=<?= $per['id']; ?>" class="btn btn-warning">
-            <div class="icon d-flex">
-                <i class="bi bi-upload"></i>&nbsp;
-                <div class="label">อัปโหลด</div>
-            </div>
-        </a>
-    </td>
-
-    <td class="d-flex justify-content-center">
-        <!-- ปุ่มแก้ไข ส่งแบบ get มี url-->
-        <a href="?page=1_10/index_1_10&edit=<?= $per['id']; ?>" class="btn btn-primary">
-            <div class="icon d-flex">
-                <i class="bi bi-pencil-square"></i>&nbsp;
-                <div class="label">แก้ไข</div>
-            </div>
-        </a>&nbsp; <!--ปุ่มลบ -->
-        <a onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่?'); " href="?page=1_10/index_1_10&delete=<?= $per['id'] ?>" class="btn btn-danger">
-            <div class="icon d-flex">
-                <i class="bi bi-trash"></i>&nbsp;
-                <div class="label">ลบ</div>
-            </div>
-        </a>
-    </td>
-<?php } ?>
-</tr>
-<?php
-                }
-            }
-?>
-<tr>
-    <th scope="row" colspan="5">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-    <td><?= number_format($totalAmountWork, 2); ?></td>
-    <td colspan="3"></td>
-</tr>
-</tbody>
 <div class="modal fade" id="ExtralargeModal" tabindex="-1">
-
     <!-- หน้าเพิ่มข้อมูล -->
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -261,7 +242,6 @@ if (isset($_GET['upload'])) {
                     <input type="hidden" class="form-control" name="userId" value="<?= $userId ?>">
                     <input type="hidden" class="form-control" name="term" value="<?= $term_year['term']; ?>">
                     <input type="hidden" class="form-control" name="year" value="<?= $term_year['year']; ?>">
-
                     <div class="mb-3">
                         <label for="date" class="col-sm-2 col-form-label">วัน/เดือน/ปี</label>
                         <input type="date" class="form-control" name="date" required>
@@ -310,8 +290,6 @@ if (isset($_GET['upload'])) {
         </div>
     </div>
 </div>
-
-
 <!-- แก้ไขข้อมูล -->
 <div class="modal fade" id="modal" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -363,13 +341,11 @@ if (isset($_GET['upload'])) {
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
                         <button type="update" name="update" class="btn btn-primary">บันทึก</button>
                     </div>
+                </form>
             </div>
-            </form>
         </div>
     </div>
 </div>
-</div>
-
 <!-- อัพโหลดไฟล์ -->
 <div class="modal fade" id="uploadModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -379,7 +355,6 @@ if (isset($_GET['upload'])) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
                 <form action="1_10/upload_1_10.php" method="post" enctype="multipart/form-data">
                     <div class="row mb-3">
                         <label for="file" class="col-sm-2 col-form-label">อัปโหลดไฟล์</label>
@@ -388,7 +363,6 @@ if (isset($_GET['upload'])) {
                             <br>
                             <img width=100% id="previewFile" alt="">
                         </div>
-
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
                             <button type="upload" name="upload" class="btn btn-primary">บันทึก</button>
@@ -399,9 +373,6 @@ if (isset($_GET['upload'])) {
         </div>
     </div>
 </div>
-</table>
-</div>
-
 <!-- เรียกใช้ไลบรารี jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -418,16 +389,13 @@ if (isset($_GET['upload'])) {
             window.location.href = 'index.php?page=1_10/index_1_10'; // เปลี่ยนเส้นทาง URL เพื่อเปลี่ยนหน้าเว็บไปที่ 'index.php?page=_1_10'
         });
     });
-
     // เมื่อเอกสารโหลดเสร็จแล้ว
-
     let fileInput = document.getElementById('fileInput'); //ใช้ getElementById() เพื่อเข้าถึงองค์ประกอบที่มี id เป็น 'fileInput'
     let previewFile = document.getElementById('previewFile'); //ใช้ getElementById() เพื่อเข้าถึงองค์ประกอบที่มี id เป็น 'previewFile'
 
     function calc1() {
         var position = document.getElementById('position1').value;
         var type_work = document.getElementById('type_work1').value;
-
 
         if (type_work == 'งานต่อเนื่อง') {
             if (position == 'ประธาน') {
@@ -506,7 +474,6 @@ if (isset($_GET['upload'])) {
     function calc2() {
         var position = document.getElementById('position2').value;
         var type_work = document.getElementById('type_work2').value;
-
 
         if (type_work == 'งานต่อเนื่อง') {
             if (position == 'ประธาน') {

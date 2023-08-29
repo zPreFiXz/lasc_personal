@@ -23,51 +23,47 @@
         </thead>
         <tbody>
             <?php
-            $stmt = $conn->query("SELECT*FROM personal_1_6_b WHERE userId = '" . $_SESSION['user'] . "' AND term = '" . $_SESSION['term'] . "' AND year = '" . $_SESSION['year'] . "'"); // ดึงข้อมูลจากตาราง personal_1_6_b
-            $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
-            $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
+                $stmt = $conn->query("SELECT*FROM personal_1_6_b WHERE userId = '" . $_SESSION['user'] . "' AND term = '" . $_SESSION['term'] . "' AND year = '" . $_SESSION['year'] . "'"); // ดึงข้อมูลจากตาราง personal_1_6_b
+                $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
+                $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
 
-            $totalAmountWork = 0.00;
+                $totalAmountWork = 0.00;
 
-            // ตรวจสอบว่ามีข้อมูลหรือไม่
-            if (!$personal) { // ไม่มีข้อมูล
-                echo " <tr><td colspan='9' class='text-center'>ไม่มีข้อมูล</td></tr>";
-            } else {
-                // วนลูปแสดงข้อมูลที่ดึงมา
-                foreach ($personal as $per) {
+                // ตรวจสอบว่ามีข้อมูลหรือไม่
+                if (!$personal) { // ไม่มีข้อมูล
+                    echo " <tr><td colspan='9' class='text-center'>ไม่มีข้อมูล</td></tr>";
+                } else {
+                    // วนลูปแสดงข้อมูลที่ดึงมา
+                    foreach ($personal as $per) {
             ?>
-                    <tr> <!-- แสดงแถวของตาราง (row) โดยใช้ข้อมูลจากตัวแปร $per ในแต่ละคอลัมน์ของตาราง -->
+                        <tr> <!-- แสดงแถวของตาราง (row) โดยใช้ข้อมูลจากตัวแปร $per ในแต่ละคอลัมน์ของตาราง -->
 
-                        <td><?= $per['number']; ?></td>
-                        <td><?= $per['project']; ?></td>
-                        <td><?= $per['funding']; ?></td>
-                        <td><?= $per['start_end']; ?></td>
-                        <td style="white-space: nowrap;"><?= $per['publish']; ?></td>
-                        <td><?= $per['amount_work']; ?></td>
-                        <?php $totalAmountWork += floatval($per['amount_work']); ?>
-
-                        <?php if ($per['file']) { ?>
-                            <td style="white-space: nowrap;">
-                                <a href="<?= "uploads/" . $per['file']; ?>" target="_blank" class="btn btn-secondary">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-eye"></i>&nbsp;
-                                        <div class="label">ดูไฟล์</div>
-                                    </div>
-                                </a>
-                            </td>
-                        <?php } else { ?>
-                            <td>ไม่มีไฟล์แนบ</td>
-                        <?php } ?>
-                    </tr>
-            <?php
-                }
-            }
-            ?>
-            <tr>
-                <th scope="row" colspan="5">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-                <td><?= number_format($totalAmountWork, 2); ?></td>
-                <td colspan="2"></td>
-            </tr>
+                            <td><?= $per['number']; ?></td>
+                            <td><?= $per['project']; ?></td>
+                            <td><?= $per['funding']; ?></td>
+                            <td><?= $per['start_end']; ?></td>
+                            <td style="white-space: nowrap;"><?= $per['publish']; ?></td>
+                            <td><?= $per['amount_work']; ?></td>
+                            <?php $totalAmountWork += floatval($per['amount_work']); ?>
+                            <?php if ($per['file']) { ?>
+                                <td style="white-space: nowrap;">
+                                    <a href="<?= "uploads/" . $per['file']; ?>" target="_blank" class="btn btn-secondary">
+                                        <div class="icon d-flex">
+                                            <i class="bi bi-eye"></i>&nbsp;
+                                            <div class="label">ดูไฟล์</div>
+                                        </div>
+                                    </a>
+                                </td>
+                            <?php } else { ?>
+                                <td>ไม่มีไฟล์แนบ</td>
+                            <?php } ?>
+                        </tr>
+            <?php } } ?>
+                        <tr>
+                            <th scope="row" colspan="5">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+                            <td><?= number_format($totalAmountWork, 2); ?></td>
+                            <td colspan="2"></td>
+                        </tr>
         </tbody>
     </table>
 </div>

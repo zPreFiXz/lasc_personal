@@ -126,7 +126,16 @@
     $totalAmountWork_1_10 += floatval($per_1_10['amount_work']);
   }
 
-  $totalAmountWork = $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10;
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_11 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_11 = $stmt->fetchAll();
+
+  $totalAmountWork_1_11 = 0;
+  foreach ($personal_1_11 as $per_1_11) {
+    $totalAmountWork_1_11 += floatval($per_1_11['amount_work']);
+  }
+
+  $totalAmountWork = $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
 
   $stmt = $conn->prepare("SELECT * FROM Vadmin WHERE userId = :userId AND term = :term AND year = :year");
   $stmt->bindParam(':userId', $userId);
@@ -537,14 +546,6 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_11/index_1_11">
           <i class="bi bi-menu-button-wide"></i><span>11. ภาระงานด้านการบริหาร</span>
-        </a>
-      </li><!-- End Components Nav -->
-
-      <li class="nav-heading">ตอนที่ 2</li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php?page=2/index_2">
-          <i class="bi bi-menu-button-wide"></i><span>แบบสรุปภาระงานรายบุคคล</span>
         </a>
       </li><!-- End Components Nav -->
 

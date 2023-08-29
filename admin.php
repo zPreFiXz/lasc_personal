@@ -136,8 +136,17 @@
     foreach ($personal_1_10 as $per_1_10) {
         $totalAmountWork_1_10 += floatval($per_1_10['amount_work']);
     }
+
+    $stmt = $conn->query("SELECT amount_work FROM personal_1_11 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+    $stmt->execute();
+    $personal_1_11 = $stmt->fetchAll();
+
+    $totalAmountWork_1_11 = 0;
+    foreach ($personal_1_11 as $per_1_11) {
+        $totalAmountWork_1_11 += floatval($per_1_11['amount_work']);
+    }
     // end ดึงค่าภาระงานไปคำนวณจากตาราง
-    $totalAmountWork = $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10;
+    $totalAmountWork = $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
     
     $stmt = $conn->query("SELECT * FROM `term_year` where id = 1"); // ดึงข้อมูลจากตาราง personal โดยใช้ ID
     $stmt->execute();
@@ -363,7 +372,7 @@
                             </tr>
                             <tr>
                                 <td>11. ภาระงานด้านการบริหาร (เฉพาะผู้ที่ได้รับการแต่งตั้งให้ดำรงตำแหน่งบริหาร)</td>
-                                <td class="text-center">0.00</td>
+                                <td class="text-center"><?= number_format($totalAmountWork_1_11, 2); ?></td>
                             </tr>
                             <tr>
                                 <th class="text-center">รวมภาระงานตลอดภาคเรียน</th>

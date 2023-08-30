@@ -124,7 +124,7 @@ foreach ($personal as $per)
                     </tr>
                 <?php } else { ?>
                     <tr>
-                        <td><input class="form-check-input" type="checkbox5" id="checkbox5" onclick="sum()" name="checkbox5" value="25" checked></td>
+                        <td><input class="form-check-input" type="checkbox" id="checkbox5" onclick="sum()" name="checkbox5" value="25" checked></td>
                         <td>รองคณบดี</td>
                         <td><input type="text" class="form-control" id="scope5" name="scope5" value="<?= $per['scope5'] ?>" readonly> </td>
                         <td class="score">25</td>

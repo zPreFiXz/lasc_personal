@@ -136,7 +136,8 @@
   }
 
   $totalAmountWork = $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
-
+  $_SESSION['$totalAmountWork'] = $totalAmountWork;
+  
   $stmt = $conn->prepare("SELECT * FROM Vadmin WHERE userId = :userId AND term = :term AND year = :year");
   $stmt->bindParam(':userId', $userId);
   $stmt->bindParam(':term', $term);
@@ -169,6 +170,20 @@
     $updateStmt->bindParam(':amount_work', $totalAmountWork);
     $updateStmt->execute();
   }
+
+  $stmt = $conn->prepare("SELECT * FROM personal_3 WHERE userId = :userId AND term = :term AND year = :year");
+  $stmt->bindParam(':userId', $userId);
+  $stmt->bindParam(':term', $term);
+  $stmt->bindParam(':year', $year);
+  $stmt->execute();
+  $personal = $stmt->fetchAll();
+
+  $insertStmt = $conn->prepare("UPDATE personal_3 set amount_work = :amount_work WHERE userId = :userId and term = :term and year = :year");
+  $insertStmt->bindParam(':userId', $userId);
+  $insertStmt->bindParam(':term', $term);
+  $insertStmt->bindParam(':year', $year);
+  $insertStmt->bindParam(':amount_work', $totalAmountWork);
+  $insertStmt->execute();
 ?>
 <!DOCTYPE html>
 <html lang="en">

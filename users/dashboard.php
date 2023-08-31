@@ -7,8 +7,15 @@
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
         }
     ?>
-    <h3 class="d-inline mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] ?></h3>
-    <a href="logout.php" class="d-inline btn btn-danger">Logout</a>
+    <br>
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="pagetitle mt-3">
+            <h1 style="font-size: 30px;">ยินดีต้อนรับ, <?php echo $row['nametitle'] .  $row['firstname'] . ' ' . $row['lastname'] ?></h1>
+        </div>
+        <a href="logout.php" class="btn btn-danger">ออกจากระบบ</a>
+    </div>
+    <hr>
+    <br>
     <?php
         require_once "config/db.php";
 
@@ -143,7 +150,7 @@
         $totalAmountWork = $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
     ?>
     <div class="container">
-        <div class="pagetitle mt-3">
+        <div class="pagetitle">
             <h1>ตอนที่ 2 : แบบสรุปภาระงานรายบุคคล</h1>
         </div>
         <table class="table table-bordered mt-3">

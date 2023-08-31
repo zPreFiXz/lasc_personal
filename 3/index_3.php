@@ -42,10 +42,10 @@
     foreach($personal as $per)
 ?>
 <div class="container">
-    <div class="pagetitle" style="text-align: center;">
+    <div class="pagetitle mt-3" style="text-align: center;">
         <h1>แบบประเมินผลการปฏิบัติงาน <br>สายวิชาการ</h1>
     </div>
-    <div class="card mt-5">
+    <div class="card mt-4">
         <div class="card-body mt-4 mb-4">
             <form action="3/edit_3.php" method="POST" >
                 <input type="hidden" class="form-control" name="userId" value="<?= $userId ?>">

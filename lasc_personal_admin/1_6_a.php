@@ -1,9 +1,9 @@
 <div class="container">
     <div class="pagetitle mt-3">
-        <h1>ก.การสร้างงานวิจัย</h1>
+        <h1>ก. การสร้างงานวิจัย</h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">6. ภาระงานวิจัย (งานวิจัยพื้นฐาน/งานวิจัยประยุกต์)</li>
-            <li class="breadcrumb-item active">ก.การสร้างงานวิจัย</li>
+            <li class="breadcrumb-item active">ก. การสร้างงานวิจัย</li>
         </ol>
     </div>
     <hr>

@@ -225,7 +225,8 @@
                     foreach ($current_year_term1 as $CYT1) {
             ?>
                     <tr>
-                        <td><?= $CYT1['firstname'], " ", $CYT1["lastname"] ?></td>
+                        <td><?= $CYT1['nametitle'],$CYT1['firstname'], " ", $CYT1["lastname"] ?></td>
+
                         <td><?= $CYT1['amount_work'] ?></td>
                         <td>
                             <a href="?page=admin&userId=<?= $CYT1['userId']; ?>&term=<?= $CYT1['term'] ?>&year=<?= $CYT1['year'] ?>" class="btn btn-primary">
@@ -235,10 +236,10 @@
                             </a>
                         </td>
                         <?php
-                            foreach ($Current_Year_term2 as $CYT2) {
-                                $found = false;
-                                if ($CYT2['firstname'] == $CYT1['firstname'] && $CYT2['lastname'] == $CYT1['lastname']) {
-                                    $found = true;
+                        foreach ($Current_Year_term2 as $CYT2) {
+                            $found = false;
+                            if ($CYT2['nametitle'] == $CYT1['nametitle'] && $CYT2['firstname'] == $CYT1['firstname'] && $CYT2['lastname'] == $CYT1['lastname']) {
+                                $found = true;
                         ?>
                                 <td><?= $CYT2['amount_work'] ?></td>
                                 <td>
@@ -258,10 +259,10 @@
                             $found = false;
                         ?>
                         <?php
-                            foreach ($last_year_term1 as $LYT1) {
-                                $found = false;
-                                if ($LYT1['firstname'] == $CYT1['firstname'] && $LYT1['lastname'] == $CYT1['lastname']) {
-                                    $found = true;
+                        foreach ($last_year_term1 as $LYT1) {
+                            $found = false;
+                            if ($LYT1['nametitle'] == $CYT1['nametitle'] && $LYT1['firstname'] == $CYT1['firstname'] && $LYT1['lastname'] == $CYT1['lastname']) {
+                                $found = true;
                         ?>
                                     <td><?= $LYT1['amount_work'] ?></td>
                                     <td>
@@ -281,10 +282,10 @@
                             $found = false;
                         ?>
                         <?php
-                            foreach ($last_year_term2 as $LYT2) {
-                                $found = false;
-                                if ($LYT2['firstname'] == $CYT1['firstname'] && $LYT2['lastname'] == $CYT1['lastname']) {
-                                    $found = true;
+                        foreach ($last_year_term2 as $LYT2) {
+                            $found = false;
+                            if ($LYT2['nametitle'] == $CYT1['nametitle'] && $LYT2['firstname'] == $CYT1['firstname'] && $LYT2['lastname'] == $CYT1['lastname']) {
+                                $found = true;
                         ?>
                                     <td><?= $LYT2['amount_work'] ?></td>
                                     <td>
@@ -446,9 +447,12 @@
                             <?php
                                 foreach ($ranks as $rank) {
                             ?>
-                                    <td class="text-center"><?php echo $rating; ?></td>
-                                    <td class="text-center"><?= $rank['firstname'] . " " . $rank['lastname'] ?></td>
-                                    <td class="text-center"><?= $rank['amount_work'] ?></td>
+                                <td class="text-center">
+                                    <?php echo $rating; ?>
+                                </td>
+                                <td class="text-center"><?= $rank['nametitle'].$rank['firstname'] . " " . $rank['lastname'] ?></td>
+                                <td class="text-center"><?= $rank['amount_work'] ?></td>
+
                         </tr>
                             <?php $rating = $rating + 1; } ?>
                     </tbody>

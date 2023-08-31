@@ -68,8 +68,12 @@
                         <td class="score">40</td>
                     </tr>
                 <?php } ?>
+<<<<<<< Updated upstream
                 <?php if ($per['checkbox3'] == 0) {
                 ?>
+=======
+                <?php if ($per['checkbox3'] == 0) { ?>
+>>>>>>> Stashed changes
                     <tr>
                         <td><input class="form-check-input" type="checkbox" id="checkbox3" onclick="sum()" name="checkbox3" value="30"></td>
                         <td>คณบดี</td>
@@ -83,7 +87,10 @@
                         <td><input type="text" class="form-control" id="scope3" name="scope3" value="<?= $per['scope3'] ?>" readonly> </td>
                         <td class="score">30</td>
                     </tr>
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
                 <?php } ?>
                 <?php if ($per['checkbox4'] == 0) { ?>
                     <tr>
@@ -263,6 +270,7 @@
 <script>
     function sum() {
         var totalScore = 0;
+
         for (var i = 1; i <= 14; i++) {
             var checkbox = document.getElementById("checkbox" + i);
             var scopeInput = document.getElementById("scope" + i);
@@ -271,18 +279,23 @@
                 totalScore += parseInt(checkbox.value);
             }
         }
+
         document.getElementById("amount_work").value = totalScore;
+        
         var resultElement = document.getElementById("result");
         resultElement.textContent = totalScore;
     }
 
     function checkbox_dissabled() {
-        
         for (var i = 1; i <= 14; i++) {
             document.getElementById("checkbox" + i).disabled = true;
         }
     }
+<<<<<<< Updated upstream
     
+=======
+
+>>>>>>> Stashed changes
     sum();
     checkbox_dissabled();
 </script>

@@ -35,7 +35,11 @@
     <div class="pagetitle mt-3">
         <h1>11. ภาระงานด้านการบริหาร (เฉพาะผู้ได้รับการแต่งตั้งให้ดำรงตำแหน่งบริหาร)</h1>
     </div>
+    <hr>
     <form action="1_11/edit_1_11.php" method="post">
+        <div class="d-flex justify-content-end mb-3">
+            <button class="btn btn-primary " type="submit">บันทึกร่าง</button>
+        </div> 
         <table class="table table-bordered text-center align-middle mt-3">
             <thead class="align-middle table-secondary">
                 <tr>
@@ -268,14 +272,12 @@
                 </tr> 
             </tbody>
         </table>
-        <div class="d-flex justify-content-end mb-3">
-            <button class="btn btn-primary " type="submit">บันทึก</button>
-        </div> 
     </form> 
 </div>
 <script>
     function sum() {
         var totalScore = 0;
+
         for (var i = 1; i <= 14; i++) {
             var checkbox = document.getElementById("checkbox" + i);
             var scopeInput = document.getElementById("scope" + i);
@@ -284,8 +286,10 @@
                 totalScore += parseInt(checkbox.value);
             }
         }
+
         document.getElementById("amount_work").value = totalScore;
         console.log(totalScore);
+
         var resultElement = document.getElementById("result");
         resultElement.textContent = totalScore;
     }

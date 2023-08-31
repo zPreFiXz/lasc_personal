@@ -232,6 +232,8 @@
                 <td colspan="2"></td>
             </tr>
         </tbody>
+    </table>
+</div>
         <div class="modal fade" id="ExtralargeModal" tabindex="-1">
             <!-- หน้าเพิ่มข้อมูล -->
             <div class="modal-dialog modal-lg">
@@ -283,8 +285,7 @@
                 </div>
             </div>
         </div>
-    </table>
-</div>
+
 <!-- แก้ไขข้อมูล -->
 <div class="modal fade" id="modal" tabindex="-1">
     <div class="modal-dialog modal-lg">

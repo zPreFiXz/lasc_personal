@@ -2,8 +2,6 @@
     session_start();
     require_once '../config/db.php';
 
-    
-
     if (isset($_POST['upload'])){
         $userId = $_SESSION['userId'];
         $term = $_POST['term'];

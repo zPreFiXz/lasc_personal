@@ -134,12 +134,7 @@ if (!isset($_SESSION['adminId'])) {
   <script src="assets/js/main.js"></script>
 
 </body>
-<<<<<<< Updated upstream
 <?php 
   $conn = null;
 ?>
 </html>
-=======
-
-</html>
->>>>>>> Stashed changes

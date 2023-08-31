@@ -1,11 +1,11 @@
 <?php
-  session_start();
-  require_once 'config/db.php';
+session_start();
+require_once 'config/db.php';
 
-  if (!isset($_SESSION['adminId'])) {
-      $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
-      header('location: signin.php');
-  }
+if (!isset($_SESSION['adminId'])) {
+  $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
+  header('location: signin.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -15,12 +15,12 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>admin - NiceAdmin Bootstrap Template</title>
+  <title>LASC SSKRU</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/logo_lasc.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -46,9 +46,9 @@
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
-  <div class="d-flex align-items-center justify-content-between">
-      <a class="logo d-flex align-items-center" >
-        <img width='35px' height='35px' src="assets/img/logo_lasc.png" alt="โลโก้คณะ">
+    <div class="d-flex align-items-center justify-content-between">
+      <a class="logo d-flex align-items-center">
+        <img src="assets/img/logo_lasc1.png" alt="โลโก้คณะ">
         <span class="d-none d-lg-block" style="color: #ffc107;">LASC SSKRU</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -102,7 +102,7 @@
       <li class="nav-item">
         <a class="nav-link " href="index_admin.php?page=admin">
           <i class="bi bi-grid"></i>
-          <span >Dashboard</span>
+          <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
     </ul>
@@ -113,9 +113,9 @@
     <br>
     <br>
     <?php
-      $page = $_GET['page'];
-      include $page.('.php');
-     ?> 
+    $page = $_GET['page'];
+    include $page . ('.php');
+    ?>
   </main>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -134,7 +134,12 @@
   <script src="assets/js/main.js"></script>
 
 </body>
+<<<<<<< Updated upstream
 <?php 
   $conn = null;
 ?>
 </html>
+=======
+
+</html>
+>>>>>>> Stashed changes

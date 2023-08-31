@@ -189,7 +189,7 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-end">
-                    <button type="submit" name="update" class="btn btn-primary">บันทึกร่าง</button>
+                    <button type="submit" name="update" class="btn btn-primary"><i class="bi bi-pencil-square">&nbsp;&nbsp;</i>บันทึกร่าง</button>
                 </div>
             </form>
         </div>

@@ -12,7 +12,7 @@
         <div class="pagetitle mt-3">
             <h1 style="font-size: 30px;">ยินดีต้อนรับ, <?=$row['nametitle'] .  $row['firstname'] . ' ' . $row['lastname'] ?></h1>
         </div>
-        <a href="logout.php" class="btn btn-danger">ออกจากระบบ</a>
+        <a href="logout.php" class="btn btn-danger d-flex align-items-center"><i class="ri-logout-box-line"></i> &nbsp;&nbsp;ออกจากระบบ</a>
     </div>
     <hr>
     <br>

@@ -7,7 +7,9 @@
     if (isset($_POST['upload'])){
         $id = $_SESSION['upload'];
         $file = $_FILES['file'];
-    
+        $term = $_POST['term'];
+        $year = $_POST['year'];
+        
         $allow = array('jpg', 'jpeg', 'png' , 'pdf','ppt','docx');
         $extension = explode('.', $file['name']);
         $fileActExt = strtolower(end($extension));
@@ -19,11 +21,13 @@
             if ($file['size'] > 0 && $file['error'] == 0) {
                 move_uploaded_file($file['tmp_name'], $filePath);
     
-                $sql = "UPDATE personal_1_1 SET file = :file WHERE id = :id";
+                $sql = "UPDATE personal_1_1_file SET file = :file, term = :term, year = :year WHERE id = :id";
     
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':id', $id);
                 $stmt->bindParam(':file', $fileNew);
+                $stmt->bindParam(':term', $term);
+                $stmt->bindParam(':year', $year);
                 $stmt->execute();
                 unset($_SESSION['upload']);
                 $conn = null;

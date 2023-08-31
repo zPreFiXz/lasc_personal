@@ -23,6 +23,12 @@
         $delete_file = $conn->prepare("UPDATE personal_1_2_a SET file = '' WHERE id = :delete_file_id");
         $delete_file->bindParam(':delete_file_id', $delete_file_id);
         $delete_file->execute();
+
+        if ($delete_file) {
+            $_SESSION['success'] = "ไฟล์ถูกลบสำเร็จ";
+            echo "<script>window.location.href = 'index.php?page=1_2_a/index_1_2_a';</script>";
+            exit;
+        }
     }
 
     if (isset($_GET['delete'])) {

@@ -38,7 +38,7 @@
     <hr>
     <form action="1_11/edit_1_11.php" method="post">
         <div class="d-flex justify-content-end mb-3">
-            <button class="btn btn-primary " type="submit">บันทึกร่าง</button>
+        <button type="submit" name="update" class="btn btn-primary"><i class="bi bi-pencil-square">&nbsp;&nbsp;</i>บันทึกร่าง</button>
         </div> 
         <table class="table table-bordered text-center align-middle mt-3">
             <thead class="align-middle table-secondary">

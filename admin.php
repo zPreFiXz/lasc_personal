@@ -1,204 +1,209 @@
 <?php
-    require "config/db.php";
+require "config/db.php";
 
-    $userId = "";
-    $term = "";
-    $year = "";
-    $rating = 1;
-    $found = false;
+$userId = "";
+$term = "";
+$year = "";
+$rating = 1;
+$found = false;
 
-    if (isset($_GET['userId'])) {
-        $userId = $_GET['userId'];
-        $term = $_GET['term'];
-        $year = $_GET['year'];
+if (isset($_GET['userId'])) {
+    $userId = $_GET['userId'];
+    $term = $_GET['term'];
+    $year = $_GET['year'];
 ?>
-        <!-- เรียก modal #details -->
-        <script>
-            // ถูกเรียกใช้เมื่อหน้าเว็บโหลดเสร็จสมบูรณ์ 
-            document.addEventListener("DOMContentLoaded", function() {
-                // สร้างอ็อบเจกต์ Modal
-                var modal = new bootstrap.Modal(document.getElementById("details"));
-                // แสดงหน้าต่าง Modal
-                modal.show();
-            });
-        </script>
+    <!-- เรียก modal #details -->
+    <script>
+        // ถูกเรียกใช้เมื่อหน้าเว็บโหลดเสร็จสมบูรณ์ 
+        document.addEventListener("DOMContentLoaded", function() {
+            // สร้างอ็อบเจกต์ Modal
+            var modal = new bootstrap.Modal(document.getElementById("details"));
+            // แสดงหน้าต่าง Modal
+            modal.show();
+        });
+    </script>
     <!-- end เรียก modal #details     -->
 <?php } ?>
 <?php
-    // ดึงค่าภาระงานไปคำนวณจากตาราง
-    $stmt = $conn->query("SELECT amount_work FROM personal_1_1 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+// ดึงค่าภาระงานไปคำนวณจากตาราง
+$stmt = $conn->query("SELECT amount_work FROM personal_1_1 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+$stmt->execute();
+$personal_1_1 = $stmt->fetchAll();
+
+$totalAmountWork_1_1 = 0;
+foreach ($personal_1_1 as $per_1_1) {
+    $totalAmountWork_1_1 += floatval($per_1_1['amount_work']);
+}
+
+$stmt = $conn->query("SELECT amount_work FROM personal_1_2_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+$stmt->execute();
+$personal_1_2_a = $stmt->fetchAll();
+
+$totalAmountWork_1_2_a = 0;
+foreach ($personal_1_2_a as $per_1_2_a) {
+    $totalAmountWork_1_2_a += floatval($per_1_2_a['amount_work']);
+}
+
+$stmt = $conn->query("SELECT amount_work FROM personal_1_2_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+$stmt->execute();
+$personal_1_2_b = $stmt->fetchAll();
+
+$totalAmountWork_1_2_b = 0;
+foreach ($personal_1_2_b as $per_1_2_b) {
+    $totalAmountWork_1_2_b += floatval($per_1_2_b['amount_work']);
+}
+$totalAmountWork_1_2 = $totalAmountWork_1_2_a + $totalAmountWork_1_2_b;
+
+$stmt = $conn->query("SELECT amount_work FROM personal_1_3 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+$stmt->execute();
+$personal_1_3 = $stmt->fetchAll();
+
+$totalAmountWork_1_3 = 0;
+foreach ($personal_1_3 as $per_1_3) {
+    $totalAmountWork_1_3 += floatval($per_1_3['amount_work']);
+}
+
+$stmt = $conn->query("SELECT amount_work FROM personal_1_4 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+$stmt->execute();
+$personal_1_4 = $stmt->fetchAll();
+
+$totalAmountWork_1_4 = 0;
+foreach ($personal_1_4 as $per_1_4) {
+    $totalAmountWork_1_4 += floatval($per_1_4['amount_work']);
+}
+
+$stmt = $conn->query("SELECT amount_work FROM personal_1_5_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+$stmt->execute();
+$personal_1_5_a = $stmt->fetchAll();
+
+$totalAmountWork_1_5_a = 0;
+foreach ($personal_1_5_a as $per_1_5_a) {
+    $totalAmountWork_1_5_a += floatval($per_1_5_a['amount_work']);
+}
+
+$stmt = $conn->query("SELECT amount_work FROM personal_1_5_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+$stmt->execute();
+$personal_1_5_b = $stmt->fetchAll();
+
+$totalAmountWork_1_5_b = 0;
+foreach ($personal_1_5_b as $per_1_5_b) {
+    $totalAmountWork_1_5_b += floatval($per_1_5_b['amount_work']);
+}
+$totalAmountWork_1_5 = $totalAmountWork_1_5_a + $totalAmountWork_1_5_b;
+
+$stmt = $conn->query("SELECT amount_work FROM personal_1_6_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+$stmt->execute();
+$personal_1_6_a = $stmt->fetchAll();
+
+$totalAmountWork_1_6_a = 0;
+foreach ($personal_1_6_a as $per_1_6_a) {
+    $totalAmountWork_1_6_a += floatval($per_1_6_a['amount_work']);
+}
+
+$stmt = $conn->query("SELECT amount_work FROM personal_1_6_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+$stmt->execute();
+$personal_1_6_b = $stmt->fetchAll();
+
+$totalAmountWork_1_6_b = 0;
+foreach ($personal_1_6_b as $per_1_6_b) {
+    $totalAmountWork_1_6_b += floatval($per_1_6_b['amount_work']);
+}
+$totalAmountWork_1_6 = $totalAmountWork_1_6_a + $totalAmountWork_1_6_b;
+
+$stmt = $conn->query("SELECT amount_work FROM personal_1_7 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+$stmt->execute();
+$personal_1_7 = $stmt->fetchAll();
+
+$totalAmountWork_1_7 = 0;
+foreach ($personal_1_7 as $per_1_7) {
+    $totalAmountWork_1_7 += floatval($per_1_7['amount_work']);
+}
+
+$stmt = $conn->query("SELECT amount_work FROM personal_1_8 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+$stmt->execute();
+$personal_1_8 = $stmt->fetchAll();
+
+$totalAmountWork_1_8 = 0;
+foreach ($personal_1_8 as $per_1_8) {
+    $totalAmountWork_1_8 += floatval($per_1_8['amount_work']);
+}
+
+$stmt = $conn->query("SELECT amount_work FROM personal_1_9 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+$stmt->execute();
+$personal_1_9 = $stmt->fetchAll();
+
+$totalAmountWork_1_9 = 0;
+foreach ($personal_1_9 as $per_1_9) {
+    $totalAmountWork_1_9 += floatval($per_1_9['amount_work']);
+}
+
+$stmt = $conn->query("SELECT amount_work FROM personal_1_10 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+$stmt->execute();
+$personal_1_10 = $stmt->fetchAll();
+
+$totalAmountWork_1_10 = 0;
+foreach ($personal_1_10 as $per_1_10) {
+    $totalAmountWork_1_10 += floatval($per_1_10['amount_work']);
+}
+
+$stmt = $conn->query("SELECT amount_work FROM personal_1_11 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+$stmt->execute();
+$personal_1_11 = $stmt->fetchAll();
+
+$totalAmountWork_1_11 = 0;
+foreach ($personal_1_11 as $per_1_11) {
+    $totalAmountWork_1_11 += floatval($per_1_11['amount_work']);
+}
+// end ดึงค่าภาระงานไปคำนวณจากตาราง
+$totalAmountWork = $totalAmountWork_1_1 + $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
+
+$stmt = $conn->query("SELECT * FROM `term_year` where id = 1"); // ดึงข้อมูลจากตาราง personal โดยใช้ ID
+$stmt->execute();
+$term_year = $stmt->fetch();
+$year = date("Y") + 543;
+// จัดดับ
+$Current_Year = $term_year['year'];
+$Current_Term = $term_year['term'];
+$stmt = $conn->query("SELECT * FROM vadmin WHERE `year` = '$Current_Year' AND term = '$Current_Term' ORDER BY amount_work DESC");
+$stmt->execute();
+$ranks = $stmt->fetchAll();
+// end จัดอันดับ
+
+if (isset($_SESSION['adminId'])) {
+    $userId = $_SESSION['adminId'];
+    $stmt = $conn->query("SELECT * FROM users WHERE firstname = '$userId'");
     $stmt->execute();
-    $personal_1_1 = $stmt->fetchAll();
-
-    $totalAmountWork_1_1 = 0;
-    foreach ($personal_1_1 as $per_1_1) {
-        $totalAmountWork_1_1 += floatval($per_1_1['amount_work']);
-    }
-
-    $stmt = $conn->query("SELECT amount_work FROM personal_1_2_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-    $stmt->execute();
-    $personal_1_2_a = $stmt->fetchAll();
-
-    $totalAmountWork_1_2_a = 0;
-    foreach ($personal_1_2_a as $per_1_2_a) {
-        $totalAmountWork_1_2_a += floatval($per_1_2_a['amount_work']);
-    }
-
-    $stmt = $conn->query("SELECT amount_work FROM personal_1_2_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-    $stmt->execute();
-    $personal_1_2_b = $stmt->fetchAll();
-
-    $totalAmountWork_1_2_b = 0;
-    foreach ($personal_1_2_b as $per_1_2_b) {
-        $totalAmountWork_1_2_b += floatval($per_1_2_b['amount_work']);
-    }
-    $totalAmountWork_1_2 = $totalAmountWork_1_2_a + $totalAmountWork_1_2_b;
-
-    $stmt = $conn->query("SELECT amount_work FROM personal_1_3 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-    $stmt->execute();
-    $personal_1_3 = $stmt->fetchAll();
-
-    $totalAmountWork_1_3 = 0;
-    foreach ($personal_1_3 as $per_1_3) {
-        $totalAmountWork_1_3 += floatval($per_1_3['amount_work']);
-    }
-
-    $stmt = $conn->query("SELECT amount_work FROM personal_1_4 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-    $stmt->execute();
-    $personal_1_4 = $stmt->fetchAll();
-
-    $totalAmountWork_1_4 = 0;
-    foreach ($personal_1_4 as $per_1_4) {
-        $totalAmountWork_1_4 += floatval($per_1_4['amount_work']);
-    }
-
-    $stmt = $conn->query("SELECT amount_work FROM personal_1_5_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-    $stmt->execute();
-    $personal_1_5_a = $stmt->fetchAll();
-
-    $totalAmountWork_1_5_a = 0;
-    foreach ($personal_1_5_a as $per_1_5_a) {
-        $totalAmountWork_1_5_a += floatval($per_1_5_a['amount_work']);
-    }
-
-    $stmt = $conn->query("SELECT amount_work FROM personal_1_5_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-    $stmt->execute();
-    $personal_1_5_b = $stmt->fetchAll();
-
-    $totalAmountWork_1_5_b = 0;
-    foreach ($personal_1_5_b as $per_1_5_b) {
-        $totalAmountWork_1_5_b += floatval($per_1_5_b['amount_work']);
-    }
-    $totalAmountWork_1_5 = $totalAmountWork_1_5_a + $totalAmountWork_1_5_b;
-
-    $stmt = $conn->query("SELECT amount_work FROM personal_1_6_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-    $stmt->execute();
-    $personal_1_6_a = $stmt->fetchAll();
-
-    $totalAmountWork_1_6_a = 0;
-    foreach ($personal_1_6_a as $per_1_6_a) {
-        $totalAmountWork_1_6_a += floatval($per_1_6_a['amount_work']);
-    }
-
-    $stmt = $conn->query("SELECT amount_work FROM personal_1_6_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-    $stmt->execute();
-    $personal_1_6_b = $stmt->fetchAll();
-
-    $totalAmountWork_1_6_b = 0;
-    foreach ($personal_1_6_b as $per_1_6_b) {
-        $totalAmountWork_1_6_b += floatval($per_1_6_b['amount_work']);
-    }
-    $totalAmountWork_1_6 = $totalAmountWork_1_6_a + $totalAmountWork_1_6_b;
-
-    $stmt = $conn->query("SELECT amount_work FROM personal_1_7 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-    $stmt->execute();
-    $personal_1_7 = $stmt->fetchAll();
-
-    $totalAmountWork_1_7 = 0;
-    foreach ($personal_1_7 as $per_1_7) {
-        $totalAmountWork_1_7 += floatval($per_1_7['amount_work']);
-    }
-
-    $stmt = $conn->query("SELECT amount_work FROM personal_1_8 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-    $stmt->execute();
-    $personal_1_8 = $stmt->fetchAll();
-
-    $totalAmountWork_1_8 = 0;
-    foreach ($personal_1_8 as $per_1_8) {
-        $totalAmountWork_1_8 += floatval($per_1_8['amount_work']);
-    }
-
-    $stmt = $conn->query("SELECT amount_work FROM personal_1_9 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-    $stmt->execute();
-    $personal_1_9 = $stmt->fetchAll();
-
-    $totalAmountWork_1_9 = 0;
-    foreach ($personal_1_9 as $per_1_9) {
-        $totalAmountWork_1_9 += floatval($per_1_9['amount_work']);
-    }
-
-    $stmt = $conn->query("SELECT amount_work FROM personal_1_10 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-    $stmt->execute();
-    $personal_1_10 = $stmt->fetchAll();
-
-    $totalAmountWork_1_10 = 0;
-    foreach ($personal_1_10 as $per_1_10) {
-        $totalAmountWork_1_10 += floatval($per_1_10['amount_work']);
-    }
-
-    $stmt = $conn->query("SELECT amount_work FROM personal_1_11 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-    $stmt->execute();
-    $personal_1_11 = $stmt->fetchAll();
-
-    $totalAmountWork_1_11 = 0;
-    foreach ($personal_1_11 as $per_1_11) {
-        $totalAmountWork_1_11 += floatval($per_1_11['amount_work']);
-    }
-    // end ดึงค่าภาระงานไปคำนวณจากตาราง
-    $totalAmountWork = $totalAmountWork_1_1 + $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
-    
-    $stmt = $conn->query("SELECT * FROM `term_year` where id = 1"); // ดึงข้อมูลจากตาราง personal โดยใช้ ID
-    $stmt->execute();
-    $term_year = $stmt->fetch();
-    $year = date("Y") + 543;
-    // จัดดับ
-    $Current_Year = $term_year['year'];
-    $Current_Term = $term_year['term'];
-    $stmt = $conn->query("SELECT * FROM vadmin WHERE `year` = '$Current_Year' AND term = '$Current_Term' ORDER BY amount_work DESC");
-    $stmt->execute();
-    $ranks = $stmt->fetchAll();
-    // end จัดอันดับ
-
-    if (isset($_SESSION['adminId'])) {
-        $userId = $_SESSION['adminId'];
-        $stmt = $conn->query("SELECT * FROM users WHERE firstname = '$userId'");
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+}
 ?>
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <div class="pagetitle mt-3">
             <h1 style="font-size: 30px;">ยินดีต้อนรับ, <?php echo $row['nametitle'] .  $row['firstname'] . ' ' . $row['lastname'] ?></h1>
         </div>
-        <a href="logout.php" class="btn btn-danger">ออกจากระบบ</a>
+        <div class="icon d-flex align-items-center">
+            <a href="logout.php" class="btn btn-danger d-flex align-items-center"><i class="ri-logout-box-line"></i> &nbsp;ออกจากระบบ</a>
+        </div>
+        
     </div>
     <hr> <!-- เส้น -->
-    <div class="d-inline justify-content-end">
-        <button class="btn btn-success mb-3" type="button" data-bs-toggle="modal" data-bs-target="#rank">
-            <div class="icon d-flex">
-                <i class="ri-account-circle-fill"></i> &nbsp;
-                <div class="label">อันดับ</div>
-            </div>
-        </button>
-    </div>
-    <div class="d-inline justify-content-end">
-        <button class="btn btn-success mb-3" type="button" data-bs-toggle="modal" data-bs-target="#largeModal">
-            <div class="icon d-flex">
-                <i class="bi bi-arrow-repeat"></i> &nbsp;
-                <div class="label">เปลี่ยนปีการศึกษาและภาคเรียน</div>
-            </div>
-        </button>
+    <div class="d-flex justify-content-end">
+        <div class="d-inline justify-content-end">
+            <button class="btn btn-warning mb-3" type="button" data-bs-toggle="modal" data-bs-target="#rank">
+                <div class="icon d-flex">
+                    <i class="ri-account-circle-fill"></i> &nbsp;
+                    <div class="label">อันดับ</div>
+                </div>
+            </button>
+        </div> &nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="d-inline justify-content-end">
+            <button class="btn btn-success mb-3" type="button" data-bs-toggle="modal" data-bs-target="#largeModal">
+                <div class="icon d-flex">
+                    <i class="bi bi-arrow-repeat"></i> &nbsp;
+                    <div class="label">เปลี่ยนปีการศึกษาและภาคเรียน</div>
+                </div>
+            </button>
+        </div>
     </div>
     <!-- table ตารางภาระงาน -->
     <table class="table table-bordered text-center align-middle">
@@ -220,36 +225,37 @@
         </thead>
         <tbody>
             <?php
-                $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year' and term = 1");
-                $stmt->execute();
-                $current_year_term1 = $stmt->fetchAll();
+            $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year' and term = 1");
+            $stmt->execute();
+            $current_year_term1 = $stmt->fetchAll();
 
-                $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year' and term = 2");
-                $stmt->execute();
-                $Current_Year_term2 = $stmt->fetchAll();
+            $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year' and term = 2");
+            $stmt->execute();
+            $Current_Year_term2 = $stmt->fetchAll();
 
-                $year = $year - 1;
-                $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year' and term = 1");
-                $stmt->execute();
-                $last_year_term1 = $stmt->fetchAll();
+            $year = $year - 1;
+            $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year' and term = 1");
+            $stmt->execute();
+            $last_year_term1 = $stmt->fetchAll();
 
-                $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year' and term = 2");
-                $stmt->execute();
-                $last_year_term2 = $stmt->fetchAll();
+            $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year' and term = 2");
+            $stmt->execute();
+            $last_year_term2 = $stmt->fetchAll();
 
-                if (!$current_year_term1) {
-                    echo "<tr><td colspan='8' class='text-center'>ไม่มีข้อมูล</td></tr>";
-                } else {
-                    foreach ($current_year_term1 as $CYT1) {
+            if (!$current_year_term1) {
+                echo "<tr><td colspan='8' class='text-center'>ไม่มีข้อมูล</td></tr>";
+            } else {
+                foreach ($current_year_term1 as $CYT1) {
             ?>
                     <tr>
-                        <td><?= $CYT1['nametitle'],$CYT1['firstname'], " ", $CYT1["lastname"] ?></td>
+                        <td><?= $CYT1['nametitle'], $CYT1['firstname'], " ", $CYT1["lastname"] ?></td>
 
                         <td><?= $CYT1['amount_work'] ?></td>
                         <td>
                             <a href="?page=admin&userId=<?= $CYT1['userId']; ?>&term=<?= $CYT1['term'] ?>&year=<?= $CYT1['year'] ?>" class="btn btn-primary">
-                                <div class="icon d-flex">
-                                    <div class="label">รายละเอียด</div>
+                                <div class="icon d-flex align-items-center">
+                                    <i class="bx bx-search"></i> &nbsp;
+                                    <div class="label">ดูข้อมูล</div>
                                 </div>
                             </a>
                         </td>
@@ -262,19 +268,22 @@
                                 <td><?= $CYT2['amount_work'] ?></td>
                                 <td>
                                     <a href="?page=admin&userId=<?= $CYT2['userId']; ?>&term=<?= $CYT2['term'] ?>&year=<?= $CYT2['year'] ?>" class="btn btn-primary">
-                                        <div class="icon d-flex">
-                                            <div class="label">รายละเอียด</div>
+                                        <div class="icon d-flex align-items-center">
+                                            <i class="bx bx-search"></i> &nbsp;
+                                            <div class="label">ดูข้อมูล</div>
                                         </div>
                                     </a>
                                 </td>
-                        <?php break; } } ?>
+                        <?php break;
+                            }
+                        } ?>
                         <?php if (!$found) { ?>
                             <td>0</td>
                             <td>
-                                <button class="btn btn-primary">รายละเอียด</button>
+                                <button class="btn btn-primary">ดูข้อมูล</button>
                             </td>
                         <?php }
-                            $found = false;
+                        $found = false;
                         ?>
                         <?php
                         foreach ($last_year_term1 as $LYT1) {
@@ -282,22 +291,25 @@
                             if ($LYT1['nametitle'] == $CYT1['nametitle'] && $LYT1['firstname'] == $CYT1['firstname'] && $LYT1['lastname'] == $CYT1['lastname']) {
                                 $found = true;
                         ?>
-                                    <td><?= $LYT1['amount_work'] ?></td>
-                                    <td>
-                                        <a href="?page=admin&userId=<?= $LYT1['userId']; ?>&term=<?= $LYT1['term'] ?>&year=<?= $LYT1['year'] ?>" class="btn btn-primary">
-                                            <div class="icon d-flex">
-                                                <div class="label">รายละเอียด</div>
-                                            </div>
-                                        </a>
-                                    </td>
-                        <?php break; } } ?>
+                                <td><?= $LYT1['amount_work'] ?></td>
+                                <td>
+                                    <a href="?page=admin&userId=<?= $LYT1['userId']; ?>&term=<?= $LYT1['term'] ?>&year=<?= $LYT1['year'] ?>" class="btn btn-primary">
+                                        <div class="icon d-flex align-items-center">
+                                            <i class="bx bx-search"></i> &nbsp;
+                                            <div class="label">ดูข้อมูล</div>
+                                        </div>
+                                    </a>
+                                </td>
+                        <?php break;
+                            }
+                        } ?>
                         <?php if (!$found) { ?>
                             <td>0</td>
                             <td>
-                                <button class="btn btn-primary">รายละเอียด</button>
+                                <button class="btn btn-primary">ดูข้อมูล</button>
                             </td>
                         <?php }
-                            $found = false;
+                        $found = false;
                         ?>
                         <?php
                         foreach ($last_year_term2 as $LYT2) {
@@ -305,28 +317,32 @@
                             if ($LYT2['nametitle'] == $CYT1['nametitle'] && $LYT2['firstname'] == $CYT1['firstname'] && $LYT2['lastname'] == $CYT1['lastname']) {
                                 $found = true;
                         ?>
-                                    <td><?= $LYT2['amount_work'] ?></td>
-                                    <td>
-                                        <a href="?page=admin&userId=<?= $LYT2['userId']; ?>&term=<?= $LYT2['term'] ?>&year=<?= $LYT2['year'] ?>" class="btn btn-primary">
-                                            <div class="icon d-flex">
-                                                <div class="label">รายละเอียด</div>
-                                            </div>
-                                        </a>
-                                    </td>
-                        <?php break; } } ?>
-                        <?php if (!$found) { ?>
-                                <td>0</td>
+                                <td><?= $LYT2['amount_work'] ?></td>
                                 <td>
-                                    <button class="btn btn-primary">รายละเอียด</button>
+                                    <a href="?page=admin&userId=<?= $LYT2['userId']; ?>&term=<?= $LYT2['term'] ?>&year=<?= $LYT2['year'] ?>" class="btn btn-primary">
+                                        <div class="icon d-flex align-items-center">
+                                            <i class="bx bx-search"></i> &nbsp;
+                                            <div class="label">ดูข้อมูล</div>
+                                        </div>
+                                    </a>
                                 </td>
+                        <?php break;
+                            }
+                        } ?>
+                        <?php if (!$found) { ?>
+                            <td>0</td>
+                            <td>
+                                <button class="btn btn-primary">ดูข้อมูล</button>
+                            </td>
                         <?php }
-                            $found = false;
+                        $found = false;
                         ?>
                     </tr>
-            <?php } } ?>
+            <?php }
+            } ?>
         </tbody>
     </table>
-<!-- end table ตารางภาระงาน  -->
+    <!-- end table ตารางภาระงาน  -->
 </div>
 <!-- modal รายระเอียด -->
 <div class="modal fade" id="details" tabindex="-1">
@@ -405,15 +421,15 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
                 <form action="index_details_personal.php" method="post">
-                    <input type="hidden" id ="userId" name="userId" value="<?= $_GET['userId']?>">
-                    <input type="hidden" id ="term" name="term" value="<?= $_GET['term']?>">
-                    <input type="hidden" id ="year" name="year" value="<?= $_GET['year']?>">
+                    <input type="hidden" id="userId" name="userId" value="<?= $_GET['userId'] ?>">
+                    <input type="hidden" id="term" name="term" value="<?= $_GET['term'] ?>">
+                    <input type="hidden" id="year" name="year" value="<?= $_GET['year'] ?>">
                     <button class="btn btn-primary" type="submit">รายละเอียด</button>
                 </form>
             </div>
         </div>
     </div>
-<!-- end modal รายระเอียด -->   
+    <!-- end modal รายระเอียด -->
 </div>
 <!-- modal เปลี่ยนปีการศึกษาและภาคเรียน -->
 <div class="modal fade" id="largeModal" tabindex="-1">
@@ -428,7 +444,7 @@
                     <label for="year" class="col-sm-2 col-form-label">ปีการศึกษา</label>
                     <input type="text" class="form-control" name="year" value="<?php echo $term_year['year']; ?>" required>
 
-                    <label for="term" class="col-sm-2 col-form-label">ภาคการศึกษา</label>
+                    <label for="term" class="col-sm-2 col-form-label" style="white-space: nowrap;">ภาคเรียนที่</label>
                     <select type="text" class="form-select" name="term" required>
                         <option value="1" <?php if ($term_year['term'] === '1') echo 'selected' ?>>1</option>
                         <option value="2" <?php if ($term_year['term'] === '2') echo 'selected' ?>>2</option>
@@ -441,14 +457,14 @@
             </form>
         </div>
     </div>
-<!-- end modal เปลี่ยนปีการศึกษาและภาคเรียน -->    
+    <!-- end modal เปลี่ยนปีการศึกษาและภาคเรียน -->
 </div>
 <!-- modal อันดับ -->
 <div class="modal fade" id="rank" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">อันดับ ภาคการศึกษาที่ <?= $Current_Term ?> ปีการศึกษาที่ <?= $Current_Year ?></h5>
+                <h5 class="modal-title">ภาคเรียนที่ <?= $Current_Term ?> ปีการศึกษาที่ <?= $Current_Year ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -463,16 +479,17 @@
                     <tbody>
                         <tr>
                             <?php
-                                foreach ($ranks as $rank) {
+                            foreach ($ranks as $rank) {
                             ?>
                                 <td class="text-center">
                                     <?php echo $rating; ?>
                                 </td>
-                                <td class="text-center"><?= $rank['nametitle'].$rank['firstname'] . " " . $rank['lastname'] ?></td>
+                                <td class="text-center"><?= $rank['nametitle'] . $rank['firstname'] . " " . $rank['lastname'] ?></td>
                                 <td class="text-center"><?= $rank['amount_work'] ?></td>
 
                         </tr>
-                            <?php $rating = $rating + 1; } ?>
+                    <?php $rating = $rating + 1;
+                            } ?>
                     </tbody>
                 </table>
             </div>

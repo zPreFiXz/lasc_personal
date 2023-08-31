@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 28, 2023 at 05:12 PM
+-- Generation Time: Aug 31, 2023 at 07:40 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -31,22 +31,33 @@ USE `lasc_personal`;
 
 CREATE TABLE `personal_1_1` (
   `userId` varchar(50) NOT NULL,
-  `id` int(10) NOT NULL,
+  `id` int(20) NOT NULL,
+  `term` int(1) NOT NULL,
+  `year` int(4) NOT NULL,
   `code_course` varchar(50) NOT NULL,
   `name_course` varchar(50) NOT NULL,
-  `amount_credit` int(10) NOT NULL,
-  `describe` int(10) NOT NULL,
-  `practice` int(10) NOT NULL,
+  `unit` varchar(50) NOT NULL,
+  `prepare_theory` varchar(50) NOT NULL,
+  `hour_lecture` varchar(50) NOT NULL,
+  `check_work1` varchar(50) NOT NULL,
+  `prepare_practice` varchar(50) NOT NULL,
+  `hour_practice` varchar(50) NOT NULL,
+  `check_work2` varchar(50) NOT NULL,
   `practice_subject` varchar(50) NOT NULL,
-  `research` varchar(50) NOT NULL,
   `level` varchar(50) NOT NULL,
-  `group_study` int(20) NOT NULL,
-  `amount_student` int(20) NOT NULL,
-  `proportion` int(10) NOT NULL,
-  `amount_time` int(10) NOT NULL,
+  `group_study` int(5) NOT NULL,
+  `amount_student` int(5) NOT NULL,
+  `proportion` int(5) NOT NULL,
   `amount_work` float NOT NULL,
   `file` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `personal_1_1`
+--
+
+INSERT INTO `personal_1_1` (`userId`, `id`, `term`, `year`, `code_course`, `name_course`, `unit`, `prepare_theory`, `hour_lecture`, `check_work1`, `prepare_practice`, `hour_practice`, `check_work2`, `practice_subject`, `level`, `group_study`, `amount_student`, `proportion`, `amount_work`, `file`) VALUES
+('ภาคภูมิ', 11, 1, 2566, 'sfef', 'f3rf', '3(3-0-6)', '3', '3', '3', '-', '-', '-', 'ทั่วไป', '2', 1, 50, 100, 9.75, '');
 
 -- --------------------------------------------------------
 
@@ -87,6 +98,15 @@ CREATE TABLE `personal_1_2_b` (
   `amount_work` float NOT NULL,
   `file` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `personal_1_2_b`
+--
+
+INSERT INTO `personal_1_2_b` (`userId`, `id`, `term`, `year`, `club`, `level`, `amount_student`, `group_study`, `amount_time`, `amount_work`, `file`) VALUES
+('ภาคภูมิ', 10, 1, 2566, 'คนสร้างฝัน', '2', 40, 1, 10, 2, ''),
+('ภาคภูมิ', 11, 1, 2566, 'ครูอาสา', '2', 12, 3, 8, 2, ''),
+('ภาคภูมิ', 12, 1, 2566, 'ครูอาสา', 'asd', 18, 3, 10, 2, '');
 
 -- --------------------------------------------------------
 
@@ -301,12 +321,46 @@ CREATE TABLE `personal_1_10` (
 
 CREATE TABLE `personal_1_11` (
   `userId` varchar(50) NOT NULL,
-  `id` int(50) NOT NULL,
+  `id` int(20) NOT NULL,
   `term` int(1) NOT NULL,
   `year` int(4) NOT NULL,
-  `checkbox` varchar(50) NOT NULL,
-  `scope` varchar(50) NOT NULL
+  `checkbox1` int(5) NOT NULL,
+  `checkbox2` int(5) NOT NULL,
+  `checkbox3` int(5) NOT NULL,
+  `checkbox4` int(5) NOT NULL,
+  `checkbox5` int(5) NOT NULL,
+  `checkbox6` int(5) NOT NULL,
+  `checkbox7` int(5) NOT NULL,
+  `checkbox8` int(5) NOT NULL,
+  `checkbox9` int(5) NOT NULL,
+  `checkbox10` int(5) NOT NULL,
+  `checkbox11` int(5) NOT NULL,
+  `checkbox12` int(5) NOT NULL,
+  `checkbox13` int(5) NOT NULL,
+  `checkbox14` int(5) NOT NULL,
+  `scope1` varchar(100) NOT NULL,
+  `scope2` varchar(100) NOT NULL,
+  `scope3` varchar(100) NOT NULL,
+  `scope4` varchar(100) NOT NULL,
+  `scope5` varchar(100) NOT NULL,
+  `scope6` varchar(100) NOT NULL,
+  `scope7` varchar(100) NOT NULL,
+  `scope8` varchar(100) NOT NULL,
+  `scope9` varchar(100) NOT NULL,
+  `scope10` varchar(100) NOT NULL,
+  `scope11` varchar(100) NOT NULL,
+  `scope12` varchar(100) NOT NULL,
+  `scope13` varchar(100) NOT NULL,
+  `scope14` varchar(100) NOT NULL,
+  `amount_work` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `personal_1_11`
+--
+
+INSERT INTO `personal_1_11` (`userId`, `id`, `term`, `year`, `checkbox1`, `checkbox2`, `checkbox3`, `checkbox4`, `checkbox5`, `checkbox6`, `checkbox7`, `checkbox8`, `checkbox9`, `checkbox10`, `checkbox11`, `checkbox12`, `checkbox13`, `checkbox14`, `scope1`, `scope2`, `scope3`, `scope4`, `scope5`, `scope6`, `scope7`, `scope8`, `scope9`, `scope10`, `scope11`, `scope12`, `scope13`, `scope14`, `amount_work`) VALUES
+('ภาคภูมิ', 30, 1, 2566, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -315,15 +369,15 @@ CREATE TABLE `personal_1_11` (
 --
 
 CREATE TABLE `personal_3` (
-  `userId` varchar(20) NOT NULL,
+  `userId` varchar(50) NOT NULL,
   `term` int(1) NOT NULL,
   `year` int(4) NOT NULL,
   `name` varchar(50) NOT NULL,
   `branch` varchar(50) NOT NULL,
-  `amount_work` int(5) NOT NULL,
-  `quality_work` int(5) NOT NULL,
-  `efficiency_work` int(5) NOT NULL,
-  `effectiveness_work` int(5) NOT NULL,
+  `amount_work` float NOT NULL,
+  `quality_work` float NOT NULL,
+  `efficiency_work` float NOT NULL,
+  `effectiveness_work` float NOT NULL,
   `score_work` int(5) NOT NULL,
   `quality_ethics` int(5) NOT NULL,
   `efficiency_ethics` int(5) NOT NULL,
@@ -348,9 +402,7 @@ CREATE TABLE `personal_3` (
 --
 
 INSERT INTO `personal_3` (`userId`, `term`, `year`, `name`, `branch`, `amount_work`, `quality_work`, `efficiency_work`, `effectiveness_work`, `score_work`, `quality_ethics`, `efficiency_ethics`, `effectiveness_ethics`, `score_ethics`, `quality_capacity`, `efficiency_capacity`, `effectiveness_capacity`, `score_capacity`, `quality_more`, `efficiency_more`, `effectiveness_more`, `score_more`, `quality_total`, `efficiency_total`, `effectiveness_total`, `score_total`) VALUES
-('Bongkotmas', 1, 2566, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('Phakphoom', 1, 2566, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('บงกชมาศ', 1, 2566, 'นางสาวบงกชมาศ บุญศักดิ์', 'วิศวกรรม', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+('ภาคภูมิ', 1, 2566, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 15.75, 10, 10, 10, 10, 10, 20, 20, 20, 5, 30, 30, 30, 10, 40, 30, 40, 35, 100, 90, 100);
 
 -- --------------------------------------------------------
 
@@ -378,11 +430,11 @@ INSERT INTO `term_year` (`id`, `term`, `year`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int(10) NOT NULL,
-  `nametitle` varchar(30) NOT NULL,
+  `id` int(20) NOT NULL,
+  `nametitle` varchar(50) NOT NULL,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
-  `branch` varchar(100) NOT NULL,
+  `branch` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `urole` varchar(50) NOT NULL,
@@ -394,10 +446,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nametitle`, `firstname`, `lastname`, `branch`, `email`, `password`, `urole`, `created_at`) VALUES
-(14, '', 'Phakphoom', 'Sukkhachat', '', 'prefix.2pm@gmail.com', '$2y$10$AqsqgTaJsZl5RoM/FCVQtegyhyne5JE5J2tJlhGuuiIggGCdhbCHS', 'user', '2023-07-24 12:05:08'),
-(15, '', 'Bongkotmas', 'Boonsak', '', 'Cream.cxz@gmail.com', '$2y$10$L1tf6qoRc6aOmdE72lEJk.nX8cKDoKtEUYw5qKBvlR665qDwi4yBu', 'user', '2023-07-26 08:25:39'),
-(16, '', 'Sarawut', 'Potjanat', '', 'gvgx831@gmail.com', '$2y$10$3AWb72ZgQt44tsq2vbk95u.P6bP/7Y1CIt7bhLeqVbLC9zUtkutri', 'admin', '2023-08-08 11:03:16'),
-(22, 'นางสาว', 'บงกชมาศ', 'บุญศักดิ์', 'วิศวกรรม', 'cream333@gmail.com', '$2y$10$sRpAmkUeiTpeIzkMgRxzP.tb9J7e/rM2fMotRQHIitFlaACtXYsWK', 'user', '2023-08-28 08:08:38');
+(22, 'นางสาว', 'บงกชมาศ', 'บุญศักดิ์', 'วิศวกรรม', 'cream333@gmail.com', '$2y$10$sRpAmkUeiTpeIzkMgRxzP.tb9J7e/rM2fMotRQHIitFlaACtXYsWK', 'admin', '2023-08-28 08:08:38'),
+(23, 'นาย', 'ภาคภูมิ', 'สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 'prefix.2pm@gmail.com', '$2y$10$GDGg3eDhW1iAEmS0aiI0R.Fe/RsTuHYb5XvZM875TtGowsVonkWze', 'user', '2023-08-28 15:14:37');
 
 -- --------------------------------------------------------
 
@@ -407,9 +457,10 @@ INSERT INTO `users` (`id`, `nametitle`, `firstname`, `lastname`, `branch`, `emai
 
 CREATE TABLE `vadmin` (
   `userId` varchar(50) NOT NULL,
-  `id` int(10) NOT NULL,
+  `id` int(20) NOT NULL,
   `term` int(1) NOT NULL,
   `year` int(4) NOT NULL,
+  `nametitle` varchar(50) NOT NULL,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `amount_work` float NOT NULL
@@ -419,14 +470,8 @@ CREATE TABLE `vadmin` (
 -- Dumping data for table `vadmin`
 --
 
-INSERT INTO `vadmin` (`userId`, `id`, `term`, `year`, `firstname`, `lastname`, `amount_work`) VALUES
-('apex', 26, 1, 2566, 'apex', 'inwza007', 34.4),
-('apex', 27, 1, 2565, 'apex', 'inwza007', 2),
-('apex', 28, 2, 2565, 'apex', 'inwza007', 4),
-('apex', 29, 2, 2566, 'apex', 'inwza007', 8.4),
-('ss', 30, 1, 2566, 'ss', 'dd', 7.8),
-('Phakphoom', 31, 1, 2566, 'Phakphoom', 'Sukkhachat', 0),
-('บงกชมาศ', 32, 1, 2566, 'บงกชมาศ', 'บุญศักดิ์', 0);
+INSERT INTO `vadmin` (`userId`, `id`, `term`, `year`, `nametitle`, `firstname`, `lastname`, `amount_work`) VALUES
+('ภาคภูมิ', 34, 1, 2566, 'นาย', 'ภาคภูมิ', 'สุขชาติ', 15.75);
 
 --
 -- Indexes for dumped tables
@@ -548,7 +593,7 @@ ALTER TABLE `vadmin`
 -- AUTO_INCREMENT for table `personal_1_1`
 --
 ALTER TABLE `personal_1_1`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `personal_1_2_a`
@@ -560,13 +605,13 @@ ALTER TABLE `personal_1_2_a`
 -- AUTO_INCREMENT for table `personal_1_2_b`
 --
 ALTER TABLE `personal_1_2_b`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `personal_1_3`
 --
 ALTER TABLE `personal_1_3`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `personal_1_4`
@@ -602,13 +647,13 @@ ALTER TABLE `personal_1_6_b`
 -- AUTO_INCREMENT for table `personal_1_7`
 --
 ALTER TABLE `personal_1_7`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `personal_1_8`
 --
 ALTER TABLE `personal_1_8`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `personal_1_9`
@@ -626,7 +671,7 @@ ALTER TABLE `personal_1_10`
 -- AUTO_INCREMENT for table `personal_1_11`
 --
 ALTER TABLE `personal_1_11`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `term_year`
@@ -638,13 +683,13 @@ ALTER TABLE `term_year`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `vadmin`
 --
 ALTER TABLE `vadmin`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,25 +1,26 @@
 <?php
-  session_start();
-  require_once 'config/db.php';
+session_start();
+require_once 'config/db.php';
 
-  if (!isset($_SESSION['adminId'])) {
-      $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
-      header('location: signin.php');
-  }
-  if (isset($_POST['userId'])) {
-    $_SESSION['user'] = $_POST['userId'];
-  }
+if (!isset($_SESSION['adminId'])) {
+  $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
+  header('location: signin.php');
+}
+if (isset($_POST['userId'])) {
+  $_SESSION['user'] = $_POST['userId'];
+}
 
-  if (isset($_POST['term'])) {
-      $_SESSION['term'] = $_POST['term'];
-  }
+if (isset($_POST['term'])) {
+  $_SESSION['term'] = $_POST['term'];
+}
 
-  if (isset($_POST['year'])) {
-      $_SESSION['year'] = $_POST['year'];
-  }
+if (isset($_POST['year'])) {
+  $_SESSION['year'] = $_POST['year'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -57,8 +58,8 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">NiceAdmin</span>
+        <img width='35px' height='35px' src="assets/img/logo_lasc.png" alt="โลโก้คณะ">
+        <span class="d-none d-lg-block" style="color: #ffc107;">LASC SSKRU</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -396,7 +397,7 @@
           <i class="bi bi-menu-button-wide"></i><span>11. ภาระงานด้านการบริหาร</span>
         </a>
       </li><!-- End Components Nav -->
-      
+
 
   </aside><!-- End Sidebar-->
 
@@ -405,9 +406,9 @@
     <br>
     <br>
     <?php
-      @$page = $_GET['page'];
-      @include $page.('.php');
-    ?> 
+    @$page = $_GET['page'];
+    @include $page . ('.php');
+    ?>
   </main>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -426,4 +427,5 @@
   <script src="assets/js/main.js"></script>
 
 </body>
+
 </html>

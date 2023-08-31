@@ -2,13 +2,14 @@
     session_start();
     require_once '../config/db.php';
 
-    $userId = $_SESSION['userId'];
+    
 
     if (isset($_POST['upload'])){
-        $id = $_SESSION['upload'];
-        $file = $_FILES['file'];
+        $userId = $_SESSION['userId'];
         $term = $_POST['term'];
         $year = $_POST['year'];
+        $file = $_FILES['file'];
+        
         
         $allow = array('jpg', 'jpeg', 'png' , 'pdf','ppt','docx');
         $extension = explode('.', $file['name']);
@@ -21,15 +22,15 @@
             if ($file['size'] > 0 && $file['error'] == 0) {
                 move_uploaded_file($file['tmp_name'], $filePath);
     
-                $sql = "UPDATE personal_1_1_file SET file = :file, term = :term, year = :year WHERE id = :id";
+                $sql = "INSERT INTO personal_1_1_file (userId,term,`year`,`file`) 
+                VALUES (:userId,:term,:year,:file)";
     
                 $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':id', $id);
-                $stmt->bindParam(':file', $fileNew);
+                $stmt->bindParam(':userId', $userId);
                 $stmt->bindParam(':term', $term);
                 $stmt->bindParam(':year', $year);
+                $stmt->bindParam(':file', $fileNew);
                 $stmt->execute();
-                unset($_SESSION['upload']);
                 $conn = null;
                 
                 if ($stmt) {

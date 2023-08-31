@@ -1,13 +1,16 @@
 <?php
 require_once "config/db.php";
 
+$stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
+$stmt->execute();
+$term_year = $stmt->fetch();
+$userId = $_SESSION['userId'];
+$term =  $term_year['term'];
+$year =  $term_year['year'];
+
 if (isset($_GET['delete_file'])) {
     $delete_file_id = $_GET['delete_file'];
-    $stmt = $conn->prepare("SELECT file FROM personal_1_1 WHERE id = :delete_file_id");
-    $stmt->bindParam(':delete_file_id', $delete_file_id);
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $currentFile = $row['file'];
+    $currentFile =  $delete_file_id;
 
     if ($currentFile) {
         $filePath = 'uploads/' . $currentFile;
@@ -16,26 +19,13 @@ if (isset($_GET['delete_file'])) {
         }
     }
 
-    $delete_file = $conn->prepare("UPDATE personal_1_1 SET file = '' WHERE id = :delete_file_id");
+    $delete_file = $conn->prepare("DELETE FROM personal_1_1_file WHERE `file` = :delete_file_id");
     $delete_file->bindParam(':delete_file_id', $delete_file_id);
     $delete_file->execute();
 }
 
 if (isset($_GET['delete'])) {
     $delete_id = $_GET['delete'];
-
-    $stmt = $conn->prepare("SELECT file FROM personal_1_1 WHERE id = :delete_id");
-    $stmt->bindParam(':delete_id', $delete_id);
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $currentFile = $row['file'];
-
-    if ($currentFile) {
-        $filePath = 'uploads/' . $currentFile;
-        if (file_exists($filePath)) {
-            unlink($filePath);
-        }
-    }
 
     $deletestmt = $conn->prepare("DELETE FROM personal_1_1 WHERE id = :delete_id");
     $deletestmt->bindParam(':delete_id', $delete_id);
@@ -85,6 +75,38 @@ if (isset($_GET['edit'])) {
                 <div class="label">เพิ่มข้อมูล</div>
             </div>
         </button>
+    <?php
+        $stmt = $conn->query("SELECT * FROM personal_1_1_file WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+        $stmt->execute();
+        $personal = $stmt->fetchAll();
+    ?>  
+        <div class="d-flex justify-content-end mb-3">
+            <?php if (isset($personal[0]['file'])) { ?> 
+                <td style="white-space: nowrap;">
+                    <a href="uploads/<?= $personal[0]['file']; ?>" class="btn btn-secondary">
+                        <div class="icon d-flex">
+                            <i class="bi bi-eye"></i>&nbsp;
+                            <div class="label">ดูไฟล์</div>
+                        </div>
+                    </a>
+                    <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_1/index_1_1&delete_file=<?= $personal[0]['file']; ?>" class="btn btn-danger">
+                        <div class="icon d-flex">
+                            <i class="bi bi-trash"></i>&nbsp;
+                            <div class="label">ลบไฟล์</div>
+                        </div>
+                    </a>
+                </td>
+                <?php } else { ?>
+                <td>
+                    <a style="white-space: nowrap;" href="?page=1_1/index_1_1&term=<?= $term ?>&year=<?= $year ?>&upload" class="btn btn-warning">
+                        <div class="icon d-flex">
+                            <i class="bi bi-upload"></i>&nbsp;
+                            <div class="label">อัปโหลด</div>
+                        </div>
+                    </a>
+                </td>
+                <?php } ?>
+        </div>
     </div>
     <?php if (isset($_SESSION['success'])) { ?>
         <div class="alert alert-success" id="alert-success">
@@ -99,14 +121,6 @@ if (isset($_GET['edit'])) {
             }, 3000);
         </script>
     <?php } ?>
-    <div class="d-flex justify-content-end mb-3">
-        <a style="white-space: nowrap;" href="?page=1_1/index_1_1&upload=<?= $per['id']; ?>" class="btn btn-warning">
-            <div class="icon d-flex">
-                <i class="bi bi-upload"></i>&nbsp;&nbsp;
-                <div class="label">อัปโหลดไฟล์</div>
-            </div>
-        </a>
-    </div>
     <table class="table table-bordered text-center align-middle">
         <thead class="align-middle table-secondary">
             <tr>
@@ -120,7 +134,6 @@ if (isset($_GET['edit'])) {
                 <th scope="col" rowspan="2">จำนวนนักศึกษา </th>
                 <th scope="col" rowspan="2">สัดส่วนการสอน (ป้อนตัวเลขไม่มี%)</th>
                 <th scope="col" rowspan="2">รวมจำนวนภาระงาน/สัปดาห์ </th>
-                <th scope="col" rowspan="2">อัปโหลดไฟล์</th>
                 <th scope="col" rowspan="2">จัดการข้อมูล</th>
             </tr>
             <tr>
@@ -136,9 +149,7 @@ if (isset($_GET['edit'])) {
         </thead>
         <tbody>
             <?php
-            $userId = $_SESSION['userId'];
-            $stmt = $conn->query("SELECT * FROM personal_1_1 WHERE userId = '$userId'");
-            $stmt->execute();
+            $stmt = $conn->query("SELECT * FROM personal_1_1 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
             $personal = $stmt->fetchAll();
 
             $totalAmountWork = 0.00;
@@ -165,21 +176,6 @@ if (isset($_GET['edit'])) {
                         <td><?= $per['proportion']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
                         <?php $totalAmountWork += floatval($per['amount_work']); ?>
-                        <?php if ($per['file']) { ?>
-                            <td style="white-space: nowrap;">
-                                <a href="uploads/<?= $per['file']; ?>" class="btn btn-secondary">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-eye"></i>&nbsp;
-                                        <div class="label">ดูไฟล์</div>
-                                    </div>
-                                </a>
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_1/index_1_1&delete_file=<?= $per['id']; ?>" class="btn btn-danger">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-trash"></i>&nbsp;
-                                        <div class="label">ลบไฟล์</div>
-                                    </div>
-                                </a>
-                            </td>
                             <td class="d-flex justify-content-center">
                                 <a href="?page=1_1/index_1_1&edit=<?= $per['id']; ?>" class="btn btn-primary">
                                     <div class="icon d-flex">
@@ -194,30 +190,6 @@ if (isset($_GET['edit'])) {
                                     </div>
                                 </a>
                             </td>
-                        <?php } else { ?>
-                            <td>
-                                <a style="white-space: nowrap;" href="?page=1_1/index_1_1&upload=<?= $per['id']; ?>" class="btn btn-warning">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-upload"></i>&nbsp;
-                                        <div class="label">อัปโหลด</div>
-                                    </div>
-                                </a>
-                            </td>
-                            <td class="d-flex justify-content-center">
-                                <a href="?page=1_1/index_1_1&edit=<?= $per['id']; ?>" class="btn btn-primary">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-pencil-square"></i>&nbsp;
-                                        <div class="label">แก้ไข</div>
-                                    </div>
-                                </a>&nbsp;
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_1/index_1_1&delete=<?= $per['id']; ?>" class="btn btn-danger">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-trash"></i>&nbsp;
-                                        <div class="label">ลบ</div>
-                                    </div>
-                                </a>
-                            </td>
-                        <?php } ?>
                     </tr>
             <?php }
             } ?>
@@ -479,6 +451,9 @@ if (isset($_GET['edit'])) {
                     </div>
                     <div class="modal-body">
                         <form action="1_1/upload_1_1.php" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="term" value="<?=$_GET['term']?>">
+                            <input type="hidden" name="year" value="<?=$_GET['year']?>">
+
                             <div class="row mb-3">
                                 <label for="file" class="col-sm-2 col-form-label">อัปโหลดไฟล์</label>
                                 <div class="col-sm-10">

@@ -2,6 +2,8 @@
     session_start(); //เริ่มต้น
     require_once "../config/db.php"; // นำเข้าไฟล์การกำหนดค่าฐานข้อมูล MySQL
 
+    $userId = $_SESSION['userId'];
+
     if(isset($_POST['upload'])) {
         $id = $_SESSION['upload']; // เช็คว่ามีการกดปุ่ม 'upload' จากฟอร์มหรือไม่
         $file = $_FILES['file']; // รับค่า id จากเซสชัน
@@ -14,7 +16,7 @@
         // ตั้งค่าโซนเวลาให้เป็นเวลาประเทศไทย
         date_default_timezone_set('Asia/Bangkok');
         // สร้างชื่อไฟล์ใหม่ที่ไม่ซ้ำกันโดยใช้เลขสุ่ม.นามสกุลไฟล์
-        $fileNew = date('Y-m-d_H-i-s'). "." . $fileActExt;
+        $fileNew = date('Y-m-d_H-i-s'). "_" . $userId . "." . $fileActExt; 
         //อัพโหลดไปที่โฟล์เดอร์อะไร
         $filePath = "../uploads/".$fileNew;// กำหนดพาธของไฟล์ที่จะบันทึก
 

@@ -2,6 +2,8 @@
     session_start();
     require_once '../config/db.php';
 
+    $userId = $_SESSION['userId'];
+
     if (isset($_POST['upload'])){
         $id = $_SESSION['upload'];
         $file = $_FILES['file'];
@@ -10,7 +12,8 @@
         $extension = explode('.', $file['name']);
         $fileActExt = strtolower(end($extension));
         date_default_timezone_set('Asia/Bangkok');
-        $fileNew = date('Y-m-d_H-i-s'). "." . $fileActExt;        $filePath = '../uploads/' . $fileNew;
+        $fileNew = date('Y-m-d_H-i-s'). "_" . $userId . "." . $fileActExt;         
+        $filePath = '../uploads/' . $fileNew;
     
         if (in_array($fileActExt, $allow)) {
             if ($file['size'] > 0 && $file['error'] == 0) {

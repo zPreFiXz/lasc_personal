@@ -53,5 +53,5 @@
             $_SESSION['error'] = "แก้ไขข้อมูลไม่สำเร็จ";
             header("location: ../index.php?page=1_1/index_1_1");
         }
-}
+    }
 ?>

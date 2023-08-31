@@ -15,6 +15,15 @@
   $term =  $term_year['term'];
   $year =  $term_year['year'];
 
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_1 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_1 = $stmt->fetchAll();
+
+  $totalAmountWork_1_1 = 0;
+  foreach ($personal_1_1 as $per_1_1) {
+    $totalAmountWork_1_1 += floatval($per_1_1['amount_work']);
+  }
+
   $stmt = $conn->query("SELECT amount_work FROM personal_1_2_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
   $stmt->execute();
   $personal_1_2_a = $stmt->fetchAll();
@@ -135,7 +144,7 @@
     $totalAmountWork_1_11 += floatval($per_1_11['amount_work']);
   }
 
-  $totalAmountWork = $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
+  $totalAmountWork = $totalAmountWork_1_1 + $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
   $_SESSION['$totalAmountWork'] = $totalAmountWork;
   
   $stmt = $conn->prepare("SELECT * FROM Vadmin WHERE userId = :userId AND term = :term AND year = :year");
@@ -172,6 +181,12 @@ if (empty($users)) {
   $updateStmt->bindParam(':amount_work', $totalAmountWork);
   $updateStmt->execute();
 }
+  $updateStmt = $conn->prepare("UPDATE personal_3 SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND `year` = :year ");
+  $updateStmt->bindParam(':userId', $userId);
+  $updateStmt->bindParam(':term', $term);
+  $updateStmt->bindParam(':year', $year);
+  $updateStmt->bindParam(':amount_work', $totalAmountWork);
+  $updateStmt->execute();
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -4,13 +4,13 @@
 
     if (isset($_POST['submit'])) {
         $userId = $_POST['userId'];
+        $term = $_POST['term'];
+        $year = $_POST['year'];
         $major = $_POST['major'];
         $code = $_POST['code'];
         $level = $_POST['level'];
         $group_study = $_POST['group_study'];
         $amount_student = $_POST['amount_student'];
-        $term = $_POST['term'];
-        $year = $_POST['year'];
         $amount_work = $_POST['amount_work'];
 
         $sql = "INSERT INTO personal_1_2_a (userId,major,code,level,group_study,amount_student, term, year, amount_work) 

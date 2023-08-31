@@ -287,7 +287,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
         <a class="nav-link " href="index_admin.php?page=admin">
-          <i class="bi bi-grid"></i>
+          <i class=" ri-arrow-left-s-fill"></i>
           <span>กลับ</span>
         </a>
       </li><!-- End back Nav -->

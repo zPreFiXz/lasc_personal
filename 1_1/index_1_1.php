@@ -132,6 +132,8 @@
                 $stmt->execute();
                 $personal = $stmt->fetchAll();
 
+                $totalAmountWork = 0.00;
+
                 if (!$personal) {
                     echo "<tr><td colspan='18' class='text-center'>ไม่มีข้อมูล</td></tr>";
                 } else {
@@ -141,18 +143,19 @@
                             <td style="white-space: nowrap;"><?= $per['code_course']; ?></td>
                             <td class="mb-3" style="white-space: nowrap;"><?= $per['name_course']; ?></td>
                             <td><?= $per['unit']; ?></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td><?= $per['prepare_theory']; ?></td>
+                            <td><?= $per['hour_lecture']; ?></td>
+                            <td><?= $per['check_work1']; ?></td>
+                            <td><?= $per['prepare_practice']; ?></td>
+                            <td><?= $per['hour_practice']; ?></td>
+                            <td><?= $per['check_work2']; ?></td>
                             <td style="white-space: nowrap;"><?= $per['practice_subject']; ?></td>
                             <td><?= $per['level']; ?></td>
                             <td><?= $per['group_study']; ?></td>
                             <td><?= $per['amount_student']; ?></td>
                             <td><?= $per['proportion']; ?></td>
                             <td><?= $per['amount_work']; ?></td>
+                            <?php $totalAmountWork += floatval($per['amount_work']); ?>
                             <?php if ($per['file']) { ?>
                                 <td style="white-space: nowrap;">
                                     <a href="uploads/<?= $per['file']; ?>" class="btn btn-secondary">
@@ -210,7 +213,7 @@
             <?php } } ?>
                         <tr>
                             <th scope="row" colspan="14">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-                            <td scope="row">0.00</td>
+                            <td scope="row"><?= number_format($totalAmountWork, 2); ?></td>
                             <td colspan="2"></td>
                         </tr>
         </tbody>
@@ -225,6 +228,8 @@
                     <div class="modal-body">
                         <form action="1_1/insert_1_1.php" method="post">
                             <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
+                            <input type="hidden" class="form-control" name="term" value="<?=$term_year['term'];?>">
+                            <input type="hidden" class="form-control" name="year" value="<?=$term_year['year'];?>">
                             <div class="mb-3">
                                 <label for="code_course" class="col-sm-2 col-form-label ">รหัสวิชา</label>
                                 <input type="text" class="form-control" name="code_course" required>
@@ -235,7 +240,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="unit" class="col-sm-2 col-form-label" style="white-space: nowrap;">หน่วยกิต (ทฤษฎี-ปฏิบัติ-ค้นคว้า)</label>
-                                <select id="unit" name="unit" class="form-select" onchange="calc1()" required>
+                                <select id="unit1" name="unit" class="form-select" onchange="calc1()" required>
                                     <option value="" selected>กรุณาเลือก</option>
                                     <option value="3(3-0-6)">3(3-0-6)</option>
                                     <option value="3(2-2-5)">3(2-2-5)</option>
@@ -252,13 +257,13 @@
                                 <div class="row mb-3">
                                     <label for="prepare_theory" class="col-sm-2 col-form-label" style="white-space: nowrap;">เตรียมสอนทฤษฎี</label>
                                     <div class="col-sm-8">    
-                                        <input type="text" class="form-control ms-4" name="prepare_theory" id="prepare_theory" readonly>
+                                        <input type="text" class="form-control ms-4" name="prepare_theory" id="prepare_theory1" readonly>
                                     </div>
                                 </div>
                                 <div class=" row mb-3">
                                     <label for="hour_lecture" class="col-sm-2 col-form-label" style="white-space: nowrap;">ชั่วโมงบรรยายตามจริง</label>
                                     <div class="col-sm-8">    
-                                        <input type="text" class="form-control ms-4" name="hour_lecture" id="hour_lecture" readonly>
+                                        <input type="text" class="form-control ms-4" name="hour_lecture" id="hour_lecture1" readonly>
                                     </div>
                                 </div>
                                 <div class=" row mb-3">
@@ -273,13 +278,13 @@
                                 <div class="row mb-3">
                                     <label for="prepare_practice" class="col-sm-2 col-form-label" style="white-space: nowrap;">เตรียมสอนปฏิบัติ</label>
                                     <div class="col-sm-8">    
-                                        <input type="text" class="form-control ms-4" name="prepare_practice" id="prepare_practice" readonly>
+                                        <input type="text" class="form-control ms-4" name="prepare_practice" id="prepare_practice1" readonly>
                                     </div>
                                 </div>
                                 <div class=" row mb-3">
                                     <label for="hour_practice" class="col-sm-2 col-form-label" style="white-space: nowrap;">ชั่วโมงปฏิบัติตามจริง</label>
                                     <div class="col-sm-8">    
-                                        <input type="text" class="form-control ms-4" name="hour_practice" id="hour_practice" readonly>
+                                        <input type="text" class="form-control ms-4" name="hour_practice" id="hour_practice1" readonly>
                                     </div>
                                 </div>
                                 <div class=" row mb-3">
@@ -291,7 +296,7 @@
                                 <div class=" row mb-3">
                                     <label for="practice_subject" class="col-sm-2 col-form-label">แบบปฏิบัติ</label>
                                     <div class="col-sm-8">    
-                                        <select id="practice_subject" name="practice_subject" class="form-select ms-4" onchange="calc1()" required>
+                                        <select id="practice_subject1" name="practice_subject" class="form-select ms-4" onchange="calc1()" required>
                                             <option value="ทั่วไป">ทั่วไป</option>
                                             <option value="ฟิสิกส์">ฟิสิกส์</option>
                                             <option value="เคมี">เคมี</option>
@@ -320,7 +325,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="proportion" class="col-sm-2 col-form-label">สัดส่วนการสอน</label>
-                                <input type="text" class="form-control" name="proportion" id="proportion1" oninput="calc1()" required>
+                                <input type="text" class="form-control" name="proportion" id="proportion1" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
                                 <label for="amount_work" class="col-sm-2 col-form-label ">รวมจำนวนภาระงาน/สัปดาห์</label>
@@ -355,7 +360,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="unit" class="col-sm-2 col-form-label" style="white-space: nowrap;">หน่วยกิต (ทฤษฎี-ปฏิบัติ-ค้นคว้า)</label>
-                                <select id="unit" name="unit" class="form-select" onchange="calc1()" required>
+                                <select id="unit2" name="unit" class="form-select" onchange="calc2()" required>
                                     <option value="3(3-0-6)" <?php if ($data['unit'] === '3(3-0-6)') echo 'selected'; ?>>3(3-0-6)</option>
                                     <option value="3(2-2-5)" <?php if ($data['unit'] === '3(2-2-5)') echo 'selected'; ?>>3(2-2-5)</option>
                                     <option value="3(1-1-4)" <?php if ($data['unit'] === '3(1-1-4)') echo 'selected'; ?>>3(1-1-4)</option>
@@ -371,19 +376,19 @@
                                 <div class="row mb-3">
                                     <label for="prepare_theory" class="col-sm-2 col-form-label" style="white-space: nowrap;">เตรียมสอนทฤษฎี</label>
                                     <div class="col-sm-8">    
-                                        <input type="text" class="form-control ms-4" name="prepare_theory" readonly>
+                                        <input type="text" class="form-control ms-4" name="prepare_theory" id="prepare_theory2" value="<?php echo $data['prepare_theory']; ?>" readonly>
                                     </div>
                                 </div>
                                 <div class=" row mb-3">
                                     <label for="hour_lecture" class="col-sm-2 col-form-label" style="white-space: nowrap;">ชั่วโมงบรรยายตามจริง</label>
                                     <div class="col-sm-8">    
-                                        <input type="text" class="form-control ms-4" name="hour_lecture" readonly>
+                                        <input type="text" class="form-control ms-4" name="hour_lecture" id="hour_lecture2" value="<?php echo $data['hour_lecture']; ?>" readonly>
                                     </div>
                                 </div>
                                 <div class=" row mb-3">
                                     <label for="check_work" class="col-sm-2 col-form-label" style="white-space: nowrap;">ตรวจงาน</label>
                                     <div class="col-sm-8">    
-                                        <input type="text" class="form-control ms-4" name="check_work" readonly>
+                                        <input type="text" class="form-control ms-4" name="check_work1" id="check_work3" value="<?php echo $data['check_work1']; ?>" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -392,25 +397,25 @@
                                 <div class="row mb-3">
                                     <label for="prepare_practice" class="col-sm-2 col-form-label" style="white-space: nowrap;">เตรียมสอนปฏิบัติ</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control ms-4" name="prepare_practice" readonly>
+                                        <input type="text" class="form-control ms-4" name="prepare_practice" id="prepare_practice2" value="<?php echo $data['prepare_practice']; ?>" readonly>
                                     </div>
                                 </div>
                                 <div class=" row mb-3">
                                     <label for="hour_practice" class="col-sm-2 col-form-label" style="white-space: nowrap;">ชั่วโมงปฏิบัติตามจริง</label>
                                     <div class="col-sm-8">    
-                                        <input type="text" class="form-control ms-4" name="hour_practice" readonly>
+                                        <input type="text" class="form-control ms-4" name="hour_practice" id="hour_practice2" value="<?php echo $data['hour_practice']; ?>" readonly>
                                     </div>
                                 </div>
                                 <div class=" row mb-3">
                                     <label for="check_work" class="col-sm-2 col-form-label" style="white-space: nowrap;">ตรวจงาน</label>
                                     <div class="col-sm-8">    
-                                        <input type="text" class="form-control ms-4" name="check_work" readonly>
+                                        <input type="text" class="form-control ms-4" name="check_work2" id="check_work4" value="<?php echo $data['check_work2']; ?>" readonly>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="practice_subject" class="col-sm-2 col-form-label">แบบปฏิบัติ</label>
                                     <div class="col-sm-8">
-                                        <select name="practice_subject" class="form-select sm-4" required>
+                                        <select name="practice_subject" class="form-select sm-4" id="practice_subject2" onchange="calc2()" required>
                                             <option value="ทั่วไป" <?php if ($data['practice_subject'] === 'ทั่วไป') echo 'selected'; ?>>ทั่วไป</option>
                                             <option value="ฟิสิกส์" <?php if ($data['practice_subject'] === 'ฟิสิกส์') echo 'selected'; ?>>ฟิสิกส์</option>
                                             <option value="เคมี" <?php if ($data['practice_subject'] === 'เคมี') echo 'selected'; ?>>เคมี</option>
@@ -425,7 +430,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="group_study" class="col-sm-2 col-form-label">หมู่เรียนที่</label>
-                                <select id="group_study" name="group_study" class="form-select" required>
+                                <select id="group_study2" name="group_study" class="form-select" onchange="calc2()" required>
                                     <option value="1" <?php if ($data['group_study'] === '1') echo 'selected'; ?>>1</option>
                                     <option value="2" <?php if ($data['group_study'] === '2') echo 'selected'; ?>>2</option>
                                     <option value="3" <?php if ($data['group_study'] === '3') echo 'selected'; ?>>3</option>
@@ -435,15 +440,15 @@
                             </div>
                             <div class="mb-3">
                                 <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>
-                                <input type="text" class="form-control" name="amount_student" value="<?php echo $data['amount_student']; ?>" required>
+                                <input type="text" class="form-control" name="amount_student" value="<?php echo $data['amount_student']; ?>" id="amount_student2" oninput="calc2()" required>
                             </div>
                             <div class="mb-3">
                                 <label for="proportion" class="col-sm-2 col-form-label">สัดส่วนการสอน</label>
                                 <input type="text" class="form-control" name="proportion" value="<?php echo $data['proportion']; ?>" required>
                             </div>
                             <div class="mb-3">
-                                <label for="amount_work" class="col-sm-2 col-form-label">รวมจำนวนภาระงาน/สัปดาห์</label>
-                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" readonly>
+                                <label for="amount_work" class="col-sm-2 col-form-label" style="white-space: nowrap;">รวมจำนวนภาระงาน/สัปดาห์</label>
+                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" id="amount_work2" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -506,15 +511,15 @@
     }
 
     function calc1() {
-        var unit = document.getElementById('unit').value;
-        var practice_subject = document.getElementById('practice_subject').value;
+        var unit = document.getElementById('unit1').value;
+        var practice_subject = document.getElementById('practice_subject1').value;
 
         if (unit == '3(3-0-6)'){
-            prepare_theory = parseFloat(document.getElementById('prepare_theory').value = 3);
-            hour_lecture = parseFloat(document.getElementById('hour_lecture').value = 3);
+            prepare_theory = parseFloat(document.getElementById('prepare_theory1').value = 3);
+            hour_lecture = parseFloat(document.getElementById('hour_lecture1').value = 3);
             check_work1 = parseFloat(document.getElementById('check_work1').value = 3);
-            prepare_practice = parseFloat(document.getElementById('prepare_practice').value = '-');
-            hour_practice = parseFloat(document.getElementById('hour_practice').value = '-');
+            prepare_practice = parseFloat(document.getElementById('prepare_practice1').value = '-');
+            hour_practice = parseFloat(document.getElementById('hour_practice1').value = '-');
             check_work2 = parseFloat(document.getElementById('check_work2').value = '-');
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
@@ -535,11 +540,11 @@
             }
 
         }else if (unit == '3(2-2-5)'){
-            prepare_theory = parseFloat(document.getElementById('prepare_theory').value = 2);
-            hour_lecture = parseFloat(document.getElementById('hour_lecture').value = 2);
+            prepare_theory = parseFloat(document.getElementById('prepare_theory1').value = 2);
+            hour_lecture = parseFloat(document.getElementById('hour_lecture1').value = 2);
             check_work1 = parseFloat(document.getElementById('check_work1').value = 2);
-            prepare_practice = parseFloat(document.getElementById('prepare_practice').value = 1);
-            hour_practice = parseFloat(document.getElementById('hour_practice').value = 2);
+            prepare_practice = parseFloat(document.getElementById('prepare_practice1').value = 1);
+            hour_practice = parseFloat(document.getElementById('hour_practice1').value = 2);
             check_work2 = parseFloat(document.getElementById('check_work2').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
@@ -560,11 +565,11 @@
             }
 
         }else if (unit == '3(1-1-4)'){
-            prepare_theory = parseFloat(document.getElementById('prepare_theory').value = 1);
-            hour_lecture = parseFloat(document.getElementById('hour_lecture').value = 1);
+            prepare_theory = parseFloat(document.getElementById('prepare_theory1').value = 1);
+            hour_lecture = parseFloat(document.getElementById('hour_lecture1').value = 1);
             check_work1 = parseFloat(document.getElementById('check_work1').value = 1);
-            prepare_practice = parseFloat(document.getElementById('prepare_practice').value = 1);
-            hour_practice = parseFloat(document.getElementById('hour_practice').value = 1);
+            prepare_practice = parseFloat(document.getElementById('prepare_practice1').value = 1);
+            hour_practice = parseFloat(document.getElementById('hour_practice1').value = 1);
             check_work2 = parseFloat(document.getElementById('check_work2').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
@@ -585,11 +590,11 @@
             }
 
         }else if (unit == '2(2-0-4)'){
-            prepare_theory = parseFloat(document.getElementById('prepare_theory').value = 2);
-            hour_lecture = parseFloat(document.getElementById('hour_lecture').value = 2);
+            prepare_theory = parseFloat(document.getElementById('prepare_theory1').value = 2);
+            hour_lecture = parseFloat(document.getElementById('hour_lecture1').value = 2);
             check_work1 = parseFloat(document.getElementById('check_work1').value = 2);
-            prepare_practice = parseFloat(document.getElementById('prepare_practice').value = '-');
-            hour_practice = parseFloat(document.getElementById('hour_practice').value = '-');
+            prepare_practice = parseFloat(document.getElementById('prepare_practice1').value = '-');
+            hour_practice = parseFloat(document.getElementById('hour_practice1').value = '-');
             check_work2 = parseFloat(document.getElementById('check_work2').value = '-');
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
@@ -610,11 +615,11 @@
             }
 
         }else if (unit == '2(1-3-4)'){
-            prepare_theory = parseFloat(document.getElementById('prepare_theory').value = 1);
-            hour_lecture = parseFloat(document.getElementById('hour_lecture').value = 1);
+            prepare_theory = parseFloat(document.getElementById('prepare_theory1').value = 1);
+            hour_lecture = parseFloat(document.getElementById('hour_lecture1').value = 1);
             check_work1 = parseFloat(document.getElementById('check_work1').value = 1);
-            prepare_practice = parseFloat(document.getElementById('prepare_practice').value = 1);
-            hour_practice = parseFloat(document.getElementById('hour_practice').value = 3);
+            prepare_practice = parseFloat(document.getElementById('prepare_practice1').value = 1);
+            hour_practice = parseFloat(document.getElementById('hour_practice1').value = 3);
             check_work2 = parseFloat(document.getElementById('check_work2').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
@@ -635,11 +640,11 @@
             }
 
         }else if (unit == '2(1-2-3)'){
-            prepare_theory = parseFloat(document.getElementById('prepare_theory').value = 1);
-            hour_lecture = parseFloat(document.getElementById('hour_lecture').value = 1);
+            prepare_theory = parseFloat(document.getElementById('prepare_theory1').value = 1);
+            hour_lecture = parseFloat(document.getElementById('hour_lecture1').value = 1);
             check_work1 = parseFloat(document.getElementById('check_work1').value = 1);
-            prepare_practice = parseFloat(document.getElementById('prepare_practice').value = 1);
-            hour_practice = parseFloat(document.getElementById('hour_practice').value = 2);
+            prepare_practice = parseFloat(document.getElementById('prepare_practice1').value = 1);
+            hour_practice = parseFloat(document.getElementById('hour_practice1').value = 2);
             check_work2 = parseFloat(document.getElementById('check_work2').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
@@ -660,11 +665,11 @@
             }
 
         }else if (unit == '1(0-2-1)'){
-            prepare_theory = parseFloat(document.getElementById('prepare_theory').value = '-');
-            hour_lecture = parseFloat(document.getElementById('hour_lecture').value = '-');
+            prepare_theory = parseFloat(document.getElementById('prepare_theory1').value = '-');
+            hour_lecture = parseFloat(document.getElementById('hour_lecture1').value = '-');
             check_work1 = parseFloat(document.getElementById('check_work1').value = '-');
-            prepare_practice = parseFloat(document.getElementById('prepare_practice').value = 1);
-            hour_practice = parseFloat(document.getElementById('hour_practice').value = 2);
+            prepare_practice = parseFloat(document.getElementById('prepare_practice1').value = 1);
+            hour_practice = parseFloat(document.getElementById('hour_practice1').value = 2);
             check_work2 = parseFloat(document.getElementById('check_work2').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
@@ -685,11 +690,11 @@
             }
 
         } else if (unit == '1(0-3-1)'){
-            prepare_theory = parseFloat(document.getElementById('prepare_theory').value = '-');
-            hour_lecture = parseFloat(document.getElementById('hour_lecture').value = '-');
+            prepare_theory = parseFloat(document.getElementById('prepare_theory1').value = '-');
+            hour_lecture = parseFloat(document.getElementById('hour_lecture1').value = '-');
             check_work1 = parseFloat(document.getElementById('check_work1').value = '-');
-            prepare_practice = parseFloat(document.getElementById('prepare_practice').value = 1);
-            hour_practice = parseFloat(document.getElementById('hour_practice').value = 3);
+            prepare_practice = parseFloat(document.getElementById('prepare_practice1').value = 1);
+            hour_practice = parseFloat(document.getElementById('hour_practice1').value = 3);
             check_work2 = parseFloat(document.getElementById('check_work2').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
@@ -743,5 +748,245 @@
                 document.getElementById('amount_work1').value = " ";
             }
         }
-    }    
+    }  
+    
+    function calc2() {
+        var unit = document.getElementById('unit2').value;
+        var practice_subject = document.getElementById('practice_subject2').value;
+
+        if (unit == '3(3-0-6)'){
+            prepare_theory = parseFloat(document.getElementById('prepare_theory2').value = 3);
+            hour_lecture = parseFloat(document.getElementById('hour_lecture2').value = 3);
+            check_work1 = parseFloat(document.getElementById('check_work3').value = 3);
+            prepare_practice = parseFloat(document.getElementById('prepare_practice2').value = '-');
+            hour_practice = parseFloat(document.getElementById('hour_practice2').value = '-');
+            check_work2 = parseFloat(document.getElementById('check_work4').value = '-');
+            amount_student1 = parseFloat(document.getElementById('amount_student2').value);
+            group_study1 = parseFloat(document.getElementById('group_study2').value);
+
+            if(amount_student1 > 40){
+                amount_student1 -= 40
+                if(group_study1 == 1){
+                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1) + amount_student1*(3/40);
+                }else if (group_study1 > 1){
+                    document.getElementById('amount_work2').value =  (hour_lecture + check_work1) + amount_student1*(3/40);
+                }
+            }else{
+                if(group_study1 == 1){
+                    document.getElementById('amount_work2').value = prepare_theory + hour_lecture + check_work1;
+                }else if (group_study1 > 1){
+                    document.getElementById('amount_work2').value =  hour_lecture + check_work1;
+                }
+            }
+
+        }else if (unit == '3(2-2-5)'){
+            prepare_theory = parseFloat(document.getElementById('prepare_theory2').value = 2);
+            hour_lecture = parseFloat(document.getElementById('hour_lecture2').value = 2);
+            check_work1 = parseFloat(document.getElementById('check_work3').value = 2);
+            prepare_practice = parseFloat(document.getElementById('prepare_practice2').value = 1);
+            hour_practice = parseFloat(document.getElementById('hour_practice2').value = 2);
+            check_work2 = parseFloat(document.getElementById('check_work4').value = 1);
+            amount_student1 = parseFloat(document.getElementById('amount_student2').value);
+            group_study1 = parseFloat(document.getElementById('group_study2').value);
+
+            if(amount_student1 > 40){
+                amount_student1 -= 40
+                if(group_study1 == 1){
+                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1*(3/40);
+                }else if (group_study1 > 1){
+                    document.getElementById('amount_work2').value =  (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1*(3/40);
+                }
+            }else{
+                if(group_study1 == 1){
+                    document.getElementById('amount_work2').value = prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                }else if (group_study1 > 1){
+                    document.getElementById('amount_work2').value = hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                }
+            }
+
+        }else if (unit == '3(1-1-4)'){
+            prepare_theory = parseFloat(document.getElementById('prepare_theory2').value = 1);
+            hour_lecture = parseFloat(document.getElementById('hour_lecture2').value = 1);
+            check_work1 = parseFloat(document.getElementById('check_work3').value = 1);
+            prepare_practice = parseFloat(document.getElementById('prepare_practice2').value = 1);
+            hour_practice = parseFloat(document.getElementById('hour_practice2').value = 1);
+            check_work2 = parseFloat(document.getElementById('check_work4').value = 1);
+            amount_student1 = parseFloat(document.getElementById('amount_student2').value);
+            group_study1 = parseFloat(document.getElementById('group_study2').value);
+
+            if(amount_student1 > 40){
+                amount_student1 -= 40
+                if(group_study1 == 1){
+                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1*(2/40);
+                }else if (group_study1 > 1){
+                    document.getElementById('amount_work2').value =  (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1*(2/40);
+                }
+            }else{
+                if(group_study1 == 1){
+                    document.getElementById('amount_work2').value = prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                }else if (group_study1 > 1){
+                    document.getElementById('amount_work2').value = hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                }
+            }
+
+        }else if (unit == '2(2-0-4)'){
+            prepare_theory = parseFloat(document.getElementById('prepare_theory2').value = 2);
+            hour_lecture = parseFloat(document.getElementById('hour_lecture2').value = 2);
+            check_work1 = parseFloat(document.getElementById('check_work3').value = 2);
+            prepare_practice = parseFloat(document.getElementById('prepare_practice2').value = '-');
+            hour_practice = parseFloat(document.getElementById('hour_practice2').value = '-');
+            check_work2 = parseFloat(document.getElementById('check_work4').value = '-');
+            amount_student1 = parseFloat(document.getElementById('amount_student2').value);
+            group_study1 = parseFloat(document.getElementById('group_study2').value);
+
+            if(amount_student1 > 40){
+                amount_student1 -= 40
+                if(group_study1 == 1){
+                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1) + amount_student1*(2/40);
+                }else if (group_study1 > 1){
+                    document.getElementById('amount_work2').value =  (hour_lecture + check_work1) + amount_student1*(2/40);
+                }
+            }else{
+                if(group_study1 == 1){
+                    document.getElementById('amount_work2').value = prepare_theory + hour_lecture + check_work1;
+                }else if (group_study1 > 1){
+                    document.getElementById('amount_work2').value = hour_lecture + check_work1;
+                }
+            }
+
+        }else if (unit == '2(1-3-4)'){
+            prepare_theory = parseFloat(document.getElementById('prepare_theory2').value = 1);
+            hour_lecture = parseFloat(document.getElementById('hour_lecture2').value = 1);
+            check_work1 = parseFloat(document.getElementById('check_work3').value = 1);
+            prepare_practice = parseFloat(document.getElementById('prepare_practice2').value = 1);
+            hour_practice = parseFloat(document.getElementById('hour_practice2').value = 3);
+            check_work2 = parseFloat(document.getElementById('check_work4').value = 1);
+            amount_student1 = parseFloat(document.getElementById('amount_student2').value);
+            group_study1 = parseFloat(document.getElementById('group_study2').value);
+
+            if(amount_student1 > 40){
+                amount_student1 -= 40
+                if(group_study1 == 1){
+                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1*(2/40);
+                }else if (group_study1 > 1){
+                    document.getElementById('amount_work2').value =  (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1*(2/40);
+                }
+            }else{
+                if(group_study1 == 1){
+                    document.getElementById('amount_work2').value = prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                }else if (group_study1 > 1){
+                    document.getElementById('amount_work2').value = hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                }
+            }
+
+        }else if (unit == '2(1-2-3)'){
+            prepare_theory = parseFloat(document.getElementById('prepare_theory2').value = 1);
+            hour_lecture = parseFloat(document.getElementById('hour_lecture2').value = 1);
+            check_work1 = parseFloat(document.getElementById('check_work3').value = 1);
+            prepare_practice = parseFloat(document.getElementById('prepare_practice2').value = 1);
+            hour_practice = parseFloat(document.getElementById('hour_practice2').value = 2);
+            check_work2 = parseFloat(document.getElementById('check_work4').value = 1);
+            amount_student1 = parseFloat(document.getElementById('amount_student2').value);
+            group_study1 = parseFloat(document.getElementById('group_study2').value);
+
+            if(amount_student1 > 40){
+                amount_student1 -= 40
+                if(group_study1 == 1){
+                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1*(2/40);
+                }else if (group_study1 > 1){
+                    document.getElementById('amount_work2').value =  (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1*(2/40);
+                }
+            }else{
+                if(group_study1 == 1){
+                    document.getElementById('amount_work2').value = prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                }else if (group_study1 > 1){
+                    document.getElementById('amount_work2').value = hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                }
+            }
+
+        }else if (unit == '1(0-2-1)'){
+            prepare_theory = parseFloat(document.getElementById('prepare_theory2').value = '-');
+            hour_lecture = parseFloat(document.getElementById('hour_lecture2').value = '-');
+            check_work1 = parseFloat(document.getElementById('check_work3').value = '-');
+            prepare_practice = parseFloat(document.getElementById('prepare_practice2').value = 1);
+            hour_practice = parseFloat(document.getElementById('hour_practice2').value = 2);
+            check_work2 = parseFloat(document.getElementById('check_work4').value = 1);
+            amount_student1 = parseFloat(document.getElementById('amount_student2').value);
+            group_study1 = parseFloat(document.getElementById('group_study2').value);
+
+            if(amount_student1 > 40){
+                amount_student1 -= 40
+                if(group_study1 == 1){
+                    document.getElementById('amount_work2').value = (prepare_practice + hour_practice + check_work2) + amount_student1*(1/40);
+                }else if (group_study1 > 1){
+                    document.getElementById('amount_work2').value =  (hour_practice + check_work2) + amount_student1*(1/40);
+                }
+            }else{
+                if(group_study1 == 1){
+                    document.getElementById('amount_work2').value = prepare_practice + hour_practice + check_work2;
+                }else if (group_study1 > 1){
+                    document.getElementById('amount_work2').value = hour_practice + check_work2;
+                }
+            }
+
+        } else if (unit == '1(0-3-1)'){
+            prepare_theory = parseFloat(document.getElementById('prepare_theory2').value = '-');
+            hour_lecture = parseFloat(document.getElementById('hour_lecture2').value = '-');
+            check_work1 = parseFloat(document.getElementById('check_work3').value = '-');
+            prepare_practice = parseFloat(document.getElementById('prepare_practice2').value = 1);
+            hour_practice = parseFloat(document.getElementById('hour_practice2').value = 3);
+            check_work2 = parseFloat(document.getElementById('check_work4').value = 1);
+            amount_student1 = parseFloat(document.getElementById('amount_student2').value);
+            group_study1 = parseFloat(document.getElementById('group_study2').value);
+
+            if (practice_subject == 'ฟิสิกส์'){
+                if(amount_student1 > 40){
+                amount_student1 -= 40
+                    if(group_study1 == 1){
+                        document.getElementById('amount_work2').value = (prepare_practice + hour_practice + check_work2 + 4) + amount_student1*(1/40);
+                    }else if (group_study1 > 1){
+                        document.getElementById('amount_work2').value =  (hour_practice + check_work2 + 4) + amount_student1*(1/40);
+                    }
+                }else{
+                    if(group_study1 == 1){
+                        document.getElementById('amount_work2').value = prepare_practice + hour_practice + check_work2 + 4;
+                    }else if (group_study1 > 1){
+                        document.getElementById('amount_work2').value = hour_practice + check_work2 + 4;
+                    }
+                }
+            }else if (practice_subject == 'เคมี'){
+                if(amount_student1 > 40){
+                amount_student1 -= 40
+                    if(group_study1 == 1){
+                        document.getElementById('amount_work2').value = (prepare_practice + hour_practice + check_work2 + 6) + amount_student1*(1/40);
+                    }else if (group_study1 > 1){
+                        document.getElementById('amount_work2').value =  (hour_practice + check_work2 + 6) + amount_student1*(1/40);
+                    }
+                }else{
+                    if(group_study1 == 1){
+                        document.getElementById('amount_work2').value = prepare_practice + hour_practice + check_work2 + 6;
+                    }else if (group_study1 > 1){
+                        document.getElementById('amount_work2').value = hour_practice + check_work2 + 6;
+                    }
+                }
+            }else if (practice_subject == 'ชีววิทยาและจุลชีววิทยา'){
+                if(amount_student1 > 40){
+                amount_student1 -= 40
+                    if(group_study1 == 1){
+                        document.getElementById('amount_work2').value = (prepare_practice + hour_practice + check_work2 + 8) + amount_student1*(1/40);
+                    }else if (group_study1 > 1){
+                        document.getElementById('amount_work2').value =  (hour_practice + check_work2 + 8) + amount_student1*(1/40);
+                    }
+                }else{
+                    if(group_study1 == 1){
+                        document.getElementById('amount_work2').value = prepare_practice + hour_practice + check_work2 + 8;
+                    }else if (group_study1 > 1){
+                        document.getElementById('amount_work2').value = hour_practice + check_work2 + 8;
+                    }
+                }
+            }else{
+                document.getElementById('amount_work2').value = " ";
+            }
+        }
+    }
 </script>

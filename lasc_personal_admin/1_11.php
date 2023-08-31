@@ -33,6 +33,7 @@
             </tr>
         </thead>
         <tbody>
+            <hr>
             <form action="1_11/edit_1_11.php" method="post">
                 <input type="hidden" name="userId" value="<?= $userId ?>">
                 <input type="hidden" class="form-control" name="term" value="<?= $term_year['term']; ?>">
@@ -68,12 +69,7 @@
                         <td class="score">40</td>
                     </tr>
                 <?php } ?>
-<<<<<<< Updated upstream
-                <?php if ($per['checkbox3'] == 0) {
-                ?>
-=======
                 <?php if ($per['checkbox3'] == 0) { ?>
->>>>>>> Stashed changes
                     <tr>
                         <td><input class="form-check-input" type="checkbox" id="checkbox3" onclick="sum()" name="checkbox3" value="30"></td>
                         <td>คณบดี</td>
@@ -87,10 +83,6 @@
                         <td><input type="text" class="form-control" id="scope3" name="scope3" value="<?= $per['scope3'] ?>" readonly> </td>
                         <td class="score">30</td>
                     </tr>
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
                 <?php } ?>
                 <?php if ($per['checkbox4'] == 0) { ?>
                     <tr>
@@ -257,12 +249,12 @@
                         <td class="score">5</td>
                     </tr>
                 <?php } ?>
-                <tr>
-                    <td colspan="3">
-                        จำนวนภาระงานตลอดภาคเรียน
-                    </td>
-                    <td><span id="result"></span></td>
-                </tr>
+                    <tr>
+                        <td colspan="3">
+                            จำนวนภาระงานตลอดภาคเรียน
+                        </td>
+                        <td><span id="result"></span></td>
+                    </tr>
             </form>    
         </tbody>
     </table>
@@ -291,11 +283,7 @@
             document.getElementById("checkbox" + i).disabled = true;
         }
     }
-<<<<<<< Updated upstream
     
-=======
-
->>>>>>> Stashed changes
     sum();
     checkbox_dissabled();
 </script>

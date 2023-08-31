@@ -27,6 +27,15 @@
         $term =  $term_year['term'];
         $year =  $term_year['year'];
 
+        $stmt = $conn->query("SELECT amount_work FROM personal_1_1 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+        $stmt->execute();
+        $personal_1_1 = $stmt->fetchAll();
+
+        $totalAmountWork_1_1 = 0;
+        foreach ($personal_1_1 as $per_1_1) {
+            $totalAmountWork_1_1 += floatval($per_1_1['amount_work']);
+        }
+
         $stmt = $conn->query("SELECT amount_work FROM personal_1_2_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
         $stmt->execute();
         $personal_1_2_a = $stmt->fetchAll();
@@ -147,7 +156,7 @@
             $totalAmountWork_1_11 += floatval($per_1_11['amount_work']);
         }
 
-        $totalAmountWork = $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
+        $totalAmountWork = $totalAmountWork_1_1 + $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
     ?>
     <div class="container">
         <div class="pagetitle">
@@ -163,7 +172,7 @@
             <tbody>
                 <tr>
                     <td>1. ภาระงานการสอน (ภาคปกติ)</td>
-                    <td class="text-center">0.00</td>
+                    <td class="text-center"><?= number_format($totalAmountWork_1_1, 2); ?></td>
                 </tr>
                 <tr>
                     <td>2. ภาระงานอาจารย์ที่ปรึกษาของนักศึกษา (หมู่เรียน ชมรม ชุมนุม หรือที่ปรึกษาอื่น)</td>
@@ -203,7 +212,7 @@
                 </tr>
                 <tr>
                     <td>11. ภาระงานด้านการบริหาร (เฉพาะผู้ที่ได้รับการแต่งตั้งให้ดำรงตำแหน่งบริหาร)</td>
-                    <td class="text-center">0.00</td>
+                    <td class="text-center"><?= number_format($totalAmountWork_1_11, 2); ?></td>
                 </tr>
                 <tr>
                     <th class="text-center">รวมภาระงานตลอดภาคเรียน</th>

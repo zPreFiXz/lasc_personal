@@ -26,6 +26,15 @@
 <?php } ?>
 <?php
     // ดึงค่าภาระงานไปคำนวณจากตาราง
+    $stmt = $conn->query("SELECT amount_work FROM personal_1_1 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+    $stmt->execute();
+    $personal_1_1 = $stmt->fetchAll();
+
+    $totalAmountWork_1_1 = 0;
+    foreach ($personal_1_1 as $per_1_1) {
+        $totalAmountWork_1_1 += floatval($per_1_1['amount_work']);
+    }
+
     $stmt = $conn->query("SELECT amount_work FROM personal_1_2_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
     $stmt->execute();
     $personal_1_2_a = $stmt->fetchAll();
@@ -146,7 +155,7 @@
         $totalAmountWork_1_11 += floatval($per_1_11['amount_work']);
     }
     // end ดึงค่าภาระงานไปคำนวณจากตาราง
-    $totalAmountWork = $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
+    $totalAmountWork = $totalAmountWork_1_1 + $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
     
     $stmt = $conn->query("SELECT * FROM `term_year` where id = 1"); // ดึงข้อมูลจากตาราง personal โดยใช้ ID
     $stmt->execute();
@@ -159,11 +168,20 @@
     $stmt->execute();
     $ranks = $stmt->fetchAll();
     // end จัดอันดับ
+
+    if (isset($_SESSION['adminId'])) {
+        $userId = $_SESSION['adminId'];
+        $stmt = $conn->query("SELECT * FROM users WHERE firstname = '$userId'");
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 ?>
 <div class="container">
-    <div class="pagetitle mt-3">
-        <h1>Dashboard admin</h1>
-        <a href="logout.php" class="btn btn-danger">Logout</a>
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="pagetitle mt-3">
+            <h1 style="font-size: 30px;">ยินดีต้อนรับ, <?php echo $row['nametitle'] .  $row['firstname'] . ' ' . $row['lastname'] ?></h1>
+        </div>
+        <a href="logout.php" class="btn btn-danger">ออกจากระบบ</a>
     </div>
     <hr> <!-- เส้น -->
     <div class="d-inline justify-content-end">
@@ -333,7 +351,7 @@
                         <tbody>
                             <tr>
                                 <td>1. ภาระงานการสอน (ภาคปกติ)</td>
-                                <td class="text-center">0.00</td>
+                                <td class="text-center"><?= number_format($totalAmountWork_1_1, 2); ?></td>
                             </tr>
                             <tr>
                                 <td>2. ภาระงานอาจารย์ที่ปรึกษาของนักศึกษา (หมู่เรียน ชมรม ชุมนุม หรือที่ปรึกษาอื่น)</td>

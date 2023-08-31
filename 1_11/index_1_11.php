@@ -296,3 +296,6 @@
 
     sum();
 </script>
+<?php 
+    $conn = null;
+?>

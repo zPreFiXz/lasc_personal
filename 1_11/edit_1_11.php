@@ -77,7 +77,7 @@
         $stmt->bindParam(':scope14', $scope14);
         $stmt->bindParam(':amount_work', $amount_work);
         $stmt->execute();
-
+        $conn = null;
         if ($stmt) {
             $_SESSION['success'] = "แก้ไขข้อมูลสำเร็จ";
             header("location: ../index.php?page=1_11/index_1_11");

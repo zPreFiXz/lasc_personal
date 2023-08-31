@@ -402,3 +402,6 @@
         }
     }
 </script>
+<?php 
+    $conn = null;
+?>

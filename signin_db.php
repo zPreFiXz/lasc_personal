@@ -36,17 +36,21 @@
                                 $_SESSION['nametitle'] = $row['nametitle'];
                                 $_SESSION['lastname'] = $row['lastname'];
                                 $_SESSION['branch'] = $row['branch'];
+                                $conn = null;
                                 header("location: index.php?page=users/dashboard");
                             }
                         } else {
+                            $conn = null;
                             $_SESSION['error'] = 'รหัสผ่านผิด';
                             header("location: signin.php");
                         }
                     } else {
+                        $conn = null;
                         $_SESSION['error'] = 'อีเมลผิด';
                         header("location: signin.php");
                     }
                 } else {
+                    $conn = null;
                     $_SESSION['error'] = "ไม่มีข้อมูลในระบบ";
                     header("location: signin.php");
                 }
@@ -55,4 +59,5 @@
             }
         }
     }
+    $conn = null;
 ?>

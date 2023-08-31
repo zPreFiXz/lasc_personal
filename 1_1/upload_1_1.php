@@ -26,15 +26,18 @@
                 $stmt->bindParam(':file', $fileNew);
                 $stmt->execute();
                 unset($_SESSION['upload']);
+                $conn = null;
+                
+                if ($stmt) {
+                    $_SESSION['success'] = "อัปโหลดไฟล์สำเร็จ";
+                    header("location: ../index.php?page=1_1/index_1_1");
+                }else{
+                    $_SESSION['error'] = "อัปโหลดไฟล์ไม่สำเร็จ";
+                    header("location: ../index.php?page=1_1/index_1_1");
+                }
             }
         }
     }
         
-    if ($stmt) {
-        $_SESSION['success'] = "อัปโหลดไฟล์สำเร็จ";
-        header("location: ../index.php?page=1_1/index_1_1");
-    }else{
-        $_SESSION['error'] = "อัปโหลดไฟล์ไม่สำเร็จ";
-        header("location: ../index.php?page=1_1/index_1_1");
-    }
+    
 ?>

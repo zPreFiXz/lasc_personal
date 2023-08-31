@@ -21,7 +21,7 @@
         $stmt->bindParam(':amount_work', $amount_work);
         $stmt->execute();
         unset( $_SESSION['edit']);
-
+        $conn = null;
         if ($stmt) {
             $_SESSION['success'] = "แก้ไขข้อมูลสำเร็จ";
             header("location: ../index.php?page=1_9/index_1_9");

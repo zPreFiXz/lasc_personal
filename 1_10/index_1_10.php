@@ -549,3 +549,6 @@
         }
     }
 </script>
+<?php 
+    $conn = null;
+?>

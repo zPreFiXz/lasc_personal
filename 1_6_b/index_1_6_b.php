@@ -440,3 +440,6 @@
         }
     }
 </script>
+<?php  
+    $conn = null;
+?>

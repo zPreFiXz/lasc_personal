@@ -47,13 +47,14 @@
         $stmt->bindParam(':proportion', $proportion);
         $stmt->bindParam(':amount_work', $amount_work);
         $stmt->execute();
-    }
-
-    if ($stmt) {
-        $_SESSION['success'] = "เพิ่มข้อมูลสำเร็จ";
-        header("location: ../index.php?page=1_1/index_1_1");
-    }else{
-        $_SESSION['error'] = "เพิ่มข้อมูลไม่สำเร็จ";
-        header("location: ../index.php?page=1_1/index_1_1");
+        $conn = null;
+    
+        if ($stmt) {
+            $_SESSION['success'] = "เพิ่มข้อมูลสำเร็จ";
+            header("location: ../index.php?page=1_1/index_1_1");
+        }else{
+            $_SESSION['error'] = "เพิ่มข้อมูลไม่สำเร็จ";
+            header("location: ../index.php?page=1_1/index_1_1");
+        }
     }
 ?>

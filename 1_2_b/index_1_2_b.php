@@ -391,3 +391,6 @@
         document.getElementById('amount_work').value = 2;
     }
 </script>
+<?php 
+    $conn = null;
+?>

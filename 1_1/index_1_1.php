@@ -990,3 +990,6 @@
         }
     }
 </script>
+<?php 
+    $conn = null;
+?>

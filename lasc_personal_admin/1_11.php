@@ -287,3 +287,6 @@
     sum();
     checkbox_dissabled();
 </script>
+<?php 
+    $conn = null;
+?>  

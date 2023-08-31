@@ -506,3 +506,7 @@
         }
     }
 </script>
+
+<?php 
+    $conn = null;
+?>

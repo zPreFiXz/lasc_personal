@@ -393,3 +393,6 @@
         document.getElementById('amount_work').value = 1;
     }
 </script>
+<?php 
+    $conn = null;
+?>

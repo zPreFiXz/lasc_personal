@@ -488,3 +488,6 @@
         });
     });
 </script>
+<?php 
+    $conn = null;
+?>

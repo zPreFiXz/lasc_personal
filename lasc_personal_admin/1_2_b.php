@@ -71,3 +71,6 @@
         </tbody>
     </table>
 </div>
+<?php 
+    $conn = null;
+?>  

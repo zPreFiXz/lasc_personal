@@ -162,7 +162,7 @@
                     foreach ($personal as $per) {
             ?>
                     <tr> <!-- แสดงแถวของตาราง (row) โดยใช้ข้อมูลจากตัวแปร $per ในแต่ละคอลัมน์ของตาราง -->
-                        <td><?php echo $per['Major']; ?></td>
+                        <td><?php echo $per['major']; ?></td>
                         <td><?php echo $per['level']; ?></td>
                         <td><?php echo $per['amount_student']; ?></td>
                         <td><?php echo $per['amount_time']; ?></td>
@@ -245,10 +245,23 @@
                             <input type="hidden" class="form-control" name="userId" value="<?=$userId?>">
                             <input type="hidden" class="form-control" name="term" value="<?=$term_year['term'];?>">
                             <input type="hidden" class="form-control" name="year" value="<?=$term_year['year'];?>">
-
                             <div class="mb-3">
-                                <label for="Major" class="col-form-label">สาขาวิชา</label>
-                                <input type="text" required class="form-control" name="Major" required>
+                                <label for="major" class="col-sm-2 col-form-label ">สาขาวิชา</label>
+                                <select class="form-select" name="major" aria-describedby="major" id="major" required>
+                                    <option value="กรุณาเลือก" selected>กรุณาเลือก</option>
+                                    <option value="วิทยาการคอมพิวเตอร์">วิทยาการคอมพิวเตอร์</option>
+                                    <option value="เทคโนโลยีคอมพิวเตอร์และดิจิทัล">เทคโนโลยีคอมพิวเตอร์และดิจิทัล</option>
+                                    <option value="สาธารณสุขชุมชน">สาธารณสุขชุมชน</option>
+                                    <option value="วิทยาศาสตร์การกีฬา">วิทยาศาสตร์การกีฬา</option>
+                                    <option value="เทคโนโลยีการเกษตร">เทคโนโลยีการเกษตร</option>
+                                    <option value="เทคโนโลยีและนวัตกรรมอาหาร">เทคโนโลยีและนวัตกรรมอาหาร</option>
+                                    <option value="อาชีวอนามัยและความปลอดภัย">อาชีวอนามัยและความปลอดภัย</option>
+                                    <option value="วิศวกรรมซอฟต์แวร์">วิศวกรรมซอฟต์แวร์</option>
+                                    <option value="วิศวกรรมโลจิสติกส์">วิศวกรรมโลจิสติกส์</option>
+                                    <option value="วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม">วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม</option>
+                                    <option value="การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ">การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ</option>
+                                    <option value="เทคโนโลยีโยธาและสถาปัตยกรรม">เทคโนโลยีโยธาและสถาปัตยกรรม</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="level" class="col-form-label">ระดับชั้น</label>
@@ -293,8 +306,21 @@
                     <div class="modal-body">
                         <form action="1_3/edit_1_3.php" method="post">
                             <div class="mb-3">
-                                <label for="Major" class="col-form-label">สาขาวิชา</label>
-                                <input type="text" class="form-control" name="Major" value="<?php echo $data['Major']; ?>" required>
+                                <label for="major" class="col-sm-2 col-form-label ">สาขาวิชา</label>
+                                <select class="form-select" name="major" aria-describedby="major" id="major" required>
+                                    <option value="วิทยาการคอมพิวเตอร์" <?php if ($data['major'] === 'วิทยาการคอมพิวเตอร์') echo 'selected'?>>วิทยาการคอมพิวเตอร์</option>
+                                    <option value="เทคโนโลยีคอมพิวเตอร์และดิจิทัล"<?php if ($data['major'] === 'เทคโนโลยีคอมพิวเตอร์และดิจิทัล') echo 'selected'?>>เทคโนโลยีคอมพิวเตอร์และดิจิทัล</option>
+                                    <option value="สาธารณสุขชุมชน"<?php if ($data['major'] === 'สาธารณสุขชุมชน') echo 'selected'?>>สาธารณสุขชุมชน</option>
+                                    <option value="วิทยาศาสตร์การกีฬา"<?php if ($data['major'] === 'วิทยาศาสตร์การกีฬา') echo 'selected'?>>วิทยาศาสตร์การกีฬา</option>
+                                    <option value="เทคโนโลยีการเกษตร"<?php if ($data['major'] === 'เทคโนโลยีการเกษตร') echo 'selected'?>>เทคโนโลยีการเกษตร</option>
+                                    <option value="เทคโนโลยีและนวัตกรรมอาหาร"<?php if ($data['major'] === 'เทคโนโลยีและนวัตกรรมอาหาร') echo 'selected'?>>เทคโนโลยีและนวัตกรรมอาหาร</option>
+                                    <option value="อาชีวอนามัยและความปลอดภัย"<?php if ($data['major'] === 'อาชีวอนามัยและความปลอดภัย') echo 'selected'?>>อาชีวอนามัยและความปลอดภัย</option>
+                                    <option value="วิศวกรรมซอฟต์แวร์"<?php if ($data['major'] === 'วิศวกรรมซอฟต์แวร์') echo 'selected'?>>วิศวกรรมซอฟต์แวร์</option>
+                                    <option value="วิศวกรรมโลจิสติกส์"<?php if ($data['major'] === 'วิศวกรรมโลจิสติกส์') echo 'selected'?>>วิศวกรรมโลจิสติกส์</option>
+                                    <option value="วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม"<?php if ($data['major'] === 'วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม') echo 'selected'?>>วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม</option>
+                                    <option value="การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ"<?php if ($data['major'] === 'การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ') echo 'selected'?>>การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ</option>
+                                    <option value="เทคโนโลยีโยธาและสถาปัตยกรรม"<?php if ($data['major'] === 'เทคโนโลยีโยธาและสถาปัตยกรรม') echo 'selected'?>>เทคโนโลยีโยธาและสถาปัตยกรรม</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="level" class="col-form-label">ระดับชั้น</label>

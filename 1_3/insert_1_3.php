@@ -4,7 +4,7 @@
 
     if(isset($_POST['submit'])) {
         $userId = $_POST['userId'];
-        $Major = $_POST['Major'];
+        $major = $_POST['major'];
         $level = $_POST['level'];
         $amount_student = $_POST['amount_student'];
         $amount_time = $_POST['amount_time'];
@@ -13,12 +13,12 @@
         $year = $_POST['year'];
         $amount_work = $_POST['amount_work'];
 
-        $sql = "INSERT INTO personal_1_3 (userId,Major, level, amount_student, amount_time, workplace, term, year, amount_work)
-        VALUES (:userId,:Major, :level, :amount_student, :amount_time, :workplace, :term, :year, :amount_work)";
+        $sql = "INSERT INTO personal_1_3 (userId,major, level, amount_student, amount_time, workplace, term, year, amount_work)
+        VALUES (:userId,:major, :level, :amount_student, :amount_time, :workplace, :term, :year, :amount_work)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userId', $userId);
-        $stmt->bindParam(':Major', $Major);
+        $stmt->bindParam(':major', $major);
         $stmt->bindParam(':level', $level);
         $stmt->bindParam(':amount_student', $amount_student);
         $stmt->bindParam(':amount_time', $amount_time);

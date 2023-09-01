@@ -94,7 +94,7 @@
                         <td><input class="form-check-input" type="checkbox" id="checkbox2" onclick="sum()" name="checkbox2" value="30" checked></td>
                         <td>รองอธิการบดี</td>
                         <td><input type="text" class="form-control" id="scope2" name="scope2" value="<?= $per['scope2'] ?>"></td>
-                        <td class="score">40</td>
+                        <td class="score">30</td>
                     </tr>
                 <?php } ?>
                 <?php if ($per['checkbox3'] == 0) { ?>
@@ -285,6 +285,8 @@
                 </tr> 
             </tbody>
         </table>
+        <div class="d-flex justify-content-end mb-3">
+        <button type="submit" name="update" class="btn btn-primary"><i class="bi bi-pencil-square">&nbsp;&nbsp;</i>บันทึกร่าง</button>
     </form> 
 </div>
 <script>

@@ -1,88 +1,88 @@
 <?php
-    require_once "config/db.php";
-    // ดึงตาราง term&year
-    $stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
+require_once "config/db.php";
+// ดึงตาราง term&year
+$stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
+$stmt->execute();
+$term_year = $stmt->fetch();
+//delete file
+if (isset($_GET['delete_file'])) {
+    $delete_file_id = $_GET['delete_file']; // รับค่า ID ที่ต้องการลบ
+    $stmt = $conn->prepare("SELECT file FROM personal_1_5_a WHERE id = :delete_file_id");
+    $stmt->bindParam(':delete_file_id', $delete_file_id);
     $stmt->execute();
-    $term_year = $stmt->fetch();
-    //delete file
-    if (isset($_GET['delete_file'])) {
-        $delete_file_id = $_GET['delete_file']; // รับค่า ID ที่ต้องการลบ
-        $stmt = $conn->prepare("SELECT file FROM personal_1_5_a WHERE id = :delete_file_id");
-        $stmt->bindParam(':delete_file_id', $delete_file_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $currentFile = $row['file'];
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $currentFile = $row['file'];
 
-        if ($currentFile) {
-            $filePath = 'uploads/' . $currentFile;
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-        }
-
-        $delete_file = $conn->prepare("UPDATE personal_1_5_a SET file = '' WHERE id = :delete_file_id");
-        $delete_file->bindParam(':delete_file_id', $delete_file_id);
-        $delete_file->execute();
-
-        if ($delete_file) {
-            $_SESSION['success'] = "ไฟล์ถูกลบสำเร็จ";
-            echo "<script>window.location.href = 'index.php?page=1_5_a/index_1_5_a';</script>";
-            exit;
+    if ($currentFile) {
+        $filePath = 'uploads/' . $currentFile;
+        if (file_exists($filePath)) {
+            unlink($filePath);
         }
     }
-    //delete 
-    if (isset($_GET['delete'])) {
-        $delete_id = $_GET['delete'];
 
-        $stmt = $conn->prepare("SELECT file FROM personal_1_5_a WHERE id = :delete_id");
-        $stmt->bindParam(':delete_id', $delete_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $currentFile = $row['file'];
+    $delete_file = $conn->prepare("UPDATE personal_1_5_a SET file = '' WHERE id = :delete_file_id");
+    $delete_file->bindParam(':delete_file_id', $delete_file_id);
+    $delete_file->execute();
 
-        if ($currentFile) {
-            $filePath = 'uploads/' . $currentFile;
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-        }
+    if ($delete_file) {
+        $_SESSION['success'] = "ไฟล์ถูกลบสำเร็จ";
+        echo "<script>window.location.href = 'index.php?page=1_5_a/index_1_5_a';</script>";
+        exit;
+    }
+}
+//delete 
+if (isset($_GET['delete'])) {
+    $delete_id = $_GET['delete'];
 
-        $deletestmt = $conn->prepare("DELETE FROM personal_1_5_a WHERE id = :delete_id");
-        $deletestmt->bindParam(':delete_id', $delete_id);
-        $deletestmt->execute();
+    $stmt = $conn->prepare("SELECT file FROM personal_1_5_a WHERE id = :delete_id");
+    $stmt->bindParam(':delete_id', $delete_id);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $currentFile = $row['file'];
 
-        if ($deletestmt) {
-            $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
-            echo "<script>window.location.href = 'index.php?page=1_5_a/index_1_5_a';</script>";
-            exit;
+    if ($currentFile) {
+        $filePath = 'uploads/' . $currentFile;
+        if (file_exists($filePath)) {
+            unlink($filePath);
         }
     }
-    //edit
-    if (isset($_GET['edit'])) {
-        // เก็บค่า ID ที่ต้องการแก้ไขในตัวแปร session ชื่อ 'edit'
-        $_SESSION['edit'] = $_GET['edit'];
-        $edit_id = $_SESSION['edit'];
-        // เตรียมคำสั่ง SQL สำหรับเลือกข้อมูลที่ต้องการแก้ไขจากตาราง personal_1_5_a โดยใช้ ID
-        $stmt = $conn->prepare("SELECT * FROM personal_1_5_a WHERE id = ?");
-        $stmt->execute([$edit_id]);
-        // เก็บข้อมูลที่ได้จากการคิวรีในตัวแปร $data
-        $data = $stmt->fetch();
+
+    $deletestmt = $conn->prepare("DELETE FROM personal_1_5_a WHERE id = :delete_id");
+    $deletestmt->bindParam(':delete_id', $delete_id);
+    $deletestmt->execute();
+
+    if ($deletestmt) {
+        $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
+        echo "<script>window.location.href = 'index.php?page=1_5_a/index_1_5_a';</script>";
+        exit;
+    }
+}
+//edit
+if (isset($_GET['edit'])) {
+    // เก็บค่า ID ที่ต้องการแก้ไขในตัวแปร session ชื่อ 'edit'
+    $_SESSION['edit'] = $_GET['edit'];
+    $edit_id = $_SESSION['edit'];
+    // เตรียมคำสั่ง SQL สำหรับเลือกข้อมูลที่ต้องการแก้ไขจากตาราง personal_1_5_a โดยใช้ ID
+    $stmt = $conn->prepare("SELECT * FROM personal_1_5_a WHERE id = ?");
+    $stmt->execute([$edit_id]);
+    // เก็บข้อมูลที่ได้จากการคิวรีในตัวแปร $data
+    $data = $stmt->fetch();
 ?>
-        <script>
-            // ถูกเรียกใช้เมื่อหน้าเว็บโหลดเสร็จสมบูรณ์ 
-            document.addEventListener("DOMContentLoaded", function() {
-                // สร้างอ็อบเจกต์ Modal
-                var modal = new bootstrap.Modal(document.getElementById("modal"));
-                // แสดงหน้าต่าง Modal
-                modal.show();
-            });
-        </script>
-    <?php } ?>
+    <script>
+        // ถูกเรียกใช้เมื่อหน้าเว็บโหลดเสร็จสมบูรณ์ 
+        document.addEventListener("DOMContentLoaded", function() {
+            // สร้างอ็อบเจกต์ Modal
+            var modal = new bootstrap.Modal(document.getElementById("modal"));
+            // แสดงหน้าต่าง Modal
+            modal.show();
+        });
+    </script>
+<?php } ?>
 <!-- upload file -->
 <?php if (isset($_GET['upload'])) {
-        // เก็บค่า ID ที่ต้องการแก้ไขในตัวแปร session ชื่อ 'upload'
-        $_SESSION['upload'] = $_GET['upload'];
-        $upload_id = $_SESSION['upload'];
+    // เก็บค่า ID ที่ต้องการแก้ไขในตัวแปร session ชื่อ 'upload'
+    $_SESSION['upload'] = $_GET['upload'];
+    $upload_id = $_SESSION['upload'];
 ?>
     <script>
         // ถูกเรียกใช้เมื่อหน้าเว็บโหลดเสร็จสมบูรณ์ 
@@ -118,8 +118,8 @@
     <?php if (isset($_SESSION['success'])) { ?>
         <div class="alert alert-success" id="alert-success">
             <?php
-                echo $_SESSION['success']; // แสดงข้อความที่เก็บในตัวแปร session 'success'
-                unset($_SESSION['success']); // ลบค่าในตัวแปร session 'success'
+            echo $_SESSION['success']; // แสดงข้อความที่เก็บในตัวแปร session 'success'
+            unset($_SESSION['success']); // ลบค่าในตัวแปร session 'success'
             ?>
         </div>
         <script>
@@ -151,21 +151,21 @@
         </thead>
         <tbody>
             <?php
-                $userId = $_SESSION['userId'];
-                $term =  $term_year['term'];
-                $year =  $term_year['year'];
-                $stmt = $conn->query("SELECT*FROM personal_1_5_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'"); // ดึงข้อมูลจากตาราง personal_1_5_a
-                $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
-                $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
+            $userId = $_SESSION['userId'];
+            $term =  $term_year['term'];
+            $year =  $term_year['year'];
+            $stmt = $conn->query("SELECT*FROM personal_1_5_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'"); // ดึงข้อมูลจากตาราง personal_1_5_a
+            $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
+            $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
 
-                $totalAmountWork = 0.00;
+            $totalAmountWork = 0.00;
 
-                // ตรวจสอบว่ามีข้อมูลหรือไม่
-                if (!$personal) { // ไม่มีข้อมูล
-                    echo " <tr><td colspan='9' class='text-center'>ไม่มีข้อมูล</td></tr>";
-                } else {
-                    // วนลูปแสดงข้อมูลที่ดึงมา
-                    foreach ($personal as $per) {
+            // ตรวจสอบว่ามีข้อมูลหรือไม่
+            if (!$personal) { // ไม่มีข้อมูล
+                echo " <tr><td colspan='9' class='text-center'>ไม่มีข้อมูล</td></tr>";
+            } else {
+                // วนลูปแสดงข้อมูลที่ดึงมา
+                foreach ($personal as $per) {
             ?>
                     <tr> <!-- แสดงแถวของตาราง (row) โดยใช้ข้อมูลจากตัวแปร $per ในแต่ละคอลัมน์ของตาราง -->
                         <td style="white-space: nowrap;"><?= $per['major']; ?></td>
@@ -231,12 +231,13 @@
                             </td>
                         <?php } ?>
                     </tr>
-            <?php } } ?>
-                    <tr>
-                        <th scope="row" colspan="6">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-                        <td><?= number_format($totalAmountWork, 2); ?></td>
-                        <td colspan="2"></td>
-                    </tr>
+            <?php }
+            } ?>
+            <tr>
+                <th scope="row" colspan="6">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+                <td><?= number_format($totalAmountWork, 2); ?></td>
+                <td colspan="2"></td>
+            </tr>
         </tbody>
     </table>
 </div>
@@ -253,10 +254,23 @@
                     <input type="hidden" class="form-control" name="userId" value="<?= $userId ?>">
                     <input type="hidden" class="form-control" name="term" value="<?= $term_year['term']; ?>">
                     <input type="hidden" class="form-control" name="year" value="<?= $term_year['year']; ?>">
-                    
                     <div class="mb-3">
-                        <label for="major" class="col-sm-2 col-form-label">สาขาวิชา</label>
-                        <input type="text" class="form-control" name="major" id="major" oninput="calc()" required>
+                        <label for="major" class="col-sm-2 col-form-label ">สาขาวิชา</label>
+                        <select class="form-select" name="major" aria-describedby="major" id="major" onchange="calc()" required>
+                            <option value="กรุณาเลือก" selected>กรุณาเลือก</option>
+                            <option value="วิทยาการคอมพิวเตอร์">วิทยาการคอมพิวเตอร์</option>
+                            <option value="เทคโนโลยีคอมพิวเตอร์และดิจิทัล">เทคโนโลยีคอมพิวเตอร์และดิจิทัล</option>
+                            <option value="สาธารณสุขชุมชน">สาธารณสุขชุมชน</option>
+                            <option value="วิทยาศาสตร์การกีฬา">วิทยาศาสตร์การกีฬา</option>
+                            <option value="เทคโนโลยีการเกษตร">เทคโนโลยีการเกษตร</option>
+                            <option value="เทคโนโลยีและนวัตกรรมอาหาร">เทคโนโลยีและนวัตกรรมอาหาร</option>
+                            <option value="อาชีวอนามัยและความปลอดภัย">อาชีวอนามัยและความปลอดภัย</option>
+                            <option value="วิศวกรรมซอฟต์แวร์">วิศวกรรมซอฟต์แวร์</option>
+                            <option value="วิศวกรรมโลจิสติกส์">วิศวกรรมโลจิสติกส์</option>
+                            <option value="วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม">วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม</option>
+                            <option value="การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ">การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ</option>
+                            <option value="เทคโนโลยีโยธาและสถาปัตยกรรม">เทคโนโลยีโยธาและสถาปัตยกรรม</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="level" class="col-sm-2 col-form-label">ระดับชั้น</label>
@@ -302,8 +316,21 @@
             <div class="modal-body">
                 <form action="1_5_a/edit_1_5_a.php" method="post">
                     <div class="mb-3">
-                        <label for="major" class="col-sm-2 col-form-label">สาขาวิชา</label>
-                        <input type="text" class="form-control" name="major" value="<?php echo $data['major']; ?>" required>
+                        <label for="major" class="col-sm-2 col-form-label ">สาขาวิชา</label>
+                        <select class="form-select" name="major" aria-describedby="major" id="major" required>
+                            <option value="วิทยาการคอมพิวเตอร์" <?php if ($data['major'] === 'วิทยาการคอมพิวเตอร์') echo 'selected' ?>>วิทยาการคอมพิวเตอร์</option>
+                            <option value="เทคโนโลยีคอมพิวเตอร์และดิจิทัล" <?php if ($data['major'] === 'เทคโนโลยีคอมพิวเตอร์และดิจิทัล') echo 'selected' ?>>เทคโนโลยีคอมพิวเตอร์และดิจิทัล</option>
+                            <option value="สาธารณสุขชุมชน" <?php if ($data['major'] === 'สาธารณสุขชุมชน') echo 'selected' ?>>สาธารณสุขชุมชน</option>
+                            <option value="วิทยาศาสตร์การกีฬา" <?php if ($data['major'] === 'วิทยาศาสตร์การกีฬา') echo 'selected' ?>>วิทยาศาสตร์การกีฬา</option>
+                            <option value="เทคโนโลยีการเกษตร" <?php if ($data['major'] === 'เทคโนโลยีการเกษตร') echo 'selected' ?>>เทคโนโลยีการเกษตร</option>
+                            <option value="เทคโนโลยีและนวัตกรรมอาหาร" <?php if ($data['major'] === 'เทคโนโลยีและนวัตกรรมอาหาร') echo 'selected' ?>>เทคโนโลยีและนวัตกรรมอาหาร</option>
+                            <option value="อาชีวอนามัยและความปลอดภัย" <?php if ($data['major'] === 'อาชีวอนามัยและความปลอดภัย') echo 'selected' ?>>อาชีวอนามัยและความปลอดภัย</option>
+                            <option value="วิศวกรรมซอฟต์แวร์" <?php if ($data['major'] === 'วิศวกรรมซอฟต์แวร์') echo 'selected' ?>>วิศวกรรมซอฟต์แวร์</option>
+                            <option value="วิศวกรรมโลจิสติกส์" <?php if ($data['major'] === 'วิศวกรรมโลจิสติกส์') echo 'selected' ?>>วิศวกรรมโลจิสติกส์</option>
+                            <option value="วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม" <?php if ($data['major'] === 'วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม') echo 'selected' ?>>วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม</option>
+                            <option value="การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ" <?php if ($data['major'] === 'การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ') echo 'selected' ?>>การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ</option>
+                            <option value="เทคโนโลยีโยธาและสถาปัตยกรรม" <?php if ($data['major'] === 'เทคโนโลยีโยธาและสถาปัตยกรรม') echo 'selected' ?>>เทคโนโลยีโยธาและสถาปัตยกรรม</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="level" class="col-sm-2 col-form-label">ระดับชั้น</label>
@@ -399,6 +426,6 @@
         document.getElementById('amount_work').value = 1;
     }
 </script>
-<?php 
-    $conn = null;
+<?php
+$conn = null;
 ?>

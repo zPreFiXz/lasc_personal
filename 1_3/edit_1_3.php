@@ -4,18 +4,18 @@
 
     if(isset($_POST['update'])) {
         $id = $_SESSION['edit'];
-        $Major = $_POST['Major'];
+        $major = $_POST['major'];
         $level = $_POST['level'];
         $amount_student = $_POST['amount_student'];
         $amount_time = $_POST['amount_time'];
         $workplace = $_POST['workplace'];
         $amount_work = $_POST['amount_work'];
 
-        $sql = "UPDATE personal_1_3 SET Major = :Major, level = :level, amount_student = :amount_student , amount_time = :amount_time , workplace = :workplace , amount_work = :amount_work WHERE id = :id" ;
+        $sql = "UPDATE personal_1_3 SET major = :major, level = :level, amount_student = :amount_student , amount_time = :amount_time , workplace = :workplace , amount_work = :amount_work WHERE id = :id" ;
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':Major', $Major);
+        $stmt->bindParam(':major', $major);
         $stmt->bindParam(':level', $level);
         $stmt->bindParam(':amount_student', $amount_student);
         $stmt->bindParam(':amount_time', $amount_time);

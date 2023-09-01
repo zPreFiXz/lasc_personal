@@ -1,78 +1,78 @@
 <?php
-    require_once "config/db.php";
+require_once "config/db.php";
 
-    // ดึงตาราง term&year
-    $stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
+// ดึงตาราง term&year
+$stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
+$stmt->execute();
+$term_year = $stmt->fetch();
+
+if (isset($_GET['delete_file'])) {
+    $delete_file_id = $_GET['delete_file'];
+    $stmt = $conn->prepare("SELECT file FROM personal_1_6_a WHERE id = :delete_file_id");
+    $stmt->bindParam(':delete_file_id', $delete_file_id);
     $stmt->execute();
-    $term_year = $stmt->fetch();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $currentFile = $row['file'];
 
-    if (isset($_GET['delete_file'])) {
-        $delete_file_id = $_GET['delete_file'];
-        $stmt = $conn->prepare("SELECT file FROM personal_1_6_a WHERE id = :delete_file_id");
-        $stmt->bindParam(':delete_file_id', $delete_file_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $currentFile = $row['file'];
-
-        if ($currentFile) {
-            $filePath = 'uploads/' . $currentFile;
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-        }
-
-        $delete_file = $conn->prepare("UPDATE personal_1_6_a SET file = '' WHERE id = :delete_file_id");
-        $delete_file->bindParam(':delete_file_id', $delete_file_id);
-        $delete_file->execute();
-
-        if ($delete_file) {
-            $_SESSION['success'] = "ไฟล์ถูกลบสำเร็จ";
-            echo "<script>window.location.href = 'index.php?page=1_6_a/index_1_6_a';</script>";
-            exit;
+    if ($currentFile) {
+        $filePath = 'uploads/' . $currentFile;
+        if (file_exists($filePath)) {
+            unlink($filePath);
         }
     }
 
-    if (isset($_GET['delete'])) {
-        $delete_id = $_GET['delete'];
+    $delete_file = $conn->prepare("UPDATE personal_1_6_a SET file = '' WHERE id = :delete_file_id");
+    $delete_file->bindParam(':delete_file_id', $delete_file_id);
+    $delete_file->execute();
 
-        $stmt = $conn->prepare("SELECT file FROM personal_1_6_a WHERE id = :delete_id");
-        $stmt->bindParam(':delete_id', $delete_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $currentFile = $row['file'];
+    if ($delete_file) {
+        $_SESSION['success'] = "ไฟล์ถูกลบสำเร็จ";
+        echo "<script>window.location.href = 'index.php?page=1_6_a/index_1_6_a';</script>";
+        exit;
+    }
+}
 
-        if ($currentFile) {
-            $filePath = 'uploads/' . $currentFile;
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-        }
+if (isset($_GET['delete'])) {
+    $delete_id = $_GET['delete'];
 
-        $deletestmt = $conn->prepare("DELETE FROM personal_1_6_a WHERE id = :delete_id");
-        $deletestmt->bindParam(':delete_id', $delete_id);
-        $deletestmt->execute();
+    $stmt = $conn->prepare("SELECT file FROM personal_1_6_a WHERE id = :delete_id");
+    $stmt->bindParam(':delete_id', $delete_id);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $currentFile = $row['file'];
 
-        if ($deletestmt) {
-            $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
-            echo "<script>window.location.href = 'index.php?page=1_6_a/index_1_6_a';</script>";
-            exit;
+    if ($currentFile) {
+        $filePath = 'uploads/' . $currentFile;
+        if (file_exists($filePath)) {
+            unlink($filePath);
         }
     }
 
-    if (isset($_GET['edit'])) {
-        $_SESSION['edit'] = $_GET['edit'];
-        $edit_id = $_GET['edit'];
-        $stmt = $conn->prepare("SELECT * FROM personal_1_6_a WHERE id = ?");
-        $stmt->execute([$edit_id]);
-        $data = $stmt->fetch();
+    $deletestmt = $conn->prepare("DELETE FROM personal_1_6_a WHERE id = :delete_id");
+    $deletestmt->bindParam(':delete_id', $delete_id);
+    $deletestmt->execute();
+
+    if ($deletestmt) {
+        $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
+        echo "<script>window.location.href = 'index.php?page=1_6_a/index_1_6_a';</script>";
+        exit;
+    }
+}
+
+if (isset($_GET['edit'])) {
+    $_SESSION['edit'] = $_GET['edit'];
+    $edit_id = $_GET['edit'];
+    $stmt = $conn->prepare("SELECT * FROM personal_1_6_a WHERE id = ?");
+    $stmt->execute([$edit_id]);
+    $data = $stmt->fetch();
 ?>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var modal = new bootstrap.Modal(document.getElementById("modal"));
-                modal.show();
-            });
-        </script>
-    <?php } ?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var modal = new bootstrap.Modal(document.getElementById("modal"));
+            modal.show();
+        });
+    </script>
+<?php } ?>
 <?php if (isset($_GET['upload'])) {
     $_SESSION['upload'] = $_GET['upload'];
     $upload_id = $_SESSION['upload'];
@@ -104,8 +104,8 @@
     <?php if (isset($_SESSION['success'])) { ?>
         <div class="alert alert-success" id="alert-success">
             <?php
-                echo $_SESSION['success'];
-                unset($_SESSION['success']);
+            echo $_SESSION['success'];
+            unset($_SESSION['success']);
             ?>
         </div>
         <script>
@@ -132,19 +132,19 @@
         </thead>
         <tbody>
             <?php
-                $userId = $_SESSION['userId'];
-                $term =  $term_year['term'];
-                $year =  $term_year['year'];
-                $stmt = $conn->query("SELECT * FROM personal_1_6_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-                $stmt->execute();
-                $personal = $stmt->fetchAll();
+            $userId = $_SESSION['userId'];
+            $term =  $term_year['term'];
+            $year =  $term_year['year'];
+            $stmt = $conn->query("SELECT * FROM personal_1_6_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+            $stmt->execute();
+            $personal = $stmt->fetchAll();
 
-                $totalAmountWork = 0.00;
+            $totalAmountWork = 0.00;
 
-                if (!$personal) {
-                    echo "<tr><td colspan='11' class='text-center'>ไม่มีข้อมูล</td></tr>";
-                } else {
-                    foreach ($personal as $per) {
+            if (!$personal) {
+                echo "<tr><td colspan='11' class='text-center'>ไม่มีข้อมูล</td></tr>";
+            } else {
+                foreach ($personal as $per) {
             ?>
                     <tr>
                         <td><?= $per['research_name']; ?></td>
@@ -211,12 +211,13 @@
                             </td>
                         <?php } ?>
                     </tr>
-            <?php } } ?>
-                    <tr>
-                        <th scope="row" colspan="8">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-                        <td scope="row"><?= number_format($totalAmountWork, 2); ?></td>
-                        <td colspan="2"></td>
-                    </tr>
+            <?php }
+            } ?>
+            <tr>
+                <th scope="row" colspan="8">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+                <td scope="row"><?= number_format($totalAmountWork, 2); ?></td>
+                <td colspan="2"></td>
+            </tr>
         </tbody>
         <div class="modal fade" id="largeModal" tabindex="-1">
             <div class="modal-dialog modal-lg">
@@ -263,11 +264,15 @@
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="nature_work" class="col-sm-2 col-form-label">ลักษณะงานเดี่ยว/กลุ่ม</label>
-                                <input type="text" class="form-control" name="nature_work" required>
+                                <select class="form-select" name="nature_work" id="nature_work" required>
+                                    <option value="" selected>กรุณาเลือก</option>
+                                    <option value="เดี่ยว">เดี่ยว</option>
+                                    <option value="กลุ่ม">กลุ่ม</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="leader" class="col-sm-2 col-form-label">หัวหน้าโครงการ/ผู้ร่วมโครงการ</label>
-                                <select type="text" class="form-control" name="leader" id="leader1" oninput="calc1()" required>
+                                <select type="text" class="form-select" name="leader" id="leader1" oninput="calc1()" required>
                                     <option value="" selected>กรุณาเลือก</option>
                                     <option value="หัวหน้าโครงการ">หัวหน้าโครงการ</option>
                                     <option value="ผู้ร่วมโครงการ">ผู้ร่วมโครงการ</option>
@@ -330,7 +335,10 @@
                                 </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="nature_work" class="col-sm-2 col-form-label">ลักษณะงานเดี่ยว/กลุ่ม</label>
-                                <input type="text" class="form-control" name="nature_work" value="<?php echo $data['nature_work']; ?>" required>
+                                <select class="form-select" name="nature_work" id="nature_work" required>
+                                    <option value="เดี่ยว" <?php if ($data['nature_work'] === 'เดี่ยว') echo 'selected'; ?>>เดี่ยว</option>
+                                    <option value="กลุ่ม" <?php if ($data['nature_work'] === 'กลุ่ม') echo 'selected'; ?>>กลุ่ม</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="leader" class="col-sm-2 col-form-label">หัวหน้าโครงการ/ผู้ร่วมโครงการ</label>
@@ -519,6 +527,6 @@
         }
     }
 </script>
-<?php 
-    $conn = null;
+<?php
+$conn = null;
 ?>

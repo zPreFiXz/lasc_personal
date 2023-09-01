@@ -1,9 +1,10 @@
 <?php
-    session_start();
-    require_once "config/db.php";
+session_start();
+require_once "config/db.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -31,6 +32,7 @@
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <div class="d-flex flex-column align-items-center justify-content-center ">
@@ -48,8 +50,8 @@
                         <?php if (isset($_SESSION['error'])) { ?>
                             <div class="alert alert-danger" role="alert">
                                 <?php
-                                    echo $_SESSION['error'];
-                                    unset($_SESSION['error']);
+                                echo $_SESSION['error'];
+                                unset($_SESSION['error']);
                                 ?>
                             </div>
                             <script>
@@ -61,8 +63,8 @@
                         <?php if (isset($_SESSION['success'])) { ?>
                             <div class="alert alert-success" role="alert">
                                 <?php
-                                    echo $_SESSION['success'];
-                                    unset($_SESSION['success']);
+                                echo $_SESSION['success'];
+                                unset($_SESSION['success']);
                                 ?>
                             </div>
                             <script>
@@ -74,8 +76,8 @@
                         <?php if (isset($_SESSION['warning'])) { ?>
                             <div class="alert alert-warning" role="alert">
                                 <?php
-                                    echo $_SESSION['warning'];
-                                    unset($_SESSION['warning']);
+                                echo $_SESSION['warning'];
+                                unset($_SESSION['warning']);
                                 ?>
                             </div>
                             <script>
@@ -85,9 +87,23 @@
                             </script>
                         <?php } ?>
                         <div class="mb-3">
-                            <label for="nametitle" class="form-label">คำนำหน้าชื่อ</label>
-                            <input type="text" class="form-control" name="nametitle" aria-describedby="nametitle">
+                            <label for="academic_rank" class="form-label">ตำแหน่งทางวิชาการ</label>
+                            <select class="form-select" name="academic_rank" id="academic_rank" aria-describedby="academic_rank">
+                                <option value="ไม่มี">ไม่มี</option>
+                                <option value="ผู้ช่วยศาสตราจารย์">ผู้ช่วยศาสตราจารย์</option>
+                                <option value="รองศาสตราจารย์">รองศาสตราจารย์</option>
+                                <option value="ศาสตราจารย์">ศาสตราจารย์</option>
+                            </select>
                         </div>
+                        <div class="mb-3">
+                            <label for="nametitle" class="form-label">คำนำหน้าชื่อ</label>
+                            <select class="form-select" name="nametitle" aria-describedby="nametitle" id="nametitle">
+                                <option value="นาย">นาย</option>
+                                <option value="นาง">นาง</option>
+                                <option value="นางสาว">นางสาว</option>
+                                <option value="ดร.">ดร.</option>
+                            </select>
+                        </div>            
                         <div class="mb-3">
                             <label for="firstname" class="form-label">ชื่อ</label>
                             <input type="text" class="form-control" name="firstname" aria-describedby="firstname">
@@ -98,7 +114,20 @@
                         </div>
                         <div class="mb-3">
                             <label for="branch" class="form-label">สาขาวิชา</label>
-                            <input type="text" class="form-control" name="branch" aria-describedby="branch">
+                            <select class="form-select" name="branch" aria-describedby="branch" id="branch">
+                                <option value="วิทยาการคอมพิวเตอร์">วิทยาการคอมพิวเตอร์</option>
+                                <option value="เทคโนโลยีคอมพิวเตอร์และดิจิทัล">เทคโนโลยีคอมพิวเตอร์และดิจิทัล</option>
+                                <option value="สาธารณสุขชุมชน">สาธารณสุขชุมชน</option>
+                                <option value="วิทยาศาสตร์การกีฬา">วิทยาศาสตร์การกีฬา</option>
+                                <option value="เทคโนโลยีการเกษตร">เทคโนโลยีการเกษตร</option>
+                                <option value="เทคโนโลยีและนวัตกรรมอาหาร">เทคโนโลยีและนวัตกรรมอาหาร</option>
+                                <option value="อาชีวอนามัยและความปลอดภัย">อาชีวอนามัยและความปลอดภัย</option>
+                                <option value="วิศวกรรมซอฟต์แวร์">วิศวกรรมซอฟต์แวร์</option>
+                                <option value="วิศวกรรมโลจิสติกส์">วิศวกรรมโลจิสติกส์</option>
+                                <option value="วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม">วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม</option>
+                                <option value="การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ">การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ</option>
+                                <option value="เทคโนโลยีโยธาและสถาปัตยกรรม">เทคโนโลยีโยธาและสถาปัตยกรรม</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">อีเมล</label>
@@ -124,6 +153,7 @@
     </div>
 </body>
 <?php
-    $conn = null;
+$conn = null;
 ?>
+
 </html>

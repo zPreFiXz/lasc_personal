@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2023 at 06:15 AM
+-- Generation Time: Sep 01, 2023 at 05:43 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `lasc_personal`
 --
+CREATE DATABASE IF NOT EXISTS `lasc_personal` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `lasc_personal`;
 
 -- --------------------------------------------------------
 
@@ -62,14 +64,6 @@ CREATE TABLE `personal_1_1_file` (
   `year` int(4) NOT NULL,
   `file` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `personal_1_1_file`
---
-
-INSERT INTO `personal_1_1_file` (`userId`, `id`, `term`, `year`, `file`) VALUES
-('เอเปค', 8, 1, 2566, '2023-08-31_20-46-41_เอเปค.png'),
-('บงกชมาศ', 15, 1, 2566, '2023-09-01_10-52-57_บงกชมาศ.png');
 
 -- --------------------------------------------------------
 
@@ -363,8 +357,7 @@ CREATE TABLE `personal_1_11` (
 --
 
 INSERT INTO `personal_1_11` (`userId`, `id`, `term`, `year`, `checkbox1`, `checkbox2`, `checkbox3`, `checkbox4`, `checkbox5`, `checkbox6`, `checkbox7`, `checkbox8`, `checkbox9`, `checkbox10`, `checkbox11`, `checkbox12`, `checkbox13`, `checkbox14`, `scope1`, `scope2`, `scope3`, `scope4`, `scope5`, `scope6`, `scope7`, `scope8`, `scope9`, `scope10`, `scope11`, `scope12`, `scope13`, `scope14`, `amount_work`) VALUES
-('ภาคภูมิ', 30, 1, 2566, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0),
-('บงกชมาศ', 31, 1, 2566, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0);
+('1', 34, 1, 2566, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -406,8 +399,7 @@ CREATE TABLE `personal_3` (
 --
 
 INSERT INTO `personal_3` (`userId`, `term`, `year`, `name`, `branch`, `amount_work`, `quality_work`, `efficiency_work`, `effectiveness_work`, `score_work`, `quality_ethics`, `efficiency_ethics`, `effectiveness_ethics`, `score_ethics`, `quality_capacity`, `efficiency_capacity`, `effectiveness_capacity`, `score_capacity`, `quality_more`, `efficiency_more`, `effectiveness_more`, `score_more`, `quality_total`, `efficiency_total`, `effectiveness_total`, `score_total`) VALUES
-('บงกชมาศ', 1, 2566, 'นางสาวบงกชมาศ บุญศักดิ์', 'วิศวกรรมซอฟต์แวร์', 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0),
-('ภาคภูมิ', 1, 2566, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 40, 0, 0, 30, 40);
+('1', 1, 2566, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -435,7 +427,7 @@ INSERT INTO `term_year` (`id`, `term`, `year`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int(20) NOT NULL,
+  `userId` int(20) NOT NULL,
   `nametitle` varchar(50) NOT NULL,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
@@ -443,6 +435,7 @@ CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `urole` varchar(50) NOT NULL,
+  `isAdmin` tinyint(1) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -450,9 +443,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `nametitle`, `firstname`, `lastname`, `branch`, `email`, `password`, `urole`, `created_at`) VALUES
-(22, 'นางสาว', 'บงกชมาศ', 'บุญศักดิ์', 'วิศวกรรม', 'cream333@gmail.com', '$2y$10$sRpAmkUeiTpeIzkMgRxzP.tb9J7e/rM2fMotRQHIitFlaACtXYsWK', 'user', '2023-08-28 08:08:38'),
-(23, 'นาย', 'ภาคภูมิ', 'สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 'prefix.2pm@gmail.com', '$2y$10$GDGg3eDhW1iAEmS0aiI0R.Fe/RsTuHYb5XvZM875TtGowsVonkWze', 'user', '2023-08-28 15:14:37');
+INSERT INTO `users` (`userId`, `nametitle`, `firstname`, `lastname`, `branch`, `email`, `password`, `urole`, `isAdmin`, `created_at`) VALUES
+(1, 'นาย', 'ภาคภูมิ', 'สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 'prefix.2pm@gmail.com', '$2y$10$3PFxIk98uCUU3CJ3N7Ru7ucYZNs7ciAbKuzKPpe3CsCr1QNsVWeWO', 'teacher', 1, '2023-09-01 15:10:10'),
+(2, 'นางสาว', 'บงกชมาศ', 'บุญศักดิ์', 'วิศวกรรมซอฟต์แวร์', 'cream333@gmail.com', '$2y$10$sZFPG7hgMk54axcVsBGEuue2i28pBlly1OIb/Z2kIeHFuz6E4QPf6', 'officer', 0, '2023-09-01 15:33:35');
 
 -- --------------------------------------------------------
 
@@ -462,7 +455,6 @@ INSERT INTO `users` (`id`, `nametitle`, `firstname`, `lastname`, `branch`, `emai
 
 CREATE TABLE `vadmin` (
   `userId` varchar(50) NOT NULL,
-  `id` int(20) NOT NULL,
   `term` int(1) NOT NULL,
   `year` int(4) NOT NULL,
   `nametitle` varchar(50) NOT NULL,
@@ -475,9 +467,9 @@ CREATE TABLE `vadmin` (
 -- Dumping data for table `vadmin`
 --
 
-INSERT INTO `vadmin` (`userId`, `id`, `term`, `year`, `nametitle`, `firstname`, `lastname`, `amount_work`) VALUES
-('ภาคภูมิ', 34, 1, 2566, 'นาย', 'ภาคภูมิ', 'สุขชาติ', 0),
-('บงกชมาศ', 35, 1, 2566, 'นางสาว', 'บงกชมาศ', 'บุญศักดิ์', 0);
+INSERT INTO `vadmin` (`userId`, `term`, `year`, `nametitle`, `firstname`, `lastname`, `amount_work`) VALUES
+('1', 1, 2566, 'นาย', 'ภาคภูมิ', 'สุขชาติ', 0),
+('2', 1, 2566, 'นางสาว', 'บงกชมาศ', 'บุญศักดิ์', 0);
 
 --
 -- Indexes for dumped tables
@@ -589,13 +581,7 @@ ALTER TABLE `term_year`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `vadmin`
---
-ALTER TABLE `vadmin`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`userId`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -605,55 +591,55 @@ ALTER TABLE `vadmin`
 -- AUTO_INCREMENT for table `personal_1_1`
 --
 ALTER TABLE `personal_1_1`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personal_1_1_file`
 --
 ALTER TABLE `personal_1_1_file`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `personal_1_2_a`
 --
 ALTER TABLE `personal_1_2_a`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `personal_1_2_b`
 --
 ALTER TABLE `personal_1_2_b`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `personal_1_3`
 --
 ALTER TABLE `personal_1_3`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `personal_1_4`
 --
 ALTER TABLE `personal_1_4`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `personal_1_5_a`
 --
 ALTER TABLE `personal_1_5_a`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `personal_1_5_b`
 --
 ALTER TABLE `personal_1_5_b`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `personal_1_6_a`
 --
 ALTER TABLE `personal_1_6_a`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `personal_1_6_b`
@@ -665,31 +651,31 @@ ALTER TABLE `personal_1_6_b`
 -- AUTO_INCREMENT for table `personal_1_7`
 --
 ALTER TABLE `personal_1_7`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `personal_1_8`
 --
 ALTER TABLE `personal_1_8`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `personal_1_9`
 --
 ALTER TABLE `personal_1_9`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `personal_1_10`
 --
 ALTER TABLE `personal_1_10`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `personal_1_11`
 --
 ALTER TABLE `personal_1_11`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `term_year`
@@ -701,13 +687,7 @@ ALTER TABLE `term_year`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
-
---
--- AUTO_INCREMENT for table `vadmin`
---
-ALTER TABLE `vadmin`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `userId` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

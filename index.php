@@ -8,8 +8,11 @@
   }
 
   $userId = $_SESSION['userId'];
+  $nametitle = $_SESSION['nametitle'];
+  $firstname = $_SESSION['firstname'];
+  $lastname = $_SESSION['lastname'];
 
-  $stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
+  $stmt = $conn->query("SELECT * FROM term_year where id = 1");
   $stmt->execute();
   $term_year = $stmt->fetch();
   $term =  $term_year['term'];
@@ -146,7 +149,7 @@
 
   $totalAmountWork = $totalAmountWork_1_1 + $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
   $_SESSION['$totalAmountWork'] = $totalAmountWork;
-  
+
   $stmt = $conn->prepare("SELECT * FROM Vadmin WHERE userId = :userId AND term = :term AND year = :year");
   $stmt->bindParam(':userId', $userId);
   $stmt->bindParam(':term', $term);
@@ -154,17 +157,13 @@
   $stmt->execute();
   $users = $stmt->fetch();
 
-  $stmt = $conn->prepare("SELECT * FROM users WHERE firstname = :userId");
+  $stmt = $conn->prepare("SELECT * FROM users WHERE userId = :userId");
   $stmt->bindParam(':userId', $userId);
   $stmt->execute();
   $user = $stmt->fetch();
 
-  $firstname = $user['firstname'];
-  $lastname = $user['lastname'];
-  $nametitle = $user['nametitle'];
-
   if (empty($users)) {
-    $insertStmt = $conn->prepare("INSERT INTO Vadmin (userId, term, `year`, nametitle, firstname, lastname, amount_work) VALUES (:userId, :term, :year, :nametitle, :firstname, :lastname, :amount_work)");
+    $insertStmt = $conn->prepare("INSERT INTO Vadmin (userId, term, year, nametitle, firstname, lastname, amount_work) VALUES (:userId, :term, :year, :nametitle, :firstname, :lastname, :amount_work)");
     $insertStmt->bindParam(':userId', $userId);
     $insertStmt->bindParam(':term', $term);
     $insertStmt->bindParam(':year', $year);
@@ -174,19 +173,19 @@
     $insertStmt->bindParam(':amount_work', $totalAmountWork);
     $insertStmt->execute();
   } else {
-    $updateStmt = $conn->prepare("UPDATE Vadmin SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND `year` = :year ");
+    $updateStmt = $conn->prepare("UPDATE Vadmin SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
     $updateStmt->bindParam(':userId', $userId);
     $updateStmt->bindParam(':term', $term);
     $updateStmt->bindParam(':year', $year);
     $updateStmt->bindParam(':amount_work', $totalAmountWork);
     $updateStmt->execute();
   }
-    $updateStmt = $conn->prepare("UPDATE personal_3 SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND `year` = :year ");
-    $updateStmt->bindParam(':userId', $userId);
-    $updateStmt->bindParam(':term', $term);
-    $updateStmt->bindParam(':year', $year);
-    $updateStmt->bindParam(':amount_work', $totalAmountWork);
-    $updateStmt->execute();
+  $updateStmt = $conn->prepare("UPDATE personal_3 SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
+  $updateStmt->bindParam(':userId', $userId);
+  $updateStmt->bindParam(':term', $term);
+  $updateStmt->bindParam(':year', $year);
+  $updateStmt->bindParam(':amount_work', $totalAmountWork);
+  $updateStmt->execute();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -224,9 +223,9 @@
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
-      <a class="logo d-flex align-items-center" >
+      <a class="logo d-flex align-items-center">
         <img src="assets/img/logo_lasc.png" alt="โลโก้คณะ">
-        <span class="d-none d-lg-block"  style="color: #ffc107;">LASC SSKRU</span>
+        <span class="d-none d-lg-block" style="color: #ffc107;">LASC SSKRU</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -235,25 +234,25 @@
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-person-circle"></i>
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $_SESSION['nametitle'] .  $_SESSION['userId'] . ' ' . $_SESSION['lastname'] ?></span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $user['nametitle'] .  $user['firstname'] . ' ' . $user['lastname'] ?></span>
           </a><!-- End Profile Iamge Icon -->
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6><?= $_SESSION['nametitle'] .  $_SESSION['userId'] . ' ' . $_SESSION['lastname'] ?></h6>
+              <h6><?= $user['nametitle'] .  $user['firstname'] . ' ' . $user['lastname'] ?></h6>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-              <hr class="dropdown-divider">
-            </li>
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="logout.php">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>ออกจากระบบ</span>
-              </a>
-            </li>
-          </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
+            <hr class="dropdown-divider">
+        </li>
+        <li>
+          <a class="dropdown-item d-flex align-items-center" href="logout.php">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>ออกจากระบบ</span>
+          </a>
+        </li>
+      </ul><!-- End Profile Dropdown Items -->
+      </li><!-- End Profile Nav -->
       </ul>
     </nav><!-- End Icons Navigation -->
   </header><!-- End Header -->
@@ -388,8 +387,17 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const main = document.getElementById('main');
+
+    document.querySelector('.toggle-sidebar-btn').addEventListener('click', function() {
+      sidebar.classList.toggle('active');
+      main.classList.toggle('active');
+    });
+  </script>
 </body>
-<?php 
+<?php
   $conn = null;
 ?>
 </html>

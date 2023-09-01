@@ -28,17 +28,13 @@
                 if ($check_data->rowCount() > 0) {
                     if ($email == $row['email']) {
                         if (password_verify($password, $row['password'])) {
-                            if ($row['urole'] == 'admin') {
-                                $_SESSION['adminId'] = $row['firstname'];
+                            if ($row['urole'] == 'teacher' OR $row['urole'] == 'officer'){
+                                $_SESSION['userId'] = $row['userId'];
                                 $_SESSION['nametitle'] = $row['nametitle'];
-                                $_SESSION['lastname'] = $row['lastname'];
-                                header("location: index_admin.php?page=admin");
-                            } else {
-                                $_SESSION['userId'] = $row['firstname'];
-                                $_SESSION['nametitle'] = $row['nametitle'];
+                                $_SESSION['firstname'] = $row['firstname'];
                                 $_SESSION['lastname'] = $row['lastname'];
                                 $_SESSION['branch'] = $row['branch'];
-                                $conn = null;
+                                $_SESSION['isAdmin'] = $row['isAdmin'];
                                 header("location: index.php?page=users/dashboard");
                             }
                         } else {

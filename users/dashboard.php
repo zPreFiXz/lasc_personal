@@ -1,8 +1,14 @@
 <div class="container">
     <?php
+        $userId = $_SESSION['userId'];
+        $nametitle = $_SESSION['nametitle'];
+        $firstname = $_SESSION['firstname'];
+        $lastname = $_SESSION['lastname']; 
+        $isAdmin = $_SESSION['isAdmin']; 
+
         if (isset($_SESSION['userId'])) {
             $userId = $_SESSION['userId'];
-            $stmt = $conn->query("SELECT * FROM users WHERE firstname = '$userId'");
+            $stmt = $conn->query("SELECT * FROM users WHERE userId = '$userId'");
             $stmt->execute();
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
         }
@@ -12,7 +18,16 @@
         <div class="pagetitle mt-3">
             <h1 style="font-size: 30px;">ยินดีต้อนรับ <?=$row['nametitle'] .  $row['firstname'] . ' ' . $row['lastname'] ?></h1>
         </div>
-        <a href="logout.php" class="btn btn-danger d-flex align-items-center"><i class="ri-logout-box-line"></i> &nbsp;&nbsp;ออกจากระบบ</a>
+        <div class="d-flex">
+        <?php
+            if($isAdmin == 1){ ?>
+                <a href="logout.php" class="btn btn-primary d-flex align-items-center"><i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;ผู้ดูแลระบบ</a>&nbsp;&nbsp;
+            <?php }elseif($isAdmin == 0){
+                
+            }
+        ?>
+        <a href="logout.php" class="btn btn-danger d-flex align-items-center"><i class="ri-logout-box-line"></i>&nbsp;&nbsp;ออกจากระบบ</a>
+        </div>
     </div>
     <hr>
     <br>
@@ -31,8 +46,6 @@
     <?php } ?>
     <?php
         require_once "config/db.php";
-
-        $userId = $_SESSION['userId'];
 
         $stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
         $stmt->execute();

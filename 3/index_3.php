@@ -1,11 +1,12 @@
 <?php
     $userId = $_SESSION['userId'];
     $nametitle = $_SESSION['nametitle'];
+    $firstname = $_SESSION['firstname'];
     $lastname = $_SESSION['lastname'];
     $branch = $_SESSION['branch'];
     $totalAmountWork = $_SESSION['$totalAmountWork'];
 
-    $name = $nametitle . $userId ." ". $lastname;
+    $name = $nametitle . $firstname ." ". $lastname;
     
     $stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
     $stmt->execute();
@@ -20,11 +21,9 @@
     $stmt->execute();
     $personal = $stmt->fetchAll();
 
+    
+
     if (empty($personal)) {
-        $userId = $_SESSION['userId'];
-        $term = $term_year['term'];
-        $year = $term_year['year'];
-        
         $insertStmt = $conn->prepare("INSERT INTO personal_3 (userId, term, year,name,branch,amount_work) VALUES (:userId, :term, :year, :name, :branch, :amount_work)");
         $insertStmt->bindParam(':userId', $userId);
         $insertStmt->bindParam(':term', $term);
@@ -67,17 +66,17 @@
                 <div class="one d-flex">
                     <div class="col-md-6 mb-3 d-flex">
                         <label for="name" class="col-form-label me-3" style="white-space: nowrap;">ชื่อ-สกุลผู้รับการประเมิน</label>
-                        <input type="text" class="form-control me-3" name="name" value="<?= $per['name']; ?>" readonly>
+                        <input type="text" class="form-control me-3 bg-light" name="name" value="<?= $per['name']; ?>" readonly>
                     </div>
                     <div class="col-md-6 mb-3 d-flex">
                         <label for="branch" class="col-form-label me-3" style="white-space: nowrap;">สาขาวิชา</label>
-                        <input type="text" class="form-control" name="branch" value="<?= $per['branch']; ?>" readonly>
+                        <input type="text" class="form-control bg-light" name="branch" value="<?= $per['branch']; ?>" readonly>
                     </div>
                 </div>
                 <div class="two d-flex">
                     <div class="col-md-6 mb-3 d-flex">
                         <label for="name" class="col-form-label me-3" style="white-space: nowrap;">1. ด้านปริมาณงาน ภาระงานหลักตลอดภาคเรียน จำนวน</label>
-                        <input type="text" class="form-control me-3 text-center" name="amount_work" value="<?= number_format($per['amount_work'],2); ?>" readonly>
+                        <input type="text" class="form-control me-3 text-center bg-light" name="amount_work" value="<?= number_format($per['amount_work'],2); ?>" readonly>
                         <label for="name" class="col-form-label me-3" style="white-space: nowrap;">ภาระงาน</label>
                     </div>
                 </div>
@@ -193,11 +192,11 @@
                             <td scope="col"></td>
                             <th scope="col" class="text-center">รวม</th>
                             <th scope="col" class="text-center">100%</th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="quality_total" id="quality_total" value="<?= $per['quality_total']; ?>" readonly></th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="efficiency_total" id="efficiency_total" value="<?= $per['efficiency_total']; ?>" readonly></th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="effectiveness_total" id="effectiveness_total" value="<?= $per['effectiveness_total']; ?>" readonly></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center bg-light" name="quality_total" id="quality_total" value="<?= $per['quality_total']; ?>" readonly></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center bg-light" name="efficiency_total" id="efficiency_total" value="<?= $per['efficiency_total']; ?>" readonly></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center bg-light" name="effectiveness_total" id="effectiveness_total" value="<?= $per['effectiveness_total']; ?>" readonly></th>
                             <th scope="col" class="text-center">100</th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="score_total" id="score_total" value="<?= $per['score_total']; ?>" readonly></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center bg-light" name="score_total" id="score_total" value="<?= $per['score_total']; ?>" readonly></th>
                         </tr>
                     </tbody>
                 </table>

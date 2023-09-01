@@ -167,7 +167,7 @@
                         <td style="white-space: nowrap;"><?= $per['date']; ?></td>
                         <td><?= $per['project']; ?></td>
                         <td style="white-space: nowrap;"><?= $per['position']; ?></td>
-                        <td><?= $per['type_work']; ?></td>
+                        <td style="white-space: nowrap;" ><?= $per['type_work']; ?></td>
                         <td><?= $per['amount_time']; ?></td>
                         <td><?= $per['amount_work']; ?></td>
                         <?php $totalAmountWork += floatval($per['amount_work']); ?>

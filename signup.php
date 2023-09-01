@@ -89,6 +89,7 @@ require_once "config/db.php";
                         <div class="mb-3">
                             <label for="academic_rank" class="form-label">ตำแหน่งทางวิชาการ</label>
                             <select class="form-select" name="academic_rank" id="academic_rank" aria-describedby="academic_rank">
+                                <option value="กรุณาเลือก" selected >กรุณาเลือก</option>
                                 <option value="ไม่มี">ไม่มี</option>
                                 <option value="ผู้ช่วยศาสตราจารย์">ผู้ช่วยศาสตราจารย์</option>
                                 <option value="รองศาสตราจารย์">รองศาสตราจารย์</option>
@@ -98,6 +99,7 @@ require_once "config/db.php";
                         <div class="mb-3">
                             <label for="nametitle" class="form-label">คำนำหน้าชื่อ</label>
                             <select class="form-select" name="nametitle" aria-describedby="nametitle" id="nametitle">
+                                <option value="กรุณาเลือก" selected >กรุณาเลือก</option>
                                 <option value="นาย">นาย</option>
                                 <option value="นาง">นาง</option>
                                 <option value="นางสาว">นางสาว</option>
@@ -115,6 +117,7 @@ require_once "config/db.php";
                         <div class="mb-3">
                             <label for="branch" class="form-label">สาขาวิชา</label>
                             <select class="form-select" name="branch" aria-describedby="branch" id="branch">
+                                <option value="กรุณาเลือก" selected >กรุณาเลือก</option>
                                 <option value="วิทยาการคอมพิวเตอร์">วิทยาการคอมพิวเตอร์</option>
                                 <option value="เทคโนโลยีคอมพิวเตอร์และดิจิทัล">เทคโนโลยีคอมพิวเตอร์และดิจิทัล</option>
                                 <option value="สาธารณสุขชุมชน">สาธารณสุขชุมชน</option>

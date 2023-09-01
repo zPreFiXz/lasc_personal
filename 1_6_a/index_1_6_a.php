@@ -74,6 +74,7 @@ if (isset($_GET['edit'])) {
     </script>
 <?php } ?>
 <?php if (isset($_GET['upload'])) {
+    // เก็บค่า ID ที่ต้องการแก้ไขในตัวแปร session ชื่อ 'upload'
     $_SESSION['upload'] = $_GET['upload'];
     $upload_id = $_SESSION['upload'];
 ?>
@@ -149,9 +150,9 @@ if (isset($_GET['edit'])) {
                     <tr>
                         <td><?= $per['research_name']; ?></td>
                         <td><?= $per['funding_source']; ?></td>
-                        <td><?= $per['funding_framework']; ?></td>
-                        <td><?= $per['start']; ?></td>
-                        <td><?= $per['end'];?></td>
+                        <td style="white-space: nowrap;"><?= $per['funding_framework']; ?></td>
+                        <td style="white-space: nowrap;"><?= $per['start']; ?></td>
+                        <td style="white-space: nowrap;"><?= $per['end'];?></td>
                         <td><?= $per['nature_work']; ?></td>
                         <td><?= $per['leader']; ?></td>
                         <td><?= $per['contribute']; ?></td>
@@ -219,6 +220,7 @@ if (isset($_GET['edit'])) {
                 <td colspan="2"></td>
             </tr>
         </tbody>
+        <!-- เพิ่มข้อมูล -->
         <div class="modal fade" id="largeModal" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -295,6 +297,7 @@ if (isset($_GET['edit'])) {
                 </div>
             </div>
         </div>
+        <!-- แก้ไขข้อมูล -->
         <div class="modal fade" id="modal" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -324,11 +327,11 @@ if (isset($_GET['edit'])) {
                             </div>
                             <div class="mb-3">
                                 <div class="row mb-3">
-                                    <label for="prepare_theory" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลาเริ่มต้น :</label>
+                                    <label for="date_start" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลาเริ่มต้น :</label>
                                     <div class="col-sm-3">
                                         <input type="date" class="form-control" name="date_start" value="<?php echo $data['start']; ?>" required>
                                     </div>
-                                    <label for="prepare_theory" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลาสิ้นสุด :</label>
+                                    <label for="date_end" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลาสิ้นสุด :</label>
                                     <div class="col-sm-3">
                                         <input type="date" class="form-control" name="date_end" value="<?php echo $data['end']; ?>" required>
                                     </div>
@@ -364,33 +367,33 @@ if (isset($_GET['edit'])) {
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="uploadModal" tabindex="-1">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">อัปโหลดไฟล์</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </table>
+</div>
+<div class="modal fade" id="uploadModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">อัพโหลดไฟล์</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="1_6_a/upload_1_6_a.php" method="post" enctype="multipart/form-data">
+                    <div class="row mb-1 mt-3">
+                        <label for="file" class="col-sm-2 col-form-label">อัปโหลดไฟล์</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" name="file" id="fileInput" required>
+                            <br>
+                            <img width=100% id="previewFile" alt="">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                            <button type="upload" name="upload" class="btn btn-primary">บันทึก</button>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <form action="1_6_a/upload_1_6_a.php" method="post" enctype="multipart/form-data">
-                            <div class="row mb-1 mt-3">
-                                <label for="file" class="col-sm-2 col-form-label">อัปโหลดไฟล์</label>
-                                <div class="col-sm-10">
-                                    <input type="file" class="form-control" name="file" id="fileInput" required>
-                                    <br>
-                                    <img width="100%" id="previewFile" alt="">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                                <button type="upload" name="upload" class="btn btn-primary">บันทึก</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
-    </table>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -528,5 +531,5 @@ if (isset($_GET['edit'])) {
     }
 </script>
 <?php
-$conn = null;
+    $conn = null;
 ?>

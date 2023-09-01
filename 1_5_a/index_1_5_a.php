@@ -286,7 +286,11 @@ if (isset($_GET['edit'])) {
                     </div>
                     <div class="mb-3">
                         <label for="teacher" class="col-sm-2 col-form-label">ที่ปรึกษาหลัก/ร่วม</label>
-                        <input type="text" class="form-control" name="teacher" required>
+                        <select  class="form-select" name="teacher" aria-describedby="teacher" id="teacher" required>
+                            <option value="กรุณาเลือก" selected>กรุณาเลือก</option>
+                            <option value="หลัก">หลัก</option>
+                            <option value="ร่วม">ร่วม</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>
@@ -346,7 +350,10 @@ if (isset($_GET['edit'])) {
                     </div>
                     <div class="mb-3">
                         <label for="teacher" class="col-sm-2 col-form-label">ที่ปรึกษาหลัก/ร่วม</label>
-                        <input type="text" class="form-control" name="teacher" value="<?php echo $data['teacher']; ?>" required>
+                        <select  class="form-select" name="teacher" aria-describedby="teacher" id="teacher" required>
+                            <option value="หลัก" <?php if ($data['teacher'] === 'หลัก') echo 'selected'?>>หลัก</option>
+                            <option value="ร่วม" <?php if ($data['teacher'] === 'ร่วม') echo 'selected'; ?>>ร่วม</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>

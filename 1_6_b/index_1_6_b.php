@@ -240,6 +240,33 @@ if (isset($_GET['edit'])) {
             </tr>
         </tbody>
     </table>
+    <!-- อัพโหลดไฟล์ -->
+    <div class="modal fade" id="uploadModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">อัพโหลดไฟล์</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="1_6_b/upload_1_6_b.php" method="post" enctype="multipart/form-data">
+                        <div class="row mb-1 mt-3">
+                            <label for="file" class="col-sm-2 col-form-label">อัปโหลดไฟล์</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" name="file" id="fileInput" required>
+                                <br>
+                                <img width=100% id="previewFile" alt="">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                <button type="upload" name="upload" class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="modal fade" id="ExtralargeModal" tabindex="-1">
     <!-- หน้าเพิ่มข้อมูล -->
@@ -345,33 +372,6 @@ if (isset($_GET['edit'])) {
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
                             <button type="update" name="update" class="btn btn-primary">บันทึก</button>
                         </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- อัพโหลดไฟล์ -->
-<div class="modal fade" id="uploadModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">อัพโหลดไฟล์</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="1_6_b/upload_1_6_b.php" method="post" enctype="multipart/form-data">
-                    <div class="row mb-1 mt-3">
-                        <label for="file" class="col-sm-2 col-form-label">อัปโหลดไฟล์</label>
-                        <div class="col-sm-10">
-                            <input type="file" class="form-control" name="file" id="fileInput" required>
-                            <br>
-                            <img width=100% id="previewFile" alt="">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                            <button type="upload" name="upload" class="btn btn-primary">บันทึก</button>
-                        </div>
-                    </div>
                 </form>
             </div>
         </div>

@@ -1,9 +1,8 @@
 <?php
-session_start();
+    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -31,7 +30,6 @@ session_start();
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="container">
         <div class="d-flex flex-column align-items-center justify-content-center">
@@ -49,8 +47,8 @@ session_start();
                         <?php if (isset($_SESSION['error'])) { ?>
                             <div class="alert alert-danger" role="alert">
                                 <?php
-                                echo $_SESSION['error'];
-                                unset($_SESSION['error']);
+                                    echo $_SESSION['error'];
+                                    unset($_SESSION['error']);
                                 ?>
                             </div>
                             <script>
@@ -62,8 +60,8 @@ session_start();
                         <?php if (isset($_SESSION['success'])) { ?>
                             <div class="alert alert-success" role="alert">
                                 <?php
-                                echo $_SESSION['success'];
-                                unset($_SESSION['success']);
+                                    echo $_SESSION['success'];
+                                    unset($_SESSION['success']);
                                 ?>
                             </div>
                             <script>
@@ -80,7 +78,9 @@ session_start();
                             <label for="password" class="form-label">รหัสผ่าน</label>
                             <input type="password" class="form-control" name="password">
                         </div>
-                        <button type="submit" name="signin" class="btn btn-primary">เข้าสู่ระบบ</button>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" name="signin" class="btn btn-primary">เข้าสู่ระบบ</button>
+                        </div>
                     </form>
                     <hr>
                     <p>ยังไม่เป็นสมาชิกใช่ไหม คลิ๊กที่นี่เพื่อ <a href="signup.php">สมัครสมาชิก</a></p>
@@ -89,5 +89,7 @@ session_start();
         </div>
     </div>
 </body>
-
 </html>
+<?php 
+  $conn = null;
+?>

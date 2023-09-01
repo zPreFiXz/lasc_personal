@@ -206,11 +206,11 @@
                         <?php } ?>
                     </tr>
             <?php }}?>
-            <tr>
-                <th scope="row" colspan="5">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-                <td scope="row"><?= number_format($totalAmountWork, 2); ?></td>
-                <td colspan="2"></td>
-            </tr>
+                    <tr>
+                        <th scope="row" colspan="5">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+                        <td scope="row"><?= number_format($totalAmountWork, 2); ?></td>
+                        <td colspan="2"></td>
+                    </tr>
         </tbody>
         <div class="modal fade" id="largeModal" tabindex="-1">
             <div class="modal-dialog modal-lg">
@@ -311,7 +311,7 @@
                         <form action="1_2_a/upload_1_2_a.php" method="post" enctype="multipart/form-data">
                             <?php
                             ?>
-                            <div class="row mb-3">
+                            <div class="row mb-1 mt-3">
                                 <label for="file" class="col-sm-2 col-form-label">อัปโหลดไฟล์</label>
                                 <div class="col-sm-10">
                                     <input type="file" class="form-control" name="file" id="fileInput" required>

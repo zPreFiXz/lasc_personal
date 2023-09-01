@@ -3,4 +3,6 @@
     unset($_SESSION['userId']);
     unset($_SESSION['adminId']);
     header('location: signin.php');
+    
+    $conn = null;
 ?>

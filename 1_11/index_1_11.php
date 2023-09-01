@@ -36,6 +36,19 @@
         <h1>11. ภาระงานด้านการบริหาร (เฉพาะผู้ได้รับการแต่งตั้งให้ดำรงตำแหน่งบริหาร)</h1>
     </div>
     <hr>
+    <?php if (isset($_SESSION['success'])) { ?>
+        <div class="alert alert-success" id="alert-success">
+            <?php
+                echo $_SESSION['success']; // แสดงข้อความที่เก็บในตัวแปร session 'success'
+                unset($_SESSION['success']); // ลบค่าในตัวแปร session 'success'
+            ?>
+        </div>
+        <script>
+            setTimeout(function() { // ซ่อนข้อความแจ้งเตือนหลังจาก 3 วินาที
+                document.getElementById('alert-success').style.display = 'none';
+            }, 3000);
+        </script>
+    <?php } ?>
     <form action="1_11/edit_1_11.php" method="post">
         <div class="d-flex justify-content-end mb-3">
         <button type="submit" name="update" class="btn btn-primary"><i class="bi bi-pencil-square">&nbsp;&nbsp;</i>บันทึกร่าง</button>

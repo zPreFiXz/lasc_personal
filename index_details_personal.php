@@ -1,26 +1,25 @@
 <?php
-session_start();
-require_once 'config/db.php';
+  session_start();
+  require_once 'config/db.php';
 
-if (!isset($_SESSION['adminId'])) {
-  $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
-  header('location: signin.php');
-}
-if (isset($_POST['userId'])) {
-  $_SESSION['user'] = $_POST['userId'];
-}
+  if (!isset($_SESSION['adminId'])) {
+    $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
+    header('location: signin.php');
+  }
+  if (isset($_POST['userId'])) {
+    $_SESSION['user'] = $_POST['userId'];
+  }
 
-if (isset($_POST['term'])) {
-  $_SESSION['term'] = $_POST['term'];
-}
+  if (isset($_POST['term'])) {
+    $_SESSION['term'] = $_POST['term'];
+  }
 
-if (isset($_POST['year'])) {
-  $_SESSION['year'] = $_POST['year'];
-}
+  if (isset($_POST['year'])) {
+    $_SESSION['year'] = $_POST['year'];
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -51,11 +50,9 @@ if (isset($_POST['year'])) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap" rel="stylesheet">
 </head>
-
 <body>
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
-
     <div class="d-flex align-items-center justify-content-between">
       <a class="logo d-flex align-items-center">
         <img src="assets/img/logo_lasc1.png" alt="โลโก้คณะ">
@@ -63,59 +60,9 @@ if (isset($_POST['year'])) {
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
-
-    <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div><!-- End Search Bar -->
-
-    <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
-        <li class="nav-item dropdown pe-3">
-
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-          <i class="bi bi-person-circle"></i>
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $_SESSION['nametitle'] .  $_SESSION['adminId'] . ' ' . $_SESSION['lastname'] ?></span>
-          </a><!-- End Profile Iamge Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-              <h6><?= $_SESSION['nametitle'] .  $_SESSION['adminId'] . ' ' . $_SESSION['lastname'] ?></h6>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="edit_profile/edit_profile.php">
-                <i class="bi bi-person"></i>
-                <span>แก้ไขโปรไฟล์</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="logout.php">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>ออกจากระบบ</span>
-              </a>
-            </li>
-
-          </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
-
-      </ul>
-    </nav><!-- End Icons Navigation -->
-
   </header><!-- End Header -->
-
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
         <a class="nav-link " href="index_admin.php?page=admin">
@@ -123,7 +70,6 @@ if (isset($_POST['year'])) {
           <span>กลับ</span>
         </a>
       </li><!-- End back Nav -->
-
       <li class="nav-heading">ตอนที่ 1</li>
 
       <li class="nav-item">
@@ -132,7 +78,6 @@ if (isset($_POST['year'])) {
           <span>1. ภาระงานสอน(ภาคปกติ)</span>
         </a>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav1" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>2. ภาระงานอาจารย์ที่ปรึกษาของนักศึกษา</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -150,19 +95,16 @@ if (isset($_POST['year'])) {
           </li>
         </ul>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/1_3">
           <i class="bi bi-menu-button-wide"></i><span>3. ภาระงานอาจารย์นิเทศ</span>
         </a>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/1_4">
           <i class="bi bi-menu-button-wide"></i><span>4. ภาระงานกิจกรรมพัฒนานักศึกษา</span>
         </a>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav2" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>5. ภาระงานอาจารย์ที่ปรึกษางานวิจัย โครงการ</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -180,7 +122,6 @@ if (isset($_POST['year'])) {
           </li>
         </ul>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav3" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>6. ภาระงานวิจัย</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -198,52 +139,52 @@ if (isset($_POST['year'])) {
           </li>
         </ul>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/1_7">
           <i class="bi bi-menu-button-wide"></i><span>7. ภาระงานผลิตผลงานทางวิชาการ</span>
         </a>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/1_8">
           <i class="bi bi-menu-button-wide"></i><span>8. ภาระงานด้านบริการวิชาการ</span>
         </a>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/1_9">
           <i class="bi bi-menu-button-wide"></i><span>9. ภาระงานทำนุบำรุงศิลปวัฒนธรรม</span>
         </a>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/1_10">
           <i class="bi bi-menu-button-wide"></i><span>10. ภาระงานเฉพาะกิจที่เกี่ยวข้อง นอกจากข้อ 1-9</span>
         </a>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/1_11">
           <i class="bi bi-menu-button-wide"></i><span>11. ภาระงานด้านการบริหาร</span>
         </a>
       </li><!-- End Components Nav -->
-
-
+      <li class="nav-heading">ประเมินผลการปฏิบัติงาน</li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="index_details_personal.php?page=lasc_personal_admin/3">
+          <i class="bi bi-menu-button-wide"></i><span>แบบประเมินผลการปฏิบัติงาน(สายวิชาการ)</span>
+        </a>
+      </li><!-- End Components Nav -->
   </aside><!-- End Sidebar-->
-
   <main>
     <br>
     <br>
     <br>
     <?php
-    @$page = $_GET['page'];
-    @include $page . ('.php');
+      if(isset($_GET['page'])){
+        $page = $_GET['page'];
+        include $page . ('.php');
+      }else{
+        include "lasc_personal_admin/1_1" . ('.php');
+      }
     ?>
   </main>
-
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -256,7 +197,6 @@ if (isset($_POST['year'])) {
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-
 </body>
 <?php 
   $conn = null;

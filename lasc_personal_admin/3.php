@@ -1,43 +1,10 @@
 <?php
-    $userId = $_SESSION['userId'];
-    $nametitle = $_SESSION['nametitle'];
-    $lastname = $_SESSION['lastname'];
-    $branch = $_SESSION['branch'];
-    $totalAmountWork = $_SESSION['$totalAmountWork'];
-
-    $name = $nametitle . $userId ." ". $lastname;
-    
-    $stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
-    $stmt->execute();
-    $term_year = $stmt->fetch();
-    $term =  $term_year['term'];
-    $year =  $term_year['year'];
-
     $stmt = $conn->prepare("SELECT * FROM personal_3 WHERE userId = :userId AND term = :term AND year = :year");
-    $stmt->bindParam(':userId', $userId);
-    $stmt->bindParam(':term', $term);
-    $stmt->bindParam(':year', $year);
+    $stmt->bindParam(':userId', $_SESSION['userId']);
+    $stmt->bindParam(':term', $_SESSION['term']);
+    $stmt->bindParam(':year', $_SESSION['year']);
     $stmt->execute();
     $personal = $stmt->fetchAll();
-
-    if (empty($personal)) {
-        $userId = $_SESSION['userId'];
-        $term = $term_year['term'];
-        $year = $term_year['year'];
-        
-        $insertStmt = $conn->prepare("INSERT INTO personal_3 (userId, term, year,name,branch,amount_work) VALUES (:userId, :term, :year, :name, :branch, :amount_work)");
-        $insertStmt->bindParam(':userId', $userId);
-        $insertStmt->bindParam(':term', $term);
-        $insertStmt->bindParam(':year', $year);
-        $insertStmt->bindParam(':name', $name);
-        $insertStmt->bindParam(':branch', $branch);
-        $insertStmt->bindParam(':amount_work', $totalAmountWork);
-        $insertStmt->execute();
-
-        if ($insertStmt) {
-            echo "<script>window.location.href = 'index.php?page=3/index_3';</script>";
-        }
-    }
 
     foreach($personal as $per)
 ?>
@@ -45,19 +12,6 @@
     <div class="pagetitle mt-3" style="text-align: center;">
         <h1>แบบประเมินผลการปฏิบัติงาน <br>สายวิชาการ</h1>
     </div>
-    <?php if (isset($_SESSION['success'])) { ?>
-        <div class="alert alert-success" id="alert-success">
-            <?php
-                echo $_SESSION['success']; // แสดงข้อความที่เก็บในตัวแปร session 'success'
-                unset($_SESSION['success']); // ลบค่าในตัวแปร session 'success'
-            ?>
-        </div>
-        <script>
-            setTimeout(function() { // ซ่อนข้อความแจ้งเตือนหลังจาก 3 วินาที
-                document.getElementById('alert-success').style.display = 'none';
-            }, 3000);
-        </script>
-    <?php } ?>
     <div class="card mt-4">
         <div class="card-body mt-4">
             <form action="3/edit_3.php" method="POST" >
@@ -107,31 +61,31 @@
                             <th scope="col">1</th>
                             <th scope="col">ภาระงานหลัก</th>
                             <th scope="col" class="text-center">50%</th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="quality_work" id="quality_work" value="<?= $per['quality_work']; ?>" oninput="calc()"></th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="efficiency_work" id="efficiency_work" value="<?= $per['efficiency_work']; ?>" oninput="calc()"></th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="effectiveness_work" id="effectiveness_work" value="<?= $per['effectiveness_work']; ?>" oninput="calc()"></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="quality_work" id="quality_work" value="<?= $per['quality_work']; ?>" oninput="calc()" readonly></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="efficiency_work" id="efficiency_work" value="<?= $per['efficiency_work']; ?>" oninput="calc()" readonly></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="effectiveness_work" id="effectiveness_work" value="<?= $per['effectiveness_work']; ?>" oninput="calc()" readonly></th>
                             <th scope="col" class="text-center">50</th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="score_work" id="score_work" value="<?= $per['score_work']; ?>" oninput="calc()"></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="score_work" id="score_work" value="<?= $per['score_work']; ?>" oninput="calc()" readonly></th>
                         </tr>
                         <tr>
                             <th scope="col">2</th>
                             <th scope="col" style="white-space: nowrap;">จรรยาบรรณวิชาชีพ</th>
                             <th scope="col" class="text-center">10%</th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="quality_ethics" id="quality_ethics" value="<?= $per['quality_ethics']; ?>" oninput="calc()"></th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="efficiency_ethics" id="efficiency_ethics" value="<?= $per['efficiency_ethics']; ?>" oninput="calc()"></th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="effectiveness_ethics" id="effectiveness_ethics" value="<?= $per['effectiveness_ethics']; ?>" oninput="calc()"></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="quality_ethics" id="quality_ethics" value="<?= $per['quality_ethics']; ?>" oninput="calc()" readonly></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="efficiency_ethics" id="efficiency_ethics" value="<?= $per['efficiency_ethics']; ?>" oninput="calc()" readonly></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="effectiveness_ethics" id="effectiveness_ethics" value="<?= $per['effectiveness_ethics']; ?>" oninput="calc()" readonly></th>
                             <th scope="col" class="text-center">10</th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="score_ethics" id="score_ethics" value="<?= $per['score_ethics']; ?>" oninput="calc()"></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="score_ethics" id="score_ethics" value="<?= $per['score_ethics']; ?>" oninput="calc()" readonly></th>
                         </tr>
                         <tr>
                             <th scope="col">3</th>
                             <th scope="col">สมรรถนะ</th>
                             <th scope="col" class="text-center">30%</th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="quality_capacity" id="quality_capacity" value="<?= $per['quality_capacity']; ?>" oninput="calc()"></th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="efficiency_capacity" id="efficiency_capacity" value="<?= $per['efficiency_capacity']; ?>" oninput="calc()"></th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="effectiveness_capacity" id="effectiveness_capacity" value="<?= $per['effectiveness_capacity']; ?>" oninput="calc()"></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="quality_capacity" id="quality_capacity" value="<?= $per['quality_capacity']; ?>" oninput="calc()" readonly></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="efficiency_capacity" id="efficiency_capacity" value="<?= $per['efficiency_capacity']; ?>" oninput="calc()" readonly></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="effectiveness_capacity" id="effectiveness_capacity" value="<?= $per['effectiveness_capacity']; ?>" oninput="calc()" readonly></th>
                             <th scope="col" class="text-center">50</th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="score_capacity" id="score_capacity" value="<?= $per['score_capacity']; ?>" oninput="calc()"></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="score_capacity" id="score_capacity" value="<?= $per['score_capacity']; ?>" oninput="calc()" readonly></th>
                         </tr>
                         <tr>
                             <td scope="col" rowspan="5"></td>
@@ -183,11 +137,11 @@
                             <th scope="col">4</th>
                             <th scope="col">งานอื่นที่ได้รับมอบหมายเป็นพิเศษ/เพิ่มเติม</th>
                             <th scope="col" class="text-center">10%</th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="quality_more" id="quality_more" value="<?= $per['quality_more']; ?>" oninput="calc()"></th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="efficiency_more" id="efficiency_more" value="<?= $per['efficiency_more']; ?>" oninput="calc()"></th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="effectiveness_more" id="effectiveness_more" value="<?= $per['effectiveness_more']; ?>" oninput="calc()"></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="quality_more" id="quality_more" value="<?= $per['quality_more']; ?>" oninput="calc()" readonly></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="efficiency_more" id="efficiency_more" value="<?= $per['efficiency_more']; ?>" oninput="calc()" readonly></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="effectiveness_more" id="effectiveness_more" value="<?= $per['effectiveness_more']; ?>" oninput="calc()" readonly></th>
                             <th scope="col" class="text-center">10</th>
-                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="score_more" id="score_more" value="<?= $per['score_more']; ?>" oninput="calc()"></th>
+                            <th scope="col"><input type="text" class="form-control me-3 text-center" name="score_more" id="score_more" value="<?= $per['score_more']; ?>" oninput="calc()" readonly></th>
                         </tr>
                         <tr>
                             <td scope="col"></td>
@@ -201,9 +155,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="d-flex justify-content-end">
-                    <button type="submit" name="update" class="btn btn-primary"><i class="bi bi-pencil-square">&nbsp;&nbsp;</i>บันทึกร่าง</button>
-                </div>
             </form>
         </div>
     </div>

@@ -24,6 +24,12 @@
         $delete_file = $conn->prepare("UPDATE personal_1_7 SET file = '' WHERE id = :delete_file_id");
         $delete_file->bindParam(':delete_file_id', $delete_file_id);
         $delete_file->execute();
+
+        if ($delete_file) {
+            $_SESSION['success'] = "ไฟล์ถูกลบสำเร็จ";
+            echo "<script>window.location.href = 'index.php?page=1_7/index_1_7';</script>";
+            exit;
+        }
     }
     //delete 
     if (isset($_GET['delete'])) {
@@ -134,7 +140,7 @@
                 <th scope="col">ลักษณะงาน</th>
                 <th scope="col">ร้อยละการมีส่วนร่วม</th>
                 <th scope="col">จำนวนภาระงาน</th>
-                <th scope="col">อัปโหลด</th>
+                <th scope="col">อัปโหลดไฟล์</th>
                 <th scope="col">จัดการข้อมูล</th>
             </tr>
         </thead>
@@ -221,11 +227,11 @@
                         <?php } ?>
                     </tr>
             <?php } } ?>
-            <tr>
-                <th scope="row" colspan="6">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-                <td><?= number_format($totalAmountWork, 2); ?></td>
-                <td colspan="2"></td>
-            </tr>
+                    <tr>
+                        <th scope="row" colspan="6">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+                        <td><?= number_format($totalAmountWork, 2); ?></td>
+                        <td colspan="2"></td>
+                    </tr>
         </tbody>
     </table>
 </div>
@@ -355,7 +361,7 @@
             </div>
             <div class="modal-body">
                 <form action="1_7/upload_1_7.php" method="post" enctype="multipart/form-data">
-                    <div class="row mb-3">
+                    <div class="row mb-1 mt-3">
                         <label for="file" class="col-sm-2 col-form-label">อัปโหลดไฟล์</label>
                         <div class="col-sm-10">
                             <input type="file" class="form-control" name="file" id="fileInput" required>

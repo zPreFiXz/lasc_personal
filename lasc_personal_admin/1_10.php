@@ -46,7 +46,6 @@
                                             <div class="label">ดูไฟล์</div>
                                         </div>
                                     </a>
-                                    >
                                 </td>
                             <?php } else { ?>
                                 <td>ไม่มีไฟล์แนบ</td>

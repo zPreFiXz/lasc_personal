@@ -30,6 +30,8 @@
                         if (password_verify($password, $row['password'])) {
                             if ($row['urole'] == 'admin') {
                                 $_SESSION['adminId'] = $row['firstname'];
+                                $_SESSION['nametitle'] = $row['nametitle'];
+                                $_SESSION['lastname'] = $row['lastname'];
                                 header("location: index_admin.php?page=admin");
                             } else {
                                 $_SESSION['userId'] = $row['firstname'];

@@ -34,7 +34,9 @@
         $stmt->bindParam(':amount_work', $amount_work);
         $stmt->execute();
     }
+
     $conn = null;
+    
     if ($stmt) {
         $_SESSION['success'] = "เพิ่มข้อมูลสำเร็จ";
         header("location: ../index.php?page=1_6_a/index_1_6_a");

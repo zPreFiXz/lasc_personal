@@ -1,11 +1,38 @@
 <?php
     require_once "config/db.php";
+
+    $stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
+    $stmt->execute();
+    $term_year = $stmt->fetch();
+    $term =  $term_year['term'];
+    $year =  $term_year['year'];
+
+    $stmt = $conn->query("SELECT * FROM personal_1_1_file WHERE userId = '".$_SESSION['userId']."' AND term = '$term' AND year = '$year'");
+    $stmt->execute();
+    $personal = $stmt->fetchAll();
 ?>
 <div class="container">
     <div class="pagetitle mt-3">
         <h1>1. ภาระงานสอน (ภาคปกติ)</h1>
     </div>
     <hr>
+    <div class="d-flex justify-content-end mb-3">
+        <?php if (isset($personal[0]['file'])) { ?> 
+            <td style="white-space: nowrap;">
+                <a href="uploads/<?= $personal[0]['file']; ?>" class="btn btn-secondary" target="_blank">
+                    <div class="icon d-flex">
+                        <i class="bi bi-eye"></i>&nbsp;
+                        <div class="label">ดูไฟล์</div>
+                    </div>
+                </a>
+            </td>
+        <?php } else { ?>
+            <td>
+                <div class="btn btn-warning">ไม่มีไฟล์แนบ</div>
+            </td>
+        <?php } ?>
+    </div>
+    </tr>
     <table class="table table-bordered text-center align-middle">
         <thead class="align-middle table-secondary">
             <tr>
@@ -19,7 +46,6 @@
                 <th scope="col" rowspan="2">จำนวนนักศึกษา </th>
                 <th scope="col" rowspan="2">สัดส่วนการสอน (ป้อนตัวเลขไม่มี%)</th>
                 <th scope="col" rowspan="2">รวมจำนวนภาระงาน/สัปดาห์ </th>
-                <th scope="col" rowspan="2">ไฟล์</th>
             </tr>
             <tr>
                 <th scope="col">เตรียมสอนทฤษฎี</th>
@@ -33,8 +59,7 @@
         </thead>
         <tbody>
             <?php
-                $userId = $_SESSION['userId'];
-                $stmt = $conn->query("SELECT * FROM personal_1_1 WHERE userId = '".$_SESSION['user']."' AND term = '".$_SESSION['term']."' AND year = '".$_SESSION['year']."'");
+                $stmt = $conn->query("SELECT * FROM personal_1_1 WHERE userId = '" . $_SESSION['user'] . "' AND term = '" . $_SESSION['term'] . "' AND year = '" . $_SESSION['year'] . "'");
                 $stmt->execute();
                 $personal = $stmt->fetchAll();
 
@@ -62,29 +87,14 @@
                             <td><?= $per['proportion']; ?></td>
                             <td><?= $per['amount_work']; ?></td>
                             <?php $totalAmountWork += floatval($per['amount_work']); ?>
-                            <?php if ($per['file']) { ?>
-                                <td style="white-space: nowrap;">
-                                    <a href="uploads/<?= $per['file']; ?>" class="btn btn-secondary">
-                                        <div class="icon d-flex">
-                                            <i class="bi bi-eye"></i>&nbsp;
-                                            <div class="label">ดูไฟล์</div>
-                                        </div>
-                                    </a>
-                                </td>
-                            <?php } else { ?>
-                                <td>ไม่มีไฟล์แนบ</td>
-                               
-                            <?php } ?>
-                        </tr>
             <?php } } ?>
                         <tr>
                             <th scope="row" colspan="14">รวมจำนวนภาระงานตลอดภาคเรียน</th>
                             <td scope="row"><?= number_format($totalAmountWork, 2); ?></td>
-                            <td colspan="2"></td>
                         </tr>
         </tbody>
     </table>
 </div>
-<?php 
+<?php
     $conn = null;
-?>  
+?>

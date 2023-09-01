@@ -47,6 +47,7 @@
         $stmt->bindParam(':proportion', $proportion);
         $stmt->bindParam(':amount_work', $amount_work);
         $stmt->execute();
+        
         $conn = null;
     
         if ($stmt) {

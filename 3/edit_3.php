@@ -63,6 +63,8 @@
         $stmt->bindParam(':userId', $userId);
         $stmt->execute();
 
+        $conn = null;
+
         if ($stmt) {
             $_SESSION['success'] = "แก้ไขข้อมูลสำเร็จ";
             header("location: ../index.php?page=3/index_3");

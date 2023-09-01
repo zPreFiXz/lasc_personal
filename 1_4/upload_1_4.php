@@ -29,7 +29,9 @@
             }
         }
     }
+
     $conn = null;
+    
     if ($stmt) {
         $_SESSION['success'] = "อัปโหลดไฟล์สำเร็จ";
         header("location: ../index.php?page=1_4/index_1_4");

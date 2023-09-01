@@ -1,10 +1,9 @@
 <?php
-session_start();
-require_once "config/db.php";
+    session_start();
+    require_once "config/db.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -32,7 +31,6 @@ require_once "config/db.php";
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="container">
         <div class="d-flex flex-column align-items-center justify-content-center ">
@@ -50,8 +48,8 @@ require_once "config/db.php";
                         <?php if (isset($_SESSION['error'])) { ?>
                             <div class="alert alert-danger" role="alert">
                                 <?php
-                                echo $_SESSION['error'];
-                                unset($_SESSION['error']);
+                                    echo $_SESSION['error'];
+                                    unset($_SESSION['error']);
                                 ?>
                             </div>
                             <script>
@@ -63,8 +61,8 @@ require_once "config/db.php";
                         <?php if (isset($_SESSION['success'])) { ?>
                             <div class="alert alert-success" role="alert">
                                 <?php
-                                echo $_SESSION['success'];
-                                unset($_SESSION['success']);
+                                    echo $_SESSION['success'];
+                                    unset($_SESSION['success']);
                                 ?>
                             </div>
                             <script>
@@ -76,8 +74,8 @@ require_once "config/db.php";
                         <?php if (isset($_SESSION['warning'])) { ?>
                             <div class="alert alert-warning" role="alert">
                                 <?php
-                                echo $_SESSION['warning'];
-                                unset($_SESSION['warning']);
+                                    echo $_SESSION['warning'];
+                                    unset($_SESSION['warning']);
                                 ?>
                             </div>
                             <script>
@@ -86,7 +84,6 @@ require_once "config/db.php";
                                 }, 3000);
                             </script>
                         <?php } ?>
-
                         <div class="mb-3">
                             <label for="nametitle" class="form-label">คำนำหน้าชื่อ</label>
                             <input type="text" class="form-control" name="nametitle" aria-describedby="nametitle">
@@ -115,17 +112,18 @@ require_once "config/db.php";
                             <label for="confirm password" class="form-label">ยืนยันรหัสผ่าน</label>
                             <input type="password" class="form-control" name="c_password">
                         </div>
-                        <button type="submit" name="signup" class="btn btn-primary">ลงทะเบียน</button>
-
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" name="signup" class="btn btn-primary">ลงทะเบียน</button>
+                        </div>
                     </form>
                     <hr>
                     <p>เป็นสมาชิกแล้วใช่ไหม คลิ๊กที่นี่เพื่อ <a href="signin.php">เข้าสู่ระบบ</a></p>
                 </div>
             </div>
         </div>
+    </div>
 </body>
 <?php
-$conn = null;
+    $conn = null;
 ?>
-
 </html>

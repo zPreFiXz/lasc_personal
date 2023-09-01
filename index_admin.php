@@ -1,16 +1,14 @@
 <?php
-session_start();
-require_once 'config/db.php';
+  session_start();
+  require_once 'config/db.php';
 
-if (!isset($_SESSION['adminId'])) {
-  $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
-  header('location: signin.php');
-}
+  if (!isset($_SESSION['adminId'])) {
+    $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
+    header('location: signin.php');
+  }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -41,11 +39,9 @@ if (!isset($_SESSION['adminId'])) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap" rel="stylesheet">
 </head>
-
 <body>
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
-
     <div class="d-flex align-items-center justify-content-between">
       <a class="logo d-flex align-items-center">
         <img src="assets/img/logo_lasc1.png" alt="โลโก้คณะ">
@@ -53,16 +49,13 @@ if (!isset($_SESSION['adminId'])) {
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
-
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
         <li class="nav-item dropdown pe-3">
-
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
           <i class="bi bi-person-circle"></i>
             <span class="d-none d-md-block dropdown-toggle ps-2"><?= $_SESSION['nametitle'] .  $_SESSION['adminId'] . ' ' . $_SESSION['lastname'] ?></span>
           </a><!-- End Profile Iamge Icon -->
-
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6><?= $_SESSION['nametitle'] .  $_SESSION['adminId'] . ' ' . $_SESSION['lastname'] ?></h6>
@@ -70,32 +63,20 @@ if (!isset($_SESSION['adminId'])) {
             <li>
               <hr class="dropdown-divider">
             </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="edit_profile/edit_profile.php">
-                <i class="bi bi-person"></i>
-                <span>แก้ไขโปรไฟล์</span>
-              </a>
-            </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-
             <li>
               <a class="dropdown-item d-flex align-items-center" href="logout.php">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>ออกจากระบบ</span>
               </a>
             </li>
-
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
-
       </ul>
     </nav><!-- End Icons Navigation -->
-
   </header><!-- End Header -->
-
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -107,7 +88,6 @@ if (!isset($_SESSION['adminId'])) {
       </li><!-- End Dashboard Nav -->
     </ul>
   </aside><!-- End Sidebar-->
-
   <main>
     <br>
     <br>
@@ -117,7 +97,6 @@ if (!isset($_SESSION['adminId'])) {
     include $page . ('.php');
     ?>
   </main>
-
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
@@ -132,7 +111,6 @@ if (!isset($_SESSION['adminId'])) {
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-
 </body>
 <?php 
   $conn = null;

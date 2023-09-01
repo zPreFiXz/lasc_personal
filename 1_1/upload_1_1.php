@@ -8,7 +8,6 @@
         $year = $_POST['year'];
         $file = $_FILES['file'];
         
-        
         $allow = array('jpg', 'jpeg', 'png' , 'pdf','ppt','docx');
         $extension = explode('.', $file['name']);
         $fileActExt = strtolower(end($extension));
@@ -29,6 +28,7 @@
                 $stmt->bindParam(':year', $year);
                 $stmt->bindParam(':file', $fileNew);
                 $stmt->execute();
+
                 $conn = null;
                 
                 if ($stmt) {
@@ -41,6 +41,4 @@
             }
         }
     }
-        
-    
 ?>

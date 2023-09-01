@@ -10,12 +10,25 @@
     <br>
     <div class="d-flex justify-content-between align-items-center">
         <div class="pagetitle mt-3">
-            <h1 style="font-size: 30px;">ยินดีต้อนรับ, <?=$row['nametitle'] .  $row['firstname'] . ' ' . $row['lastname'] ?></h1>
+            <h1 style="font-size: 30px;">ยินดีต้อนรับ <?=$row['nametitle'] .  $row['firstname'] . ' ' . $row['lastname'] ?></h1>
         </div>
         <a href="logout.php" class="btn btn-danger d-flex align-items-center"><i class="ri-logout-box-line"></i> &nbsp;&nbsp;ออกจากระบบ</a>
     </div>
     <hr>
     <br>
+    <?php if (isset($_SESSION['success'])) { ?>
+        <div class="alert alert-success" id="alert-success">
+            <?php
+                echo $_SESSION['success'];
+                unset($_SESSION['success']);
+            ?>
+        </div>
+        <script>
+            setTimeout(function() {
+                document.getElementById('alert-success').style.display = 'none';
+            }, 3000);
+        </script>
+    <?php } ?>
     <?php
         require_once "config/db.php";
 

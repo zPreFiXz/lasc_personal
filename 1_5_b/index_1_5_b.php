@@ -24,6 +24,12 @@
         $delete_file = $conn->prepare("UPDATE personal_1_5_b SET file = '' WHERE id = :delete_file_id");
         $delete_file->bindParam(':delete_file_id', $delete_file_id);
         $delete_file->execute();
+
+        if ($delete_file) {
+            $_SESSION['success'] = "ไฟล์ถูกลบสำเร็จ";
+            echo "<script>window.location.href = 'index.php?page=1_5_b/index_1_5_b';</script>";
+            exit;
+        }
     }
     //delete 
     if (isset($_GET['delete'])) {
@@ -227,11 +233,11 @@
                         <?php } ?>
                     </tr>
             <?php } } ?>
-            <tr>
-                <th scope="row" colspan="6">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-                <td><?= number_format($totalAmountWork, 2); ?></td>
-                <td colspan="2"></td>
-            </tr>
+                    <tr>
+                        <th scope="row" colspan="6">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+                        <td><?= number_format($totalAmountWork, 2); ?></td>
+                        <td colspan="2"></td>
+                    </tr>
         </tbody>
     </table>
 </div>
@@ -343,7 +349,7 @@
             </div>
             <div class="modal-body">
                 <form action="1_5_b/upload_1_5_b.php" method="post" enctype="multipart/form-data">
-                    <div class="row mb-3">
+                    <div class="row mb-1 mt-3">
                         <label for="file" class="col-sm-2 col-form-label">อัปโหลดไฟล์</label>
                         <div class="col-sm-10">
                             <input type="file" class="form-control" name="file" id="fileInput" required>

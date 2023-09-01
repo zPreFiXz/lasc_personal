@@ -24,9 +24,6 @@
         </thead>
         <tbody>
             <?php
-                $userId = $_SESSION['userId'];
-                $term =  $term_year['term'];
-                $year =  $term_year['year'];
                 $stmt = $conn->query("SELECT*FROM personal_1_5_a WHERE userId = '" . $_SESSION['user'] . "' AND term = '" . $_SESSION['term'] . "' AND year = '" . $_SESSION['year'] . "'"); // ดึงข้อมูลจากตาราง personal_1_5_a
                 $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
                 $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal

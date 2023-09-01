@@ -163,30 +163,30 @@
   $lastname = $user['lastname'];
   $nametitle = $user['nametitle'];
 
-if (empty($users)) {
-  $insertStmt = $conn->prepare("INSERT INTO Vadmin (userId, term, `year`, nametitle, firstname, lastname, amount_work) VALUES (:userId, :term, :year, :nametitle, :firstname, :lastname, :amount_work)");
-  $insertStmt->bindParam(':userId', $userId);
-  $insertStmt->bindParam(':term', $term);
-  $insertStmt->bindParam(':year', $year);
-  $insertStmt->bindParam(':nametitle', $nametitle);
-  $insertStmt->bindParam(':firstname', $firstname);
-  $insertStmt->bindParam(':lastname', $lastname);
-  $insertStmt->bindParam(':amount_work', $totalAmountWork);
-  $insertStmt->execute();
-} else {
-  $updateStmt = $conn->prepare("UPDATE Vadmin SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND `year` = :year ");
-  $updateStmt->bindParam(':userId', $userId);
-  $updateStmt->bindParam(':term', $term);
-  $updateStmt->bindParam(':year', $year);
-  $updateStmt->bindParam(':amount_work', $totalAmountWork);
-  $updateStmt->execute();
-}
-  $updateStmt = $conn->prepare("UPDATE personal_3 SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND `year` = :year ");
-  $updateStmt->bindParam(':userId', $userId);
-  $updateStmt->bindParam(':term', $term);
-  $updateStmt->bindParam(':year', $year);
-  $updateStmt->bindParam(':amount_work', $totalAmountWork);
-  $updateStmt->execute();
+  if (empty($users)) {
+    $insertStmt = $conn->prepare("INSERT INTO Vadmin (userId, term, `year`, nametitle, firstname, lastname, amount_work) VALUES (:userId, :term, :year, :nametitle, :firstname, :lastname, :amount_work)");
+    $insertStmt->bindParam(':userId', $userId);
+    $insertStmt->bindParam(':term', $term);
+    $insertStmt->bindParam(':year', $year);
+    $insertStmt->bindParam(':nametitle', $nametitle);
+    $insertStmt->bindParam(':firstname', $firstname);
+    $insertStmt->bindParam(':lastname', $lastname);
+    $insertStmt->bindParam(':amount_work', $totalAmountWork);
+    $insertStmt->execute();
+  } else {
+    $updateStmt = $conn->prepare("UPDATE Vadmin SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND `year` = :year ");
+    $updateStmt->bindParam(':userId', $userId);
+    $updateStmt->bindParam(':term', $term);
+    $updateStmt->bindParam(':year', $year);
+    $updateStmt->bindParam(':amount_work', $totalAmountWork);
+    $updateStmt->execute();
+  }
+    $updateStmt = $conn->prepare("UPDATE personal_3 SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND `year` = :year ");
+    $updateStmt->bindParam(':userId', $userId);
+    $updateStmt->bindParam(':term', $term);
+    $updateStmt->bindParam(':year', $year);
+    $updateStmt->bindParam(':amount_work', $totalAmountWork);
+    $updateStmt->execute();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -220,11 +220,9 @@ if (empty($users)) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap" rel="stylesheet">
 </head>
-
 <body>
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
-
     <div class="d-flex align-items-center justify-content-between">
       <a class="logo d-flex align-items-center" >
         <img src="assets/img/logo_lasc.png" alt="โลโก้คณะ">
@@ -232,16 +230,13 @@ if (empty($users)) {
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
-
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
         <li class="nav-item dropdown pe-3">
-
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-person-circle"></i>
             <span class="d-none d-md-block dropdown-toggle ps-2"><?= $_SESSION['nametitle'] .  $_SESSION['userId'] . ' ' . $_SESSION['lastname'] ?></span>
           </a><!-- End Profile Iamge Icon -->
-
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6><?= $_SESSION['nametitle'] .  $_SESSION['userId'] . ' ' . $_SESSION['lastname'] ?></h6>
@@ -249,35 +244,21 @@ if (empty($users)) {
             <li>
               <hr class="dropdown-divider">
             </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="edit_profile/edit_profile.php">
-                <i class="bi bi-person"></i>
-                <span>แก้ไขโปรไฟล์</span>
-              </a>
-            </li>
-            <li>
               <hr class="dropdown-divider">
             </li>
-
             <li>
               <a class="dropdown-item d-flex align-items-center" href="logout.php">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>ออกจากระบบ</span>
               </a>
             </li>
-
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
-
       </ul>
     </nav><!-- End Icons Navigation -->
-
   </header><!-- End Header -->
-
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
         <a class="nav-link " href="index.php?page=users/dashboard">
@@ -285,16 +266,13 @@ if (empty($users)) {
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
-
       <li class="nav-heading">ตอนที่ 1</li>
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_1/index_1_1">
           <i class="bi bi-menu-button-wide"></i>
           <span>1. ภาระงานสอน(ภาคปกติ)</span>
         </a>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav1" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>2. ภาระงานอาจารย์ที่ปรึกษาของนักศึกษา</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -312,19 +290,16 @@ if (empty($users)) {
           </li>
         </ul>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_3/index_1_3">
           <i class="bi bi-menu-button-wide"></i><span>3. ภาระงานอาจารย์นิเทศ</span>
         </a>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_4/index_1_4">
           <i class="bi bi-menu-button-wide"></i><span>4. ภาระงานกิจกรรมพัฒนานักศึกษา</span>
         </a>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav2" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>5. ภาระงานอาจารย์ที่ปรึกษางานวิจัย โครงการ</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -342,7 +317,6 @@ if (empty($users)) {
           </li>
         </ul>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav3" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>6. ภาระงานวิจัย</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -360,46 +334,38 @@ if (empty($users)) {
           </li>
         </ul>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_7/index_1_7">
           <i class="bi bi-menu-button-wide"></i><span>7. ภาระงานผลิตผลงานทางวิชาการ</span>
         </a>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_8/index_1_8">
           <i class="bi bi-menu-button-wide"></i><span>8. ภาระงานด้านบริการวิชาการ</span>
         </a>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_9/index_1_9">
           <i class="bi bi-menu-button-wide"></i><span>9. ภาระงานทำนุบำรุงศิลปวัฒนธรรม</span>
         </a>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_10/index_1_10">
           <i class="bi bi-menu-button-wide"></i><span>10. ภาระงานเฉพาะกิจที่เกี่ยวข้อง นอกจากข้อ 1-9</span>
         </a>
       </li><!-- End Components Nav -->
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=1_11/index_1_11">
           <i class="bi bi-menu-button-wide"></i><span>11. ภาระงานด้านการบริหาร</span>
         </a>
       </li><!-- End Components Nav -->
-
       <li class="nav-heading">ประเมินผลการปฏิบัติงาน</li>
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.php?page=3/index_3">
           <i class="bi bi-menu-button-wide"></i><span>แบบประเมินผลการปฏิบัติงาน(สายวิชาการ)</span>
         </a>
       </li><!-- End Components Nav -->
   </aside><!-- End Sidebar-->
-
   <main>
     <br>
     <br>
@@ -409,9 +375,7 @@ if (empty($users)) {
       include $page . ('.php');
     ?>
   </main>
-
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

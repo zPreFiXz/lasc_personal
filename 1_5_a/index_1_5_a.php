@@ -23,6 +23,12 @@
         $delete_file = $conn->prepare("UPDATE personal_1_5_a SET file = '' WHERE id = :delete_file_id");
         $delete_file->bindParam(':delete_file_id', $delete_file_id);
         $delete_file->execute();
+
+        if ($delete_file) {
+            $_SESSION['success'] = "ไฟล์ถูกลบสำเร็จ";
+            echo "<script>window.location.href = 'index.php?page=1_5_a/index_1_5_a';</script>";
+            exit;
+        }
     }
     //delete 
     if (isset($_GET['delete'])) {
@@ -226,66 +232,65 @@
                         <?php } ?>
                     </tr>
             <?php } } ?>
-            <tr>
-                <th scope="row" colspan="6">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-                <td><?= number_format($totalAmountWork, 2); ?></td>
-                <td colspan="2"></td>
-            </tr>
+                    <tr>
+                        <th scope="row" colspan="6">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+                        <td><?= number_format($totalAmountWork, 2); ?></td>
+                        <td colspan="2"></td>
+                    </tr>
         </tbody>
     </table>
 </div>
-        <div class="modal fade" id="ExtralargeModal" tabindex="-1">
-            <!-- หน้าเพิ่มข้อมูล -->
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">เพิ่มข้อมูล</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="ExtralargeModal" tabindex="-1">
+    <!-- หน้าเพิ่มข้อมูล -->
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">เพิ่มข้อมูล</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="1_5_a/insert_1_5_a.php" method="post" enctype="multipart/form-data">
+                    <input type="hidden" class="form-control" name="userId" value="<?= $userId ?>">
+                    <input type="hidden" class="form-control" name="term" value="<?= $term_year['term']; ?>">
+                    <input type="hidden" class="form-control" name="year" value="<?= $term_year['year']; ?>">
+                    
+                    <div class="mb-3">
+                        <label for="major" class="col-sm-2 col-form-label">สาขาวิชา</label>
+                        <input type="text" class="form-control" name="major" id="major" oninput="calc()" required>
                     </div>
-                    <div class="modal-body">
-                        <form action="1_5_a/insert_1_5_a.php" method="post" enctype="multipart/form-data">
-                            <input type="hidden" class="form-control" name="userId" value="<?= $userId ?>">
-                            <input type="hidden" class="form-control" name="term" value="<?= $term_year['term']; ?>">
-                            <input type="hidden" class="form-control" name="year" value="<?= $term_year['year']; ?>">
-                            
-                            <div class="mb-3">
-                                <label for="major" class="col-sm-2 col-form-label">สาขาวิชา</label>
-                                <input type="text" class="form-control" name="major" id="major" oninput="calc()" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="level" class="col-sm-2 col-form-label">ระดับชั้น</label>
-                                <input type="text" class="form-control" name="level" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="name_project" class="col-sm-2 col-form-label">ชื่องานวิจัย</label>
-                                <input type="text" class="form-control" name="name_project" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="amount_teacher" class="col-sm-2 col-form-label" style="white-space: nowrap;">จำนวนที่ปรึกษา (คน)</label>
-                                <input type="text" class="form-control" name="amount_teacher" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="teacher" class="col-sm-2 col-form-label">ที่ปรึกษาหลัก/ร่วม</label>
-                                <input type="text" class="form-control" name="teacher" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>
-                                <input type="text" class="form-control" name="amount_student" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
-                                <input type="text" class="form-control" name="amount_work" id="amount_work" readonly>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                                <button type="submit" name="submit" class="btn btn-primary">บันทึก</button>
-                            </div>
-                        </form>
+                    <div class="mb-3">
+                        <label for="level" class="col-sm-2 col-form-label">ระดับชั้น</label>
+                        <input type="text" class="form-control" name="level" required>
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <label for="name_project" class="col-sm-2 col-form-label">ชื่องานวิจัย</label>
+                        <input type="text" class="form-control" name="name_project" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount_teacher" class="col-sm-2 col-form-label" style="white-space: nowrap;">จำนวนที่ปรึกษา (คน)</label>
+                        <input type="text" class="form-control" name="amount_teacher" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="teacher" class="col-sm-2 col-form-label">ที่ปรึกษาหลัก/ร่วม</label>
+                        <input type="text" class="form-control" name="teacher" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount_student" class="col-sm-2 col-form-label">จำนวนนักศึกษา</label>
+                        <input type="text" class="form-control" name="amount_student" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
+                        <input type="text" class="form-control" name="amount_work" id="amount_work" readonly>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                        <button type="submit" name="submit" class="btn btn-primary">บันทึก</button>
+                    </div>
+                </form>
             </div>
         </div>
-
+    </div>
+</div>
 <!-- แก้ไขข้อมูล -->
 <div class="modal fade" id="modal" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -344,7 +349,7 @@
             </div>
             <div class="modal-body">
                 <form action="1_5_a/upload_1_5_a.php" method="post" enctype="multipart/form-data">
-                    <div class="row mb-3">
+                    <div class="row mb-1 mt-3">
                         <label for="file" class="col-sm-2 col-form-label">อัปโหลดไฟล์</label>
                         <div class="col-sm-10">
                             <input type="file" class="form-control" name="file" id="fileInput" required>

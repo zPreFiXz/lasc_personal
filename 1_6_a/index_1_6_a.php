@@ -117,11 +117,11 @@
     <table class="table table-bordered text-center align-middle">
         <thead class="align-middle table-secondary">
             <tr>
-                <th scope="col" style="white-space: nowrap;">ลำดับที่</th>
                 <th scope="col" style="white-space: nowrap;">ชื่องานวิจัย</th>
                 <th scope="col" style="white-space: nowrap;">แหล่งเงินทุน</th>
                 <th scope="col" style="white-space: nowrap;">กรอบเงินทุน</th>
-                <th scope="col">ระยะเวลาเริ่มต้น-สิ้นสุด</th>
+                <th scope="col">ระยะเวลาเริ่มต้น</th>
+                <th scope="col">ระยะเวลาสิ้นสุด</th>
                 <th scope="col">ลักษณะงานเดี่ยว/กลุ่ม</th>
                 <th scope="col">หัวหน้าโครงการ/ผู้ร่วมโครงการ</th>
                 <th scope="col">ร้อยละการมีส่วนร่วม</th>
@@ -147,11 +147,11 @@
                     foreach ($personal as $per) {
             ?>
                     <tr>
-                        <td style="white-space: nowrap;"><?= $per['number']; ?></td>
                         <td><?= $per['research_name']; ?></td>
                         <td><?= $per['funding_source']; ?></td>
                         <td><?= $per['funding_framework']; ?></td>
-                        <td><?= $per['start_end']; ?></td>
+                        <td><?= $per['start']; ?></td>
+                        <td><?= $per['end'];?></td>
                         <td><?= $per['nature_work']; ?></td>
                         <td><?= $per['leader']; ?></td>
                         <td><?= $per['contribute']; ?></td>
@@ -231,10 +231,6 @@
                             <input type="hidden" class="form-control" name="term" value="<?=$term_year['term'];?>">
                             <input type="hidden" class="form-control" name="year" value="<?=$term_year['year'];?>">
                             <div class="mb-3">
-                                <label for="number" class="col-sm-2 col-form-label ">ลำดับที่</label>
-                                <input type="text" class="form-control" name="number" required>
-                            </div>
-                            <div class="mb-3">
                                 <label for="research_name" class="col-sm-2 col-form-label">ชื่องานวิจัย</label>
                                 <input type="text" class="form-control" name="research_name" required>
                             </div>
@@ -246,7 +242,7 @@
                                 <label for="funding_framework" class="col-sm-2 col-form-label">กรอบเงินทุน</label>
                                 <select type="text" class="form-select" name="funding_framework" id="funding_framework1" onchange="calc1()">
                                     <option value="" selected>กรุณาเลือก</option>
-                                    <option value="<50,000">50,000</option>
+                                    <option value="<50,000"> <50,000 </option>
                                     <option value="50,000-100,000">50,000-100,000</option>
                                     <option value="100,000-500,000">100,000-500,000</option>
                                     <option value="500,000-1,000,000">500,000-1,000,000</option>
@@ -254,8 +250,16 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="start_end" class="col-sm-2 col-form-label">ระยะเวลาเริ่มต้น-สิ้นสุด</label>
-                                <input type="text" class="form-control" name="start_end" required>
+                                <div class="row mb-3">
+                                    <label for="prepare_theory" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลาเริ่มต้น :</label>
+                                    <div class="col-sm-3">
+                                        <input type="date" class="form-control" name="date_start" required>
+                                    </div>
+                                    <label for="prepare_theory" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลาสิ้นสุด :</label>
+                                    <div class="col-sm-3">
+                                        <input type="date" class="form-control" name="date_end" required>
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="nature_work" class="col-sm-2 col-form-label">ลักษณะงานเดี่ยว/กลุ่ม</label>
@@ -296,10 +300,6 @@
                     <div class="modal-body">
                         <form action="1_6_a/edit_1_6_a.php" method="post">
                             <div class="mb-3">
-                                <label for="number" class="col-sm-2 col-form-label">ลำดับที่</label>
-                                <input type="text" class="form-control" name="number" value="<?php echo $data['number']; ?>" required>
-                            </div>
-                            <div class="mb-3">
                                 <label for="research_name" class="col-sm-2 col-form-label">ชื่องานวิจัย</label>
                                 <input type="text" class="form-control" name="research_name" value="<?php echo $data['research_name']; ?>" required>
                             </div>
@@ -310,7 +310,7 @@
                             <div class="mb-3">
                                 <label for="funding_framework" class="col-sm-2 col-form-label">กรอบเงินทุน</label>
                                 <select type="text" class="form-select" name="funding_framework" id="funding_framework2" onchange="calc2()" required>
-                                    <option value="<50,000" <?php if ($data['funding_framework'] === '<50,000') echo 'selected' ?>>50,000<< /option>
+                                    <option value="<50,000" <?php if ($data['funding_framework'] === '<50,000') echo 'selected' ?>> <50,000 </option>
                                     <option value="50,000-100,000" <?php if ($data['funding_framework'] === '50,000-100,000') echo 'selected' ?>>50,000-100,000</option>
                                     <option value="100,000-500,000" <?php if ($data['funding_framework'] === '100,000-500,000') echo 'selected' ?>>100,000-500,000</option>
                                     <option value="500,000-1,000,000" <?php if ($data['funding_framework'] === '500,000-1,000,000') echo 'selected' ?>>500,000-1,000,000</option>
@@ -318,9 +318,16 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label style="white-space: nowrap;" for="start_end" class="col-sm-2 col-form-label">ระยะเวลาเริ่มต้น-สิ้นสุด</label>
-                                <input type="text" class="form-control" name="start_end" value="<?php echo $data['start_end']; ?>" required>
-                            </div>
+                                <div class="row mb-3">
+                                    <label for="prepare_theory" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลาเริ่มต้น :</label>
+                                    <div class="col-sm-3">
+                                        <input type="date" class="form-control" name="date_start" value="<?php echo $data['start']; ?>" required>
+                                    </div>
+                                    <label for="prepare_theory" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลาสิ้นสุด :</label>
+                                    <div class="col-sm-3">
+                                        <input type="date" class="form-control" name="date_end" value="<?php echo $data['end']; ?>" required>
+                                    </div>
+                                </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="nature_work" class="col-sm-2 col-form-label">ลักษณะงานเดี่ยว/กลุ่ม</label>
                                 <input type="text" class="form-control" name="nature_work" value="<?php echo $data['nature_work']; ?>" required>

@@ -156,16 +156,15 @@
         $totalAmountWork_1_11 += floatval($per_1_11['amount_work']);
     }
     // end ดึงค่าภาระงานไปคำนวณจากตาราง
-    $totalAmountWork = $totalAmountWork_1_1 + $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
+    $totalAmountWork  = $totalAmountWork_1_1 + $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
 
     $stmt = $conn->query("SELECT * FROM `term_year` where id = 1"); // ดึงข้อมูลจากตาราง personal โดยใช้ ID
     $stmt->execute();
     $term_year = $stmt->fetch();
-    $year = date("Y") + 543;
-    // จัดดับ
-    $Current_Year = $term_year['year'];
-    $Current_Term = $term_year['term'];
-    $stmt = $conn->query("SELECT * FROM vadmin WHERE `year` = '$Current_Year' AND term = '$Current_Term' ORDER BY amount_work DESC");
+    $year = $term_year['year'];
+    $term = $term_year['term'];
+    
+    $stmt = $conn->query("SELECT * FROM vadmin WHERE `year` = '$year' AND term = '$term' ORDER BY amount_work DESC");
     $stmt->execute();
     $ranks = $stmt->fetchAll();
     // end จัดอันดับ
@@ -244,7 +243,7 @@
 
                 $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year' and term = 2");
                 $stmt->execute();
-                $Current_Year_term2 = $stmt->fetchAll();
+                $current_Year_term2 = $stmt->fetchAll();
 
                 $year = $year - 1;
                 $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year' and term = 1");
@@ -271,7 +270,7 @@
                                     </div>
                                 </a>
                             </td>
-                            <?php foreach ($Current_Year_term2 as $CYT2) {
+                            <?php foreach ($current_Year_term2 as $CYT2) {
                                 $found = false;
                                 if ($CYT2['nametitle'] == $CYT1['nametitle'] && $CYT2['firstname'] == $CYT1['firstname'] && $CYT2['lastname'] == $CYT1['lastname']) {
                                     $found = true;
@@ -481,7 +480,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">ภาคเรียนที่ <?= $Current_Term ?> ปีการศึกษาที่ <?= $Current_Year ?></h5>
+                <h5 class="modal-title">ภาคเรียนที่ <?= $term ?> ปีการศึกษาที่ <?= $year ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

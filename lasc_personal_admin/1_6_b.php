@@ -12,10 +12,10 @@
     <table class="table table-bordered text-center">
         <thead class="align-middle table-secondary">
             <tr>
-                <th scope="col">ลำดับที่</th>
                 <th scope="col">ชื่องานวิจัย</th>
                 <th scope="col">แหล่งเงินทุน</th>
-                <th scope="col">ระยะเวลาเริ่มต้น-สิ้นสุด</th>
+                <th scope="col">ระยะเวลาเริ่มต้น</th>
+                <th scope="col">ระยะเวลาสิ้นสุด</th>
                 <th scope="col">ระบบการเผยแพร่ (ประชุม,วารสาร,ผลงาน)</th>
                 <th scope="col">จำนวนภาระงาน</th>
                 <th scope="col">ไฟล์</th>
@@ -37,11 +37,10 @@
                     foreach ($personal as $per) {
             ?>
                         <tr> <!-- แสดงแถวของตาราง (row) โดยใช้ข้อมูลจากตัวแปร $per ในแต่ละคอลัมน์ของตาราง -->
-
-                            <td><?= $per['number']; ?></td>
                             <td><?= $per['project']; ?></td>
                             <td><?= $per['funding']; ?></td>
-                            <td><?= $per['start_end']; ?></td>
+                            <td><?= $per['start']; ?></td>
+                            <td><?= $per['end']; ?></td>
                             <td style="white-space: nowrap;"><?= $per['publish']; ?></td>
                             <td><?= $per['amount_work']; ?></td>
                             <?php $totalAmountWork += floatval($per['amount_work']); ?>

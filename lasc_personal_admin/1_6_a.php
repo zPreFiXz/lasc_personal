@@ -10,11 +10,12 @@
     <table class="table table-bordered text-center align-middle">
         <thead class="align-middle table-secondary">
             <tr>
-                <th scope="col" style="white-space: nowrap;">ลำดับที่</th>
+                
                 <th scope="col" style="white-space: nowrap;">ชื่องานวิจัย</th>
                 <th scope="col" style="white-space: nowrap;">แหล่งเงินทุน</th>
                 <th scope="col" style="white-space: nowrap;">กรอบเงินทุน</th>
-                <th scope="col">ระยะเวลาเริ่มต้น-สิ้นสุด</th>
+                <th scope="col">ระยะเวลาเริ่มต้น</th>
+                <th scope="col">ระยะเวลาสิ้นสุด</th>
                 <th scope="col">ลักษณะงานเดี่ยว/กลุ่ม</th>
                 <th scope="col">หัวหน้าโครงการ/ผู้ร่วมโครงการ</th>
                 <th scope="col">ร้อยละการมีส่วนร่วม</th>
@@ -36,11 +37,11 @@
                     foreach ($personal as $per) {
             ?>
                         <tr>
-                            <td style="white-space: nowrap;"><?= $per['number']; ?></td>
                             <td><?= $per['research_name']; ?></td>
                             <td><?= $per['funding_source']; ?></td>
                             <td><?= $per['funding_framework']; ?></td>
-                            <td><?= $per['start_end']; ?></td>
+                            <td><?= $per['start']; ?></td>
+                            <td><?= $per['end']; ?></td>
                             <td><?= $per['nature_work']; ?></td>
                             <td><?= $per['leader']; ?></td>
                             <td><?= $per['contribute']; ?></td>

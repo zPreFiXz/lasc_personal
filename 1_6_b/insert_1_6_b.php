@@ -4,24 +4,24 @@
 
     if(isset($_POST['submit'])) {
         $userId = $_POST['userId'];
-        $number = $_POST['number'];
         $project = $_POST['project'];
         $funding = $_POST['funding'];
-        $start_end = $_POST['start_end'];
+        $date_start = $_POST['date_start'];
+        $date_end = $_POST['date_end'];
         $publish = $_POST['publish'];
         $term = $_POST['term'];
         $year = $_POST['year'];
         $amount_work = $_POST['amount_work'];
 
-        $sql = "INSERT INTO personal_1_6_b (userId,number, project, funding, start_end, publish, term, year, amount_work)
-        VALUES (:userId,:number, :project, :funding, :start_end, :publish, :term, :year,:amount_work)";
+        $sql = "INSERT INTO personal_1_6_b (userId,project, funding, `start`, `end`, publish, term, year, amount_work)
+        VALUES (:userId,:project, :funding, :date_start, :date_end, :publish, :term, :year,:amount_work)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userId', $userId);
-        $stmt->bindParam(':number', $number);
         $stmt->bindParam(':project', $project);
         $stmt->bindParam(':funding', $funding);
-        $stmt->bindParam(':start_end', $start_end);
+        $stmt->bindParam(':date_start', $date_start);
+        $stmt->bindParam(':date_end', $date_end);
         $stmt->bindParam(':publish', $publish);
         $stmt->bindParam(':term', $term);
         $stmt->bindParam(':year', $year);

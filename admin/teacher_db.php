@@ -1,6 +1,9 @@
 <?php 
     session_start();
     require_once '../config/db.php';
+    echo "<pre>";
+    print_r($_POST);
+    echo "</pre>";
 
     if (isset($_POST['signup'])) {
         $academic_rank = $_POST['academic_rank'];
@@ -63,7 +66,7 @@
                 } else if (!isset($_SESSION['error'])) {
                     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
                     $stmt = $conn->prepare("INSERT INTO users(academic_rank,nametitle,firstname, lastname, branch, email, password, urole,isAdmin) 
-                                            VALUES(:academic_rank,:nametitle, :firstname, :lastname, :branch, :email, :password, :urole,isAdmin)");
+                                            VALUES(:academic_rank,:nametitle, :firstname, :lastname, :branch, :email, :password, :urole,:isAdmin)");
                     $stmt->bindParam(":academic_rank", $academic_rank);
                     $stmt->bindParam(":nametitle", $nametitle);
                     $stmt->bindParam(":firstname", $firstname);
@@ -76,10 +79,10 @@
                     $stmt->execute();
                     
                     $_SESSION['success'] = "เพิ่มผู้ใช้งานเรียบร้อยแล้ว! <a href='signin.php' class='alert-link'>คลิ๊กที่นี่</a> เพื่อเข้าสู่ระบบ";
-                    header("location: index_admin.php?page=admin/teacher");
+                    header("location: /lasc_personal/index_admin.php?page=admin/teacher");
                 } else {
                     $_SESSION['error'] = "มีบางอย่างผิดพลาด";
-                    header("location: index_admin.php?page=admin/teacher");
+                    header("location: /lasc_personal/index_admin.php?page=admin/teacher");
                 }
             } catch(PDOException $e) {
                 echo $e->getMessage();

@@ -90,7 +90,6 @@
             <li class="breadcrumb-item">2. ภาระงานอาจารย์ที่ปรึกษาของนักศึกษา (ประจำหมู่เรียน /ชมรม /ชุมนุม /ที่ปรึกษาอื่นๆ)</li>
             <li class="breadcrumb-item active">ก. ภาระงานอาจารย์ที่ปรึกษาหมู่เรียน</li>
         </ol>
-        </nav>
     </div>
     <hr>
     <div class="d-flex justify-content-end">

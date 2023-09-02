@@ -65,7 +65,7 @@
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link " href="index_admin.php?page=admin">
+        <a class="nav-link " href="index_admin.php?page=admin/dashboard">
           <i class=" ri-arrow-left-s-fill"></i>
           <span>กลับ</span>
         </a>

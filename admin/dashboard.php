@@ -13,7 +13,6 @@
     $found = false;
 
     if (isset($_GET['userId'])) {
-        $_SESSION['userId'] = $_GET['userId'];
         $userId = $_GET['userId'];
         $term = $_GET['term'];
         $year = $_GET['year'];
@@ -266,7 +265,7 @@
                             <td><?= $CYT1['nametitle'], $CYT1['firstname'], " ", $CYT1["lastname"] ?></td>
                             <td><?= $CYT1['amount_work'] ?></td>
                             <td>
-                                <a href="?page=admin&userId=<?= $CYT1['userId']; ?>&term=<?= $CYT1['term'] ?>&year=<?= $CYT1['year'] ?>" class="btn btn-primary">
+                                <a href="?page=admin/dashboard&userId=<?= $CYT1['userId']; ?>&term=<?= $CYT1['term'] ?>&year=<?= $CYT1['year'] ?>" class="btn btn-primary">
                                     <div class="icon d-flex align-items-center">
                                         <i class="bx bx-search"></i> &nbsp;
                                         <div class="label">ดูข้อมูล</div>
@@ -280,7 +279,7 @@
                             ?>
                                     <td><?= $CYT2['amount_work'] ?></td>
                                     <td>
-                                        <a href="?page=admin&userId=<?= $CYT2['userId']; ?>&term=<?= $CYT2['term'] ?>&year=<?= $CYT2['year'] ?>" class="btn btn-primary">
+                                        <a href="?page=admin/dashboard&userId=<?= $CYT2['userId']; ?>&term=<?= $CYT2['term'] ?>&year=<?= $CYT2['year'] ?>" class="btn btn-primary">
                                             <div class="icon d-flex align-items-center">
                                                 <i class="bx bx-search"></i> &nbsp;
                                                 <div class="label">ดูข้อมูล</div>
@@ -308,7 +307,7 @@
                             ?>
                                     <td><?= $LYT1['amount_work'] ?></td>
                                     <td>
-                                        <a href="?page=admin&userId=<?= $LYT1['userId']; ?>&term=<?= $LYT1['term'] ?>&year=<?= $LYT1['year'] ?>" class="btn btn-primary">
+                                        <a href="?page=admin/dashboard&userId=<?= $LYT1['userId']; ?>&term=<?= $LYT1['term'] ?>&year=<?= $LYT1['year'] ?>" class="btn btn-primary">
                                             <div class="icon d-flex align-items-center">
                                                 <i class="bx bx-search"></i> &nbsp;
                                                 <div class="label">ดูข้อมูล</div>
@@ -336,7 +335,7 @@
                             ?>
                                     <td><?= $LYT2['amount_work'] ?></td>
                                     <td>
-                                        <a href="?page=admin&userId=<?= $LYT2['userId']; ?>&term=<?= $LYT2['term'] ?>&year=<?= $LYT2['year'] ?>" class="btn btn-primary">
+                                        <a href="?page=admin/dashboard&userId=<?= $LYT2['userId']; ?>&term=<?= $LYT2['term'] ?>&year=<?= $LYT2['year'] ?>" class="btn btn-primary">
                                             <div class="icon d-flex align-items-center">
                                                 <i class="bx bx-search"></i> &nbsp;
                                                 <div class="label">ดูข้อมูล</div>
@@ -516,7 +515,7 @@
 <script>
     $(document).ready(function() {
         $('#details').on('hidden.bs.modal', function() {
-            window.location.href = 'index_admin.php?page=admin';
+            window.location.href = 'index_admin.php?page=admin/dashboard';
         });
     });
 </script>

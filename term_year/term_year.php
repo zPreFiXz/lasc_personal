@@ -14,5 +14,5 @@
         
     }
     $conn = null;
-    header("location: ../index_admin.php?page=admin");
+    header("location: ../index_admin.php?page=admin/dashboard");
 ?>

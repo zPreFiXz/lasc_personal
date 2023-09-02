@@ -335,6 +335,7 @@
                                         <input type="date" class="form-control" name="date_end" value="<?php echo $data['end']; ?>" required>
                                     </div>
                                 </div>
+                            </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="nature_work" class="col-sm-2 col-form-label">ลักษณะงานเดี่ยว/กลุ่ม</label>
                                 <select class="form-select" name="nature_work" id="nature_work" required>

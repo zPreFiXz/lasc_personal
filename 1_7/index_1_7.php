@@ -135,7 +135,8 @@
             <tr>
                 <th scope="col">ประเภท</th>
                 <th scope="col">ชื่อเรื่อง</th>
-                <th scope="col">ระยะเวลา เริ่มต้น-สิ้นสุด</th>
+                <th scope="col">ระยะเวลาเริ่มต้น</th>
+                <th scope="col">ระยะเวลาสิ้นสุด</th>
                 <th scope="col">ลักษณะ เดี่ยว/ร่วม</th>
                 <th scope="col">ลักษณะงาน</th>
                 <th scope="col">ร้อยละการมีส่วนร่วม</th>
@@ -157,7 +158,7 @@
 
                 // ตรวจสอบว่ามีข้อมูลหรือไม่
                 if (!$personal) { // ไม่มีข้อมูล
-                    echo " <tr><td colspan='9' class='text-center'>ไม่มีข้อมูล</td></tr>";
+                    echo " <tr><td colspan='10' class='text-center'>ไม่มีข้อมูล</td></tr>";
                 } else {
                     // วนลูปแสดงข้อมูลที่ดึงมา
                     foreach ($personal as $per) {
@@ -165,7 +166,8 @@
                         <tr> <!-- แสดงแถวของตาราง (row) โดยใช้ข้อมูลจากตัวแปร $per ในแต่ละคอลัมน์ของตาราง -->
                             <td style="white-space: nowrap;"><?= $per['type']; ?></td>
                             <td><?= $per['title']; ?></td>
-                            <td style="white-space: nowrap;"><?= $per['amount_time']; ?></td>
+                            <td style="white-space: nowrap;"><?= $per['start']; ?></td>
+                            <td style="white-space: nowrap;"><?= $per['end']; ?></td>
                             <td><?= $per['type_work_s_j']; ?></td>
                             <td><?= $per['type_work']; ?></td>
                             <td><?= $per['participation']; ?></td>
@@ -228,7 +230,7 @@
                         </tr>
             <?php } } ?>
                         <tr>
-                            <th scope="row" colspan="6">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+                            <th scope="row" colspan="7">รวมจำนวนภาระงานตลอดภาคเรียน</th>
                             <td><?= number_format($totalAmountWork, 2); ?></td>
                             <td colspan="2"></td>
                         </tr>
@@ -257,8 +259,16 @@
                         <input type="text" class="form-control" name="title" required>
                     </div>
                     <div class="mb-3">
-                        <label for="amount_time" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลา เริ่มต้น-สิ้นสุด</label>
-                        <input type="text" class="form-control" name="amount_time" required>
+                        <div class="row mb-3">
+                            <label for="prepare_theory" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลาเริ่มต้น :</label>
+                            <div class="col-sm-3">
+                                <input type="date" class="form-control" name="date_start" required>
+                            </div>
+                            <label for="prepare_theory" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลาสิ้นสุด :</label>
+                            <div class="col-sm-3">
+                                <input type="date" class="form-control" name="date_end" required>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="type_work_s_j" class="col-sm-2 col-form-label">ลักษณะ เดี่ยว/ร่วม</label>
@@ -314,8 +324,16 @@
                         <input type="text" class="form-control" name="title" value="<?php echo $data['title']; ?>" required>
                     </div>
                     <div class="mb-3">
-                        <label for="amount_time" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลา เริ่มต้น-สิ้นสุด</label>
-                        <input type="text" class="form-control" name="amount_time" class="form-select" value="<?php echo $data['amount_time']; ?>" required>
+                        <div class="row mb-3">
+                            <label for="date_start" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลาเริ่มต้น :</label>
+                            <div class="col-sm-3">
+                                <input type="date" class="form-control" name="date_start" value="<?php echo $data['start']; ?>" required>
+                            </div>
+                            <label for="date_end" class="col-sm-2 col-form-label" style="white-space: nowrap;">ระยะเวลาสิ้นสุด :</label>
+                            <div class="col-sm-3">
+                                <input type="date" class="form-control" name="date_end" value="<?php echo $data['end']; ?>" required>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="type_work_s_j" class="col-sm-2 col-form-label">ลักษณะ เดี่ยว/ร่วม</label>

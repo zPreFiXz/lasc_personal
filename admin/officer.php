@@ -122,7 +122,7 @@
             <?php } } ?>           
         </tbody>
         <!-- เพิ่มข้อมูล -->
-        <div class="modal fade" id="largeModal" tabindex="-1">
+        <div class="modal fade" id="largeModal" tabindex="-1">  
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">

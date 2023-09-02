@@ -69,6 +69,12 @@
               <hr class="dropdown-divider">
             </li>
             <li>
+              <a class="dropdown-item d-flex align-items-center" href="index_admin.php?page=users/account">
+                <i class="bi bi-file-person-fill"></i>
+                <span>จัดการบัญชี</span>
+              </a>
+            </li>
+            <li>
               <hr class="dropdown-divider">
             </li>
             <li>

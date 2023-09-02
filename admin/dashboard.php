@@ -1,6 +1,11 @@
 <?php
     require "config/db.php";
 
+    $userId = $_SESSION['userId'];
+    $nametitle = $_SESSION['nametitle'];
+    $firstname = $_SESSION['firstname'];
+    $lastname = $_SESSION['lastname'];
+
     $userId = "";
     $term = "";
     $year = "";
@@ -168,22 +173,20 @@
     $stmt->execute();
     $ranks = $stmt->fetchAll();
     // end จัดอันดับ
-
-    if (isset($_SESSION['adminId'])) {
-        $userId = $_SESSION['adminId'];
-        $stmt = $conn->query("SELECT * FROM users WHERE firstname = '$userId'");
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    }
 ?>
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <div class="pagetitle mt-3">
-            <h1 style="font-size: 30px;">ยินดีต้อนรับ <?php echo $row['nametitle'] .  $row['firstname'] . ' ' . $row['lastname'] ?></h1>
+            <h1 style="font-size: 30px;">ยินดีต้อนรับ <?php echo $nametitle .  $firstname . ' ' . $lastname ?></h1>
         </div>
-        <div class="icon d-flex align-items-center">
-            <a href="logout.php" class="btn btn-danger d-flex align-items-center"><i class="ri-logout-box-line"></i> &nbsp;ออกจากระบบ</a>
-        </div>
+        <div class="d-flex">
+            <div class="icon d-flex align-items-center">
+                <a href="index.php?page=users/dashboard" class="btn btn-primary d-flex align-items-center"><i class="ri-logout-box-line"></i> &nbsp;ลงทะเบียน</a>
+            </div>&nbsp;&nbsp;
+            <div class="icon d-flex align-items-center">
+                <a href="logout.php" class="btn btn-danger d-flex align-items-center"><i class="ri-logout-box-line"></i> &nbsp;ออกจากระบบ</a>
+            </div>
+        </div>    
     </div>
     <hr> <!-- เส้น -->
     <?php if (isset($_SESSION['success'])) { ?>

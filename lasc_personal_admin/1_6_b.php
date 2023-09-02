@@ -23,10 +23,12 @@
         </thead>
         <tbody>
             <?php
-                $stmt = $conn->query("SELECT*FROM personal_1_6_b WHERE userId = '" . $_SESSION['user'] . "' AND term = '" . $_SESSION['term'] . "' AND year = '" . $_SESSION['year'] . "'"); // ดึงข้อมูลจากตาราง personal_1_6_b
-                $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
-                $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
-
+                $stmt = $conn->prepare("SELECT*FROM personal_1_6_b WHERE userId = :userId AND term = :term AND year = :year");
+                $stmt->bindParam(':userId', $_SESSION['userId_view'],);
+                $stmt->bindParam(':term', $_SESSION['term_view']);
+                $stmt->bindParam(':year', $_SESSION['year_view']);
+                $stmt->execute();
+                $personal = $stmt->fetchAll();
                 $totalAmountWork = 0.00;
 
                 // ตรวจสอบว่ามีข้อมูลหรือไม่

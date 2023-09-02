@@ -2,10 +2,15 @@
   session_start();
   require_once 'config/db.php';
 
-  if (!isset($_SESSION['adminId'])) {
+  if (!isset($_SESSION['userId'])) {
     $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
     header('location: signin.php');
   }
+
+  $userId = $_SESSION['userId'];
+  $nametitle = $_SESSION['nametitle'];
+  $firstname = $_SESSION['firstname'];
+  $lastname = $_SESSION['lastname'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,11 +59,11 @@
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
           <i class="bi bi-person-circle"></i>
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $_SESSION['nametitle'] .  $_SESSION['adminId'] . ' ' . $_SESSION['lastname'] ?></span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $nametitle .  $firstname . ' ' . $lastname ?></span>
           </a><!-- End Profile Iamge Icon -->
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6><?= $_SESSION['nametitle'] .  $_SESSION['adminId'] . ' ' . $_SESSION['lastname'] ?></h6>
+              <h6><?= $nametitle .  $firstname . ' ' . $lastname ?></h6>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -81,11 +86,34 @@
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link " href="index_admin.php?page=admin">
+        <a class="nav-link " href="index_admin.php?page=admin/dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="index_admin.php?page=admin/change_term_year">
+          <i class="bi bi-menu-button-wide"></i>
+          <span>เปลี่ยนปีการศึกษาและภาคเรียน</span>
+        </a>
+      </li><!-- End Components Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav1" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>รายชื่อผู้ใช้งาน</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="index_admin.php?page=admin/teacher">
+              <i class="bi bi-circle"></i><span>รายชื่ออาจารย์</span>
+            </a>
+          </li>
+          <li>
+            <a href="index_admin.php?page=admin/officer">
+              <i class="bi bi-circle"></i><span>รายชื่อเจ้าหน้าที่</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Components Nav -->
     </ul>
   </aside><!-- End Sidebar-->
   <main>

@@ -18,7 +18,10 @@
         </thead>
         <tbody>
             <?php
-                $stmt = $conn->query("SELECT * FROM personal_1_8 WHERE userId = '" . $_SESSION['user'] . "' AND term = '" . $_SESSION['term'] . "' AND year = '" . $_SESSION['year'] . "'");
+                $stmt = $conn->prepare("SELECT * FROM personal_1_8 WHERE userId = :userId AND term = :term AND year = :year");
+                $stmt->bindParam(':userId', $_SESSION['userId_view'],);
+                $stmt->bindParam(':term', $_SESSION['term_view']);
+                $stmt->bindParam(':year', $_SESSION['year_view']);
                 $stmt->execute();
                 $personal = $stmt->fetchAll();
 

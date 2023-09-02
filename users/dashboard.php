@@ -21,7 +21,7 @@
         <div class="d-flex">
         <?php
             if($isAdmin == 1){ ?>
-                <a href="logout.php" class="btn btn-primary d-flex align-items-center"><i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;ผู้ดูแลระบบ</a>&nbsp;&nbsp;
+                <a href="index_admin.php?page=admin/dashboard" class="btn btn-primary d-flex align-items-center"><i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;ผู้ดูแลระบบ</a>&nbsp;&nbsp;
             <?php }elseif($isAdmin == 0){
                 
             }

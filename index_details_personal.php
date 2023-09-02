@@ -2,20 +2,20 @@
   session_start();
   require_once 'config/db.php';
 
-  if (!isset($_SESSION['adminId'])) {
+  if (!isset($_SESSION['userId'])) {
     $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
     header('location: signin.php');
   }
   if (isset($_POST['userId'])) {
-    $_SESSION['user'] = $_POST['userId'];
+    $_SESSION['userId_view'] = $_POST['userId'];
   }
 
   if (isset($_POST['term'])) {
-    $_SESSION['term'] = $_POST['term'];
+    $_SESSION['term_view'] = $_POST['term'];
   }
 
   if (isset($_POST['year'])) {
-    $_SESSION['year'] = $_POST['year'];
+    $_SESSION['year_view'] = $_POST['year'];
   }
 ?>
 <!DOCTYPE html>

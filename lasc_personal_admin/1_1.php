@@ -1,15 +1,13 @@
 <?php
     require_once "config/db.php";
 
-    $stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
-    $stmt->execute();
-    $term_year = $stmt->fetch();
-    $term =  $term_year['term'];
-    $year =  $term_year['year'];
-
-    $stmt = $conn->query("SELECT * FROM personal_1_1_file WHERE userId = '".$_SESSION['userId']."' AND term = '$term' AND year = '$year'");
+    $stmt = $conn->prepare("SELECT * FROM personal_1_1_file WHERE userId = :userId AND term = :term AND year = :year");
+    $stmt->bindParam(':userId', $_SESSION['userId_view']);
+    $stmt->bindParam(':term', $_SESSION['term_view']);
+    $stmt->bindParam(':year', $_SESSION['year_view']);
     $stmt->execute();
     $personal = $stmt->fetchAll();
+
 ?>
 <div class="container">
     <div class="pagetitle mt-3">
@@ -59,7 +57,10 @@
         </thead>
         <tbody>
             <?php
-                $stmt = $conn->query("SELECT * FROM personal_1_1 WHERE userId = '" . $_SESSION['user'] . "' AND term = '" . $_SESSION['term'] . "' AND year = '" . $_SESSION['year'] . "'");
+                $stmt = $conn->prepare("SELECT * FROM personal_1_1 WHERE userId = :userId AND term = :term AND year = :year");
+                $stmt->bindParam(':userId', $_SESSION['userId_view'],);
+                $stmt->bindParam(':term', $_SESSION['term_view']);
+                $stmt->bindParam(':year', $_SESSION['year_view']);
                 $stmt->execute();
                 $personal = $stmt->fetchAll();
 

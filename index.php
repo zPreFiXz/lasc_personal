@@ -11,6 +11,9 @@
   $nametitle = $_SESSION['nametitle'];
   $firstname = $_SESSION['firstname'];
   $lastname = $_SESSION['lastname'];
+  $branch = $_SESSION['branch'];
+
+  $name = $nametitle . $firstname ." ". $lastname;
 
   $stmt = $conn->query("SELECT * FROM term_year where id = 1");
   $stmt->execute();
@@ -157,11 +160,6 @@
   $stmt->execute();
   $users = $stmt->fetch();
 
-  $stmt = $conn->prepare("SELECT * FROM users WHERE userId = :userId");
-  $stmt->bindParam(':userId', $userId);
-  $stmt->execute();
-  $user = $stmt->fetch();
-
   if (empty($users)) {
     $insertStmt = $conn->prepare("INSERT INTO Vadmin (userId, term, year, nametitle, firstname, lastname, amount_work) VALUES (:userId, :term, :year, :nametitle, :firstname, :lastname, :amount_work)");
     $insertStmt->bindParam(':userId', $userId);
@@ -180,12 +178,50 @@
     $updateStmt->bindParam(':amount_work', $totalAmountWork);
     $updateStmt->execute();
   }
-  $updateStmt = $conn->prepare("UPDATE personal_3 SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
-  $updateStmt->bindParam(':userId', $userId);
-  $updateStmt->bindParam(':term', $term);
-  $updateStmt->bindParam(':year', $year);
-  $updateStmt->bindParam(':amount_work', $totalAmountWork);
-  $updateStmt->execute();
+
+  $stmt = $conn->prepare("SELECT*FROM personal_1_11 WHERE userId = :userId AND term = :term AND year = :year");
+  $stmt->bindParam(':userId', $userId);
+  $stmt->bindParam(':term', $term);
+  $stmt->bindParam(':year', $year);
+  $stmt->execute();
+  $personal = $stmt->fetchAll();
+
+  if (empty($personal)) {
+    $userId = $_SESSION['userId'];
+    $term = $term_year['term'];
+    $year = $term_year['year'];
+
+    $insertStmt = $conn->prepare("INSERT INTO personal_1_11 (userId, term, `year`) VALUES (:userId, :term, :year)");
+    $insertStmt->bindParam(':userId', $userId);
+    $insertStmt->bindParam(':term', $term);
+    $insertStmt->bindParam(':year', $year);
+    $insertStmt->execute();
+  }
+
+  $stmt = $conn->prepare("SELECT * FROM personal_3 WHERE userId = :userId AND term = :term AND year = :year");
+  $stmt->bindParam(':userId', $userId);
+  $stmt->bindParam(':term', $term);
+  $stmt->bindParam(':year', $year);
+  $stmt->execute();
+  $personal = $stmt->fetchAll();
+
+  if (empty($personal)) {
+    $insertStmt = $conn->prepare("INSERT INTO personal_3 (userId, term, year,name,branch,amount_work) VALUES (:userId, :term, :year, :name, :branch, :amount_work)");
+    $insertStmt->bindParam(':userId', $userId);
+    $insertStmt->bindParam(':term', $term);
+    $insertStmt->bindParam(':year', $year);
+    $insertStmt->bindParam(':name', $name);
+    $insertStmt->bindParam(':branch', $branch);
+    $insertStmt->bindParam(':amount_work', $totalAmountWork);
+    $insertStmt->execute();
+  }else{
+    $updateStmt = $conn->prepare("UPDATE personal_3 SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
+    $updateStmt->bindParam(':userId', $userId);
+    $updateStmt->bindParam(':term', $term);
+    $updateStmt->bindParam(':year', $year);
+    $updateStmt->bindParam(':amount_work', $totalAmountWork);
+    $updateStmt->execute();
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -234,11 +270,11 @@
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-person-circle"></i>
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $user['nametitle'] .  $user['firstname'] . ' ' . $user['lastname'] ?></span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $nametitle .  $firstname . ' ' . $lastname ?></span>
           </a><!-- End Profile Iamge Icon -->
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6><?= $user['nametitle'] .  $user['firstname'] . ' ' . $user['lastname'] ?></h6>
+              <h6><?= $nametitle .  $firstname . ' ' . $lastname ?></h6>
             </li>
             <li>
               <hr class="dropdown-divider">

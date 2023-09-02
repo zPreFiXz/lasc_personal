@@ -1,33 +1,17 @@
 <?php
     require_once "config/db.php";
 
-    // ดึงตาราง term&year
+    $userId = $_SESSION['userId'];
+
     $stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
     $stmt->execute();
     $term_year = $stmt->fetch();
-
-    $userId = $_SESSION['userId'];
     $term =  $term_year['term'];
     $year =  $term_year['year'];
+
     $stmt = $conn->query("SELECT*FROM personal_1_11 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
     $stmt->execute();
     $personal = $stmt->fetchAll();
-
-    if (empty($personal)) {
-        $userId = $_SESSION['userId'];
-        $term = $term_year['term'];
-        $year = $term_year['year'];
-
-        $insertStmt = $conn->prepare("INSERT INTO personal_1_11 (userId, term, `year`) VALUES (:userId, :term, :year)");
-        $insertStmt->bindParam(':userId', $userId);
-        $insertStmt->bindParam(':term', $term);
-        $insertStmt->bindParam(':year', $year);
-        $insertStmt->execute();
-
-        if ($insertStmt) {
-            echo "<script>window.location.href = 'index.php?page=1_11/index_1_11';</script>";
-        }
-    }
 
     foreach ($personal as $per)
 ?>

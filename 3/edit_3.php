@@ -3,7 +3,7 @@
     require_once "../config/db.php";
 
     if(isset($_POST['update'])) {
-        $userId = $_POST['userId'];
+        $id = $_POST['id'];
         $name = $_POST['name'];
         $branch = $_POST['branch'];
         $amount_work = $_POST['amount_work'];
@@ -34,7 +34,7 @@
         quality_capacity = :quality_capacity,efficiency_capacity = :efficiency_capacity,effectiveness_capacity = :effectiveness_capacity,
         score_capacity = :score_capacity,quality_more = :quality_more,efficiency_more = :efficiency_more,effectiveness_more	= :effectiveness_more,
         score_more = :score_more,quality_total = :quality_total,efficiency_total = :efficiency_total,effectiveness_total = :effectiveness_total,
-        score_total = :score_total WHERE userId = :userId" ;
+        score_total = :score_total WHERE id = :id" ;
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':name', $name);
@@ -60,7 +60,7 @@
         $stmt->bindParam(':efficiency_total', $efficiency_total);
         $stmt->bindParam(':effectiveness_total', $effectiveness_total);
         $stmt->bindParam(':score_total', $score_total);
-        $stmt->bindParam(':userId', $userId);
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
 
         $conn = null;

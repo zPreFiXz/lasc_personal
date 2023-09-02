@@ -1,10 +1,11 @@
 <?php
     require_once "config/db.php";
 
+    $userId = $_SESSION['userId'];
+
     $stmt = $conn->query("SELECT * FROM `term_year` where id = 1");
     $stmt->execute();
     $term_year = $stmt->fetch();
-    $userId = $_SESSION['userId'];
     $term =  $term_year['term'];
     $year =  $term_year['year'];
 
@@ -57,7 +58,7 @@
                 modal.show();
             });
         </script>
-<?php } ?>
+    <?php } ?>
 <?php if (isset($_GET['upload'])) {
         $_SESSION['upload'] = $_GET['upload'];
         $upload_id = $_SESSION['upload'];
@@ -312,11 +313,11 @@
                             </div>
                             <div class="mb-3">
                                 <label for="proportion" class="col-sm-2 col-form-label">สัดส่วนการสอน</label>
-                                <input type="text" class="form-control" name="proportion" id="proportion1" required>
+                                <input type="text" class="form-control" name="proportion" id="proportion1" oninput="calc1()" required>
                             </div>
                             <div class="mb-3" style="white-space: nowrap;">
                                 <label for="amount_work" class="col-sm-2 col-form-label ">รวมจำนวนภาระงาน/สัปดาห์</label>
-                                <input type="text" class="form-control" name="amount_work" id="amount_work1" readonly>
+                                <input type="text" class="form-control bg-light" name="amount_work" id="amount_work1" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -431,11 +432,11 @@
                             </div>
                             <div class="mb-3">
                                 <label for="proportion" class="col-sm-2 col-form-label">สัดส่วนการสอน</label>
-                                <input type="text" class="form-control" name="proportion" value="<?php echo $data['proportion']; ?>" required>
+                                <input type="text" class="form-control" name="proportion" id="proportion2" value="<?php echo $data['proportion']; ?>" oninput="calc2()" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label" style="white-space: nowrap;">รวมจำนวนภาระงาน/สัปดาห์</label>
-                                <input type="text" class="form-control" name="amount_work" value="<?php echo $data['amount_work']; ?>" id="amount_work2" readonly>
+                                <input type="text" class="form-control bg-light" name="amount_work" value="<?php echo $data['amount_work']; ?>" id="amount_work2" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
@@ -512,19 +513,20 @@
             check_work2 = parseFloat(document.getElementById('check_work2').value = '-');
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
+            proportion1 = parseFloat(document.getElementById('proportion1').value);
 
             if (amount_student1 > 40) {
                 amount_student1 -= 40
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work1').value = (prepare_theory + hour_lecture + check_work1) + amount_student1 * (3 / 40);
+                    document.getElementById('amount_work1').value = ((prepare_theory + hour_lecture + check_work1) + amount_student1 * (3 / 40)) * (proportion1/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work1').value = (hour_lecture + check_work1) + amount_student1 * (3 / 40);
+                    document.getElementById('amount_work1').value = ((hour_lecture + check_work1) + amount_student1 * (3 / 40)) * (proportion1/100);
                 }
             } else {
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work1').value = prepare_theory + hour_lecture + check_work1;
+                    document.getElementById('amount_work1').value = (prepare_theory + hour_lecture + check_work1) * (proportion1/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work1').value = hour_lecture + check_work1;
+                    document.getElementById('amount_work1').value = (hour_lecture + check_work1) * (proportion1/100);
                 }
             }
 
@@ -537,19 +539,20 @@
             check_work2 = parseFloat(document.getElementById('check_work2').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
+            proportion1 = parseFloat(document.getElementById('proportion1').value);
 
             if (amount_student1 > 40) {
                 amount_student1 -= 40
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work1').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (3 / 40);
+                    document.getElementById('amount_work1').value = ((prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (3 / 40)) * (proportion1/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work1').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (3 / 40);
+                    document.getElementById('amount_work1').value = ((hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (3 / 40)) * (proportion1/100);
                 }
             } else {
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work1').value = prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work1').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) * (proportion1/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work1').value = hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work1').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) * (proportion1/100);
                 }
             }
 
@@ -562,19 +565,20 @@
             check_work2 = parseFloat(document.getElementById('check_work2').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
+            proportion1 = parseFloat(document.getElementById('proportion1').value);
 
             if (amount_student1 > 40) {
                 amount_student1 -= 40
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work1').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40);
+                    document.getElementById('amount_work1').value = ((prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40)) * (proportion1/100);
                 } else if (group_study1 > 1) {
                     document.getElementById('amount_work1').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40);
                 }
             } else {
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work1').value = prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work1').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) * (proportion1/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work1').value = hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work1').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2)  * (proportion1/100);
                 }
             }
 
@@ -587,19 +591,20 @@
             check_work2 = parseFloat(document.getElementById('check_work2').value = '-');
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
+            proportion1 = parseFloat(document.getElementById('proportion1').value);
 
             if (amount_student1 > 40) {
                 amount_student1 -= 40
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work1').value = (prepare_theory + hour_lecture + check_work1) + amount_student1 * (2 / 40);
+                    document.getElementById('amount_work1').value = ((prepare_theory + hour_lecture + check_work1) + amount_student1 * (2 / 40)) * (proportion1/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work1').value = (hour_lecture + check_work1) + amount_student1 * (2 / 40);
+                    document.getElementById('amount_work1').value = ((hour_lecture + check_work1) + amount_student1 * (2 / 40)) * (proportion1/100);
                 }
             } else {
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work1').value = prepare_theory + hour_lecture + check_work1;
+                    document.getElementById('amount_work1').value = (prepare_theory + hour_lecture + check_work1) * (proportion1/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work1').value = hour_lecture + check_work1;
+                    document.getElementById('amount_work1').value = (hour_lecture + check_work1) * (proportion1/100);
                 }
             }
 
@@ -612,19 +617,20 @@
             check_work2 = parseFloat(document.getElementById('check_work2').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
+            proportion1 = parseFloat(document.getElementById('proportion1').value);
 
             if (amount_student1 > 40) {
                 amount_student1 -= 40
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work1').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40);
+                    document.getElementById('amount_work1').value = ((prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40)) * (proportion1/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work1').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40);
+                    document.getElementById('amount_work1').value = ((hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40)) * (proportion1/100);
                 }
             } else {
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work1').value = prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work1').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) * (proportion1/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work1').value = hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work1').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) * (proportion1/100);
                 }
             }
 
@@ -637,19 +643,20 @@
             check_work2 = parseFloat(document.getElementById('check_work2').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
+            proportion1 = parseFloat(document.getElementById('proportion1').value);
 
             if (amount_student1 > 40) {
                 amount_student1 -= 40
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work1').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40);
+                    document.getElementById('amount_work1').value = ((prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40)) * (proportion1/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work1').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40);
+                    document.getElementById('amount_work1').value = ((hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40)) * (proportion1/100);
                 }
             } else {
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work1').value = prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work1').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) * (proportion1/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work1').value = hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work1').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) * (proportion1/100);
                 }
             }
 
@@ -662,19 +669,20 @@
             check_work2 = parseFloat(document.getElementById('check_work2').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
+            proportion1 = parseFloat(document.getElementById('proportion1').value);
 
             if (amount_student1 > 40) {
                 amount_student1 -= 40
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work1').value = (prepare_practice + hour_practice + check_work2) + amount_student1 * (1 / 40);
+                    document.getElementById('amount_work1').value = ((prepare_practice + hour_practice + check_work2) + amount_student1 * (1 / 40)) * (proportion1/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work1').value = (hour_practice + check_work2) + amount_student1 * (1 / 40);
+                    document.getElementById('amount_work1').value = ((hour_practice + check_work2) + amount_student1 * (1 / 40)) * (proportion1/100);
                 }
             } else {
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work1').value = prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work1').value = (prepare_practice + hour_practice + check_work2) * (proportion1/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work1').value = hour_practice + check_work2;
+                    document.getElementById('amount_work1').value = (hour_practice + check_work2) * (proportion1/100);
                 }
             }
 
@@ -687,50 +695,51 @@
             check_work2 = parseFloat(document.getElementById('check_work2').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student1').value);
             group_study1 = parseFloat(document.getElementById('group_study1').value);
+            proportion1 = parseFloat(document.getElementById('proportion1').value);
 
             if (practice_subject == 'ฟิสิกส์') {
                 if (amount_student1 > 40) {
                     amount_student1 -= 40
                     if (group_study1 == 1) {
-                        document.getElementById('amount_work1').value = (prepare_practice + hour_practice + check_work2 + 4) + amount_student1 * (1 / 40);
+                        document.getElementById('amount_work1').value = ((prepare_practice + hour_practice + check_work2 + 4) + amount_student1 * (1 / 40)) * (proportion1/100);
                     } else if (group_study1 > 1) {
-                        document.getElementById('amount_work1').value = (hour_practice + check_work2 + 4) + amount_student1 * (1 / 40);
+                        document.getElementById('amount_work1').value = ((hour_practice + check_work2 + 4) + amount_student1 * (1 / 40)) * (proportion1/100);
                     }
                 } else {
                     if (group_study1 == 1) {
-                        document.getElementById('amount_work1').value = prepare_practice + hour_practice + check_work2 + 4;
+                        document.getElementById('amount_work1').value = (prepare_practice + hour_practice + check_work2 + 4) * (proportion1/100);
                     } else if (group_study1 > 1) {
-                        document.getElementById('amount_work1').value = hour_practice + check_work2 + 4;
+                        document.getElementById('amount_work1').value = (hour_practice + check_work2 + 4) * (proportion1/100);
                     }
                 }
             } else if (practice_subject == 'เคมี') {
                 if (amount_student1 > 40) {
                     amount_student1 -= 40
                     if (group_study1 == 1) {
-                        document.getElementById('amount_work1').value = (prepare_practice + hour_practice + check_work2 + 6) + amount_student1 * (1 / 40);
+                        document.getElementById('amount_work1').value = ((prepare_practice + hour_practice + check_work2 + 6) + amount_student1 * (1 / 40)) * (proportion1/100);
                     } else if (group_study1 > 1) {
-                        document.getElementById('amount_work1').value = (hour_practice + check_work2 + 6) + amount_student1 * (1 / 40);
+                        document.getElementById('amount_work1').value = ((hour_practice + check_work2 + 6) + amount_student1 * (1 / 40)) * (proportion1/100);
                     }
                 } else {
                     if (group_study1 == 1) {
-                        document.getElementById('amount_work1').value = prepare_practice + hour_practice + check_work2 + 6;
+                        document.getElementById('amount_work1').value = (prepare_practice + hour_practice + check_work2 + 6) * (proportion1/100);
                     } else if (group_study1 > 1) {
-                        document.getElementById('amount_work1').value = hour_practice + check_work2 + 6;
+                        document.getElementById('amount_work1').value = (hour_practice + check_work2 + 6) * (proportion1/100);
                     }
                 }
             } else if (practice_subject == 'ชีววิทยาและจุลชีววิทยา') {
                 if (amount_student1 > 40) {
                     amount_student1 -= 40
                     if (group_study1 == 1) {
-                        document.getElementById('amount_work1').value = (prepare_practice + hour_practice + check_work2 + 8) + amount_student1 * (1 / 40);
+                        document.getElementById('amount_work1').value = ((prepare_practice + hour_practice + check_work2 + 8) + amount_student1 * (1 / 40)) * (proportion1/100);
                     } else if (group_study1 > 1) {
-                        document.getElementById('amount_work1').value = (hour_practice + check_work2 + 8) + amount_student1 * (1 / 40);
+                        document.getElementById('amount_work1').value = ((hour_practice + check_work2 + 8) + amount_student1 * (1 / 40)) * (proportion1/100);
                     }
                 } else {
                     if (group_study1 == 1) {
-                        document.getElementById('amount_work1').value = prepare_practice + hour_practice + check_work2 + 8;
+                        document.getElementById('amount_work1').value = (prepare_practice + hour_practice + check_work2 + 8) * (proportion1/100);
                     } else if (group_study1 > 1) {
-                        document.getElementById('amount_work1').value = hour_practice + check_work2 + 8;
+                        document.getElementById('amount_work1').value = (hour_practice + check_work2 + 8) * (proportion1/100);
                     }
                 }
             } else {
@@ -752,19 +761,20 @@
             check_work2 = parseFloat(document.getElementById('check_work4').value = '-');
             amount_student1 = parseFloat(document.getElementById('amount_student2').value);
             group_study1 = parseFloat(document.getElementById('group_study2').value);
+            proportion2 = parseFloat(document.getElementById('proportion2').value);
 
             if (amount_student1 > 40) {
                 amount_student1 -= 40
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1) + amount_student1 * (3 / 40);
+                    document.getElementById('amount_work2').value = ((prepare_theory + hour_lecture + check_work1) + amount_student1 * (3 / 40)) * (proportion2/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work2').value = (hour_lecture + check_work1) + amount_student1 * (3 / 40);
+                    document.getElementById('amount_work2').value = ((hour_lecture + check_work1) + amount_student1 * (3 / 40)) * (proportion2/100);
                 }
             } else {
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work2').value = prepare_theory + hour_lecture + check_work1;
+                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1) * (proportion2/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work2').value = hour_lecture + check_work1;
+                    document.getElementById('amount_work2').value = (hour_lecture + check_work1) * (proportion2/100);
                 }
             }
 
@@ -777,19 +787,20 @@
             check_work2 = parseFloat(document.getElementById('check_work4').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student2').value);
             group_study1 = parseFloat(document.getElementById('group_study2').value);
+            proportion2 = parseFloat(document.getElementById('proportion2').value);
 
             if (amount_student1 > 40) {
                 amount_student1 -= 40
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (3 / 40);
+                    document.getElementById('amount_work2').value = ((prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (3 / 40)) * (proportion2/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work2').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (3 / 40);
+                    document.getElementById('amount_work2').value = ((hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (3 / 40)) * (proportion2/100);
                 }
             } else {
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work2').value = prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) * (proportion2/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work2').value = hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work2').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) * (proportion2/100);
                 }
             }
 
@@ -802,19 +813,20 @@
             check_work2 = parseFloat(document.getElementById('check_work4').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student2').value);
             group_study1 = parseFloat(document.getElementById('group_study2').value);
+            proportion2 = parseFloat(document.getElementById('proportion2').value);
 
             if (amount_student1 > 40) {
                 amount_student1 -= 40
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40);
+                    document.getElementById('amount_work2').value = ((prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40)) * (proportion2/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work2').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40);
+                    document.getElementById('amount_work2').value = ((hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40)) * (proportion2/100);
                 }
             } else {
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work2').value = prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) * (proportion2/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work2').value = hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work2').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) * (proportion2/100);
                 }
             }
 
@@ -827,19 +839,20 @@
             check_work2 = parseFloat(document.getElementById('check_work4').value = '-');
             amount_student1 = parseFloat(document.getElementById('amount_student2').value);
             group_study1 = parseFloat(document.getElementById('group_study2').value);
+            proportion2 = parseFloat(document.getElementById('proportion2').value);
 
             if (amount_student1 > 40) {
                 amount_student1 -= 40
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1) + amount_student1 * (2 / 40);
+                    document.getElementById('amount_work2').value = ((prepare_theory + hour_lecture + check_work1) + amount_student1 * (2 / 40)) * (proportion2/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work2').value = (hour_lecture + check_work1) + amount_student1 * (2 / 40);
+                    document.getElementById('amount_work2').value = ((hour_lecture + check_work1) + amount_student1 * (2 / 40)) * (proportion2/100);
                 }
             } else {
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work2').value = prepare_theory + hour_lecture + check_work1;
+                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1) * (proportion2/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work2').value = hour_lecture + check_work1;
+                    document.getElementById('amount_work2').value = (hour_lecture + check_work1) * (proportion2/100);
                 }
             }
 
@@ -852,19 +865,20 @@
             check_work2 = parseFloat(document.getElementById('check_work4').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student2').value);
             group_study1 = parseFloat(document.getElementById('group_study2').value);
+            proportion2 = parseFloat(document.getElementById('proportion2').value);
 
             if (amount_student1 > 40) {
                 amount_student1 -= 40
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40);
+                    document.getElementById('amount_work2').value = ((prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40)) * (proportion2/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work2').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40);
+                    document.getElementById('amount_work2').value = ((hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40)) * (proportion2/100);
                 }
             } else {
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work2').value = prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) * (proportion2/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work2').value = hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work2').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) * (proportion2/100);
                 }
             }
 
@@ -877,19 +891,20 @@
             check_work2 = parseFloat(document.getElementById('check_work4').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student2').value);
             group_study1 = parseFloat(document.getElementById('group_study2').value);
+            proportion2 = parseFloat(document.getElementById('proportion2').value);
 
             if (amount_student1 > 40) {
                 amount_student1 -= 40
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40);
+                    document.getElementById('amount_work2').value = ((prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40)) * (proportion2/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work2').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40);
+                    document.getElementById('amount_work2').value = ((hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) + amount_student1 * (2 / 40)) * (proportion2/100);
                 }
             } else {
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work2').value = prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work2').value = (prepare_theory + hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) * (proportion2/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work2').value = hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work2').value = (hour_lecture + check_work1 + prepare_practice + hour_practice + check_work2) * (proportion2/100);
                 }
             }
 
@@ -902,19 +917,20 @@
             check_work2 = parseFloat(document.getElementById('check_work4').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student2').value);
             group_study1 = parseFloat(document.getElementById('group_study2').value);
+            proportion2 = parseFloat(document.getElementById('proportion2').value);
 
             if (amount_student1 > 40) {
                 amount_student1 -= 40
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work2').value = (prepare_practice + hour_practice + check_work2) + amount_student1 * (1 / 40);
+                    document.getElementById('amount_work2').value = ((prepare_practice + hour_practice + check_work2) + amount_student1 * (1 / 40)) * (proportion2/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work2').value = (hour_practice + check_work2) + amount_student1 * (1 / 40);
+                    document.getElementById('amount_work2').value = ((hour_practice + check_work2) + amount_student1 * (1 / 40)) * (proportion2/100);
                 }
             } else {
                 if (group_study1 == 1) {
-                    document.getElementById('amount_work2').value = prepare_practice + hour_practice + check_work2;
+                    document.getElementById('amount_work2').value = (prepare_practice + hour_practice + check_work2) * (proportion2/100);
                 } else if (group_study1 > 1) {
-                    document.getElementById('amount_work2').value = hour_practice + check_work2;
+                    document.getElementById('amount_work2').value = (hour_practice + check_work2) * (proportion2/100);
                 }
             }
 
@@ -927,50 +943,51 @@
             check_work2 = parseFloat(document.getElementById('check_work4').value = 1);
             amount_student1 = parseFloat(document.getElementById('amount_student2').value);
             group_study1 = parseFloat(document.getElementById('group_study2').value);
+            proportion2 = parseFloat(document.getElementById('proportion2').value);
 
             if (practice_subject == 'ฟิสิกส์') {
                 if (amount_student1 > 40) {
                     amount_student1 -= 40
                     if (group_study1 == 1) {
-                        document.getElementById('amount_work2').value = (prepare_practice + hour_practice + check_work2 + 4) + amount_student1 * (1 / 40);
+                        document.getElementById('amount_work2').value = ((prepare_practice + hour_practice + check_work2 + 4) + amount_student1 * (1 / 40)) * (proportion2/100);
                     } else if (group_study1 > 1) {
-                        document.getElementById('amount_work2').value = (hour_practice + check_work2 + 4) + amount_student1 * (1 / 40);
+                        document.getElementById('amount_work2').value = ((hour_practice + check_work2 + 4) + amount_student1 * (1 / 40)) * (proportion2/100);
                     }
                 } else {
                     if (group_study1 == 1) {
-                        document.getElementById('amount_work2').value = prepare_practice + hour_practice + check_work2 + 4;
+                        document.getElementById('amount_work2').value = (prepare_practice + hour_practice + check_work2 + 4) * (proportion2/100);
                     } else if (group_study1 > 1) {
-                        document.getElementById('amount_work2').value = hour_practice + check_work2 + 4;
+                        document.getElementById('amount_work2').value = (hour_practice + check_work2 + 4) * (proportion2/100);
                     }
                 }
             } else if (practice_subject == 'เคมี') {
                 if (amount_student1 > 40) {
                     amount_student1 -= 40
                     if (group_study1 == 1) {
-                        document.getElementById('amount_work2').value = (prepare_practice + hour_practice + check_work2 + 6) + amount_student1 * (1 / 40);
+                        document.getElementById('amount_work2').value = ((prepare_practice + hour_practice + check_work2 + 6) + amount_student1 * (1 / 40)) * (proportion2/100);
                     } else if (group_study1 > 1) {
-                        document.getElementById('amount_work2').value = (hour_practice + check_work2 + 6) + amount_student1 * (1 / 40);
+                        document.getElementById('amount_work2').value = ((hour_practice + check_work2 + 6) + amount_student1 * (1 / 40)) * (proportion2/100);
                     }
                 } else {
                     if (group_study1 == 1) {
-                        document.getElementById('amount_work2').value = prepare_practice + hour_practice + check_work2 + 6;
+                        document.getElementById('amount_work2').value = (prepare_practice + hour_practice + check_work2 + 6) * (proportion2/100);
                     } else if (group_study1 > 1) {
-                        document.getElementById('amount_work2').value = hour_practice + check_work2 + 6;
+                        document.getElementById('amount_work2').value = (hour_practice + check_work2 + 6) * (proportion2/100);
                     }
                 }
             } else if (practice_subject == 'ชีววิทยาและจุลชีววิทยา') {
                 if (amount_student1 > 40) {
                     amount_student1 -= 40
                     if (group_study1 == 1) {
-                        document.getElementById('amount_work2').value = (prepare_practice + hour_practice + check_work2 + 8) + amount_student1 * (1 / 40);
+                        document.getElementById('amount_work2').value = ((prepare_practice + hour_practice + check_work2 + 8) + amount_student1 * (1 / 40)) * (proportion2/100);
                     } else if (group_study1 > 1) {
-                        document.getElementById('amount_work2').value = (hour_practice + check_work2 + 8) + amount_student1 * (1 / 40);
+                        document.getElementById('amount_work2').value = ((hour_practice + check_work2 + 8) + amount_student1 * (1 / 40)) * (proportion2/100);
                     }
                 } else {
                     if (group_study1 == 1) {
-                        document.getElementById('amount_work2').value = prepare_practice + hour_practice + check_work2 + 8;
+                        document.getElementById('amount_work2').value = (prepare_practice + hour_practice + check_work2 + 8) * (proportion2/100);
                     } else if (group_study1 > 1) {
-                        document.getElementById('amount_work2').value = hour_practice + check_work2 + 8;
+                        document.getElementById('amount_work2').value = (hour_practice + check_work2 + 8) * (proportion2/100);
                     }
                 }
             } else {

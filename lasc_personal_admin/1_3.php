@@ -17,10 +17,12 @@
         </thead>
         <tbody>
             <?php
-                $stmt = $conn->query("SELECT * FROM personal_1_3 WHERE userId = '" . $_SESSION['user'] . "' AND term = '" . $_SESSION['term'] . "' AND year = '" . $_SESSION['year'] . "'");
-                // ดึงข้อมูลจากตาราง personal_1_3
-                $stmt->execute(); // ประมวลผลคำสั่ง SQL เพื่อดึงข้อมูลจากฐานข้อมูล
-                $personal = $stmt->fetchAll(); // เก็บผลลัพธ์ที่ได้จากการดึงข้อมูลทั้งหมดในตัวแปร $personal
+                $stmt = $conn->prepare("SELECT * FROM personal_1_3 WHERE userId = :userId AND term = :term AND year = :year");
+                $stmt->bindParam(':userId', $_SESSION['userId_view'],);
+                $stmt->bindParam(':term', $_SESSION['term_view']);
+                $stmt->bindParam(':year', $_SESSION['year_view']);
+                $stmt->execute();
+                $personal = $stmt->fetchAll();
 
                 $totalAmountWork = 0.00;
 
@@ -32,7 +34,7 @@
                     foreach ($personal as $per) {
             ?>
                         <tr> <!-- แสดงแถวของตาราง (row) โดยใช้ข้อมูลจากตัวแปร $per ในแต่ละคอลัมน์ของตาราง -->
-                            <td><?php echo $per['Major']; ?></td>
+                            <td><?php echo $per['major']; ?></td>
                             <td><?php echo $per['level']; ?></td>
                             <td><?php echo $per['amount_student']; ?></td>
                             <td><?php echo $per['amount_time']; ?></td>

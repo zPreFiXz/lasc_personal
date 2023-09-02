@@ -8,26 +8,13 @@
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
 
-        $stmt = $conn->prepare("SELECT file FROM personal_1_2_a WHERE id = :delete_id");
-        $stmt->bindParam(':delete_id', $delete_id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $currentFile = $row['file'];
-
-        if ($currentFile) {
-            $filePath = 'uploads/' . $currentFile;
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-        }
-
-        $deletestmt = $conn->prepare("DELETE FROM personal_1_2_a WHERE id = :delete_id");
+        $deletestmt = $conn->prepare("DELETE FROM users WHERE userId = :delete_id");    
         $deletestmt->bindParam(':delete_id', $delete_id);
         $deletestmt->execute();
 
         if ($deletestmt) {
             $_SESSION['success'] = "ข้อมูลถูกลบสำเร็จ";
-            echo "<script>window.location.href = 'index.php?page=1_2_a/index_1_2_a';</script>";
+            echo "<script>window.location.href = 'index_admin.php?page=admin/teacher';</script>";
             exit;
         }
     }
@@ -35,8 +22,8 @@
     if (isset($_GET['edit'])) {
         $_SESSION['edit'] = $_GET['edit'];
         $edit_id = $_GET['edit'];
-        $stmt = $conn->prepare("SELECT * FROM personal_1_2_a WHERE id = ?");
-        $stmt->execute([$edit_id]);
+        $stmt = $conn->prepare("SELECT * FROM users WHERE userId = $edit_id");
+        $stmt->execute();
         $data = $stmt->fetch();
 ?>
         <script>
@@ -72,6 +59,20 @@
             }, 3000);
         </script>
     <?php } ?>
+    <?php if (isset($_SESSION['error'])) { ?>
+        <div class="alert alert-danger" id="alert-error">
+            <?php
+                echo $_SESSION['error'];
+                unset($_SESSION['error']);
+            ?>
+        </div>
+        <script>
+            setTimeout(function() {
+                document.getElementById('alert-error').style.display = 'none';
+            }, 3000);
+        </script>
+    <?php } ?>
+
     <table class="table table-bordered text-center align-middle">
         <thead class="align-middle table-secondary">
             <tr>
@@ -105,13 +106,13 @@
                             <td><?= $per['email']; ?></td>
                             <td><?= $per['isAdmin']; ?></td>
                             <td class="d-flex justify-content-center">
-                                <a href="?page=1_2_a/index_1_2_a&edit=<?= $per['userId']; ?>" class="btn btn-primary">
+                                <a href="?page=admin/teacher&edit=<?= $per['userId']; ?>" class="btn btn-primary">
                                     <div class="icon d-flex">
                                         <i class="bi bi-pencil-square"></i>&nbsp;
                                         <div class="label">แก้ไข</div>
                                     </div>
                                 </a>&nbsp;
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_2_a/index_1_2_a&delete=<?= $per['userId']; ?>" class="btn btn-danger">
+                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=admin/teacher&delete=<?= $per['userId']; ?>" class="btn btn-danger">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;
                                         <div class="label">ลบ</div>
@@ -130,7 +131,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="admin/teacher_db.php" method="post">
+                        <form action="admin/teacher_insert.php" method="post">
                             <div class="mb-3">
                                 <label for="academic_rank" class="form-label">ตำแหน่งทางวิชาการ</label>
                                 <select class="form-select" name="academic_rank" id="academic_rank" aria-describedby="academic_rank">
@@ -205,6 +206,7 @@
                 </div>
             </div>
         </div>
+        
         <!-- แก้ไขข้อมูล -->
         <div class="modal fade" id="modal" tabindex="-1">
             <div class="modal-dialog modal-lg">
@@ -214,22 +216,25 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="1_2_a/edit_1_2_a.php" method="post">
+                        <form action="admin/edit.php" method="post">
                             <div class="mb-3">
+                                <input type="hidden" name = "userId" value="<?= $data["userId"]?>">
+                                <input type="hidden" name = "urole" value="<?= $data["urole"]?>">
                                 <label for="academic_rank" class="form-label">ตำแหน่งทางวิชาการ</label>
                                 <select class="form-select" name="academic_rank" id="academic_rank" aria-describedby="academic_rank" required>
-                                    <option value="ผู้ช่วยศาสตราจารย์" <?php if ($data['ผู้ช่วยศาสตราจารย์'] === 'ผู้ช่วยศาสตราจารย์') echo 'selected' ?>>ผู้ช่วยศาสตราจารย์</option>
-                                    <option value="รองศาสตราจารย์" <?php if ($data['รองศาสตราจารย์'] === 'รองศาสตราจารย์') echo 'selected' ?>>รองศาสตราจารย์</option>
-                                    <option value="ศาสตราจารย์" <?php if ($data['ศาสตราจารย์'] === 'ศาสตราจารย์') echo 'selected' ?>>ศาสตราจารย์</option>
+                                    <option value="ไม่มี" <?php if ($data['academic_rank'] === 'ไม่มี') echo 'selected' ?>>ไม่มี</option>
+                                    <option value="ผู้ช่วยศาสตราจารย์" <?php if ($data['academic_rank'] === 'ผู้ช่วยศาสตราจารย์') echo 'selected' ?>>ผู้ช่วยศาสตราจารย์</option>
+                                    <option value="รองศาสตราจารย์" <?php if ($data['academic_rank'] === 'รองศาสตราจารย์') echo 'selected' ?>>รองศาสตราจารย์</option>
+                                    <option value="ศาสตราจารย์" <?php if ($data['academic_rank'] === 'ศาสตราจารย์') echo 'selected' ?>>ศาสตราจารย์</option>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="nametitle" class="form-label">คำนำหน้าชื่อ</label>
                                 <select class="form-select" name="nametitle" aria-describedby="nametitle" id="nametitle" required>
-                                    <option value="นาย" <?php if($data['นาย'] === 'นาย') echo 'selected' ?>>นาย</option>
-                                    <option value="นาง" <?php if($data['นาง'] === 'นาง') echo 'selected' ?>>นาง</option>
-                                    <option value="นางสาว" <?php if($data['นางสาว'] === 'นางสาว') echo 'selected' ?>>นางสาว</option>
-                                    <option value="ดร." <?php if($data['ดร.'] === 'ดร.') echo 'selected' ?>>ดร.</option>
+                                    <option value="นาย" <?php if($data['nametitle'] === 'นาย') echo 'selected' ?>>นาย</option>
+                                    <option value="นาง" <?php if($data['nametitle'] === 'นาง') echo 'selected' ?>>นาง</option>
+                                    <option value="นางสาว" <?php if($data['nametitle'] === 'นางสาว') echo 'selected' ?>>นางสาว</option>
+                                    <option value="ดร." <?php if($data['nametitle'] === 'ดร.') echo 'selected' ?>>ดร.</option>
                                 </select>
                             </div>            
                             <div class="mb-3">
@@ -241,20 +246,20 @@
                                 <input type="text" class="form-control" name="lastname" value="<?php echo $data['lastname']; ?>" required>
                             </div>
                             <div class="mb-3">
-                                <label for="major" class="col-sm-2 col-form-label ">สาขาวิชา</label>
-                                <select class="form-select" name="major" aria-describedby="major" id="major" required>
-                                    <option value="วิทยาการคอมพิวเตอร์" <?php if ($data['major'] === 'วิทยาการคอมพิวเตอร์') echo 'selected' ?>>วิทยาการคอมพิวเตอร์</option>
-                                    <option value="เทคโนโลยีคอมพิวเตอร์และดิจิทัล" <?php if ($data['major'] === 'เทคโนโลยีคอมพิวเตอร์และดิจิทัล') echo 'selected' ?>>เทคโนโลยีคอมพิวเตอร์และดิจิทัล</option>
-                                    <option value="สาธารณสุขชุมชน" <?php if ($data['major'] === 'สาธารณสุขชุมชน') echo 'selected' ?>>สาธารณสุขชุมชน</option>
-                                    <option value="วิทยาศาสตร์การกีฬา" <?php if ($data['major'] === 'วิทยาศาสตร์การกีฬา') echo 'selected' ?>>วิทยาศาสตร์การกีฬา</option>
-                                    <option value="เทคโนโลยีการเกษตร" <?php if ($data['major'] === 'เทคโนโลยีการเกษตร') echo 'selected' ?>>เทคโนโลยีการเกษตร</option>
-                                    <option value="เทคโนโลยีและนวัตกรรมอาหาร" <?php if ($data['major'] === 'เทคโนโลยีและนวัตกรรมอาหาร') echo 'selected' ?>>เทคโนโลยีและนวัตกรรมอาหาร</option>
-                                    <option value="อาชีวอนามัยและความปลอดภัย" <?php if ($data['major'] === 'อาชีวอนามัยและความปลอดภัย') echo 'selected' ?>>อาชีวอนามัยและความปลอดภัย</option>
-                                    <option value="วิศวกรรมซอฟต์แวร์" <?php if ($data['major'] === 'วิศวกรรมซอฟต์แวร์') echo 'selected' ?>>วิศวกรรมซอฟต์แวร์</option>
-                                    <option value="วิศวกรรมโลจิสติกส์" <?php if ($data['major'] === 'วิศวกรรมโลจิสติกส์') echo 'selected' ?>>วิศวกรรมโลจิสติกส์</option>
-                                    <option value="วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม" <?php if ($data['major'] === 'วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม') echo 'selected' ?>>วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม</option>
-                                    <option value="การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ" <?php if ($data['major'] === 'การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ') echo 'selected' ?>>การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ</option>
-                                    <option value="เทคโนโลยีโยธาและสถาปัตยกรรม" <?php if ($data['major'] === 'เทคโนโลยีโยธาและสถาปัตยกรรม') echo 'selected' ?>>เทคโนโลยีโยธาและสถาปัตยกรรม</option>
+                                <label for="branch" class="col-sm-2 col-form-label ">สาขาวิชา</label>
+                                <select class="form-select" name="branch" aria-describedby="branch" id="branch" required>
+                                    <option value="วิทยาการคอมพิวเตอร์" <?php if ($data['branch'] === 'วิทยาการคอมพิวเตอร์') echo 'selected' ?>>วิทยาการคอมพิวเตอร์</option>
+                                    <option value="เทคโนโลยีคอมพิวเตอร์และดิจิทัล" <?php if ($data['branch'] === 'เทคโนโลยีคอมพิวเตอร์และดิจิทัล') echo 'selected' ?>>เทคโนโลยีคอมพิวเตอร์และดิจิทัล</option>
+                                    <option value="สาธารณสุขชุมชน" <?php if ($data['branch'] === 'สาธารณสุขชุมชน') echo 'selected' ?>>สาธารณสุขชุมชน</option>
+                                    <option value="วิทยาศาสตร์การกีฬา" <?php if ($data['branch'] === 'วิทยาศาสตร์การกีฬา') echo 'selected' ?>>วิทยาศาสตร์การกีฬา</option>
+                                    <option value="เทคโนโลยีการเกษตร" <?php if ($data['branch'] === 'เทคโนโลยีการเกษตร') echo 'selected' ?>>เทคโนโลยีการเกษตร</option>
+                                    <option value="เทคโนโลยีและนวัตกรรมอาหาร" <?php if ($data['branch'] === 'เทคโนโลยีและนวัตกรรมอาหาร') echo 'selected' ?>>เทคโนโลยีและนวัตกรรมอาหาร</option>
+                                    <option value="อาชีวอนามัยและความปลอดภัย" <?php if ($data['branch'] === 'อาชีวอนามัยและความปลอดภัย') echo 'selected' ?>>อาชีวอนามัยและความปลอดภัย</option>
+                                    <option value="วิศวกรรมซอฟต์แวร์" <?php if ($data['branch'] === 'วิศวกรรมซอฟต์แวร์') echo 'selected' ?>>วิศวกรรมซอฟต์แวร์</option>
+                                    <option value="วิศวกรรมโลจิสติกส์" <?php if ($data['branch'] === 'วิศวกรรมโลจิสติกส์') echo 'selected' ?>>วิศวกรรมโลจิสติกส์</option>
+                                    <option value="วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม" <?php if ($data['branch'] === 'วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม') echo 'selected' ?>>วิศวกรรมการจัดการอุตสาหกรรมและสิ่งแวดล้อม</option>
+                                    <option value="การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ" <?php if ($data['branch'] === 'การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ') echo 'selected' ?>>การออกแบบผลิตภัณฑ์และนวัตกรรมวัสดุ</option>
+                                    <option value="เทคโนโลยีโยธาและสถาปัตยกรรม" <?php if ($data['branch'] === 'เทคโนโลยีโยธาและสถาปัตยกรรม') echo 'selected' ?>>เทคโนโลยีโยธาและสถาปัตยกรรม</option>
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -263,13 +268,13 @@
                             </div>
                             <div class="mb-3">
                                 <label for="check admin" class="form-label">ผู้ดูแลระบบ (เป็นผู้ดูแลระบบหรือไม่)</label>
-                                <select class="form-select" name="ch_adamin" required>
-                                    <option value="yes" <?php if($data['yes'] === 'ใช่') echo 'selected' ?>>เป็น</option>
-                                    <option value="no" <?php if($data['no'] === 'ใช่') echo 'selected' ?>>ไม่เป็น</option>
+                                <select class="form-select" name="isAdmin" required>
+                                    <option value="1" <?php if($data['isAdmin'] === '1') echo 'selected' ?>>เป็น</option>
+                                    <option value="0" <?php if($data['isAdmin'] === '0') echo 'selected' ?>>ไม่เป็น</option>
                                 </select>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button type="submit" name="signup" class="btn btn-primary">ลงทะเบียน</button>
+                                <button type="submit" name="edit" class="btn btn-primary">แก้ไข</button>
                             </div>
                         </form>
                     </div>

@@ -282,7 +282,7 @@ if (empty($personal)) {
               <hr class="dropdown-divider">
             </li>
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="index_admin.php?page=users/account">
+              <a class="dropdown-item d-flex align-items-center" href="index.php?page=users/account">
                 <i class="bi bi-file-person-fill"></i>
                 <span>จัดการบัญชี</span>
               </a>

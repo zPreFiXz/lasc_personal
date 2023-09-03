@@ -162,7 +162,7 @@
     // end ดึงค่าภาระงานไปคำนวณจากตาราง
     $totalAmountWork  = $totalAmountWork_1_1 + $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
 
-    $stmt = $conn->query("SELECT * FROM `term_year` where id = 1"); // ดึงข้อมูลจากตาราง personal โดยใช้ ID
+    $stmt = $conn->query("SELECT * FROM `term_year` where id = 2"); // ดึงข้อมูลจากตาราง personal โดยใช้ ID
     $stmt->execute();
     $term_year = $stmt->fetch();
     $year = $term_year['year'];
@@ -255,6 +255,7 @@
                 $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year' and term = 2");
                 $stmt->execute();
                 $last_year_term2 = $stmt->fetchAll();
+                $year = $year + 1;
 
                 if (!$current_year_term1) {
                     echo "<tr><td colspan='8' class='text-center'>ไม่มีข้อมูล</td></tr>";
@@ -460,6 +461,7 @@
             <form action="term_year/term_year.php" method="post">
                 <div class="modal-body">
                     <label for="year" class="col-sm-2 col-form-label">ปีการศึกษา</label>
+                    <input type="hidden" name="id" value="<?= $term_year['id'] ?>">
                     <input type="text" class="form-control" name="year" value="<?php echo $term_year['year']; ?>" required>
 
                     <label for="term" class="col-sm-2 col-form-label" style="white-space: nowrap;">ภาคเรียนที่</label>

@@ -27,7 +27,7 @@
         $stmt->execute();
     }
     if($stmt){
-        $_SESSION['success'] = "เปลียนเรียบร้อยแล้ว!";
+        $_SESSION['success'] = "เปลี่ยนเรียบร้อยแล้ว!";
         header("location: /lasc_personal/index_admin.php?page=users/account");
     } else {
         $_SESSION['error'] = "มีบางอย่างผิดพลาด";

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 03, 2023 at 06:08 AM
+-- Generation Time: Sep 03, 2023 at 12:52 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -56,7 +56,8 @@ CREATE TABLE `personal_1_1` (
 INSERT INTO `personal_1_1` (`userId`, `id`, `term`, `year`, `code_course`, `name_course`, `unit`, `prepare_theory`, `hour_lecture`, `check_work1`, `prepare_practice`, `hour_practice`, `check_work2`, `practice_subject`, `level`, `group_study`, `amount_student`, `proportion`, `amount_work`) VALUES
 ('2', 1, 1, 2566, '65100141119', 'ซอฟต์แวร์จ้า', '3(3-0-6)', '3', '3', '3', '-', '-', '-', 'เคมี', '1', 1, 250, 50, 24.75),
 ('1', 2, 1, 2566, 'sfef', 'sdcsdc', '1(0-3-1)', '-', '-', '-', '1', '3', '1', 'ฟิสิกส์', '2', 1, 40, 92, 8.28),
-('2', 3, 1, 2567, 'dsc', 'sdfsdf', '3(2-2-5)', '2', '2', '2', '1', '2', '1', 'ทั่วไป', '2', 1, 50, 100, 10.75);
+('2', 3, 1, 2567, 'dsc', 'sdfsdf', '3(2-2-5)', '2', '2', '2', '1', '2', '1', 'ทั่วไป', '2', 1, 50, 100, 10.75),
+('1', 4, 1, 2567, 'dsc', 'sdfsdf', '3(3-0-6)', '3', '3', '3', '-', '-', '-', 'ทั่วไป', '2', 1, 50, 50, 4.875);
 
 -- --------------------------------------------------------
 
@@ -106,7 +107,8 @@ CREATE TABLE `personal_1_2_a` (
 INSERT INTO `personal_1_2_a` (`userId`, `id`, `term`, `year`, `major`, `code`, `level`, `group_study`, `amount_student`, `amount_work`, `file`) VALUES
 ('2', 25, 1, 2566, 'เทคโนโลยีคอมพิวเตอร์และดิจิทัล', '0002', '2', '651001413', 250, 2, '2023-09-01_22-49-35_2.pdf'),
 ('1', 26, 1, 2566, 'วิศวกรรมซอฟต์แวร์', '0001', '2', '6510014117', 1, 2, ''),
-('1', 27, 2, 2566, 'วิทยาการคอมพิวเตอร์', '0001', '2', '6510014117', 1, 2, '');
+('1', 27, 2, 2566, 'วิทยาการคอมพิวเตอร์', '0001', '2', '6510014117', 1, 2, ''),
+('1', 28, 1, 2567, 'สาธารณสุขชุมชน', '0001', '2', '6510014117', 40, 2, '');
 
 -- --------------------------------------------------------
 
@@ -216,7 +218,8 @@ CREATE TABLE `personal_1_5_a` (
 
 INSERT INTO `personal_1_5_a` (`userId`, `id`, `term`, `year`, `major`, `level`, `name_project`, `amount_teacher`, `teacher`, `amount_student`, `amount_work`, `file`) VALUES
 ('2', 18, 1, 2566, 'เทคโนโลยีโยธาและสถาปัตยกรรม', '1', 'วิทย์ยาศาสตร์', 2, 'หลัก', 250, 1, ''),
-('1', 19, 1, 2566, 'วิศวกรรมซอฟต์แวร์', '3', 'วิทย์ยาศาสตร์งง', 3, 'ร่วม', 400, 1, '2023-09-02_00-12-10_1.pdf');
+('1', 19, 1, 2566, 'วิศวกรรมซอฟต์แวร์', '3', 'วิทย์ยาศาสตร์งง', 3, 'ร่วม', 400, 1, '2023-09-02_00-12-10_1.pdf'),
+('1', 20, 1, 2567, 'วิทยาการคอมพิวเตอร์', '2', 'dfas', 2, 'หลัก', 40, 1, '');
 
 -- --------------------------------------------------------
 
@@ -275,7 +278,8 @@ CREATE TABLE `personal_1_6_a` (
 
 INSERT INTO `personal_1_6_a` (`userId`, `id`, `term`, `year`, `research_name`, `funding_source`, `funding_framework`, `start`, `end`, `nature_work`, `leader`, `contribute`, `amount_work`, `file`) VALUES
 ('2', 17, 1, 2566, 'บบบบ', 'บบบบ', '50,000-100,000', '2023-09-01', '2023-09-02', 'เดี่ยว', 'ผู้ร่วมโครงการ', 3, 3, ''),
-('1', 18, 1, 2566, 'revevจ้า', 'erv', '50,000-100,000', '2023-09-02', '2023-09-03', 'เดี่ยว', 'หัวหน้าโครงการ', 3, 6, '2023-09-02_00-01-29_1.pdf');
+('1', 18, 1, 2566, 'revevจ้า', 'erv', '50,000-100,000', '2023-09-02', '2023-09-03', 'เดี่ยว', 'หัวหน้าโครงการ', 3, 6, '2023-09-02_00-01-29_1.pdf'),
+('1', 19, 1, 2567, 'asf', 'wefwf', '50,000-100,000', '2023-09-05', '2023-09-13', 'เดี่ยว', 'หัวหน้าโครงการ', 100, 6, '');
 
 -- --------------------------------------------------------
 
@@ -469,7 +473,8 @@ INSERT INTO `personal_1_11` (`userId`, `id`, `term`, `year`, `checkbox1`, `check
 ('1', 64, 1, 2568, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0),
 ('1', 65, 2, 2566, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0),
 ('20', 66, 1, 2566, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0),
-('20', 67, 1, 2567, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0);
+('20', 67, 1, 2567, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0),
+('22', 68, 1, 2566, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -515,11 +520,12 @@ INSERT INTO `personal_3` (`userId`, `id`, `term`, `year`, `name`, `branch`, `amo
 ('1', 1, 1, 2566, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 32.49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('2', 2, 1, 2566, 'นางสาวบงกชมาศ บุญศักดิ์', 'วิศวกรรมซอฟต์แวร์', 36.08, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('2', 3, 1, 2567, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 10.75, 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0, 40, 0, 0, 0),
-('1', 4, 1, 2567, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('1', 4, 1, 2567, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 13.875, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('1', 5, 1, 2568, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('1', 6, 2, 2566, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('20', 7, 1, 2566, 'นายSarawut Potjanat', 'วิทยาการคอมพิวเตอร์', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('20', 8, 1, 2567, 'นายSarawut Potjanat', 'วิทยาการคอมพิวเตอร์', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+('20', 8, 1, 2567, 'นายSarawut Potjanat', 'วิทยาการคอมพิวเตอร์', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('22', 9, 1, 2566, 'นางBongkotmas Boonsak', 'เทคโนโลยีคอมพิวเตอร์และดิจิทัล', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -538,8 +544,7 @@ CREATE TABLE `term_year` (
 --
 
 INSERT INTO `term_year` (`id`, `term`, `year`) VALUES
-(1, 1, 2567),
-(2, 1, 2568);
+(1, 1, 2566);
 
 -- --------------------------------------------------------
 
@@ -557,7 +562,7 @@ CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `urole` varchar(50) NOT NULL,
-  `isAdmin` int(1) NOT NULL,
+  `isAdmin` varchar(10) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -566,10 +571,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userId`, `academic_rank`, `nametitle`, `firstname`, `lastname`, `branch`, `email`, `password`, `urole`, `isAdmin`, `created_at`) VALUES
-(1, 'ศาสตราจารย์', 'นาย', 'ภาคภูมิ', 'สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 'prefix.2pm@gmail.com', '$2y$10$3PFxIk98uCUU3CJ3N7Ru7ucYZNs7ciAbKuzKPpe3CsCr1QNsVWeWO', 'teacher', 1, '2023-09-01 15:10:10'),
-(2, 'ผู้ช่วยศาสตราจารย์', 'นาง', 'บงกชมาศ', 'บุญศักดิ์', 'วิศวกรรมซอฟต์แวร์', 'cream333@gmail.com', '$2y$10$sZFPG7hgMk54axcVsBGEuue2i28pBlly1OIb/Z2kIeHFuz6E4QPf6', 'officer', 0, '2023-09-01 15:33:35'),
-(20, 'ผู้ช่วยศาสตราจารย์', 'นาย', 'Sarawut', 'Potjanat', 'วิทยาการคอมพิวเตอร์', 'gvgx831@gmail.com', '$2y$10$NMwJ9MXTVqWHXF3n6nHzxObyyOxXKshUkSAH0oKCTEuypF3ZULf/C', 'officer', 1, '2023-09-02 16:11:27'),
-(21, 'ผู้ช่วยศาสตราจารย์', 'นาง', 'Sarawut', 'Potjanat', 'เทคโนโลยีและนวัตกรรมอาหาร', 'stu6510014111@sskru.ac.th', '$2y$10$RmWPRIynIXjOhmDiLWTjN.pRCFJDnRQvuNPXWQJeEuxkMCTSKfkXe', 'teacher', 1, '2023-09-02 18:15:27');
+(1, 'ศาสตราจารย์', 'นาย', 'ภาคภูมิ', 'สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 'prefix.2pm@gmail.com', '$2y$10$3PFxIk98uCUU3CJ3N7Ru7ucYZNs7ciAbKuzKPpe3CsCr1QNsVWeWO', 'teacher', 'เป็น', '2023-09-01 15:10:10'),
+(2, 'ผู้ช่วยศาสตราจารย์', 'นาง', 'บงกชมาศ', 'บุญศักดิ์', 'วิศวกรรมซอฟต์แวร์', 'cream333@gmail.com', '$2y$10$sZFPG7hgMk54axcVsBGEuue2i28pBlly1OIb/Z2kIeHFuz6E4QPf6', 'officer', 'เป็น', '2023-09-01 15:33:35'),
+(20, 'ผู้ช่วยศาสตราจารย์', 'นาย', 'Sarawut', 'Potjanat', 'วิทยาการคอมพิวเตอร์', 'gvgx831@gmail.com', '$2y$10$NMwJ9MXTVqWHXF3n6nHzxObyyOxXKshUkSAH0oKCTEuypF3ZULf/C', 'officer', 'เป็น', '2023-09-02 16:11:27'),
+(21, 'ผู้ช่วยศาสตราจารย์', 'นาง', 'Sarawut', 'Potjanat', 'เทคโนโลยีและนวัตกรรมอาหาร', 'stu6510014111@sskru.ac.th', '$2y$10$RmWPRIynIXjOhmDiLWTjN.pRCFJDnRQvuNPXWQJeEuxkMCTSKfkXe', 'teacher', 'เป็น', '2023-09-02 18:15:27'),
+(22, 'ผู้ช่วยศาสตราจารย์', 'นาง', 'Bongkotmas', 'Boonsak', 'เทคโนโลยีคอมพิวเตอร์และดิจิทัล', 'root@gmail.com', '$2y$10$AyqQViKlZXavLv4HoUh84OU5pxkjpnrMULbiZ6qb.bMe6vWwei2DK', 'teacher', 'เป็น', '2023-09-03 10:48:42');
 
 -- --------------------------------------------------------
 
@@ -597,7 +603,11 @@ INSERT INTO `vadmin` (`userId`, `id`, `term`, `year`, `academic_rank`, `nametitl
 ('1', 9, 2, 2566, '', 'นาย', 'ภาคภูมิ', 'สุขชาติ', 2),
 ('1', 10, 1, 2566, '', 'นาย', 'ภาคภูมิ', 'สุขชาติ', 32.49),
 ('20', 11, 1, 2566, '', 'นาย', 'Sarawut', 'Potjanat', 0),
-('20', 12, 1, 2567, '', 'นาย', 'Sarawut', 'Potjanat', 0);
+('20', 12, 1, 2567, '', 'นาย', 'Sarawut', 'Potjanat', 0),
+('1', 13, 1, 2567, '', 'นาย', 'ภาคภูมิ', 'สุขชาติ', 13.875),
+('2', 14, 1, 2567, '', 'นาง', 'บงกชมาศ', 'บุญศักดิ์', 10.75),
+('2', 15, 1, 2566, '', 'นาง', 'บงกชมาศ', 'บุญศักดิ์', 36.08),
+('22', 16, 1, 2566, '', 'นาง', 'Bongkotmas', 'Boonsak', 0);
 
 --
 -- Indexes for dumped tables
@@ -725,7 +735,7 @@ ALTER TABLE `vadmin`
 -- AUTO_INCREMENT for table `personal_1_1`
 --
 ALTER TABLE `personal_1_1`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `personal_1_1_file`
@@ -737,7 +747,7 @@ ALTER TABLE `personal_1_1_file`
 -- AUTO_INCREMENT for table `personal_1_2_a`
 --
 ALTER TABLE `personal_1_2_a`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `personal_1_2_b`
@@ -761,7 +771,7 @@ ALTER TABLE `personal_1_4`
 -- AUTO_INCREMENT for table `personal_1_5_a`
 --
 ALTER TABLE `personal_1_5_a`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `personal_1_5_b`
@@ -773,7 +783,7 @@ ALTER TABLE `personal_1_5_b`
 -- AUTO_INCREMENT for table `personal_1_6_a`
 --
 ALTER TABLE `personal_1_6_a`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `personal_1_6_b`
@@ -809,13 +819,13 @@ ALTER TABLE `personal_1_10`
 -- AUTO_INCREMENT for table `personal_1_11`
 --
 ALTER TABLE `personal_1_11`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `personal_3`
 --
 ALTER TABLE `personal_3`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `term_year`
@@ -827,13 +837,13 @@ ALTER TABLE `term_year`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userId` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `userId` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `vadmin`
 --
 ALTER TABLE `vadmin`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

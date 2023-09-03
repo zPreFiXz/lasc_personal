@@ -281,7 +281,7 @@
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="contribute" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม</label>
-                                <input type="text" class="form-control" name="contribute" required>
+                                <input type="text" class="form-control" name="contribute" id="contribute1" oninput="calc1()" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
@@ -352,7 +352,7 @@
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="contribute" class="col-sm-2 col-form-label">ร้อยละการมีส่วนร่วม</label>
-                                <input type="text" class="form-control" name="contribute" value="<?php echo $data['contribute']; ?>" required>
+                                <input type="text" class="form-control" name="contribute" id="contribute2" oninput="calc2()" value="<?php echo $data['contribute']; ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
@@ -421,111 +421,95 @@
     function calc1() {
         var funding = document.getElementById('funding_framework1').value;
         var leader = document.getElementById('leader1').value;
+        var contribute = document.getElementById('contribute1').value;
 
         if (funding == '<50,000') {
             if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 4;
-                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 2;
-                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-            } else {
-                var calculatedAmountWork = 0.00;
-                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             }
         } else if (funding == '50,000-100,000') {
             if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 6;
-                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 3;
-                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-            } else {
-                var calculatedAmountWork = 0.00;
-                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             }
         } else if (funding == '100,000-500,000') {
             if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 8;
-                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 4;
-                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-            } else {
-                var calculatedAmountWork = 0.00;
-                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             }
         } else if (funding == '500,000-1,000,000') {
             if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 10;
-                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 5;
-                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-            } else {
-                var calculatedAmountWork = 0.00;
-                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             }
         } else if (funding == '>1,000,000') {
             if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 12;
-                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 6;
-                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
-            } else {
-                var calculatedAmountWork = 0.00;
-                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             }
-        } else {
-            var calculatedAmountWork = 0;
-            document.getElementById('amount_work1').value = calculatedAmountWork.toFixed(2);
         }
     }
 
     function calc2() {
         var funding = document.getElementById('funding_framework2').value;
         var leader = document.getElementById('leader2').value;
+        var contribute = document.getElementById('contribute2').value;
 
         if (funding == '<50,000') {
             if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 4;
-                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 2;
-                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             }
         } else if (funding == '50,000-100,000') {
             if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 6;
-                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 3;
-                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             }
         } else if (funding == '100,000-500,000') {
             if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 8;
-                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 4;
-                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             }
         } else if (funding == '500,000-1,000,000') {
             if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 10;
-                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 5;
-                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             }
         } else if (funding == '>1,000,000') {
             if (leader == 'หัวหน้าโครงการ') {
                 var calculatedAmountWork = 12;
-                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             } else if (leader == 'ผู้ร่วมโครงการ') {
                 var calculatedAmountWork = 6;
-                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2);
+                document.getElementById('amount_work2').value = calculatedAmountWork.toFixed(2) * (contribute/100);
             }
         }
     }

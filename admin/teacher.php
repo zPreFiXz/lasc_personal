@@ -194,8 +194,8 @@
                                 <label for="isAdmin" class="form-label">ผู้ดูแลระบบ (เป็นผู้ดูแลระบบหรือไม่)</label>
                                 <select class="form-select" name="isAdmin">
                                     <option value="กรุณาเลือก" selected>กรุณาเลือก</option>
-                                    <option value="1">เป็น</option>
-                                    <option value="0">ไม่เป็น</option>
+                                    <option value="เป็น">เป็น</option>
+                                    <option value="ไม่เป็น">ไม่เป็น</option>
                                 </select>
                             </div>
                             <div class="d-flex justify-content-center">
@@ -269,8 +269,8 @@
                             <div class="mb-3">
                                 <label for="check admin" class="form-label">ผู้ดูแลระบบ (เป็นผู้ดูแลระบบหรือไม่)</label>
                                 <select class="form-select" name="isAdmin" required>
-                                    <option value="1" <?php if($data['isAdmin'] === '1') echo 'selected' ?>>เป็น</option>
-                                    <option value="0" <?php if($data['isAdmin'] === '0') echo 'selected' ?>>ไม่เป็น</option>
+                                    <option value="เป็น" <?php if($data['isAdmin'] === 'เป็น') echo 'selected' ?>>เป็น</option>
+                                    <option value="ไม่เป็น" <?php if($data['isAdmin'] === 'ไม่เป็น') echo 'selected' ?>>ไม่เป็น</option>
                                 </select>
                             </div>
                             <div class="d-flex justify-content-center">

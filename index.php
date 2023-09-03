@@ -1,227 +1,227 @@
 <?php
-session_start();
-require_once 'config/db.php';
+  session_start();
+  require_once 'config/db.php';
 
-if (!isset($_SESSION['userId'])) {
-  $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
-  header('location: signin.php');
-}
+  if (!isset($_SESSION['userId'])) {
+    $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
+    header('location: signin.php');
+  }
 
-$userId = $_SESSION['userId'];
-$nametitle = $_SESSION['nametitle'];
-$firstname = $_SESSION['firstname'];
-$lastname = $_SESSION['lastname'];
-$branch = $_SESSION['branch'];
-
-$name = $nametitle . $firstname . " " . $lastname;
-
-$stmt = $conn->query("SELECT * FROM term_year where id = 1");
-$stmt->execute();
-$term_year = $stmt->fetch();
-$term =  $term_year['term'];
-$year =  $term_year['year'];
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_1 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_1 = $stmt->fetchAll();
-
-$totalAmountWork_1_1 = 0;
-foreach ($personal_1_1 as $per_1_1) {
-  $totalAmountWork_1_1 += floatval($per_1_1['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_2_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_2_a = $stmt->fetchAll();
-
-$totalAmountWork_1_2_a = 0;
-foreach ($personal_1_2_a as $per_1_2_a) {
-  $totalAmountWork_1_2_a += floatval($per_1_2_a['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_2_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_2_b = $stmt->fetchAll();
-
-$totalAmountWork_1_2_b = 0;
-foreach ($personal_1_2_b as $per_1_2_b) {
-  $totalAmountWork_1_2_b += floatval($per_1_2_b['amount_work']);
-}
-$totalAmountWork_1_2 = $totalAmountWork_1_2_a + $totalAmountWork_1_2_b;
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_3 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_3 = $stmt->fetchAll();
-
-$totalAmountWork_1_3 = 0;
-foreach ($personal_1_3 as $per_1_3) {
-  $totalAmountWork_1_3 += floatval($per_1_3['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_4 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_4 = $stmt->fetchAll();
-
-$totalAmountWork_1_4 = 0;
-foreach ($personal_1_4 as $per_1_4) {
-  $totalAmountWork_1_4 += floatval($per_1_4['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_5_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_5_a = $stmt->fetchAll();
-
-$totalAmountWork_1_5_a = 0;
-foreach ($personal_1_5_a as $per_1_5_a) {
-  $totalAmountWork_1_5_a += floatval($per_1_5_a['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_5_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_5_b = $stmt->fetchAll();
-
-$totalAmountWork_1_5_b = 0;
-foreach ($personal_1_5_b as $per_1_5_b) {
-  $totalAmountWork_1_5_b += floatval($per_1_5_b['amount_work']);
-}
-$totalAmountWork_1_5 = $totalAmountWork_1_5_a + $totalAmountWork_1_5_b;
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_6_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_6_a = $stmt->fetchAll();
-
-$totalAmountWork_1_6_a = 0;
-foreach ($personal_1_6_a as $per_1_6_a) {
-  $totalAmountWork_1_6_a += floatval($per_1_6_a['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_6_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_6_b = $stmt->fetchAll();
-
-$totalAmountWork_1_6_b = 0;
-foreach ($personal_1_6_b as $per_1_6_b) {
-  $totalAmountWork_1_6_b += floatval($per_1_6_b['amount_work']);
-}
-$totalAmountWork_1_6 = $totalAmountWork_1_6_a + $totalAmountWork_1_6_b;
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_7 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_7 = $stmt->fetchAll();
-
-$totalAmountWork_1_7 = 0;
-foreach ($personal_1_7 as $per_1_7) {
-  $totalAmountWork_1_7 += floatval($per_1_7['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_8 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_8 = $stmt->fetchAll();
-
-$totalAmountWork_1_8 = 0;
-foreach ($personal_1_8 as $per_1_8) {
-  $totalAmountWork_1_8 += floatval($per_1_8['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_9 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_9 = $stmt->fetchAll();
-
-$totalAmountWork_1_9 = 0;
-foreach ($personal_1_9 as $per_1_9) {
-  $totalAmountWork_1_9 += floatval($per_1_9['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_10 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_10 = $stmt->fetchAll();
-
-$totalAmountWork_1_10 = 0;
-foreach ($personal_1_10 as $per_1_10) {
-  $totalAmountWork_1_10 += floatval($per_1_10['amount_work']);
-}
-
-$stmt = $conn->query("SELECT amount_work FROM personal_1_11 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
-$stmt->execute();
-$personal_1_11 = $stmt->fetchAll();
-
-$totalAmountWork_1_11 = 0;
-foreach ($personal_1_11 as $per_1_11) {
-  $totalAmountWork_1_11 += floatval($per_1_11['amount_work']);
-}
-
-$totalAmountWork = $totalAmountWork_1_1 + $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
-$_SESSION['$totalAmountWork'] = $totalAmountWork;
-
-$stmt = $conn->prepare("SELECT * FROM Vadmin WHERE userId = :userId AND term = :term AND year = :year");
-$stmt->bindParam(':userId', $userId);
-$stmt->bindParam(':term', $term);
-$stmt->bindParam(':year', $year);
-$stmt->execute();
-$users = $stmt->fetch();
-
-if (empty($users)) {
-  $insertStmt = $conn->prepare("INSERT INTO Vadmin (userId, term, year, nametitle, firstname, lastname, amount_work) VALUES (:userId, :term, :year, :nametitle, :firstname, :lastname, :amount_work)");
-  $insertStmt->bindParam(':userId', $userId);
-  $insertStmt->bindParam(':term', $term);
-  $insertStmt->bindParam(':year', $year);
-  $insertStmt->bindParam(':nametitle', $nametitle);
-  $insertStmt->bindParam(':firstname', $firstname);
-  $insertStmt->bindParam(':lastname', $lastname);
-  $insertStmt->bindParam(':amount_work', $totalAmountWork);
-  $insertStmt->execute();
-} else {
-  $updateStmt = $conn->prepare("UPDATE Vadmin SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
-  $updateStmt->bindParam(':userId', $userId);
-  $updateStmt->bindParam(':term', $term);
-  $updateStmt->bindParam(':year', $year);
-  $updateStmt->bindParam(':amount_work', $totalAmountWork);
-  $updateStmt->execute();
-}
-
-$stmt = $conn->prepare("SELECT*FROM personal_1_11 WHERE userId = :userId AND term = :term AND year = :year");
-$stmt->bindParam(':userId', $userId);
-$stmt->bindParam(':term', $term);
-$stmt->bindParam(':year', $year);
-$stmt->execute();
-$personal = $stmt->fetchAll();
-
-if (empty($personal)) {
   $userId = $_SESSION['userId'];
-  $term = $term_year['term'];
-  $year = $term_year['year'];
+  $nametitle = $_SESSION['nametitle'];
+  $firstname = $_SESSION['firstname'];
+  $lastname = $_SESSION['lastname'];
+  $branch = $_SESSION['branch'];
 
-  $insertStmt = $conn->prepare("INSERT INTO personal_1_11 (userId, term, `year`) VALUES (:userId, :term, :year)");
-  $insertStmt->bindParam(':userId', $userId);
-  $insertStmt->bindParam(':term', $term);
-  $insertStmt->bindParam(':year', $year);
-  $insertStmt->execute();
-}
+  $name = $nametitle . $firstname . " " . $lastname;
 
-$stmt = $conn->prepare("SELECT * FROM personal_3 WHERE userId = :userId AND term = :term AND year = :year");
-$stmt->bindParam(':userId', $userId);
-$stmt->bindParam(':term', $term);
-$stmt->bindParam(':year', $year);
-$stmt->execute();
-$personal = $stmt->fetchAll();
+  $stmt = $conn->query("SELECT * FROM term_year where id = 1");
+  $stmt->execute();
+  $term_year = $stmt->fetch();
+  $term =  $term_year['term'];
+  $year =  $term_year['year'];
 
-if (empty($personal)) {
-  $insertStmt = $conn->prepare("INSERT INTO personal_3 (userId, term, year,name,branch,amount_work) VALUES (:userId, :term, :year, :name, :branch, :amount_work)");
-  $insertStmt->bindParam(':userId', $userId);
-  $insertStmt->bindParam(':term', $term);
-  $insertStmt->bindParam(':year', $year);
-  $insertStmt->bindParam(':name', $name);
-  $insertStmt->bindParam(':branch', $branch);
-  $insertStmt->bindParam(':amount_work', $totalAmountWork);
-  $insertStmt->execute();
-} else {
-  $updateStmt = $conn->prepare("UPDATE personal_3 SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
-  $updateStmt->bindParam(':userId', $userId);
-  $updateStmt->bindParam(':term', $term);
-  $updateStmt->bindParam(':year', $year);
-  $updateStmt->bindParam(':amount_work', $totalAmountWork);
-  $updateStmt->execute();
-}
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_1 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_1 = $stmt->fetchAll();
+
+  $totalAmountWork_1_1 = 0;
+  foreach ($personal_1_1 as $per_1_1) {
+    $totalAmountWork_1_1 += floatval($per_1_1['amount_work']);
+  }
+
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_2_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_2_a = $stmt->fetchAll();
+
+  $totalAmountWork_1_2_a = 0;
+  foreach ($personal_1_2_a as $per_1_2_a) {
+    $totalAmountWork_1_2_a += floatval($per_1_2_a['amount_work']);
+  }
+
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_2_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_2_b = $stmt->fetchAll();
+
+  $totalAmountWork_1_2_b = 0;
+  foreach ($personal_1_2_b as $per_1_2_b) {
+    $totalAmountWork_1_2_b += floatval($per_1_2_b['amount_work']);
+  }
+  $totalAmountWork_1_2 = $totalAmountWork_1_2_a + $totalAmountWork_1_2_b;
+
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_3 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_3 = $stmt->fetchAll();
+
+  $totalAmountWork_1_3 = 0;
+  foreach ($personal_1_3 as $per_1_3) {
+    $totalAmountWork_1_3 += floatval($per_1_3['amount_work']);
+  }
+
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_4 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_4 = $stmt->fetchAll();
+
+  $totalAmountWork_1_4 = 0;
+  foreach ($personal_1_4 as $per_1_4) {
+    $totalAmountWork_1_4 += floatval($per_1_4['amount_work']);
+  }
+
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_5_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_5_a = $stmt->fetchAll();
+
+  $totalAmountWork_1_5_a = 0;
+  foreach ($personal_1_5_a as $per_1_5_a) {
+    $totalAmountWork_1_5_a += floatval($per_1_5_a['amount_work']);
+  }
+
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_5_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_5_b = $stmt->fetchAll();
+
+  $totalAmountWork_1_5_b = 0;
+  foreach ($personal_1_5_b as $per_1_5_b) {
+    $totalAmountWork_1_5_b += floatval($per_1_5_b['amount_work']);
+  }
+  $totalAmountWork_1_5 = $totalAmountWork_1_5_a + $totalAmountWork_1_5_b;
+
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_6_a WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_6_a = $stmt->fetchAll();
+
+  $totalAmountWork_1_6_a = 0;
+  foreach ($personal_1_6_a as $per_1_6_a) {
+    $totalAmountWork_1_6_a += floatval($per_1_6_a['amount_work']);
+  }
+
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_6_b WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_6_b = $stmt->fetchAll();
+
+  $totalAmountWork_1_6_b = 0;
+  foreach ($personal_1_6_b as $per_1_6_b) {
+    $totalAmountWork_1_6_b += floatval($per_1_6_b['amount_work']);
+  }
+  $totalAmountWork_1_6 = $totalAmountWork_1_6_a + $totalAmountWork_1_6_b;
+
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_7 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_7 = $stmt->fetchAll();
+
+  $totalAmountWork_1_7 = 0;
+  foreach ($personal_1_7 as $per_1_7) {
+    $totalAmountWork_1_7 += floatval($per_1_7['amount_work']);
+  }
+
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_8 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_8 = $stmt->fetchAll();
+
+  $totalAmountWork_1_8 = 0;
+  foreach ($personal_1_8 as $per_1_8) {
+    $totalAmountWork_1_8 += floatval($per_1_8['amount_work']);
+  }
+
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_9 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_9 = $stmt->fetchAll();
+
+  $totalAmountWork_1_9 = 0;
+  foreach ($personal_1_9 as $per_1_9) {
+    $totalAmountWork_1_9 += floatval($per_1_9['amount_work']);
+  }
+
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_10 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_10 = $stmt->fetchAll();
+
+  $totalAmountWork_1_10 = 0;
+  foreach ($personal_1_10 as $per_1_10) {
+    $totalAmountWork_1_10 += floatval($per_1_10['amount_work']);
+  }
+
+  $stmt = $conn->query("SELECT amount_work FROM personal_1_11 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
+  $stmt->execute();
+  $personal_1_11 = $stmt->fetchAll();
+
+  $totalAmountWork_1_11 = 0;
+  foreach ($personal_1_11 as $per_1_11) {
+    $totalAmountWork_1_11 += floatval($per_1_11['amount_work']);
+  }
+
+  $totalAmountWork = $totalAmountWork_1_1 + $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
+  $_SESSION['$totalAmountWork'] = $totalAmountWork;
+
+  $stmt = $conn->prepare("SELECT * FROM Vadmin WHERE userId = :userId AND term = :term AND year = :year");
+  $stmt->bindParam(':userId', $userId);
+  $stmt->bindParam(':term', $term);
+  $stmt->bindParam(':year', $year);
+  $stmt->execute();
+  $users = $stmt->fetch();
+
+  if (empty($users)) {
+    $insertStmt = $conn->prepare("INSERT INTO Vadmin (userId, term, year, nametitle, firstname, lastname, amount_work) VALUES (:userId, :term, :year, :nametitle, :firstname, :lastname, :amount_work)");
+    $insertStmt->bindParam(':userId', $userId);
+    $insertStmt->bindParam(':term', $term);
+    $insertStmt->bindParam(':year', $year);
+    $insertStmt->bindParam(':nametitle', $nametitle);
+    $insertStmt->bindParam(':firstname', $firstname);
+    $insertStmt->bindParam(':lastname', $lastname);
+    $insertStmt->bindParam(':amount_work', $totalAmountWork);
+    $insertStmt->execute();
+  } else {
+    $updateStmt = $conn->prepare("UPDATE Vadmin SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
+    $updateStmt->bindParam(':userId', $userId);
+    $updateStmt->bindParam(':term', $term);
+    $updateStmt->bindParam(':year', $year);
+    $updateStmt->bindParam(':amount_work', $totalAmountWork);
+    $updateStmt->execute();
+  }
+
+  $stmt = $conn->prepare("SELECT*FROM personal_1_11 WHERE userId = :userId AND term = :term AND year = :year");
+  $stmt->bindParam(':userId', $userId);
+  $stmt->bindParam(':term', $term);
+  $stmt->bindParam(':year', $year);
+  $stmt->execute();
+  $personal = $stmt->fetchAll();
+
+  if (empty($personal)) {
+    $userId = $_SESSION['userId'];
+    $term = $term_year['term'];
+    $year = $term_year['year'];
+
+    $insertStmt = $conn->prepare("INSERT INTO personal_1_11 (userId, term, `year`) VALUES (:userId, :term, :year)");
+    $insertStmt->bindParam(':userId', $userId);
+    $insertStmt->bindParam(':term', $term);
+    $insertStmt->bindParam(':year', $year);
+    $insertStmt->execute();
+  }
+
+  $stmt = $conn->prepare("SELECT * FROM personal_3 WHERE userId = :userId AND term = :term AND year = :year");
+  $stmt->bindParam(':userId', $userId);
+  $stmt->bindParam(':term', $term);
+  $stmt->bindParam(':year', $year);
+  $stmt->execute();
+  $personal = $stmt->fetchAll();
+
+  if (empty($personal)) {
+    $insertStmt = $conn->prepare("INSERT INTO personal_3 (userId, term, year,name,branch,amount_work) VALUES (:userId, :term, :year, :name, :branch, :amount_work)");
+    $insertStmt->bindParam(':userId', $userId);
+    $insertStmt->bindParam(':term', $term);
+    $insertStmt->bindParam(':year', $year);
+    $insertStmt->bindParam(':name', $name);
+    $insertStmt->bindParam(':branch', $branch);
+    $insertStmt->bindParam(':amount_work', $totalAmountWork);
+    $insertStmt->execute();
+  } else {
+    $updateStmt = $conn->prepare("UPDATE personal_3 SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
+    $updateStmt->bindParam(':userId', $userId);
+    $updateStmt->bindParam(':term', $term);
+    $updateStmt->bindParam(':year', $year);
+    $updateStmt->bindParam(':amount_work', $totalAmountWork);
+    $updateStmt->execute();
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -415,8 +415,8 @@ if (empty($personal)) {
     <br>
     <br>
     <?php
-    $page = $_GET['page'];
-    include $page . ('.php');
+      $page = $_GET['page'];
+      include $page . ('.php');
     ?>
   </main>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -443,7 +443,6 @@ if (empty($personal)) {
   </script>
 </body>
 <?php
-$conn = null;
+  $conn = null;
 ?>
-
 </html>

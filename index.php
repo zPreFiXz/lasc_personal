@@ -221,6 +221,17 @@ if (empty($personal)) {
   $updateStmt->bindParam(':year', $year);
   $updateStmt->bindParam(':amount_work', $totalAmountWork);
   $updateStmt->execute();
+  
+  $userId = $_SESSION['userId'];
+  $nametitle = $_SESSION['nametitle'];
+  $firstname = $_SESSION['firstname'];
+  $lastname = $_SESSION['lastname'];
+
+  if (isset($_SESSION['userId'])) {
+    $stmt = $conn->query("SELECT * FROM users WHERE userId = '$userId'");
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -272,11 +283,33 @@ if (empty($personal)) {
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-person-circle"></i>
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $nametitle .  $firstname . ' ' . $lastname ?></span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"> 
+            <?php
+                if($row['academic_rank'] == 'ไม่มี'){
+                    echo  ' ' . $row['nametitle'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                }elseif($row['academic_rank'] == 'ศาสตราจารย์'){
+                    echo $row['academic_rank'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                }elseif(($row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์') and $row['nametitle'] == "ดร." ){
+                    echo $row['academic_rank'] . ' ' . $row['nametitle'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                }else {
+                    echo $row['academic_rank'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                }
+            ?>
+            </span>
           </a><!-- End Profile Iamge Icon -->
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6><?= $nametitle .  $firstname . ' ' . $lastname ?></h6>
+            <?php
+                if($row['academic_rank'] == 'ไม่มี'){
+                    echo  ' ' . $row['nametitle'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                }elseif($row['academic_rank'] == 'ศาสตราจารย์'){
+                    echo $row['academic_rank'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                }elseif(($row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์') and $row['nametitle'] == "ดร." ){
+                    echo $row['academic_rank'] . ' ' . $row['nametitle'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                }else {
+                    echo $row['academic_rank'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                }
+            ?>
             </li>
             <li>
               <hr class="dropdown-divider">

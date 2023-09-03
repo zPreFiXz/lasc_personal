@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2023 at 02:52 PM
+-- Generation Time: Sep 03, 2023 at 06:08 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -244,8 +244,7 @@ CREATE TABLE `personal_1_5_b` (
 --
 
 INSERT INTO `personal_1_5_b` (`userId`, `id`, `term`, `year`, `major`, `level`, `name_project`, `amount_teacher`, `teacher`, `amount_time`, `amount_work`, `file`) VALUES
-('2', 15, 1, 2566, 'วิศวกรรมซอฟต์แวร์', '1', 'วิทย์ยาศาสตร์ง', 3, 'หลัก', 3, 1, '2023-09-01_23-05-11_2.jpg'),
-('1', 16, 1, 2566, 'เทคโนโลยีและนวัตกรรมอาหาร', '12', 'วิทย์ยาศาสตร์งงงงงงง', 4, 'หลัก', 3, 1, '');
+('2', 15, 1, 2566, 'วิศวกรรมซอฟต์แวร์', '1', 'วิทย์ยาศาสตร์ง', 3, 'หลัก', 3, 1, '2023-09-01_23-05-11_2.jpg');
 
 -- --------------------------------------------------------
 
@@ -318,7 +317,8 @@ CREATE TABLE `personal_1_7` (
   `year` int(4) NOT NULL,
   `type` varchar(50) NOT NULL,
   `title` varchar(50) NOT NULL,
-  `amount_time` varchar(50) NOT NULL,
+  `start` varchar(50) NOT NULL,
+  `end` varchar(50) NOT NULL,
   `type_work_s_j` varchar(50) NOT NULL,
   `type_work` varchar(50) NOT NULL,
   `participation` int(5) NOT NULL,
@@ -330,8 +330,8 @@ CREATE TABLE `personal_1_7` (
 -- Dumping data for table `personal_1_7`
 --
 
-INSERT INTO `personal_1_7` (`userId`, `id`, `term`, `year`, `type`, `title`, `amount_time`, `type_work_s_j`, `type_work`, `participation`, `amount_work`, `file`) VALUES
-('1', 15, 1, 2566, 'งา', 'แงะ', '10-12', 'เดี่ยว', 'เอกสารคำสอน', 50, 4, '2023-09-02_00-04-18_1.jpg');
+INSERT INTO `personal_1_7` (`userId`, `id`, `term`, `year`, `type`, `title`, `start`, `end`, `type_work_s_j`, `type_work`, `participation`, `amount_work`, `file`) VALUES
+('1', 16, 1, 2566, 'qqqq', 'www', '2023-10-01', '2023-10-02', 'ร่วม', 'VirtualClassroom/E-learning/CAI', 100, 0.75, '');
 
 -- --------------------------------------------------------
 
@@ -467,7 +467,9 @@ INSERT INTO `personal_1_11` (`userId`, `id`, `term`, `year`, `checkbox1`, `check
 ('2', 62, 1, 2567, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0),
 ('1', 63, 1, 2567, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0),
 ('1', 64, 1, 2568, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0),
-('1', 65, 2, 2566, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0);
+('1', 65, 2, 2566, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0),
+('20', 66, 1, 2566, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0),
+('20', 67, 1, 2567, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -510,12 +512,14 @@ CREATE TABLE `personal_3` (
 --
 
 INSERT INTO `personal_3` (`userId`, `id`, `term`, `year`, `name`, `branch`, `amount_work`, `quality_work`, `efficiency_work`, `effectiveness_work`, `score_work`, `quality_ethics`, `efficiency_ethics`, `effectiveness_ethics`, `score_ethics`, `quality_capacity`, `efficiency_capacity`, `effectiveness_capacity`, `score_capacity`, `quality_more`, `efficiency_more`, `effectiveness_more`, `score_more`, `quality_total`, `efficiency_total`, `effectiveness_total`, `score_total`) VALUES
-('1', 1, 1, 2566, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 36.74, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('1', 1, 1, 2566, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 32.49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('2', 2, 1, 2566, 'นางสาวบงกชมาศ บุญศักดิ์', 'วิศวกรรมซอฟต์แวร์', 36.08, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('2', 3, 1, 2567, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 10.75, 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0, 40, 0, 0, 0),
 ('1', 4, 1, 2567, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('1', 5, 1, 2568, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('1', 6, 2, 2566, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+('1', 6, 2, 2566, 'นายภาคภูมิ สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('20', 7, 1, 2566, 'นายSarawut Potjanat', 'วิทยาการคอมพิวเตอร์', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('20', 8, 1, 2567, 'นายSarawut Potjanat', 'วิทยาการคอมพิวเตอร์', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -534,7 +538,8 @@ CREATE TABLE `term_year` (
 --
 
 INSERT INTO `term_year` (`id`, `term`, `year`) VALUES
-(1, 1, 2566);
+(1, 1, 2567),
+(2, 1, 2568);
 
 -- --------------------------------------------------------
 
@@ -562,7 +567,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`userId`, `academic_rank`, `nametitle`, `firstname`, `lastname`, `branch`, `email`, `password`, `urole`, `isAdmin`, `created_at`) VALUES
 (1, 'ศาสตราจารย์', 'นาย', 'ภาคภูมิ', 'สุขชาติ', 'วิศวกรรมซอฟต์แวร์', 'prefix.2pm@gmail.com', '$2y$10$3PFxIk98uCUU3CJ3N7Ru7ucYZNs7ciAbKuzKPpe3CsCr1QNsVWeWO', 'teacher', 1, '2023-09-01 15:10:10'),
-(2, '', 'นางสาว', 'บงกชมาศ', 'บุญศักดิ์', 'วิศวกรรมซอฟต์แวร์', 'cream333@gmail.com', '$2y$10$sZFPG7hgMk54axcVsBGEuue2i28pBlly1OIb/Z2kIeHFuz6E4QPf6', 'officer', 0, '2023-09-01 15:33:35');
+(2, 'ผู้ช่วยศาสตราจารย์', 'นาง', 'บงกชมาศ', 'บุญศักดิ์', 'วิศวกรรมซอฟต์แวร์', 'cream333@gmail.com', '$2y$10$sZFPG7hgMk54axcVsBGEuue2i28pBlly1OIb/Z2kIeHFuz6E4QPf6', 'officer', 0, '2023-09-01 15:33:35'),
+(20, 'ผู้ช่วยศาสตราจารย์', 'นาย', 'Sarawut', 'Potjanat', 'วิทยาการคอมพิวเตอร์', 'gvgx831@gmail.com', '$2y$10$NMwJ9MXTVqWHXF3n6nHzxObyyOxXKshUkSAH0oKCTEuypF3ZULf/C', 'officer', 1, '2023-09-02 16:11:27'),
+(21, 'ผู้ช่วยศาสตราจารย์', 'นาง', 'Sarawut', 'Potjanat', 'เทคโนโลยีและนวัตกรรมอาหาร', 'stu6510014111@sskru.ac.th', '$2y$10$RmWPRIynIXjOhmDiLWTjN.pRCFJDnRQvuNPXWQJeEuxkMCTSKfkXe', 'teacher', 1, '2023-09-02 18:15:27');
 
 -- --------------------------------------------------------
 
@@ -588,7 +595,9 @@ CREATE TABLE `vadmin` (
 
 INSERT INTO `vadmin` (`userId`, `id`, `term`, `year`, `academic_rank`, `nametitle`, `firstname`, `lastname`, `amount_work`) VALUES
 ('1', 9, 2, 2566, '', 'นาย', 'ภาคภูมิ', 'สุขชาติ', 2),
-('1', 10, 1, 2566, '', 'นาย', 'ภาคภูมิ', 'สุขชาติ', 36.74);
+('1', 10, 1, 2566, '', 'นาย', 'ภาคภูมิ', 'สุขชาติ', 32.49),
+('20', 11, 1, 2566, '', 'นาย', 'Sarawut', 'Potjanat', 0),
+('20', 12, 1, 2567, '', 'นาย', 'Sarawut', 'Potjanat', 0);
 
 --
 -- Indexes for dumped tables
@@ -776,7 +785,7 @@ ALTER TABLE `personal_1_6_b`
 -- AUTO_INCREMENT for table `personal_1_7`
 --
 ALTER TABLE `personal_1_7`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `personal_1_8`
@@ -800,31 +809,31 @@ ALTER TABLE `personal_1_10`
 -- AUTO_INCREMENT for table `personal_1_11`
 --
 ALTER TABLE `personal_1_11`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `personal_3`
 --
 ALTER TABLE `personal_3`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `term_year`
 --
 ALTER TABLE `term_year`
-  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userId` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userId` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `vadmin`
 --
 ALTER TABLE `vadmin`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

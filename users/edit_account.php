@@ -28,9 +28,9 @@
     }
     if($stmt){
         $_SESSION['success'] = "เปลี่ยนเรียบร้อยแล้ว!";
-        header("location: /lasc_personal/index_admin.php?page=users/account");
+        header("location: /lasc_personal/index.php?page=users/account");
     } else {
         $_SESSION['error'] = "มีบางอย่างผิดพลาด";
-        header("location: /lasc_personal/index_admin.php?page=users/account");
+        header("location: /lasc_personal/index.php?page=users/account");
     }
 ?>

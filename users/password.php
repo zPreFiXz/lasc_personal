@@ -13,13 +13,13 @@
     if (password_verify($_POST['password'], $row['password'])) {
        if ($_POST['password_new'] != $_POST['c_password_new']) {
         $_SESSION['error'] = 'รหัสผ่านใหม่ไม่ตรงกัน';
-        header("location: /lasc_personal/index_admin.php?page=users/account");
+        header("location: /lasc_personal/index.php?page=users/account");
  
         }
     } else {
         $conn = null;
         $_SESSION['error'] = 'รหัสผ่านผิด';
-        header("location: /lasc_personal/index_admin.php?page=users/account");
+        header("location: /lasc_personal/index.php?page=users/account");
     }
 
     
@@ -36,9 +36,9 @@
     }
     if($stmt){
         $_SESSION['success'] = "เปลียนรหัสผ่านเรียบร้อยแล้ว!";
-        header("location: /lasc_personal/index_admin.php?page=users/account");
+        header("location: /lasc_personal/index.php?page=users/account");
     } else {
         $_SESSION['error'] = "มีบางอย่างผิดพลาด";
-        header("location: /lasc_personal/index_admin.php?page=users/account");
+        header("location: /lasc_personal/index.php?page=users/account");
     }
 ?>

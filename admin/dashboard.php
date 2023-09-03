@@ -172,11 +172,37 @@
     $stmt->execute();
     $ranks = $stmt->fetchAll();
     // end จัดอันดับ
-?>
+    $userId = $_SESSION['userId'];
+    $nametitle = $_SESSION['nametitle'];
+    $firstname = $_SESSION['firstname'];
+    $lastname = $_SESSION['lastname'];
+    $isAdmin = $_SESSION['isAdmin'];
+
+    if (isset($_SESSION['userId'])) {
+        $userId = $_SESSION['userId'];
+        $stmt = $conn->query("SELECT * FROM users WHERE userId = '$userId'");
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    ?>
+
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <div class="pagetitle mt-3">
-            <h1 style="font-size: 30px;">ยินดีต้อนรับ <?php echo $nametitle .  $firstname . ' ' . $lastname ?></h1>
+            <h1 style="font-size: 30px;">
+            <?php
+                echo "ยินดีต้อนรับ ";
+                if($row['academic_rank'] == 'ไม่มี'){
+                    echo  ' ' . $row['nametitle'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                }elseif($row['academic_rank'] == 'ศาสตราจารย์'){
+                    echo $row['academic_rank'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                }elseif(($row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์') and $row['nametitle'] == "ดร." ){
+                    echo $row['academic_rank'] . ' ' . $row['nametitle'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                }else {
+                    echo $row['academic_rank'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                }
+            ?>
+            </h1>
         </div>
         <div class="d-flex">
             <div class="icon d-flex align-items-center">

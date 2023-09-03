@@ -1,9 +1,6 @@
 <?php 
     require_once "../config/db.php";
     session_start();
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
 
     if(isset($_POST['submit'])) {
         $id = $_POST['id'];
@@ -21,22 +18,14 @@
     }
 
     $conn = null;
+    
     if($id == 1){
         if($stmt){
-            $_SESSION['success'] = "เปลี่ยนเรียบร้อยแล้ว!";
+            $_SESSION['success'] = "เปลี่ยนเรียบร้อยแล้ว";
             header("location: /lasc_personal/index_admin.php?page=admin/change_term_year");
         } else {
             $_SESSION['error'] = "มีบางอย่างผิดพลาด";
             header("location: /lasc_personal/index_admin.php?page=admin/change_term_year");
-        }
-    }elseif($id == 2){
-        if($stmt){
-            $_SESSION['success'] = "เปลี่ยนเรียบร้อยแล้ว!";
-            header("location: /lasc_personal/index_admin.php?page=admin/dashboard");
-        } else {
-            $_SESSION['error'] = "มีบางอย่างผิดพลาด";
-            header("location: /lasc_personal/index_admin.php?page=admin/dashboard");
         }
     }
-    
 ?>

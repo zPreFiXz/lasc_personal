@@ -39,29 +39,16 @@
                     <span class="d-none d-lg-block" style="color: #ffc107;">LASC SSKRU</span>
                 </a>
             </div><!-- End Logo -->
-            <div class="card mt-4">
+            <div class="card mt-4 col-md-4">
                 <div class="card-body" style="padding-bottom:5px;">
                     <h3 class="card-title pb0 fs-4 mt-3" style="padding:4px;">เข้าสู่ระบบ</h3>
                     <hr>
                     <form action="signin_db.php" method="post">
                         <?php if (isset($_SESSION['error'])) { ?>
-                            <div class="alert alert-danger" role="alert">
+                            <div class="alert alert-danger" id="alert-success" role="alert">
                                 <?php
                                     echo $_SESSION['error'];
                                     unset($_SESSION['error']);
-                                ?>
-                            </div>
-                            <script>
-                                setTimeout(function() {
-                                    document.getElementById('alert-success').style.display = 'none';
-                                }, 3000);
-                            </script>
-                        <?php } ?>
-                        <?php if (isset($_SESSION['success'])) { ?>
-                            <div class="alert alert-success" role="alert">
-                                <?php
-                                    echo $_SESSION['success'];
-                                    unset($_SESSION['success']);
                                 ?>
                             </div>
                             <script>
@@ -78,12 +65,10 @@
                             <label for="password" class="form-label">รหัสผ่าน</label>
                             <input type="password" class="form-control" name="password">
                         </div>
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center mb-4">
                             <button type="submit" name="signin" class="btn btn-primary">เข้าสู่ระบบ</button>
                         </div>
                     </form>
-                    <hr>
-                    <p>ยังไม่เป็นสมาชิกใช่ไหม คลิกที่นี่เพื่อ <a href="signup.php">สมัครสมาชิก</a></p>
                 </div>
             </div>
         </div>

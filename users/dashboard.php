@@ -20,22 +20,20 @@
                 <?php
                 echo "ยินดีต้อนรับ ";
                 if($row['academic_rank'] == 'ไม่มี'){
-                    echo  ' ' . $row['nametitle'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
-                }elseif($row['academic_rank'] == 'ศาสตราจารย์'){
-                    echo $row['academic_rank'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
-                }elseif(($row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์') and $row['nametitle'] == "ดร." ){
+                    echo  $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+                }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $row['nametitle'] == 'ดร.'){
                     echo $row['academic_rank'] . ' ' . $row['nametitle'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
-                }else {
-                    echo $row['academic_rank'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($row['nametitle'] == 'นาย' or $row['nametitle'] == 'นาง' or $row['nametitle'] == 'นางสาว')){
+                    echo $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
                 }
                 ?>
             </h1>   
         </div>
         <div class="d-flex">
             <?php
-            if ($isAdmin == 1) { ?>
+            if ($isAdmin == 'เป็น') { ?>
                 <a href="index_admin.php?page=admin/dashboard" class="btn btn-primary d-flex align-items-center"><i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;ผู้ดูแลระบบ</a>&nbsp;&nbsp;
-            <?php } elseif ($isAdmin == 0) {
+            <?php } elseif ($isAdmin == 'ไม่เป็น') {
             }
             ?>
             <a href="logout.php" class="btn btn-danger d-flex align-items-center"><i class="ri-logout-box-line"></i>&nbsp;&nbsp;ออกจากระบบ</a>

@@ -44,7 +44,7 @@ $data = $stmt->fetch();
                     </script>
                 <?php } ?>
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change_password">เปลี่ยนรหัสผ่าน</button>
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#change_password">เปลี่ยนรหัสผ่าน</button>
                 </div>
 
                 <form action="users/edit_account.php" method="post">
@@ -96,7 +96,7 @@ $data = $stmt->fetch();
                         <label for="email" class="form-label">อีเมล</label>
                         <input type="email" class="form-control" name="email" value="<?php echo $data['email']; ?>" required>
                     </div>
-                    <div class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-center mb-3">
                         <button type="submit" name="edit" class="btn btn-primary">แก้ไข</button>
                     </div>
                 </form>

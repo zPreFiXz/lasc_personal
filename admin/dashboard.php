@@ -162,7 +162,7 @@
     // end ดึงค่าภาระงานไปคำนวณจากตาราง
     $totalAmountWork  = $totalAmountWork_1_1 + $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
 
-    $stmt = $conn->query("SELECT * FROM `term_year` where id = 2"); // ดึงข้อมูลจากตาราง personal โดยใช้ ID
+    $stmt = $conn->query("SELECT * FROM `term_year` where id = 1"); // ดึงข้อมูลจากตาราง personal โดยใช้ ID
     $stmt->execute();
     $term_year = $stmt->fetch();
     $year = $term_year['year'];
@@ -184,8 +184,7 @@
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    ?>
-
+?>
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <div class="pagetitle mt-3">
@@ -193,20 +192,18 @@
             <?php
                 echo "ยินดีต้อนรับ ";
                 if($row['academic_rank'] == 'ไม่มี'){
-                    echo  ' ' . $row['nametitle'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
-                }elseif($row['academic_rank'] == 'ศาสตราจารย์'){
-                    echo $row['academic_rank'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
-                }elseif(($row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์') and $row['nametitle'] == "ดร." ){
+                    echo  $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+                }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $row['nametitle'] == 'ดร.'){
                     echo $row['academic_rank'] . ' ' . $row['nametitle'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
-                }else {
-                    echo $row['academic_rank'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($row['nametitle'] == 'นาย' or $row['nametitle'] == 'นาง' or $row['nametitle'] == 'นางสาว')){
+                    echo $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
                 }
             ?>
             </h1>
         </div>
         <div class="d-flex">
             <div class="icon d-flex align-items-center">
-                <a href="index.php?page=users/dashboard" class="btn btn-primary d-flex align-items-center"><i class="ri-logout-box-line"></i> &nbsp;ลงทะเบียน</a>
+                <a href="index.php?page=users/dashboard" class="btn btn-primary d-flex align-items-center"><i class="ri-logout-box-line"></i> &nbsp;แบบประเมิน</a>
             </div>&nbsp;&nbsp;
             <div class="icon d-flex align-items-center">
                 <a href="logout.php" class="btn btn-danger d-flex align-items-center"><i class="ri-logout-box-line"></i> &nbsp;ออกจากระบบ</a>
@@ -232,15 +229,7 @@
             <button class="btn btn-warning mb-3" type="button" data-bs-toggle="modal" data-bs-target="#rank">
                 <div class="icon d-flex">
                     <i class="ri-account-circle-fill"></i> &nbsp;
-                    <div class="label">อันดับ</div>
-                </div>
-            </button>
-        </div> &nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="d-inline justify-content-end">
-            <button class="btn btn-success mb-3" type="button" data-bs-toggle="modal" data-bs-target="#largeModal">
-                <div class="icon d-flex">
-                    <i class="bi bi-arrow-repeat"></i> &nbsp;
-                    <div class="label">เปลี่ยนปีการศึกษาและภาคเรียน</div>
+                    <div class="label">อันดับภาระงาน</div>
                 </div>
             </button>
         </div>

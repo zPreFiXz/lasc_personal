@@ -39,9 +39,6 @@
                         }, 3000);
                     </script>
                 <?php } ?>
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#change_password">เปลี่ยนรหัสผ่าน</button>
-                </div>
                 <form action="users/edit_account.php" method="post">
                     <div class="mb-3">
                         <?php if(isset($_GET['lastPage'])){?>

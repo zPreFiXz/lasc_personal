@@ -248,9 +248,10 @@
         </div>
     </div>
     <!-- table ตารางภาระงาน -->
-    <table class="table table-bordered text-center align-middle">
-        <thead class="align-middle table-secondary">
+    <table class="table table-bordered align-middle">
+        <thead class="text-center align-middle table-secondary">
             <tr>
+                <th rowspan="3">ลำดับ</th>
                 <th rowspan="3">ชื่อ</th>
                 <th colspan="8">จำนวนภาระงาน</th>
             </tr>
@@ -267,7 +268,7 @@
         </thead>
         <tbody>
             <?php
-                $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year' and term = 1 ORDER BY userId ASC");
+                $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year' and term = 1 ORDER BY firstname ASC");
                 $stmt->execute();
                 $current_year_term1 = $stmt->fetchAll();
 
@@ -284,14 +285,18 @@
                 $stmt->execute();
                 $last_year_term2 = $stmt->fetchAll();
                 $year = $year + 1;
+                
+                $order = 0;
 
                 if (!$current_year_term1) {
                     echo "<tr><td colspan='8' class='text-center'>ไม่มีข้อมูล</td></tr>";
                 } else {
                     foreach ($current_year_term1 as $CYT1) {
+                        $order+=1;
             ?>
                         <tr>
-                            <td>
+                            <td class="text-center"><?= $order?></td>
+                            <td  style="white-space: nowrap;">
                                 <?php if($CYT1['academic_rank'] == 'ไม่มี'){
                                     echo  $CYT1['nametitle'] . $CYT1['firstname'] . ' ' . $CYT1['lastname'];
                                 }elseif(($CYT1['academic_rank'] == 'ศาสตราจารย์' or $CYT1['academic_rank'] == 'รองศาสตราจารย์' or $CYT1['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $CYT1['nametitle'] == 'ดร.'){
@@ -300,8 +305,8 @@
                                     echo $CYT1['academic_rank'] . $CYT1['firstname'] . ' ' . $CYT1['lastname'];}
                                 ?>
                             </td>
-                            <td><?= $CYT1['amount_work'] ?></td>
-                            <td>
+                            <td class = 'text-center' ><?= $CYT1['amount_work'] ?></td>
+                            <td class = 'text-center'>
                                 <a href="?page=admin/dashboard&userId=<?= $CYT1['userId']; ?>&term=<?= $CYT1['term'] ?>&year=<?= $CYT1['year'] ?>" class="btn btn-primary">
                                     <div class="icon d-flex align-items-center">
                                         <i class="bx bx-search"></i> &nbsp;
@@ -325,8 +330,8 @@
                                     </td>
                             <?php break;} } ?>
                             <?php if (!$found) { ?>
-                                <td>0</td>
-                                <td>
+                                <td class = 'text-center'>0</td>
+                                <td class = 'text-center'>
                                     <a class="btn btn-primary">
                                         <div class="icon d-flex align-items-center">
                                             <i class="bx bx-search"></i> &nbsp;
@@ -353,8 +358,8 @@
                                     </td>
                             <?php break; } } ?>
                             <?php if (!$found) { ?>
-                                <td>0</td>
-                                <td>
+                                <td class = 'text-center'>0</td>
+                                <td class = 'text-center'>
                                     <a class="btn btn-primary">
                                         <div class="icon d-flex align-items-center">
                                             <i class="bx bx-search"></i> &nbsp;
@@ -381,8 +386,8 @@
                                     </td>
                             <?php break; } } ?>
                             <?php if (!$found) { ?>
-                                <td>0</td>
-                                <td>
+                                <td class = 'text-center'>0</td>
+                                <td class = 'text-center'>
                                     <a class="btn btn-primary">
                                         <div class="icon d-flex align-items-center">
                                             <i class="bx bx-search"></i> &nbsp;

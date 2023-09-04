@@ -205,7 +205,6 @@
                 </div>
             </div>
         </div>
-        
         <!-- แก้ไขข้อมูล -->
         <div class="modal fade" id="modal" tabindex="-1">
             <div class="modal-dialog modal-lg">
@@ -273,7 +272,7 @@
                                 </select>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button type="submit" name="edit" class="btn btn-primary">แก้ไข</button>
+                                <button type="submit" name="edit" class="btn btn-primary">บันทึก</button>
                             </div>
                         </form>
                     </div>

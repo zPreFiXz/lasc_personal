@@ -274,7 +274,7 @@
                                 </select>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button type="submit" name="edit" class="btn btn-primary">แก้ไข</button>
+                                <button type="submit" name="edit" class="btn btn-primary">บันทึก</button>
                             </div>
                         </form>
                     </div>

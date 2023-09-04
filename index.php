@@ -8,12 +8,11 @@
   }
 
   $userId = $_SESSION['userId'];
+  $academic_rank = $_SESSION['academic_rank'];
   $nametitle = $_SESSION['nametitle'];
   $firstname = $_SESSION['firstname'];
   $lastname = $_SESSION['lastname'];
   $branch = $_SESSION['branch'];
-
-  $name = $nametitle . $firstname . " " . $lastname;
 
   $stmt = $conn->query("SELECT * FROM term_year where id = 1");
   $stmt->execute();
@@ -153,6 +152,12 @@
   $totalAmountWork = $totalAmountWork_1_1 + $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
   $_SESSION['$totalAmountWork'] = $totalAmountWork;
 
+  if (isset($_SESSION['userId'])) {
+    $stmt = $conn->query("SELECT * FROM users WHERE userId = '$userId'");
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+  
   $stmt = $conn->prepare("SELECT * FROM Vadmin WHERE userId = :userId AND term = :term AND year = :year");
   $stmt->bindParam(':userId', $userId);
   $stmt->bindParam(':term', $term);
@@ -161,20 +166,30 @@
   $users = $stmt->fetch();
 
   if (empty($users)) {
-    $insertStmt = $conn->prepare("INSERT INTO Vadmin (userId, term, year, nametitle, firstname, lastname, amount_work) VALUES (:userId, :term, :year, :nametitle, :firstname, :lastname, :amount_work)");
+    $insertStmt = $conn->prepare("INSERT INTO Vadmin (userId, term, year, academic_rank,nametitle, firstname, lastname, amount_work) VALUES (:userId, :term, :year, :academic_rank, :nametitle, :firstname, :lastname, :amount_work)");
     $insertStmt->bindParam(':userId', $userId);
     $insertStmt->bindParam(':term', $term);
     $insertStmt->bindParam(':year', $year);
+    $insertStmt->bindParam(':academic_rank', $academic_rank);
     $insertStmt->bindParam(':nametitle', $nametitle);
     $insertStmt->bindParam(':firstname', $firstname);
     $insertStmt->bindParam(':lastname', $lastname);
     $insertStmt->bindParam(':amount_work', $totalAmountWork);
     $insertStmt->execute();
   } else {
-    $updateStmt = $conn->prepare("UPDATE Vadmin SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
+    $academic_rank_update = $row['academic_rank'];
+    $nametitle_update = $row['nametitle'];
+    $firstname_update = $row['firstname'];
+    $lastname_update = $row['lastname'];
+
+    $updateStmt = $conn->prepare("UPDATE Vadmin SET academic_rank = :academic_rank, nametitle = :nametitle, firstname = :firstname, lastname = :lastname, amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
     $updateStmt->bindParam(':userId', $userId);
     $updateStmt->bindParam(':term', $term);
-    $updateStmt->bindParam(':year', $year);
+    $updateStmt->bindParam(':year', $year); 
+    $updateStmt->bindParam(':academic_rank', $academic_rank_update); 
+    $updateStmt->bindParam(':nametitle', $nametitle_update); 
+    $updateStmt->bindParam(':firstname', $firstname_update); 
+    $updateStmt->bindParam(':lastname', $lastname_update); 
     $updateStmt->bindParam(':amount_work', $totalAmountWork);
     $updateStmt->execute();
   }
@@ -206,6 +221,14 @@
   $personal = $stmt->fetchAll();
 
 if (empty($personal)) {
+  if($row['academic_rank'] == 'ไม่มี'){
+    $name = $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+  }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $row['nametitle'] == 'ดร.'){
+    $name = $row['academic_rank'] . ' ' . $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+  }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($row['nametitle'] == 'นาย' or $row['nametitle'] == 'นาง' or $row['nametitle'] == 'นางสาว')){
+    $name = $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
+  }
+
   $insertStmt = $conn->prepare("INSERT INTO personal_3 (userId, term, year,name,branch,amount_work) VALUES (:userId, :term, :year, :name, :branch, :amount_work)");
   $insertStmt->bindParam(':userId', $userId);
   $insertStmt->bindParam(':term', $term);
@@ -215,24 +238,23 @@ if (empty($personal)) {
   $insertStmt->bindParam(':amount_work', $totalAmountWork);
   $insertStmt->execute();
 } else {
-  $updateStmt = $conn->prepare("UPDATE personal_3 SET amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
+  $branch_update = $row['branch'];
+  if($row['academic_rank'] == 'ไม่มี'){
+    $name = $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+  }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $row['nametitle'] == 'ดร.'){
+    $name = $row['academic_rank'] . ' ' . $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+  }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($row['nametitle'] == 'นาย' or $row['nametitle'] == 'นาง' or $row['nametitle'] == 'นางสาว')){
+    $name = $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
+  }
+  $updateStmt = $conn->prepare("UPDATE personal_3 SET name = :name, branch = :branch, amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
   $updateStmt->bindParam(':userId', $userId);
+  $updateStmt->bindParam(':name', $name);
   $updateStmt->bindParam(':term', $term);
   $updateStmt->bindParam(':year', $year);
+  $updateStmt->bindParam(':branch', $branch_update);
   $updateStmt->bindParam(':amount_work', $totalAmountWork);
   $updateStmt->execute();
-  
-  $userId = $_SESSION['userId'];
-  $nametitle = $_SESSION['nametitle'];
-  $firstname = $_SESSION['firstname'];
-  $lastname = $_SESSION['lastname'];
-
-  if (isset($_SESSION['userId'])) {
-    $stmt = $conn->query("SELECT * FROM users WHERE userId = '$userId'");
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-  }
-}
+} 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -286,38 +308,43 @@ if (empty($personal)) {
             <span class="d-none d-md-block dropdown-toggle ps-2"> 
             <?php
                 if($row['academic_rank'] == 'ไม่มี'){
-                    echo  ' ' . $row['nametitle'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
-                }elseif($row['academic_rank'] == 'ศาสตราจารย์'){
-                    echo $row['academic_rank'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
-                }elseif(($row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์') and $row['nametitle'] == "ดร." ){
-                    echo $row['academic_rank'] . ' ' . $row['nametitle'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
-                }else {
-                    echo $row['academic_rank'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                  echo  $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+                }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $row['nametitle'] == 'ดร.'){
+                  echo $row['academic_rank'] . ' ' . $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+                }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($row['nametitle'] == 'นาย' or $row['nametitle'] == 'นาง' or $row['nametitle'] == 'นางสาว')){
+                  echo $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
                 }
             ?>
             </span>
           </a><!-- End Profile Iamge Icon -->
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-            <?php
-                if($row['academic_rank'] == 'ไม่มี'){
-                    echo  ' ' . $row['nametitle'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
-                }elseif($row['academic_rank'] == 'ศาสตราจารย์'){
-                    echo $row['academic_rank'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
-                }elseif(($row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์') and $row['nametitle'] == "ดร." ){
-                    echo $row['academic_rank'] . ' ' . $row['nametitle'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
-                }else {
-                    echo $row['academic_rank'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
-                }
-            ?>
+              <?php
+                  if($row['academic_rank'] == 'ไม่มี'){
+                    echo  $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+                  }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $row['nametitle'] == 'ดร.'){
+                    echo $row['academic_rank'] . ' ' . $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+                  }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($row['nametitle'] == 'นาย' or $row['nametitle'] == 'นาง' or $row['nametitle'] == 'นางสาว')){
+                    echo $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
+                  }
+              ?>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="index.php?page=users/account">
+              <a class="dropdown-item d-flex align-items-center" href="index.php?page=users/account&lastPage=index.php?page=users/dashboard">
                 <i class="bi bi-file-person-fill"></i>
-                <span>จัดการบัญชี</span>
+                <span>แก้ไขโปรไฟล์</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="index.php?page=users/password&lastPage=index.php?page=users/dashboard">
+              <i class="bi bi-key-fill"></i>
+                <span>เปลี่ยนรหัสผ่าน</span>
               </a>
             </li>
             <li>

@@ -21,10 +21,10 @@
     
     if($id == 1){
         if($stmt){
-            $_SESSION['success'] = "เปลี่ยนเรียบร้อยแล้ว";
+            $_SESSION['success'] = "เปลี่ยนปีการศึกษาและภาคการเรียนสำเร็จ";
             header("location: /lasc_personal/index_admin.php?page=admin/change_term_year");
         } else {
-            $_SESSION['error'] = "มีบางอย่างผิดพลาด";
+            $_SESSION['error'] = "เปลี่ยนปีการศึกษาและภาคการเรียนไม่สำเร็จ";
             header("location: /lasc_personal/index_admin.php?page=admin/change_term_year");
         }
     }

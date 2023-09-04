@@ -1,11 +1,9 @@
 <?php
     require "../config/db.php";
     session_start();
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
 
     if (isset($_POST['edit'])) {
+        $lastPage = $_POST['lastPage'];
         $userId = $_POST['userId'];
         $academic_rank = $_POST['academic_rank'];
         $nametitle = $_POST['nametitle'];
@@ -26,11 +24,12 @@
         $stmt->bindParam(':email', $email);
         $stmt->execute();
     }
+    
     if($stmt){
-        $_SESSION['success'] = "เปลี่ยนเรียบร้อยแล้ว!";
-        header("location: /lasc_personal/index.php?page=users/account");
+        $_SESSION['success'] = "แก้ไขโปรไฟล์สำเร็จ";
+        header("location: /lasc_personal/" . $lastPage);
     } else {
-        $_SESSION['error'] = "มีบางอย่างผิดพลาด";
-        header("location: /lasc_personal/index.php?page=users/account");
+        $_SESSION['error'] = "แก้ไขโปรไฟล์ไม่สำเร็จ";
+        header("location: /lasc_personal/" . $lastPage);
     }
 ?>

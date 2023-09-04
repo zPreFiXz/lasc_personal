@@ -1,9 +1,6 @@
 <?php
     session_start();
     require_once "../config/db.php";
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
 
     if(isset($_POST['edit'])) {
         $userId = $_POST['userId'];
@@ -29,6 +26,7 @@
         $stmt->execute();
 
         $conn = null;
+        
         if($_POST['urole'] == "teacher") {
             if ($stmt) {
                 $_SESSION['success'] = "แก้ไขข้อมูลสำเร็จ";

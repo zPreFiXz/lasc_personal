@@ -97,6 +97,7 @@
             </div>
         </button>
     </div>
+    <!-- ตรวจสอบว่ามีตัวแปร session ชื่อ 'success' อยู่หรือไม่ -->
     <?php if (isset($_SESSION['success'])) { ?>
         <div class="alert alert-success" id="alert-success">
             <?php
@@ -107,6 +108,20 @@
         <script>
             setTimeout(function() {
                 document.getElementById('alert-success').style.display = 'none';
+            }, 3000);
+        </script>
+    <?php } ?>
+    <!-- ตรวจสอบว่ามีตัวแปร session ชื่อ 'error' อยู่หรือไม่ -->
+    <?php if (isset($_SESSION['error'])) { ?>
+        <div class="alert alert-danger" id="alert-error">
+            <?php
+                echo $_SESSION['error'];
+                unset($_SESSION['error']);
+            ?>
+        </div>
+        <script>
+            setTimeout(function() {
+                document.getElementById('alert-error').style.display = 'none';
             }, 3000);
         </script>
     <?php } ?>
@@ -253,7 +268,7 @@
                             </div>
                             <div class="mb-3">
                                 <label style="white-space: nowrap;" for="hours" class="col-sm-2 col-form-label">จำนวนชั่วโมงทำงาน</label>
-                                <input type="text" class="form-control" name="hours" id="hours1" oninput="calca1()" required>
+                                <input type="text" class="form-control" name="hours" id="hours1" oninput="calc1()" required>
                             </div>
                             <div class="mb-3">
                                 <label for="amount_work" class="col-sm-2 col-form-label">จำนวนภาระงาน</label>
@@ -322,6 +337,7 @@
                 </div>
             </div>
         </div>
+        <!-- อัพโหลดไฟล์ -->
         <div class="modal fade" id="uploadModal" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -336,6 +352,7 @@
                                 <div class="col-sm-10">
                                     <input type="file" class="form-control" name="file" id="fileInput" required>
                                     <br>
+                                    <p>***นามสกุลไฟล์ที่รองรับ .jpg, .jpeg, .png, .pdf, .ppt, .docx***</p>
                                     <img width="100%" id="previewFile" alt="">
                                 </div>
                             </div>
@@ -375,7 +392,7 @@
 
     function calc1() {
         var type = document.getElementById('type1').value;
-        var hours = document.getElementById('hours1').value;
+        var hours = parseFloat(document.getElementById('hours1').value);
 
         if (type == 'วิทยากร') {
             var calculatedAmountWork = hours / 15;
@@ -400,7 +417,7 @@
 
     function calc2() {
         var type = document.getElementById('type2').value;
-        var hours = document.getElementById('hours2').value;
+        var hours =  parseFloat(document.getElementById('hours2').value);
 
         if (type == 'วิทยากร') {
             var calculatedAmountWork = hours / 15;

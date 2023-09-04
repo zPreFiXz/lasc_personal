@@ -129,6 +129,20 @@
             }, 3000);
         </script>
     <?php } ?>
+    <!-- ตรวจสอบว่ามีตัวแปร session ชื่อ 'error' อยู่หรือไม่ -->
+    <?php if (isset($_SESSION['error'])) { ?>
+        <div class="alert alert-danger" id="alert-error">
+            <?php
+                echo $_SESSION['error'];
+                unset($_SESSION['error']);
+            ?>
+        </div>
+        <script>
+            setTimeout(function() {
+                document.getElementById('alert-error').style.display = 'none';
+            }, 3000);
+        </script>
+    <?php } ?>
     <!-- ตรวจสอบว่ามีพารามิเตอร์ 'id' ใน URL หรือไม่ -->
     <?php if (isset($_GET['id'])) {
         $id = $_GET['id']; // รับค่าพารามิเตอร์ 'id' จาก URL
@@ -388,6 +402,7 @@
                         <div class="col-sm-10">
                             <input type="file" class="form-control" name="file" id="fileInput" required>
                             <br>
+                            <p>***นามสกุลไฟล์ที่รองรับ .jpg, .jpeg, .png, .pdf, .ppt, .docx***</p>
                             <img width=100% id="previewFile" alt="">
                         </div>
                         <div class="modal-footer">

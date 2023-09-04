@@ -30,6 +30,7 @@
                         if (password_verify($password, $row['password'])) {
                             if ($row['urole'] == 'teacher' OR $row['urole'] == 'officer'){
                                 $_SESSION['userId'] = $row['userId'];
+                                $_SESSION['academic_rank'] = $row['academic_rank'];
                                 $_SESSION['nametitle'] = $row['nametitle'];
                                 $_SESSION['firstname'] = $row['firstname'];
                                 $_SESSION['lastname'] = $row['lastname'];

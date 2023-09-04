@@ -36,7 +36,7 @@
         $_SESSION['success'] = "อัปโหลดไฟล์สำเร็จ";
         header("location: ../index.php?page=1_6_a/index_1_6_a");
     }else{
-        $_SESSION['error'] = "อัปโหลดไฟล์ไม่สำเร็จ";
+        $_SESSION['error'] = "นามสกุลของไฟล์ไม่ถูกต้อง กรุณาอัปโหลดไฟล์ที่มีนามสกุลที่ถูกต้อง";
         header("location: ../index.php?page=1_6_a/index_1_6_a");
     }
 ?>

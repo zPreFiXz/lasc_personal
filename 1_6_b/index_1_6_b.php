@@ -115,8 +115,8 @@
             </div>
         </button>
     </div>
+    <!-- ตรวจสอบว่ามีตัวแปร session ชื่อ 'success' อยู่หรือไม่ -->
     <?php
-    // ตรวจสอบว่ามีตัวแปร session ชื่อ 'success' อยู่หรือไม่
     if (isset($_SESSION['success'])) { ?>
         <div class="alert alert-success" id="alert-success">
             <?php
@@ -127,6 +127,20 @@
         <script>
             setTimeout(function() { // ซ่อนข้อความแจ้งเตือนหลังจาก 3 วินาที
                 document.getElementById('alert-success').style.display = 'none';
+            }, 3000);
+        </script>
+    <?php } ?>
+    <!-- ตรวจสอบว่ามีตัวแปร session ชื่อ 'error' อยู่หรือไม่ -->
+    <?php if (isset($_SESSION['error'])) { ?>
+        <div class="alert alert-danger" id="alert-error">
+            <?php
+                echo $_SESSION['error'];
+                unset($_SESSION['error']);
+            ?>
+        </div>
+        <script>
+            setTimeout(function() {
+                document.getElementById('alert-error').style.display = 'none';
             }, 3000);
         </script>
     <?php } ?>
@@ -254,6 +268,7 @@
                             <div class="col-sm-10">
                                 <input type="file" class="form-control" name="file" id="fileInput" required>
                                 <br>
+                                <p>***นามสกุลไฟล์ที่รองรับ .jpg, .jpeg, .png, .pdf, .ppt, .docx***</p>
                                 <img width=100% id="previewFile" alt="">
                             </div>
                             <div class="modal-footer">

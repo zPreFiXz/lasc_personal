@@ -1,21 +1,17 @@
 <?php
-require_once "config/db.php";
-$userId = $_SESSION['userId'];
-$stmt = $conn->prepare("SELECT * FROM users WHERE userId = $userId");
-$stmt->execute();
-$data = $stmt->fetch();
+    require_once "config/db.php";
+
+    $userId = $_SESSION['userId'];
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE userId = $userId");
+    $stmt->execute();
+    $data = $stmt->fetch();
 ?>
 <div class="container">
     <div class="d-flex flex-column align-items-center justify-content-center ">
-        <div class="d-flex justify-content-center py-4 mt-1">
-            <a href="index.html" class="logo d-flex align-items-center w-auto">
-                <img style="max-height: 100px;" src="assets/img/logo_lasc1.png" alt="">
-                <span class="d-none d-lg-block" style="color: #ffc107;">LASC SSKRU</span>
-            </a>
-        </div>
-        <div class="card col-md-6">
+        <div class="card col-md-6 mt-5">
             <div class="card-body" style="padding-bottom:0px;">
-                <h3 class="card-title pb0 fs-4 mt-3" style="padding:0px;">จัดการข้อมูล</h3>
+                <h3 class="card-title pb0 fs-4 mt-3" style="padding:0px;">แก้ไขโปรไฟล์</h3>
                 <hr>
                 <?php if (isset($_SESSION['success'])) { ?>
                     <div class="alert alert-success" id="alert-success">
@@ -46,9 +42,11 @@ $data = $stmt->fetch();
                 <div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#change_password">เปลี่ยนรหัสผ่าน</button>
                 </div>
-
                 <form action="users/edit_account.php" method="post">
                     <div class="mb-3">
+                        <?php if(isset($_GET['lastPage'])){?>
+                            <input type="hidden" name="lastPage" value="<?= $_GET["lastPage"] ?>">
+                        <?php } ?>
                         <input type="hidden" name="userId" value="<?= $data["userId"] ?>">
                         <label for="academic_rank" class="form-label">ตำแหน่งทางวิชาการ</label>
                         <select class="form-select" name="academic_rank" id="academic_rank" aria-describedby="academic_rank" required>
@@ -94,10 +92,10 @@ $data = $stmt->fetch();
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">อีเมล</label>
-                        <input type="email" class="form-control" name="email" value="<?php echo $data['email']; ?>" required>
+                        <input type="email" class="form-control bg-light" name="email" value="<?php echo $data['email']; ?>" readonly>
                     </div>
                     <div class="d-flex justify-content-center mb-3">
-                        <button type="submit" name="edit" class="btn btn-primary">แก้ไข</button>
+                        <button type="submit" name="edit" class="btn btn-primary">บันทึก</button>
                     </div>
                 </form>
                 <div class="modal fade" id="change_password" tabindex="-1">
@@ -111,7 +109,7 @@ $data = $stmt->fetch();
                                 <form action="users/password.php" method="post">
                                     <div class="mb-3">
                                         <input type="hidden" name="userId" value="<?= $data["userId"] ?>">
-                                        <label for="password" class="form-label">รหัสผ่าน</label>
+                                        <label for="password" class="form-label">รหัสผ่านปัจจุบัน</label>
                                         <input type="password" class="form-control" name="password">
                                     </div>
                                     <div class="mb-3">
@@ -122,12 +120,12 @@ $data = $stmt->fetch();
                                         <label for="confirm password" class="form-label">ยืนยันรหัสผ่านใหม่</label>
                                         <input type="password" class="form-control" name="c_password_new">
                                     </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                                        <button type="submit" name="change_password" class="btn btn-primary">บันทึก</button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
-                                <button type="submit" name="change_password" class="btn btn-primary">เปลี่ยน</button>
-                            </div>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -137,7 +135,6 @@ $data = $stmt->fetch();
     </div>
 </div>
 <?php
-$conn = null;
+    $conn = null;
 ?>
-
 </html>

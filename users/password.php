@@ -1,44 +1,44 @@
-<?php 
-    require "../config/db.php";
-    session_start();
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
+<?php
+    require_once "config/db.php";
 
-    $check_data = $conn->prepare("SELECT password FROM users WHERE userId = :userId");
-    $check_data->bindParam(":userId", $_POST['userId']);
-    $check_data->execute();
-    $row = $check_data->fetch(PDO::FETCH_ASSOC);
+    $userId = $_SESSION['userId'];
 
-    if (password_verify($_POST['password'], $row['password'])) {
-       if ($_POST['password_new'] != $_POST['c_password_new']) {
-        $_SESSION['error'] = 'รหัสผ่านใหม่ไม่ตรงกัน';
-        header("location: /lasc_personal/index.php?page=users/account");
- 
-        }
-    } else {
-        $conn = null;
-        $_SESSION['error'] = 'รหัสผ่านผิด';
-        header("location: /lasc_personal/index.php?page=users/account");
-    }
-
-    
-    if(isset($_POST['change_password'])){
-        $userId = $_POST['userId'];
-        $password_new = $_POST['password_new']; 
-        $hashedPassword = password_hash($password_new, PASSWORD_DEFAULT);  
-
-        $sql = "UPDATE users SET password = :password_new WHERE userId = :userId";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':password_new', $hashedPassword);
-        $stmt->bindParam(':userId', $userId);
-        $stmt->execute();
-    }
-    if($stmt){
-        $_SESSION['success'] = "เปลียนรหัสผ่านเรียบร้อยแล้ว!";
-        header("location: /lasc_personal/index.php?page=users/account");
-    } else {
-        $_SESSION['error'] = "มีบางอย่างผิดพลาด";
-        header("location: /lasc_personal/index.php?page=users/account");
-    }
+    $stmt = $conn->prepare("SELECT * FROM users WHERE userId = $userId");
+    $stmt->execute();
+    $data = $stmt->fetch();
 ?>
+<div class="container">
+    <div class="d-flex flex-column align-items-center justify-content-center ">
+        <div class="card col-md-6 mt-5">
+            <div class="card-body" style="padding-bottom:0px;">
+                <h3 class="card-title pb0 fs-4 mt-3" style="padding:0px;">เปลี่ยนรหัสผ่าน</h3>
+                <hr>
+                <form action="users/password_db.php" method="post">
+                    <div class="mb-3">
+                        <?php if(isset($_GET['lastPage'])){?>
+                            <input type="hidden" name="lastPage" value="<?= $_GET["lastPage"] ?>">
+                        <?php } ?>
+                        <input type="hidden" name="userId" value="<?= $data["userId"] ?>">
+                        <label for="password" class="form-label">รหัสผ่านปัจจุบัน</label>
+                        <input type="password" class="form-control" name="password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirm password" class="form-label">รหัสผ่านใหม่</label>
+                        <input type="password" class="form-control" name="password_new">
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirm password" class="form-label">ยืนยันรหัสผ่านใหม่</label>
+                        <input type="password" class="form-control" name="c_password_new">
+                    </div>
+                    <div class="d-flex justify-content-center mb-3">
+                        <button type="submit" name="edit" class="btn btn-primary">บันทึก</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+    $conn = null;
+?>
+</html>

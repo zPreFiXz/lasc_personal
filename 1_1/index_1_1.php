@@ -10,7 +10,7 @@
     $year =  $term_year['year'];
 
     if (isset($_GET['delete_file'])) {
-        $delete_file_id = $_GET['delete_file'];
+        $delete_file_id = base64_decode($_GET['delete_file']);
         $currentFile =  $delete_file_id;
 
         if ($currentFile) {
@@ -32,7 +32,7 @@
     }
 
     if (isset($_GET['delete'])) {
-        $delete_id = $_GET['delete'];
+        $delete_id = base64_decode($_GET['delete']);
 
         $deletestmt = $conn->prepare("DELETE FROM personal_1_1 WHERE id = :delete_id");
         $deletestmt->bindParam(':delete_id', $delete_id);
@@ -46,8 +46,8 @@
     }
 
     if (isset($_GET['edit'])) {
-        $_SESSION['edit'] = $_GET['edit'];
-        $edit_id = $_GET['edit'];
+        $_SESSION['edit'] = base64_decode($_GET['edit']);
+        $edit_id = base64_decode($_GET['edit']);
         $stmt = $conn->prepare("SELECT * FROM personal_1_1 WHERE id = ?");
         $stmt->execute([$edit_id]);
         $data = $stmt->fetch();
@@ -98,7 +98,7 @@
                     </div>
                 </a>
                 &nbsp;&nbsp;
-                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_1/index_1_1&delete_file=<?= $personal[0]['file']; ?>" class="btn btn-danger">
+                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_1/index_1_1&delete_file=<?= base64_encode($personal[0]['file']); ?>" class="btn btn-danger">
                     <div class="icon d-flex">
                         <i class="bi bi-trash"></i>&nbsp;
                         <div class="label">ลบไฟล์</div>
@@ -107,7 +107,7 @@
             </td>
         <?php } else { ?>
             <td>
-                <a style="white-space: nowrap;" href="?page=1_1/index_1_1&term=<?= $term ?>&year=<?= $year ?>&upload" class="btn btn-warning">
+                <a style="white-space: nowrap;" href="?page=1_1/index_1_1&term=<?= base64_encode($term) ?>&year=<?= base64_encode($year) ?>&upload" class="btn btn-warning">
                     <div class="icon d-flex">
                         <i class="bi bi-upload"></i>&nbsp;
                         <div class="label">อัปโหลดไฟล์</div>
@@ -126,6 +126,19 @@
         <script>
             setTimeout(function() {
                 document.getElementById('alert-success').style.display = 'none';
+            }, 3000);
+        </script>
+    <?php } ?>
+    <?php if (isset($_SESSION['error'])) { ?>
+        <div class="alert alert-danger" id="alert-error">
+            <?php
+                echo $_SESSION['error'];
+                unset($_SESSION['error']);
+            ?>
+        </div>
+        <script>
+            setTimeout(function() {
+                document.getElementById('alert-error').style.display = 'none';
             }, 3000);
         </script>
     <?php } ?>
@@ -184,13 +197,13 @@
                             <td><?= $per['amount_work']; ?></td>
                             <?php $totalAmountWork += floatval($per['amount_work']); ?>
                                 <td class="d-flex justify-content-center">
-                                    <a href="?page=1_1/index_1_1&edit=<?= $per['id']; ?>" class="btn btn-primary">
+                                    <a href="?page=1_1/index_1_1&edit=<?= base64_encode($per['id']); ?>" class="btn btn-primary">
                                         <div class="icon d-flex">
                                             <i class="bi bi-pencil-square"></i>&nbsp;
                                             <div class="label">แก้ไข</div>
                                         </div>
                                     </a>&nbsp;
-                                    <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_1/index_1_1&delete=<?= $per['id']; ?>" class="btn btn-danger">
+                                    <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_1/index_1_1&delete=<?= base64_encode($per['id']); ?>" class="btn btn-danger">
                                         <div class="icon d-flex">
                                             <i class="bi bi-trash"></i>&nbsp;
                                             <div class="label">ลบ</div>
@@ -447,6 +460,7 @@
                 </div>
             </div>
         </div>
+        <!-- อัพโหลดไฟล์ -->
         <div class="modal fade" id="uploadModal" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -463,6 +477,7 @@
                                 <div class="col-sm-10">
                                     <input type="file" class="form-control" name="file" id="fileInput" required>
                                     <br>
+                                    <p>***นามสกุลไฟล์ที่รองรับ .jpg, .jpeg, .png, .pdf, .ppt, .docx***</p>
                                     <img width="100%" id="previewFile" alt="">
                                 </div>
                             </div>

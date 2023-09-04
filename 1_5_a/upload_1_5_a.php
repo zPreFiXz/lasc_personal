@@ -44,7 +44,7 @@
         $_SESSION['success'] = "อัปโหลดไฟล์สำเร็จ";
         header("location: ../index.php?page=1_5_a/index_1_5_a"); // นำทางไปยังหน้า index.php?page=1_5_a
     }else {
-        $_SESSION['error'] = "อัพโหลดไฟล์ไม่สำเร็จ";
+        $_SESSION['error'] = "นามสกุลของไฟล์ไม่ถูกต้อง กรุณาอัปโหลดไฟล์ที่มีนามสกุลที่ถูกต้อง";
         header("location: ../index.php?page=1_5_a/index_1_5_a"); // นำทางไปยังหน้า index.php?page=1_5_a
     }
 ?>

@@ -6,8 +6,8 @@
     $firstname = $_SESSION['firstname'];
 
     if (isset($_POST['upload'])){
-        $term = $_POST['term'];
-        $year = $_POST['year'];
+        $term = base64_decode($_POST['term']);
+        $year = base64_decode($_POST['year']);
         $file = $_FILES['file'];
         
         $allow = array('jpg', 'jpeg', 'png' , 'pdf','ppt','docx');
@@ -31,16 +31,17 @@
                 $stmt->bindParam(':file', $fileNew);
                 $stmt->execute();
 
-                $conn = null;
                 
-                if ($stmt) {
-                    $_SESSION['success'] = "อัปโหลดไฟล์สำเร็จ";
-                    header("location: ../index.php?page=1_1/index_1_1");
-                }else{
-                    $_SESSION['error'] = "อัปโหลดไฟล์ไม่สำเร็จ";
-                    header("location: ../index.php?page=1_1/index_1_1");
-                }
             }
         }
+    }
+    $conn = null;
+                
+    if ($stmt) {
+        $_SESSION['success'] = "อัปโหลดไฟล์สำเร็จ";
+        header("location: ../index.php?page=1_1/index_1_1");
+    }else{
+        $_SESSION['error'] = "นามสกุลของไฟล์ไม่ถูกต้อง กรุณาอัปโหลดไฟล์ที่มีนามสกุลที่ถูกต้อง";
+        header("location: ../index.php?page=1_1/index_1_1");
     }
 ?>

@@ -75,10 +75,10 @@
                     $stmt->bindParam(":isAdmin", $isAdmin);
                     $stmt->execute();
                     
-                    $_SESSION['success'] = "เพิ่มผู้ใช้งานเรียบร้อยแล้ว! ";
+                    $_SESSION['success'] = "เพิ่มผู้ใช้งานสำเร็จ ";
                     header("location: /lasc_personal/index_admin.php?page=admin/officer");
                 } else {
-                    $_SESSION['error'] = "มีบางอย่างผิดพลาด";
+                    $_SESSION['error'] = "เพิ่มผู้ใช้งานไม่สำเร็จ";
                     header("location: /lasc_personal/index_admin.php?page=admin/officer");
                 }
             } catch(PDOException $e) {

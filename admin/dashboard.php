@@ -194,7 +194,7 @@
                 if($row['academic_rank'] == 'ไม่มี'){
                     echo  $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
                 }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $row['nametitle'] == 'ดร.'){
-                    echo $row['academic_rank'] . ' ' . $row['nametitle'] . ' ' .  $row['firstname'] . ' ' . $row['lastname'];
+                    echo $row['academic_rank'] . ' ' . $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
                 }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($row['nametitle'] == 'นาย' or $row['nametitle'] == 'นาง' or $row['nametitle'] == 'นางสาว')){
                     echo $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
                 }
@@ -221,6 +221,19 @@
         <script>
             setTimeout(function() {
                 document.getElementById('alert-success').style.display = 'none';
+            }, 3000);
+        </script>
+    <?php } ?>
+    <?php if (isset($_SESSION['error'])) { ?>
+        <div class="alert alert-danger" id="alert-error">
+            <?php
+                echo $_SESSION['error'];
+                unset($_SESSION['error']);
+            ?>
+        </div>
+        <script>
+            setTimeout(function() {
+                document.getElementById('alert-error').style.display = 'none';
             }, 3000);
         </script>
     <?php } ?>
@@ -254,7 +267,7 @@
         </thead>
         <tbody>
             <?php
-                $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year' and term = 1");
+                $stmt = $conn->query("SELECT * FROM Vadmin WHERE `year` = '$year' and term = 1 ORDER BY userId ASC");
                 $stmt->execute();
                 $current_year_term1 = $stmt->fetchAll();
 
@@ -278,7 +291,15 @@
                     foreach ($current_year_term1 as $CYT1) {
             ?>
                         <tr>
-                            <td><?= $CYT1['nametitle'], $CYT1['firstname'], " ", $CYT1["lastname"] ?></td>
+                            <td>
+                                <?php if($CYT1['academic_rank'] == 'ไม่มี'){
+                                    echo  $CYT1['nametitle'] . $CYT1['firstname'] . ' ' . $CYT1['lastname'];
+                                }elseif(($CYT1['academic_rank'] == 'ศาสตราจารย์' or $CYT1['academic_rank'] == 'รองศาสตราจารย์' or $CYT1['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $CYT1['nametitle'] == 'ดร.'){
+                                    echo $CYT1['academic_rank'] . ' ' . $CYT1['nametitle'] . $CYT1['firstname'] . ' ' . $CYT1['lastname'];
+                                }elseif(($CYT1['academic_rank'] == 'ศาสตราจารย์' or $CYT1['academic_rank'] == 'รองศาสตราจารย์' or $CYT1['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($CYT1['nametitle'] == 'นาย' or $CYT1['nametitle'] == 'นาง' or $CYT1['nametitle'] == 'นางสาว')){
+                                    echo $CYT1['academic_rank'] . $CYT1['firstname'] . ' ' . $CYT1['lastname'];}
+                                ?>
+                            </td>
                             <td><?= $CYT1['amount_work'] ?></td>
                             <td>
                                 <a href="?page=admin/dashboard&userId=<?= $CYT1['userId']; ?>&term=<?= $CYT1['term'] ?>&year=<?= $CYT1['year'] ?>" class="btn btn-primary">

@@ -6,7 +6,7 @@
     $term_year = $stmt->fetch();
 
     if (isset($_GET['delete_file'])) {
-        $delete_file_id = $_GET['delete_file'];
+        $delete_file_id = base64_decode($_GET['delete_file']);
         $stmt = $conn->prepare("SELECT file FROM personal_1_4 WHERE id = :delete_file_id");
         $stmt->bindParam(':delete_file_id', $delete_file_id);
         $stmt->execute();
@@ -32,7 +32,7 @@
     }
 
     if (isset($_GET['delete'])) {
-        $delete_id = $_GET['delete'];
+        $delete_id = base64_decode($_GET['delete']);
 
         $stmt = $conn->prepare("SELECT file FROM personal_1_4 WHERE id = :delete_id");
         $stmt->bindParam(':delete_id', $delete_id);
@@ -59,8 +59,8 @@
     }
 
     if (isset($_GET['edit'])) {
-        $_SESSION['edit'] = $_GET['edit'];
-        $edit_id = $_GET['edit'];
+        $_SESSION['edit'] = base64_decode($_GET['edit']);
+        $edit_id = base64_decode($_GET['edit']);
         $stmt = $conn->prepare("SELECT * FROM personal_1_4 WHERE id = ?");
         $stmt->execute([$edit_id]);
         $data = $stmt->fetch();
@@ -73,7 +73,7 @@
         </script>
     <?php } ?>
 <?php if (isset($_GET['upload'])) {
-    $_SESSION['upload'] = $_GET['upload'];
+    $_SESSION['upload'] = base64_decode($_GET['upload']);
     $upload_id = $_SESSION['upload'];
 ?>
     <script>
@@ -166,7 +166,7 @@
                                         <div class="label">ดูไฟล์</div>
                                     </div>
                                 </a>
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_4/index_1_4&delete_file=<?= $per['id']; ?>" class="btn btn-danger">
+                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_4/index_1_4&delete_file=<?= base64_encode($per['id']); ?>" class="btn btn-danger">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;
                                         <div class="label">ลบไฟล์</div>
@@ -174,13 +174,13 @@
                                 </a>
                             </td>
                             <td class="d-flex justify-content-center">
-                                <a href="?page=1_4/index_1_4&edit=<?= $per['id']; ?>" class="btn btn-primary">
+                                <a href="?page=1_4/index_1_4&edit=<?= base64_encode($per['id']); ?>" class="btn btn-primary">
                                     <div class="icon d-flex">
                                         <i class="bi bi-pencil-square"></i>&nbsp;
                                         <div class="label">แก้ไข</div>
                                     </div>
                                 </a>&nbsp;
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_4/index_1_4&delete=<?= $per['id']; ?>" class="btn btn-danger">
+                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_4/index_1_4&delete=<?= base64_encode($per['id']); ?>" class="btn btn-danger">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;
                                         <div class="label">ลบ</div>
@@ -189,7 +189,7 @@
                             </td>
                         <?php } else { ?>
                             <td>
-                                <a style="white-space: nowrap;" href="?page=1_4/index_1_4&upload=<?= $per['id']; ?>" class="btn btn-warning">
+                                <a style="white-space: nowrap;" href="?page=1_4/index_1_4&upload=<?= base64_encode($per['id']); ?>" class="btn btn-warning">
                                     <div class="icon d-flex">
                                         <i class="bi bi-upload"></i>&nbsp;
                                         <div class="label">อัปโหลด</div>
@@ -197,13 +197,13 @@
                                 </a>
                             </td>
                             <td class="d-flex justify-content-center">
-                                <a href="?page=1_4/index_1_4&edit=<?= $per['id']; ?>" class="btn btn-primary">
+                                <a href="?page=1_4/index_1_4&edit=<?= base64_encode($per['id']); ?>" class="btn btn-primary">
                                     <div class="icon d-flex">
                                         <i class="bi bi-pencil-square"></i>&nbsp;
                                         <div class="label">แก้ไข</div>
                                     </div>
                                 </a>&nbsp;
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_4/index_1_4&delete=<?= $per['id']; ?>" class="btn btn-danger">
+                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_4/index_1_4&delete=<?= base64_encode($per['id']); ?>" class="btn btn-danger">
                                     <div class="icon d-flex">
                                         <i class="bi bi-trash"></i>&nbsp;
                                         <div class="label">ลบ</div>

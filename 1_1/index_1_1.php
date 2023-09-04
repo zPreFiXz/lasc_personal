@@ -60,8 +60,8 @@
         </script>
     <?php } ?>
 <?php if (isset($_GET['upload'])) {
-        $_SESSION['upload'] = $_GET['upload'];
-        $upload_id = $_SESSION['upload'];
+        $_SESSION['upload'] = base64_decode($_GET['upload']);
+        $upload_id = base64_decode($_SESSION['upload']);
 ?>
         <script>
             document.addEventListener("DOMContentLoaded", function() {

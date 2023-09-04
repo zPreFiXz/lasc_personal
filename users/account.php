@@ -1,18 +1,93 @@
 <?php
-    require_once "config/db.php";
+require_once "config/db.php";
 
-    $userId = $_SESSION['userId'];
+$userId = $_SESSION['userId'];
 
-    $stmt = $conn->prepare("SELECT * FROM users WHERE userId = $userId");
-    $stmt->execute();
-    $data = $stmt->fetch();
+$stmt = $conn->prepare("SELECT * FROM users WHERE userId = $userId");
+$stmt->execute();
+$data = $stmt->fetch();
 ?>
+<style>
+    #image-container {
+        width: 200px;
+        /* กำหนดความกว้างตามที่คุณต้องการ */
+        height: 200px;
+        /* กำหนดความสูงตามที่คุณต้องการ */
+        overflow: hidden;
+        /* ทำให้ภาพที่เกินขนาดถูกตัดทิ้ง */
+        position: relative;
+    }
+
+    #image-container img {
+        width: 100%;
+        /* ทำให้รูปภาพของคุณครอบคลุมพื้นที่ทั้งหมดของคอนเทนเนอร์ */
+        height: auto;
+        /* รักษาอัตราส่วนของรูปภาพเพื่อไม่ทำให้เป็นรูปแบบยืดหรือบีบ */
+    }
+    
+    .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7); /* สีดำโปร่งใส */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s; /* การเพิ่มเอฟเฟกต์การเปลี่ยนสี */
+    }
+
+    .image-overlay span {
+        color: white; /* สีข้อความ */
+        font-size: 18px; /* ขนาดตัวอักษร */
+    }
+
+    #image-container:hover .image-overlay {
+        opacity: 1; /* เมื่อโฮเวอร์หน้ารูปภาพแสดงคำว่า "เปลี่ยนรูปภาพ" */
+    }
+      
+</style>
+
+<?php if (isset($_GET['upload'])) {
+    $_SESSION['upload'] = $_GET['upload'];
+    $upload_id = $_SESSION['upload'];
+?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var modal = new bootstrap.Modal(document.getElementById("uploadModal"));
+            modal.show();
+        });
+    </script>
+<?php } ?>
+
 <div class="container">
     <div class="d-flex flex-column align-items-center justify-content-center ">
         <div class="card col-md-6 mt-5">
             <div class="card-body" style="padding-bottom:0px;">
                 <h3 class="card-title pb0 fs-4 mt-3" style="padding:0px;">แก้ไขโปรไฟล์</h3>
                 <hr>
+
+                <div class="d-flex justify-content-center">
+                    <?php if (empty($data['img'])) { ?>
+                        <a class="d-flex justify-content-center" href="index.php?page=users/account&lastPage=index.php?page=users/dashboard&upload=<?= $data['userId']?>">
+                            <img src="profile/dummy.png" width="30%" class="rounded-circle">
+                        </a>
+                    <?php } else { ?>
+                        <div id="image-container" class="rounded-circle">
+                            <a class="d-flex justify-content-center" href="index.php?page=users/account&lastPage=index.php?page=users/dashboard&upload=<?= $data['userId']?>">
+                                <img src="profile/<?= $data['img'] ?>">
+                            <div class="image-overlay">
+                                <span>เปลี่ยนรูปภาพ</span>
+                            </div>
+                            </a>
+                            
+                        </div>
+                    <?php } ?>
+                </div>
+                <br>
                 <?php if (isset($_SESSION['success'])) { ?>
                     <div class="alert alert-success" id="alert-success">
                         <?php
@@ -41,7 +116,7 @@
                 <?php } ?>
                 <form action="users/edit_account.php" method="post">
                     <div class="mb-3">
-                        <?php if(isset($_GET['lastPage'])){?>
+                        <?php if (isset($_GET['lastPage'])) { ?>
                             <input type="hidden" name="lastPage" value="<?= $_GET["lastPage"] ?>">
                         <?php } ?>
                         <input type="hidden" name="userId" value="<?= $data["userId"] ?>">
@@ -95,6 +170,38 @@
                         <button type="submit" name="edit" class="btn btn-primary">บันทึก</button>
                     </div>
                 </form>
+
+                <div class="modal fade" id="uploadModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">อัปโหลดไฟล์</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="users/update_profile.php" method="post" enctype="multipart/form-data">
+                                    <?php
+                                    ?>
+                                    <div class="row mb-1 mt-3">
+                                        <label for="file" class="col-sm-2 col-form-label">อัปโหลดไฟล์</label>
+                                        <input type="hidden" name="userId" value = "<?= $data['userId']?>" >
+                                        <div class="col-sm-10">
+                                            <input type="file" class="form-control" name="file" id="fileInput" required>
+                                            <br>
+                                            <p>***นามสกุลไฟล์ที่รองรับ .jpg, .jpeg, .png  ***</p>
+                                            <img width="100%" id="previewFile" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                        <button type="upload" name="upload" class="btn btn-primary">บันทึก</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="modal fade" id="change_password" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -132,6 +239,24 @@
     </div>
 </div>
 <?php
-    $conn = null;
+$conn = null;
 ?>
 </html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+ $(document).ready(function() {
+        $('#uploadModal').on('hidden.bs.modal', function() {
+            window.location.href = 'index.php?page=users/account&lastPage=index.php?page=users/dashboard';
+        });
+    });
+
+    let fileInput = document.getElementById('fileInput');
+    let previewFile = document.getElementById('previewFile');
+
+    fileInput.onchange = evt => {
+        const [file] = fileInput.files;
+        if (file) {
+            previewFile.src = URL.createObjectURL(file);
+        }
+    }
+</script>

@@ -304,7 +304,11 @@ if (empty($personal)) {
       <ul class="d-flex align-items-center">
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+          <?php if(empty($row['img'])) {?> 
             <i class="bi bi-person-circle"></i>
+            <?php } else { ?>
+              <img src="profile/<?= $row['img'] ?> " class="rounded-circle">
+              <?php } ?>
             <span class="d-none d-md-block dropdown-toggle ps-2"> 
             <?php
                 if($row['academic_rank'] == 'ไม่มี'){

@@ -14,11 +14,12 @@
         $currentFile = $row['img'];
 
         if ($currentFile) {
-            $filePath = 'profile/' . $currentFile;
+            $filePath = '../profile/' . $currentFile;
             if (file_exists($filePath)) {
                 unlink($filePath);
             }
         }
+     
         
         $allow = array('jpg', 'jpeg', 'png');
         $extension = explode('.', $file['name']);

@@ -258,7 +258,6 @@ if (empty($personal)) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -288,8 +287,17 @@ if (empty($personal)) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap" rel="stylesheet">
+  <style>
+    .profile1 {
+      height: 45px;
+      width: 45px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-radius: 50%;
+      
+    }
+  </style>
 </head>
-
 <body>
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -300,16 +308,20 @@ if (empty($personal)) {
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
+    
     <nav class="header-nav ms-auto">
+      
       <ul class="d-flex align-items-center">
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-          <?php if(empty($row['img'])) {?> 
-            <i class="bi bi-person-circle"></i>
+          <div>
+            <?php if(empty($row['img'])) {?> 
+              <i class="bi bi-person-circle"></i>
             <?php } else { ?>
-              <img src="profile/<?= $row['img'] ?> " class="rounded-circle">
-              <?php } ?>
-            <span class="d-none d-md-block dropdown-toggle ps-2"> 
+              <img src="profile/<?= $row['img'] ?>" class="profile1">
+            <?php } ?>
+          </div>
+          <span class="d-none d-md-block dropdown-toggle ps-2"> 
             <?php
                 if($row['academic_rank'] == 'ไม่มี'){
                   echo  $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
@@ -319,7 +331,7 @@ if (empty($personal)) {
                   echo $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
                 }
             ?>
-            </span>
+          </span>
           </a><!-- End Profile Iamge Icon -->
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
@@ -337,7 +349,7 @@ if (empty($personal)) {
               <hr class="dropdown-divider">
             </li>
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="index.php?page=users/account&lastPage=index.php?page=users/dashboard">
+              <a class="dropdown-item d-flex align-items-center" href="index.php?page=users/account">
                 <i class="bi bi-file-person-fill"></i>
                 <span>แก้ไขโปรไฟล์</span>
               </a>
@@ -346,7 +358,7 @@ if (empty($personal)) {
               <hr class="dropdown-divider">
             </li>
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="index.php?page=users/password&lastPage=index.php?page=users/dashboard">
+              <a class="dropdown-item d-flex align-items-center" href="index.php?page=users/password">
               <i class="bi bi-key-fill"></i>
                 <span>เปลี่ยนรหัสผ่าน</span>
               </a>

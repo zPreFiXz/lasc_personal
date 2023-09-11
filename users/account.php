@@ -1,56 +1,52 @@
-<?php
-require_once "config/db.php";
-
-$userId = $_SESSION['userId'];
-
-$stmt = $conn->prepare("SELECT * FROM users WHERE userId = $userId");
-$stmt->execute();
-$data = $stmt->fetch();
-?>
 <style>
-    #image-container {
-        width: 200px;
-        /* กำหนดความกว้างตามที่คุณต้องการ */
-        height: 200px;
-        /* กำหนดความสูงตามที่คุณต้องการ */
-        overflow: hidden;
-        /* ทำให้ภาพที่เกินขนาดถูกตัดทิ้ง */
-        position: relative;
+    .round {
+        width: 150px;
+        height: 150px;
     }
 
-    #image-container img {
-        width: 100%;
-        /* ทำให้รูปภาพของคุณครอบคลุมพื้นที่ทั้งหมดของคอนเทนเนอร์ */
-        height: auto;
-        /* รักษาอัตราส่วนของรูปภาพเพื่อไม่ทำให้เป็นรูปแบบยืดหรือบีบ */
-    }
-    
     .image-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7); /* สีดำโปร่งใส */
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
-        opacity: 0;
-        transition: opacity 0.3s; /* การเพิ่มเอฟเฟกต์การเปลี่ยนสี */
+        height: 100%;
+        /* Ensure the div takes up the full height */
     }
-
-    .image-overlay span {
-        color: white; /* สีข้อความ */
-        font-size: 18px; /* ขนาดตัวอักษร */
-    }
-
-    #image-container:hover .image-overlay {
-        opacity: 1; /* เมื่อโฮเวอร์หน้ารูปภาพแสดงคำว่า "เปลี่ยนรูปภาพ" */
-    }
-      
 </style>
+<?php
+    require_once "config/db.php";
 
+    $userId = $_SESSION['userId'];
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE userId = $userId");
+    $stmt->execute();
+    $data = $stmt->fetch();
+
+    if (isset($_GET['delete'])) {
+        $delete = base64_decode($_GET['delete']);
+        $stmt = $conn->prepare("SELECT img FROM users WHERE userId = :delete");
+        $stmt->bindParam(':delete', $delete);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $currentFile = $row['img'];
+
+        if ($currentFile) {
+            $filePath = 'profile/' . $currentFile;
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+
+        $delete_file = $conn->prepare("UPDATE users SET img = '' WHERE userId = :delete");
+        $delete_file->bindParam(':delete', $delete);
+        $delete_file->execute();
+
+        if ($delete_file) {
+            $_SESSION['success'] = "ลบรูปโปรไฟล์สำเร็จ";
+            echo "<script>window.location.href = 'index.php?page=users/account';</script>";
+            exit;
+        }
+    }
+?>
 <?php if (isset($_GET['upload'])) {
     $_SESSION['upload'] = $_GET['upload'];
     $upload_id = $_SESSION['upload'];
@@ -62,37 +58,40 @@ $data = $stmt->fetch();
         });
     </script>
 <?php } ?>
-
 <div class="container">
     <div class="d-flex flex-column align-items-center justify-content-center ">
         <div class="card col-md-6 mt-5">
             <div class="card-body" style="padding-bottom:0px;">
                 <h3 class="card-title pb0 fs-4 mt-3" style="padding:0px;">แก้ไขโปรไฟล์</h3>
                 <hr>
-
                 <div class="d-flex justify-content-center">
                     <?php if (empty($data['img'])) { ?>
-                        <a class="d-flex justify-content-center" href="index.php?page=users/account&lastPage=index.php?page=users/dashboard&upload=<?= $data['userId']?>">
+                        <a class="d-flex justify-content-center">
                             <img src="profile/dummy.png" width="30%" class="rounded-circle">
                         </a>
                     <?php } else { ?>
-                        <div id="image-container" class="rounded-circle">
-                            <a class="d-flex justify-content-center" href="index.php?page=users/account&lastPage=index.php?page=users/dashboard&upload=<?= $data['userId']?>">
-                                <img src="profile/<?= $data['img'] ?>">
-                            <div class="image-overlay">
-                                <span>เปลี่ยนรูปภาพ</span>
-                            </div>
+                        <div>
+                            <a class="d-flex justify-content-center">
+                                <img src="profile/<?= $data['img'] ?>" class="rounded-circle round">
                             </a>
-                            
                         </div>
+                    <?php } ?>
+                </div>
+                <br>
+                <div class="image-overlay">
+                    <?php if (empty($data['img'])) { ?>
+                        <a class="btn btn-warning" href="index.php?page=users/account&upload=<?= base64_encode($data['userId']) ?>">เปลี่ยนรูปโปรไฟล์</a> &nbsp;&nbsp;
+                    <?php } else { ?>
+                        <a class="btn btn-warning" href="index.php?page=users/account&upload=<?= base64_encode($data['userId']) ?>">เปลี่ยนรูปโปรไฟล์</a> &nbsp;&nbsp;
+                        <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" class="btn btn-danger"  href="index.php?page=users/account&delete=<?= base64_encode($data['userId']) ?>">ลบรูปโปรไฟล์</a>
                     <?php } ?>
                 </div>
                 <br>
                 <?php if (isset($_SESSION['success'])) { ?>
                     <div class="alert alert-success" id="alert-success">
                         <?php
-                        echo $_SESSION['success'];
-                        unset($_SESSION['success']);
+                            echo $_SESSION['success'];
+                            unset($_SESSION['success']);
                         ?>
                     </div>
                     <script>
@@ -104,8 +103,8 @@ $data = $stmt->fetch();
                 <?php if (isset($_SESSION['error'])) { ?>
                     <div class="alert alert-danger" id="alert-error">
                         <?php
-                        echo $_SESSION['error'];
-                        unset($_SESSION['error']);
+                            echo $_SESSION['error'];
+                            unset($_SESSION['error']);
                         ?>
                     </div>
                     <script>
@@ -170,7 +169,6 @@ $data = $stmt->fetch();
                         <button type="submit" name="edit" class="btn btn-primary">บันทึก</button>
                     </div>
                 </form>
-
                 <div class="modal fade" id="uploadModal" tabindex="-1">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -184,11 +182,11 @@ $data = $stmt->fetch();
                                     ?>
                                     <div class="row mb-1 mt-3">
                                         <label for="file" class="col-sm-2 col-form-label">อัปโหลดไฟล์</label>
-                                        <input type="hidden" name="userId" value = "<?= $data['userId']?>" >
+                                        <input type="hidden" name="userId" value="<?= base64_decode($_GET['upload']) ?>">
                                         <div class="col-sm-10">
                                             <input type="file" class="form-control" name="file" id="fileInput" required>
                                             <br>
-                                            <p>***นามสกุลไฟล์ที่รองรับ .jpg, .jpeg, .png  ***</p>
+                                            <p>***นามสกุลไฟล์ที่รองรับ .jpg, .jpeg, .png ***</p>
                                             <img width="100%" id="previewFile" alt="">
                                         </div>
                                     </div>
@@ -201,7 +199,6 @@ $data = $stmt->fetch();
                         </div>
                     </div>
                 </div>
-
                 <div class="modal fade" id="change_password" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -239,12 +236,12 @@ $data = $stmt->fetch();
     </div>
 </div>
 <?php
-$conn = null;
+    $conn = null;
 ?>
 </html>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
- $(document).ready(function() {
+    $(document).ready(function() {
         $('#uploadModal').on('hidden.bs.modal', function() {
             window.location.href = 'index.php?page=users/account&lastPage=index.php?page=users/dashboard';
         });

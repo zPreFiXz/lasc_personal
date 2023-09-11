@@ -151,73 +151,73 @@
                 } else {
                     foreach ($personal as $per) {
             ?>
-                    <tr>
-                        <td style="white-space: nowrap;"><?= $per['date']; ?></td>
-                        <td><?= $per['project_name']; ?></td>
-                        <td><?= $per['location']; ?></td>
-                        <td><?= $per['period']; ?></td>
-                        <td><?= $per['amount_work']; ?></td>
-                        <?php $totalAmountWork += floatval($per['amount_work']); ?>
-                        <?php if ($per['file']) { ?>
-                            <td style="white-space: nowrap;">
-                                <a href="uploads/<?= $per['file']; ?>" target="_blank" class="btn btn-secondary">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-eye"></i>&nbsp;
-                                        <div class="label">ดูไฟล์</div>
-                                    </div>
-                                </a>
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_4/index_1_4&delete_file=<?= base64_encode($per['id']); ?>" class="btn btn-danger">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-trash"></i>&nbsp;
-                                        <div class="label">ลบไฟล์</div>
-                                    </div>
-                                </a>
-                            </td>
-                            <td class="d-flex justify-content-center">
-                                <a href="?page=1_4/index_1_4&edit=<?= base64_encode($per['id']); ?>" class="btn btn-primary">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-pencil-square"></i>&nbsp;
-                                        <div class="label">แก้ไข</div>
-                                    </div>
-                                </a>&nbsp;
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_4/index_1_4&delete=<?= base64_encode($per['id']); ?>" class="btn btn-danger">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-trash"></i>&nbsp;
-                                        <div class="label">ลบ</div>
-                                    </div>
-                                </a>
-                            </td>
-                        <?php } else { ?>
-                            <td>
-                                <a style="white-space: nowrap;" href="?page=1_4/index_1_4&upload=<?= base64_encode($per['id']); ?>" class="btn btn-warning">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-upload"></i>&nbsp;
-                                        <div class="label">อัปโหลด</div>
-                                    </div>
-                                </a>
-                            </td>
-                            <td class="d-flex justify-content-center">
-                                <a href="?page=1_4/index_1_4&edit=<?= base64_encode($per['id']); ?>" class="btn btn-primary">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-pencil-square"></i>&nbsp;
-                                        <div class="label">แก้ไข</div>
-                                    </div>
-                                </a>&nbsp;
-                                <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_4/index_1_4&delete=<?= base64_encode($per['id']); ?>" class="btn btn-danger">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-trash"></i>&nbsp;
-                                        <div class="label">ลบ</div>
-                                    </div>
-                                </a>
-                            </td>
-                        <?php } ?>
-                    </tr>
+                        <tr>
+                            <td style="white-space: nowrap;"><?= $per['date']; ?></td>
+                            <td><?= $per['project_name']; ?></td>
+                            <td><?= $per['location']; ?></td>
+                            <td><?= $per['period']; ?></td>
+                            <td><?= $per['amount_work']; ?></td>
+                            <?php $totalAmountWork += floatval($per['amount_work']); ?>
+                            <?php if ($per['file']) { ?>
+                                <td style="white-space: nowrap;">
+                                    <a href="uploads/<?= $per['file']; ?>" target="_blank" class="btn btn-secondary">
+                                        <div class="icon d-flex">
+                                            <i class="bi bi-eye"></i>&nbsp;
+                                            <div class="label">ดูไฟล์</div>
+                                        </div>
+                                    </a>
+                                    <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_4/index_1_4&delete_file=<?= base64_encode($per['id']); ?>" class="btn btn-danger">
+                                        <div class="icon d-flex">
+                                            <i class="bi bi-trash"></i>&nbsp;
+                                            <div class="label">ลบไฟล์</div>
+                                        </div>
+                                    </a>
+                                </td>
+                                <td class="d-flex justify-content-center">
+                                    <a href="?page=1_4/index_1_4&edit=<?= base64_encode($per['id']); ?>" class="btn btn-primary">
+                                        <div class="icon d-flex">
+                                            <i class="bi bi-pencil-square"></i>&nbsp;
+                                            <div class="label">แก้ไข</div>
+                                        </div>
+                                    </a>&nbsp;
+                                    <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_4/index_1_4&delete=<?= base64_encode($per['id']); ?>" class="btn btn-danger">
+                                        <div class="icon d-flex">
+                                            <i class="bi bi-trash"></i>&nbsp;
+                                            <div class="label">ลบ</div>
+                                        </div>
+                                    </a>
+                                </td>
+                            <?php } else { ?>
+                                <td>
+                                    <a style="white-space: nowrap;" href="?page=1_4/index_1_4&upload=<?= base64_encode($per['id']); ?>" class="btn btn-warning">
+                                        <div class="icon d-flex">
+                                            <i class="bi bi-upload"></i>&nbsp;
+                                            <div class="label">อัปโหลด</div>
+                                        </div>
+                                    </a>
+                                </td>
+                                <td class="d-flex justify-content-center">
+                                    <a href="?page=1_4/index_1_4&edit=<?= base64_encode($per['id']); ?>" class="btn btn-primary">
+                                        <div class="icon d-flex">
+                                            <i class="bi bi-pencil-square"></i>&nbsp;
+                                            <div class="label">แก้ไข</div>
+                                        </div>
+                                    </a>&nbsp;
+                                    <a onclick="return confirm('ต้องการลบข้อมูลหรือไม่')" href="?page=1_4/index_1_4&delete=<?= base64_encode($per['id']); ?>" class="btn btn-danger">
+                                        <div class="icon d-flex">
+                                            <i class="bi bi-trash"></i>&nbsp;
+                                            <div class="label">ลบ</div>
+                                        </div>
+                                    </a>
+                                </td>
+                            <?php } ?>
+                        </tr>
             <?php } } ?>
-                    <tr>
-                        <th scope="row" colspan="4">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-                        <td scope="row"><?= number_format($totalAmountWork, 2); ?></td>
-                        <td colspan="2"></td>
-                    </tr>
+                        <tr>
+                            <th scope="row" colspan="4">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+                            <td scope="row"><?= number_format($totalAmountWork, 2); ?></td>
+                            <td colspan="2"></td>
+                        </tr>
         </tbody>
         <div class="modal fade" id="largeModal" tabindex="-1">
             <div class="modal-dialog modal-lg">

@@ -17,7 +17,6 @@
     $stmt->execute();
     $personal = $stmt->fetchAll();
 
-
     foreach($personal as $per)
 ?>
 <div class="container">

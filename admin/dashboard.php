@@ -28,7 +28,7 @@
             });
         </script>
         <!-- end เรียก modal #details     -->
-<?php } ?>
+    <?php } ?>
 <?php
     // ดึงค่าภาระงานไปคำนวณจากตาราง
     $stmt = $conn->query("SELECT amount_work FROM personal_1_1 WHERE userId = '$userId' AND term = '$term' AND year = '$year'");
@@ -189,19 +189,22 @@
     <div class="d-flex justify-content-between align-items-center">
         <div class="pagetitle mt-3">
             <h1 style="font-size: 30px;">
-            <?php
-                echo "ยินดีต้อนรับ ";
-                if($row['academic_rank'] == 'ไม่มี'){
-                    echo  $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
-                }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $row['nametitle'] == 'ดร.'){
-                    echo $row['academic_rank'] . ' ' . $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
-                }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($row['nametitle'] == 'นาย' or $row['nametitle'] == 'นาง' or $row['nametitle'] == 'นางสาว')){
-                    echo $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
-                }
-            ?>
+                <?php
+                    echo "ยินดีต้อนรับ ";
+                    if($row['academic_rank'] == 'ไม่มี'){
+                        echo  $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+                    }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $row['nametitle'] == 'ดร.'){
+                        echo $row['academic_rank'] . ' ' . $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+                    }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($row['nametitle'] == 'นาย' or $row['nametitle'] == 'นาง' or $row['nametitle'] == 'นางสาว')){
+                        echo $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
+                    }
+                ?>
             </h1>
         </div>
-        <div class="d-flex">
+        <div class="d-flex align-items-center"> 
+            <div class="pagetitle mt-3 mx-3">
+                <h1 style="font-size: 30px;"><?= "ปีการศึกษา " . $term . "/" . $year; ?></h1>
+            </div>
             <div class="icon d-flex align-items-center">
                 <a href="index.php?page=users/dashboard" class="btn btn-primary d-flex align-items-center"><i class="ri-logout-box-line"></i> &nbsp;แบบประเมิน</a>
             </div>&nbsp;&nbsp;
@@ -296,7 +299,7 @@
             ?>
                         <tr>
                             <td class="text-center"><?= $order?></td>
-                            <td  style="white-space: nowrap;">
+                            <td style="white-space: nowrap;">
                                 <?php if($CYT1['academic_rank'] == 'ไม่มี'){
                                     echo  $CYT1['nametitle'] . $CYT1['firstname'] . ' ' . $CYT1['lastname'];
                                 }elseif(($CYT1['academic_rank'] == 'ศาสตราจารย์' or $CYT1['academic_rank'] == 'รองศาสตราจารย์' or $CYT1['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $CYT1['nametitle'] == 'ดร.'){
@@ -319,8 +322,8 @@
                                 if ($CYT2['nametitle'] == $CYT1['nametitle'] && $CYT2['firstname'] == $CYT1['firstname'] && $CYT2['lastname'] == $CYT1['lastname']) {
                                     $found = true;
                             ?>
-                                    <td><?= $CYT2['amount_work'] ?></td>
-                                    <td>
+                                    <td class = 'text-center'><?= $CYT2['amount_work'] ?></td>
+                                    <td class = 'text-center'>
                                         <a href="?page=admin/dashboard&userId=<?= $CYT2['userId']; ?>&term=<?= $CYT2['term'] ?>&year=<?= $CYT2['year'] ?>" class="btn btn-primary">
                                             <div class="icon d-flex align-items-center">
                                                 <i class="bx bx-search"></i> &nbsp;
@@ -347,8 +350,8 @@
                                 if ($LYT1['nametitle'] == $CYT1['nametitle'] && $LYT1['firstname'] == $CYT1['firstname'] && $LYT1['lastname'] == $CYT1['lastname']) {
                                     $found = true;
                             ?>
-                                    <td><?= $LYT1['amount_work'] ?></td>
-                                    <td>
+                                    <td class = 'text-center'><?= $LYT1['amount_work'] ?></td>
+                                    <td class = 'text-center'>
                                         <a href="?page=admin/dashboard&userId=<?= $LYT1['userId']; ?>&term=<?= $LYT1['term'] ?>&year=<?= $LYT1['year'] ?>" class="btn btn-primary">
                                             <div class="icon d-flex align-items-center">
                                                 <i class="bx bx-search"></i> &nbsp;
@@ -375,8 +378,8 @@
                                 if ($LYT2['nametitle'] == $CYT1['nametitle'] && $LYT2['firstname'] == $CYT1['firstname'] && $LYT2['lastname'] == $CYT1['lastname']) {
                                     $found = true;
                             ?>
-                                    <td><?= $LYT2['amount_work'] ?></td>
-                                    <td>
+                                    <td class = 'text-center'><?= $LYT2['amount_work'] ?></td>
+                                    <td class = 'text-center'>
                                         <a href="?page=admin/dashboard&userId=<?= $LYT2['userId']; ?>&term=<?= $LYT2['term'] ?>&year=<?= $LYT2['year'] ?>" class="btn btn-primary">
                                             <div class="icon d-flex align-items-center">
                                                 <i class="bx bx-search"></i> &nbsp;

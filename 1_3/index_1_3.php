@@ -175,76 +175,76 @@
                     // วนลูปแสดงข้อมูลที่ดึงมา
                     foreach ($personal as $per) {
             ?>
-                    <tr> <!-- แสดงแถวของตาราง (row) โดยใช้ข้อมูลจากตัวแปร $per ในแต่ละคอลัมน์ของตาราง -->
-                        <td><?php echo $per['major']; ?></td>
-                        <td><?php echo $per['level']; ?></td>
-                        <td><?php echo $per['amount_student']; ?></td>
-                        <td><?php echo $per['amount_time']; ?></td>
-                        <td><?php echo $per['workplace']; ?></td>
-                        <td><?php echo $per['amount_work']; ?></td>
-                        <?php $totalAmountWork += floatval($per['amount_work']);?>
-                        <?php if ($per['file']) { ?>
-                            <td style="white-space: nowrap;">
-                                <a href="<?= "uploads/" . $per['file']; ?>" target="_blank" class="btn btn-secondary">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-eye"></i>&nbsp;
-                                        <div class="label">ดูไฟล์</div>
-                                    </div>
-                                </a>
-                                <a onclick="return confirm('ต้องการลบไฟล์หรือไม่')" href="?page=1_3/index_1_3&delete_file=<?= base64_encode($per['id']); ?>" class="btn btn-danger">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-trash"></i>&nbsp;
-                                        <div class="label">ลบไฟล์</div>
-                                    </div>
-                                </a>
-                            </td>
-                            <td class="d-flex justify-content-center">
-                                <!-- ปุ่มแก้ไข ส่งแบบ get มี url-->
-                                <a href="?page=1_3/index_1_3&edit=<?= base64_encode($per['id']); ?>" class="btn btn-primary">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-pencil-square"></i>&nbsp;
-                                        <div class="label">แก้ไข</div>
-                                    </div>
-                                </a>&nbsp; <!--ปุ่มลบ -->
-                                <a onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่?'); " href="?page=1_3/index_1_3&delete=<?= base64_encode($per['id']) ?>" class="btn btn-danger">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-trash"></i>&nbsp;
-                                        <div class="label">ลบ</div>
-                                    </div>
-                                </a>
-                            </td>
-                        <?php } else { ?>
-                            <td>
-                                <a style="white-space: nowrap;" href="?page=1_3/index_1_3&upload=<?= base64_encode($per['id']); ?>" class="btn btn-warning">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-upload"></i>&nbsp;
-                                        <div class="label">อัปโหลด</div>
-                                    </div>
-                                </a>
-                            </td>
-                            <td class="d-flex justify-content-center">
-                                <!-- ปุ่มแก้ไข ส่งแบบ get มี url-->
-                                <a href="?page=1_3/index_1_3&edit=<?= base64_encode($per['id']); ?>" class="btn btn-primary">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-pencil-square"></i>&nbsp;
-                                        <div class="label">แก้ไข</div>
-                                    </div>
-                                </a>&nbsp; <!--ปุ่มลบ -->
-                                <a onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่?'); " href="?page=1_3/index_1_3&delete=<?= base64_encode($per['id']) ?>" class="btn btn-danger">
-                                    <div class="icon d-flex">
-                                        <i class="bi bi-trash"></i>&nbsp;
-                                        <div class="label">ลบ</div>
-                                    </div>
-                                </a>
-                            </td>
-                        <?php } ?>
-                    </tr>
+                        <tr> <!-- แสดงแถวของตาราง (row) โดยใช้ข้อมูลจากตัวแปร $per ในแต่ละคอลัมน์ของตาราง -->
+                            <td><?php echo $per['major']; ?></td>
+                            <td><?php echo $per['level']; ?></td>
+                            <td><?php echo $per['amount_student']; ?></td>
+                            <td><?php echo $per['amount_time']; ?></td>
+                            <td><?php echo $per['workplace']; ?></td>
+                            <td><?php echo $per['amount_work']; ?></td>
+                            <?php $totalAmountWork += floatval($per['amount_work']);?>
+                            <?php if ($per['file']) { ?>
+                                <td style="white-space: nowrap;">
+                                    <a href="<?= "uploads/" . $per['file']; ?>" target="_blank" class="btn btn-secondary">
+                                        <div class="icon d-flex">
+                                            <i class="bi bi-eye"></i>&nbsp;
+                                            <div class="label">ดูไฟล์</div>
+                                        </div>
+                                    </a>
+                                    <a onclick="return confirm('ต้องการลบไฟล์หรือไม่')" href="?page=1_3/index_1_3&delete_file=<?= base64_encode($per['id']); ?>" class="btn btn-danger">
+                                        <div class="icon d-flex">
+                                            <i class="bi bi-trash"></i>&nbsp;
+                                            <div class="label">ลบไฟล์</div>
+                                        </div>
+                                    </a>
+                                </td>
+                                <td class="d-flex justify-content-center">
+                                    <!-- ปุ่มแก้ไข ส่งแบบ get มี url-->
+                                    <a href="?page=1_3/index_1_3&edit=<?= base64_encode($per['id']); ?>" class="btn btn-primary">
+                                        <div class="icon d-flex">
+                                            <i class="bi bi-pencil-square"></i>&nbsp;
+                                            <div class="label">แก้ไข</div>
+                                        </div>
+                                    </a>&nbsp; <!--ปุ่มลบ -->
+                                    <a onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่?'); " href="?page=1_3/index_1_3&delete=<?= base64_encode($per['id']) ?>" class="btn btn-danger">
+                                        <div class="icon d-flex">
+                                            <i class="bi bi-trash"></i>&nbsp;
+                                            <div class="label">ลบ</div>
+                                        </div>
+                                    </a>
+                                </td>
+                            <?php } else { ?>
+                                <td>
+                                    <a style="white-space: nowrap;" href="?page=1_3/index_1_3&upload=<?= base64_encode($per['id']); ?>" class="btn btn-warning">
+                                        <div class="icon d-flex">
+                                            <i class="bi bi-upload"></i>&nbsp;
+                                            <div class="label">อัปโหลด</div>
+                                        </div>
+                                    </a>
+                                </td>
+                                <td class="d-flex justify-content-center">
+                                    <!-- ปุ่มแก้ไข ส่งแบบ get มี url-->
+                                    <a href="?page=1_3/index_1_3&edit=<?= base64_encode($per['id']); ?>" class="btn btn-primary">
+                                        <div class="icon d-flex">
+                                            <i class="bi bi-pencil-square"></i>&nbsp;
+                                            <div class="label">แก้ไข</div>
+                                        </div>
+                                    </a>&nbsp; <!--ปุ่มลบ -->
+                                    <a onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่?'); " href="?page=1_3/index_1_3&delete=<?= base64_encode($per['id']) ?>" class="btn btn-danger">
+                                        <div class="icon d-flex">
+                                            <i class="bi bi-trash"></i>&nbsp;
+                                            <div class="label">ลบ</div>
+                                        </div>
+                                    </a>
+                                </td>
+                            <?php } ?>
+                        </tr>
             <?php } } ?>
-                    <tr>
-                        <th scope="row" colspan="5">รวมจำนวนภาระงานตลอดภาคเรียน</th>
-                        <td><?= number_format($totalAmountWork, 2); ?></td>
-                        <td colspan="2"></td>
-                    </tr>
+                        <tr>
+                            <th scope="row" colspan="5">รวมจำนวนภาระงานตลอดภาคเรียน</th>
+                            <td><?= number_format($totalAmountWork, 2); ?></td>
+                            <td colspan="2"></td>
+                        </tr>
         </tbody>
         <div class="modal fade" id="ExtralargeModal" tabindex="-1">
             <!-- หน้าเพิ่มข้อมูล -->

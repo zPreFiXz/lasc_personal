@@ -1,30 +1,30 @@
 <?php   
     session_start();
     require "../config/db.php";
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
 
     if (isset($_POST['upload'])){
-
         $userId = $_POST['userId'];
         $file = $_FILES['file'];
+        $lastPage = $_POST['lastPage'];
 
-        $stmt = $conn->prepare("SELECT * FROM users WHERE userId = $userId");
+        $stmt = $conn->prepare("SELECT img FROM users WHERE userId = :userId");
+        $stmt->bindParam(':userId', $userId);
         $stmt->execute();
-        $data = $stmt->fetch();
-        $deletefilePath = '../profile/'. $data['img'];
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $currentFile = $row['img'];
 
-        if (file_exists($deletefilePath)) {
-            unlink($deletefilePath);
+        if ($currentFile) {
+            $filePath = 'profile/' . $currentFile;
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
         }
         
         $allow = array('jpg', 'jpeg', 'png');
         $extension = explode('.', $file['name']);
         $fileActExt = strtolower(end($extension));
-        $fileNew =  "profile_userId_" . $userId . "." . $fileActExt;  
+        $fileNew =  $userId . "." . $fileActExt;  
         $filePath = '../profile/'. $fileNew;
-        
 
         if (in_array($fileActExt, $allow)) {
             if ($file['size'] > 0 && $file['error'] == 0) {
@@ -37,7 +37,6 @@
                 $stmt->bindParam(':img', $fileNew);
                 $stmt->execute();
                 unset($_SESSION['upload']);
-                
             }
         }
     }
@@ -45,11 +44,10 @@
     $conn = null;
     
     if ($stmt) {
-        $_SESSION['success'] = "เปลี่ยนสำเร็จ";
-        header("location: ../index.php?page=users/account&lastPage=index.php?page=users/dashboard");
+        $_SESSION['success'] = "เปลี่ยนรูปโปรไฟล์สำเร็จ";
+        header("location: http://localhost/lasc_personal/index.php?page=users/account");
     }else{
         $_SESSION['error'] = "นามสกุลของไฟล์ไม่ถูกต้อง กรุณาอัปโหลดไฟล์ที่มีนามสกุลที่ถูกต้อง";
-        header("location: ../index.php?page=users/account&lastPage=index.php?page=users/dashboard");
+        header("location: http://localhost/lasc_personal/index.php?page=users/account");
     }
-
 ?>

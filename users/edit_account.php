@@ -3,7 +3,6 @@
     session_start();
 
     if (isset($_POST['edit'])) {
-        $lastPage = $_POST['lastPage'];
         $userId = $_POST['userId'];
         $academic_rank = $_POST['academic_rank'];
         $nametitle = $_POST['nametitle'];
@@ -24,12 +23,14 @@
         $stmt->bindParam(':email', $email);
         $stmt->execute();
     }
+
+    $conn = null;
     
     if($stmt){
         $_SESSION['success'] = "แก้ไขโปรไฟล์สำเร็จ";
-        header("location: /lasc_personal/" . $lastPage);
+        header("location: /lasc_personal/index.php?page=users/account");
     } else {
         $_SESSION['error'] = "แก้ไขโปรไฟล์ไม่สำเร็จ";
-        header("location: /lasc_personal/" . $lastPage);
+        header("location: /lasc_personal/index.php?page=users/account");
     }
 ?>

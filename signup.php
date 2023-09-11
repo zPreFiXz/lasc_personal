@@ -1,10 +1,9 @@
 <?php
-session_start();
-require_once "config/db.php";
+    session_start();
+    require_once "config/db.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -32,7 +31,6 @@ require_once "config/db.php";
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="container">
         <div class="d-flex flex-column align-items-center justify-content-center ">
@@ -50,8 +48,8 @@ require_once "config/db.php";
                         <?php if (isset($_SESSION['error'])) { ?>
                             <div class="alert alert-danger" role="alert">
                                 <?php
-                                echo $_SESSION['error'];
-                                unset($_SESSION['error']);
+                                    echo $_SESSION['error'];
+                                    unset($_SESSION['error']);
                                 ?>
                             </div>
                             <script>
@@ -63,8 +61,8 @@ require_once "config/db.php";
                         <?php if (isset($_SESSION['success'])) { ?>
                             <div class="alert alert-success" role="alert">
                                 <?php
-                                echo $_SESSION['success'];
-                                unset($_SESSION['success']);
+                                    echo $_SESSION['success'];
+                                    unset($_SESSION['success']);
                                 ?>
                             </div>
                             <script>
@@ -76,8 +74,8 @@ require_once "config/db.php";
                         <?php if (isset($_SESSION['warning'])) { ?>
                             <div class="alert alert-warning" role="alert">
                                 <?php
-                                echo $_SESSION['warning'];
-                                unset($_SESSION['warning']);
+                                    echo $_SESSION['warning'];
+                                    unset($_SESSION['warning']);
                                 ?>
                             </div>
                             <script>
@@ -156,7 +154,6 @@ require_once "config/db.php";
     </div>
 </body>
 <?php
-$conn = null;
+    $conn = null;
 ?>
-
 </html>

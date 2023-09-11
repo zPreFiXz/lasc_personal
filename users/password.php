@@ -13,6 +13,32 @@
             <div class="card-body" style="padding-bottom:0px;">
                 <h3 class="card-title pb0 fs-4 mt-3" style="padding:0px;">เปลี่ยนรหัสผ่าน</h3>
                 <hr>
+                <?php if (isset($_SESSION['success'])) { ?>
+                    <div class="alert alert-success" id="alert-success">
+                        <?php
+                            echo $_SESSION['success'];
+                            unset($_SESSION['success']);
+                        ?>
+                    </div>
+                    <script>
+                        setTimeout(function() {
+                            document.getElementById('alert-success').style.display = 'none';
+                        }, 3000);
+                    </script>
+                <?php } ?>
+                <?php if (isset($_SESSION['error'])) { ?>
+                    <div class="alert alert-danger" id="alert-error">
+                        <?php
+                            echo $_SESSION['error'];
+                            unset($_SESSION['error']);
+                        ?>
+                    </div>
+                    <script>
+                        setTimeout(function() {
+                            document.getElementById('alert-error').style.display = 'none';
+                        }, 3000);
+                    </script>
+                <?php } ?>
                 <form action="users/password_db.php" method="post">
                     <div class="mb-3">
                         <?php if(isset($_GET['lastPage'])){?>

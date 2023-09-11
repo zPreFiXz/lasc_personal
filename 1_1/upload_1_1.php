@@ -35,6 +35,7 @@
             }
         }
     }
+    
     $conn = null;
                 
     if ($stmt) {

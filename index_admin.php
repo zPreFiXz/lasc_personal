@@ -209,6 +209,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap" rel="stylesheet">
+  <style>
+    .profile1 {
+      height: 45px;
+      width: 45px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-radius: 50%;
+      
+    }
+  </style>
 </head>
 <body>
   <!-- ======= Header ======= -->
@@ -224,7 +234,13 @@
       <ul class="d-flex align-items-center">
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-          <i class="bi bi-person-circle"></i>
+          <div>
+            <?php if(empty($row['img'])) {?> 
+              <i class="bi bi-person-circle"></i>
+            <?php } else { ?>
+              <img src="profile/<?= $row['img'] ?>" class="profile1">
+            <?php } ?>
+          </div>
             <span class="d-none d-md-block dropdown-toggle ps-2">
             <?php
               if($row['academic_rank'] == 'ไม่มี'){
@@ -251,21 +267,6 @@
             </li>
             <li>
               <hr class="dropdown-divider">
-            </li>
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="index_admin.php?page=users/account&lastPage=index_admin.php?page=admin/dashboard">
-                <i class="bi bi-file-person-fill"></i>
-                <span>แก้ไขโปรไฟล์</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="index_admin.php?page=users/password&lastPage=index_admin.php?page=admin/dashboard">
-                <i class="bi bi-key-fill"></i>
-                <span>เปลี่ยนรหัสผ่าน</span>
-              </a>
             </li>
             <li>
               <hr class="dropdown-divider">

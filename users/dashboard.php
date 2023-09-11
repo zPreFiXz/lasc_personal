@@ -1,20 +1,19 @@
-<div class="container">
-    <?php
+<?php
+    $userId = $_SESSION['userId'];
+    $nametitle = $_SESSION['nametitle'];
+    $firstname = $_SESSION['firstname'];
+    $lastname = $_SESSION['lastname'];
+    $isAdmin = $_SESSION['isAdmin'];
+
+    if (isset($_SESSION['userId'])) {
         $userId = $_SESSION['userId'];
-        $nametitle = $_SESSION['nametitle'];
-        $firstname = $_SESSION['firstname'];
-        $lastname = $_SESSION['lastname'];
-        $isAdmin = $_SESSION['isAdmin'];
 
-        if (isset($_SESSION['userId'])) {
-            $userId = $_SESSION['userId'];
-
-            $stmt = $conn->query("SELECT * FROM users WHERE userId = '$userId'");
-            $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        }
-    ?>
-    <br>
+        $stmt = $conn->query("SELECT * FROM users WHERE userId = '$userId'");
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+?>
+<div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <div class="pagetitle mt-3">
             <h1 style="font-size: 30px;">
@@ -27,10 +26,14 @@
                     }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($row['nametitle'] == 'นาย' or $row['nametitle'] == 'นาง' or $row['nametitle'] == 'นางสาว')){
                         echo $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
                     }
+                  
                 ?>
-            </h1>   
+            </h1>  
         </div>
-        <div class="d-flex">
+        <div class="d-flex align-items-center">
+            <div class="pagetitle mt-3 mx-3">
+                <h1 style="font-size: 30px;"><?= "ปีการศึกษา " . $term . "/" . $year; ?></h1>
+            </div>
             <?php
                 if ($isAdmin == 'เป็น') { ?>
                     <a href="index_admin.php?page=admin/dashboard" class="btn btn-primary d-flex align-items-center"><i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;ผู้ดูแลระบบ</a>&nbsp;&nbsp;

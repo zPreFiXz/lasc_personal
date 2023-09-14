@@ -32,7 +32,7 @@
     }
     //delete 
     if (isset($_GET['delete'])) {
-        $delete_id = $_GET['delete'];
+        $delete_id = base64_decode($_GET['delete']);
 
         $stmt = $conn->prepare("SELECT file FROM personal_1_3 WHERE id = :delete_id");
         $stmt->bindParam(':delete_id', $delete_id);

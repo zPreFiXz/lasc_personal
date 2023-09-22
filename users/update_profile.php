@@ -46,9 +46,9 @@
     
     if ($stmt) {
         $_SESSION['success'] = "เปลี่ยนรูปโปรไฟล์สำเร็จ";
-        header("location: http://localhost/lasc_personal/index.php?page=users/account");
+        header("location: /lasc_personal/index.php?page=users/account");
     }else{
         $_SESSION['error'] = "นามสกุลของไฟล์ไม่ถูกต้อง กรุณาอัปโหลดไฟล์ที่มีนามสกุลที่ถูกต้อง";
-        header("location: http://localhost/lasc_personal/index.php?page=users/account");
+        header("location: /lasc_personal/index.php?page=users/account");
     }
 ?>

@@ -13,7 +13,20 @@
     $stmt->execute();
     $personal = $stmt->fetchAll();
 
-    foreach ($personal as $per)
+    foreach ($personal as $per){
+  
+    if (empty($personal)) {
+      $userId = $_SESSION['userId'];
+      $term = $term_year['term'];
+      $year = $term_year['year'];
+  
+      $insertStmt = $conn->prepare("INSERT INTO personal_1_11 (userId, term, `year`) VALUES (:userId, :term, :year)");
+      $insertStmt->bindParam(':userId', $userId);
+      $insertStmt->bindParam(':term', $term);
+      $insertStmt->bindParam(':year', $year);
+      $insertStmt->execute();
+    }
+}
 ?>
 <div class="container">
     <div class="pagetitle mt-3">
@@ -71,7 +84,7 @@
                         <td><input class="form-check-input" type="checkbox" id="checkbox2" onclick="sum()" name="checkbox2" value="30"></td>
                         <td>รองอธิการบดี</td>
                         <td><input type="text" class="form-control" id="scope2" name="scope2" value="<?= $per['scope2'] ?>"></td>
-                        <td class="score">40</td>
+                        <td class="score">30</td>
                     </tr>
                 <?php } else { ?>
                     <tr>

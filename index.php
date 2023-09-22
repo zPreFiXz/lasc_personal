@@ -6,7 +6,7 @@
     $_SESSION['error'] = 'กรุณาเข้าสู่ระบบ!';
     header('location: signin.php');
   }
-
+  
   $userId = $_SESSION['userId'];
   $academic_rank = $_SESSION['academic_rank'];
   $nametitle = $_SESSION['nametitle'];
@@ -150,7 +150,7 @@
   }
 
   $totalAmountWork = $totalAmountWork_1_1 + $totalAmountWork_1_2 + $totalAmountWork_1_3 + $totalAmountWork_1_4 + $totalAmountWork_1_5 + $totalAmountWork_1_6 + $totalAmountWork_1_7 + $totalAmountWork_1_8 + $totalAmountWork_1_9 + $totalAmountWork_1_10 + $totalAmountWork_1_11;
-  $_SESSION['$totalAmountWork'] = $totalAmountWork;
+  $_SESSION['totalAmountWork'] = $totalAmountWork;
 
   if (isset($_SESSION['userId'])) {
     $stmt = $conn->query("SELECT * FROM users WHERE userId = '$userId'");
@@ -158,103 +158,103 @@
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
   }
   
-  $stmt = $conn->prepare("SELECT * FROM Vadmin WHERE userId = :userId AND term = :term AND year = :year");
-  $stmt->bindParam(':userId', $userId);
-  $stmt->bindParam(':term', $term);
-  $stmt->bindParam(':year', $year);
-  $stmt->execute();
-  $users = $stmt->fetch();
+  // $stmt = $conn->prepare("SELECT * FROM Vadmin WHERE userId = :userId AND term = :term AND year = :year");
+  // $stmt->bindParam(':userId', $userId);
+  // $stmt->bindParam(':term', $term);
+  // $stmt->bindParam(':year', $year);
+  // $stmt->execute();
+  // $users = $stmt->fetch();
 
-  if (empty($users)) {
-    $insertStmt = $conn->prepare("INSERT INTO Vadmin (userId, term, year, academic_rank,nametitle, firstname, lastname, amount_work) VALUES (:userId, :term, :year, :academic_rank, :nametitle, :firstname, :lastname, :amount_work)");
-    $insertStmt->bindParam(':userId', $userId);
-    $insertStmt->bindParam(':term', $term);
-    $insertStmt->bindParam(':year', $year);
-    $insertStmt->bindParam(':academic_rank', $academic_rank);
-    $insertStmt->bindParam(':nametitle', $nametitle);
-    $insertStmt->bindParam(':firstname', $firstname);
-    $insertStmt->bindParam(':lastname', $lastname);
-    $insertStmt->bindParam(':amount_work', $totalAmountWork);
-    $insertStmt->execute();
-  } else {
-    $academic_rank_update = $row['academic_rank'];
-    $nametitle_update = $row['nametitle'];
-    $firstname_update = $row['firstname'];
-    $lastname_update = $row['lastname'];
+  // if (empty($users)) {
+  //   $insertStmt = $conn->prepare("INSERT INTO Vadmin (userId, term, year, academic_rank,nametitle, firstname, lastname, amount_work) VALUES (:userId, :term, :year, :academic_rank, :nametitle, :firstname, :lastname, :amount_work)");
+  //   $insertStmt->bindParam(':userId', $userId);
+  //   $insertStmt->bindParam(':term', $term);
+  //   $insertStmt->bindParam(':year', $year);
+  //   $insertStmt->bindParam(':academic_rank', $academic_rank);
+  //   $insertStmt->bindParam(':nametitle', $nametitle);
+  //   $insertStmt->bindParam(':firstname', $firstname);
+  //   $insertStmt->bindParam(':lastname', $lastname);
+  //   $insertStmt->bindParam(':amount_work', $totalAmountWork);
+  //   $insertStmt->execute();
+  // } else {
+  //   $academic_rank_update = $row['academic_rank'];
+  //   $nametitle_update = $row['nametitle'];
+  //   $firstname_update = $row['firstname'];
+  //   $lastname_update = $row['lastname'];
 
-    $updateStmt = $conn->prepare("UPDATE Vadmin SET academic_rank = :academic_rank, nametitle = :nametitle, firstname = :firstname, lastname = :lastname, amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
-    $updateStmt->bindParam(':userId', $userId);
-    $updateStmt->bindParam(':term', $term);
-    $updateStmt->bindParam(':year', $year); 
-    $updateStmt->bindParam(':academic_rank', $academic_rank_update); 
-    $updateStmt->bindParam(':nametitle', $nametitle_update); 
-    $updateStmt->bindParam(':firstname', $firstname_update); 
-    $updateStmt->bindParam(':lastname', $lastname_update); 
-    $updateStmt->bindParam(':amount_work', $totalAmountWork);
-    $updateStmt->execute();
-  }
+  //   $updateStmt = $conn->prepare("UPDATE Vadmin SET academic_rank = :academic_rank, nametitle = :nametitle, firstname = :firstname, lastname = :lastname, amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
+  //   $updateStmt->bindParam(':userId', $userId);
+  //   $updateStmt->bindParam(':term', $term);
+  //   $updateStmt->bindParam(':year', $year); 
+  //   $updateStmt->bindParam(':academic_rank', $academic_rank_update); 
+  //   $updateStmt->bindParam(':nametitle', $nametitle_update); 
+  //   $updateStmt->bindParam(':firstname', $firstname_update); 
+  //   $updateStmt->bindParam(':lastname', $lastname_update); 
+  //   $updateStmt->bindParam(':amount_work', $totalAmountWork);
+  //   $updateStmt->execute();
+  // }
 
-  $stmt = $conn->prepare("SELECT*FROM personal_1_11 WHERE userId = :userId AND term = :term AND year = :year");
-  $stmt->bindParam(':userId', $userId);
-  $stmt->bindParam(':term', $term);
-  $stmt->bindParam(':year', $year);
-  $stmt->execute();
-  $personal = $stmt->fetchAll();
+  // $stmt = $conn->prepare("SELECT*FROM personal_1_11 WHERE userId = :userId AND term = :term AND year = :year");
+  // $stmt->bindParam(':userId', $userId);
+  // $stmt->bindParam(':term', $term);
+  // $stmt->bindParam(':year', $year);
+  // $stmt->execute();
+  // $personal = $stmt->fetchAll();
 
-  if (empty($personal)) {
-    $userId = $_SESSION['userId'];
-    $term = $term_year['term'];
-    $year = $term_year['year'];
+  // if (empty($personal)) {
+  //   $userId = $_SESSION['userId'];
+  //   $term = $term_year['term'];
+  //   $year = $term_year['year'];
 
-    $insertStmt = $conn->prepare("INSERT INTO personal_1_11 (userId, term, `year`) VALUES (:userId, :term, :year)");
-    $insertStmt->bindParam(':userId', $userId);
-    $insertStmt->bindParam(':term', $term);
-    $insertStmt->bindParam(':year', $year);
-    $insertStmt->execute();
-  }
+  //   $insertStmt = $conn->prepare("INSERT INTO personal_1_11 (userId, term, `year`) VALUES (:userId, :term, :year)");
+  //   $insertStmt->bindParam(':userId', $userId);
+  //   $insertStmt->bindParam(':term', $term);
+  //   $insertStmt->bindParam(':year', $year);
+  //   $insertStmt->execute();
+  // }
 
-  $stmt = $conn->prepare("SELECT * FROM personal_3 WHERE userId = :userId AND term = :term AND year = :year");
-  $stmt->bindParam(':userId', $userId);
-  $stmt->bindParam(':term', $term);
-  $stmt->bindParam(':year', $year);
-  $stmt->execute();
-  $personal = $stmt->fetchAll();
+//   $stmt = $conn->prepare("SELECT * FROM personal_3 WHERE userId = :userId AND term = :term AND year = :year");
+//   $stmt->bindParam(':userId', $userId);
+//   $stmt->bindParam(':term', $term);
+//   $stmt->bindParam(':year', $year);
+//   $stmt->execute();
+//   $personal = $stmt->fetchAll();
 
-if (empty($personal)) {
-  if($row['academic_rank'] == 'ไม่มี'){
-    $name = $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
-  }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $row['nametitle'] == 'ดร.'){
-    $name = $row['academic_rank'] . ' ' . $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
-  }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($row['nametitle'] == 'นาย' or $row['nametitle'] == 'นาง' or $row['nametitle'] == 'นางสาว')){
-    $name = $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
-  }
+// if (empty($personal)) {
+//   if($row['academic_rank'] == 'ไม่มี'){
+//     $name = $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+//   }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $row['nametitle'] == 'ดร.'){
+//     $name = $row['academic_rank'] . ' ' . $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+//   }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($row['nametitle'] == 'นาย' or $row['nametitle'] == 'นาง' or $row['nametitle'] == 'นางสาว')){
+//     $name = $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
+//   }
 
-  $insertStmt = $conn->prepare("INSERT INTO personal_3 (userId, term, year,name,branch,amount_work) VALUES (:userId, :term, :year, :name, :branch, :amount_work)");
-  $insertStmt->bindParam(':userId', $userId);
-  $insertStmt->bindParam(':term', $term);
-  $insertStmt->bindParam(':year', $year);
-  $insertStmt->bindParam(':name', $name);
-  $insertStmt->bindParam(':branch', $branch);
-  $insertStmt->bindParam(':amount_work', $totalAmountWork);
-  $insertStmt->execute();
-} else {
-  $branch_update = $row['branch'];
-  if($row['academic_rank'] == 'ไม่มี'){
-    $name = $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
-  }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $row['nametitle'] == 'ดร.'){
-    $name = $row['academic_rank'] . ' ' . $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
-  }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($row['nametitle'] == 'นาย' or $row['nametitle'] == 'นาง' or $row['nametitle'] == 'นางสาว')){
-    $name = $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
-  }
-  $updateStmt = $conn->prepare("UPDATE personal_3 SET name = :name, branch = :branch, amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
-  $updateStmt->bindParam(':userId', $userId);
-  $updateStmt->bindParam(':name', $name);
-  $updateStmt->bindParam(':term', $term);
-  $updateStmt->bindParam(':year', $year);
-  $updateStmt->bindParam(':branch', $branch_update);
-  $updateStmt->bindParam(':amount_work', $totalAmountWork);
-  $updateStmt->execute();
-} 
+//   $insertStmt = $conn->prepare("INSERT INTO personal_3 (userId, term, year,name,branch,amount_work) VALUES (:userId, :term, :year, :name, :branch, :amount_work)");
+//   $insertStmt->bindParam(':userId', $userId);
+//   $insertStmt->bindParam(':term', $term);
+//   $insertStmt->bindParam(':year', $year);
+//   $insertStmt->bindParam(':name', $name);
+//   $insertStmt->bindParam(':branch', $branch);
+//   $insertStmt->bindParam(':amount_work', $totalAmountWork);
+//   $insertStmt->execute();
+// } else {
+//   $branch_update = $row['branch'];
+//   if($row['academic_rank'] == 'ไม่มี'){
+//     $name = $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+//   }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $row['nametitle'] == 'ดร.'){
+//     $name = $row['academic_rank'] . ' ' . $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+//   }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($row['nametitle'] == 'นาย' or $row['nametitle'] == 'นาง' or $row['nametitle'] == 'นางสาว')){
+//     $name = $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
+//   }
+//   $updateStmt = $conn->prepare("UPDATE personal_3 SET name = :name, branch = :branch, amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
+//   $updateStmt->bindParam(':userId', $userId);
+//   $updateStmt->bindParam(':name', $name);
+//   $updateStmt->bindParam(':term', $term);
+//   $updateStmt->bindParam(':year', $year);
+//   $updateStmt->bindParam(':branch', $branch_update);
+//   $updateStmt->bindParam(':amount_work', $totalAmountWork);
+//   $updateStmt->execute();
+// } 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -518,7 +518,4 @@ if (empty($personal)) {
     });
   </script>
 </body>
-<?php
-  $conn = null;
-?>
 </html>

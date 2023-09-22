@@ -153,30 +153,30 @@
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
-  $stmt = $conn->prepare("SELECT * FROM Vadmin WHERE userId = :userId AND term = :term AND year = :year");
-  $stmt->bindParam(':userId', $userId);
-  $stmt->bindParam(':term', $term);
-  $stmt->bindParam(':year', $year);
-  $stmt->execute();
-  $users = $stmt->fetch();
+  // $stmt = $conn->prepare("SELECT * FROM Vadmin WHERE userId = :userId AND term = :term AND year = :year");
+  // $stmt->bindParam(':userId', $userId);
+  // $stmt->bindParam(':term', $term);
+  // $stmt->bindParam(':year', $year);
+  // $stmt->execute();
+  // $users = $stmt->fetch();
 
-  if ($users){
-    $academic_rank_update = $row['academic_rank'];
-    $nametitle_update = $row['nametitle'];
-    $firstname_update = $row['firstname'];
-    $lastname_update = $row['lastname'];
+  // if ($users){
+  //   $academic_rank_update = $row['academic_rank'];
+  //   $nametitle_update = $row['nametitle'];
+  //   $firstname_update = $row['firstname'];
+  //   $lastname_update = $row['lastname'];
 
-    $updateStmt = $conn->prepare("UPDATE Vadmin SET academic_rank = :academic_rank, nametitle = :nametitle, firstname = :firstname, lastname = :lastname, amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
-    $updateStmt->bindParam(':userId', $userId);
-    $updateStmt->bindParam(':term', $term);
-    $updateStmt->bindParam(':year', $year); 
-    $updateStmt->bindParam(':academic_rank', $academic_rank_update); 
-    $updateStmt->bindParam(':nametitle', $nametitle_update); 
-    $updateStmt->bindParam(':firstname', $firstname_update); 
-    $updateStmt->bindParam(':lastname', $lastname_update); 
-    $updateStmt->bindParam(':amount_work', $totalAmountWork);
-    $updateStmt->execute();
-  }
+  //   $updateStmt = $conn->prepare("UPDATE Vadmin SET academic_rank = :academic_rank, nametitle = :nametitle, firstname = :firstname, lastname = :lastname, amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
+  //   $updateStmt->bindParam(':userId', $userId);
+  //   $updateStmt->bindParam(':term', $term);
+  //   $updateStmt->bindParam(':year', $year); 
+  //   $updateStmt->bindParam(':academic_rank', $academic_rank_update); 
+  //   $updateStmt->bindParam(':nametitle', $nametitle_update); 
+  //   $updateStmt->bindParam(':firstname', $firstname_update); 
+  //   $updateStmt->bindParam(':lastname', $lastname_update); 
+  //   $updateStmt->bindParam(':amount_work', $totalAmountWork);
+  //   $updateStmt->execute();
+  // }
 ?>
 <!DOCTYPE html>
 <html lang="en">

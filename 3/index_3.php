@@ -18,6 +18,28 @@
     $personal = $stmt->fetchAll();
 
     foreach($personal as $per)
+
+    $totalAmountWork = $_SESSION['totalAmountWork'];
+  
+  if ($personal) {
+    $branch_update = $row['branch'];
+    if($row['academic_rank'] == 'ไม่มี'){
+      $name = $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+    }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and $row['nametitle'] == 'ดร.'){
+      $name = $row['academic_rank'] . ' ' . $row['nametitle'] . $row['firstname'] . ' ' . $row['lastname'];
+    }elseif(($row['academic_rank'] == 'ศาสตราจารย์' or $row['academic_rank'] == 'รองศาสตราจารย์' or $row['academic_rank'] == 'ผู้ช่วยศาสตราจารย์')and ($row['nametitle'] == 'นาย' or $row['nametitle'] == 'นาง' or $row['nametitle'] == 'นางสาว')){
+      $name = $row['academic_rank'] . $row['firstname'] . ' ' . $row['lastname'];
+    }
+    $updateStmt = $conn->prepare("UPDATE personal_3 SET name = :name, branch = :branch, amount_work = :amount_work WHERE userId = :userId AND term = :term AND year = :year");
+    $updateStmt->bindParam(':userId', $userId);
+    $updateStmt->bindParam(':name', $name);
+    $updateStmt->bindParam(':term', $term);
+    $updateStmt->bindParam(':year', $year);
+    $updateStmt->bindParam(':branch', $branch_update);
+    $updateStmt->bindParam(':amount_work', $totalAmountWork);
+    $updateStmt->execute();
+  } 
+
 ?>
 <div class="container">
     <div class="pagetitle mt-3" style="text-align: center;">

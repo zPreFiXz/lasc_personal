@@ -23,7 +23,7 @@
         $stmt->bindParam(':email', $email);
         $stmt->execute();
     }
-
+    
     $conn = null;
     
     if($stmt){
